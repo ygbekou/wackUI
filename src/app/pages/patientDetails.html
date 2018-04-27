@@ -1,0 +1,203 @@
+<div role="main" class="main">
+	<section
+		class="parallax section section-text-light section-parallax section-center mt-0 mb-5"
+		data-plugin-parallax data-plugin-options="{'speed': 1.5}"
+		data-image-src="assets/images/slides/bg-top.jpg">
+	</section>
+
+		<div class="container" style="padding-left: 10px; max-width: 100%;">
+
+	<section class="call-to-action featured featured-secondary mb-5"
+		style="border-radius: 8px; padding:10px;" *ngIf="vote">
+		<div class="col-sm-9 col-lg-9 text-center">
+			<div class="call-to-action-content" style="width:100%;" >
+				<h3>
+					<strong>Il y a des scrutins qui vous attendent</strong>
+				</h3>
+				<p class="mb-0">
+					Faites votre <strong>devoir civique</strong> en votant
+			</div>
+		</div>
+		<div class="col-sm-3 col-lg-3 text-left">
+			<div class="call-to-action-btn">
+				<a href="#/vote" class="btn btn-lg btn-secondary">Je vote
+					maintenant!</a>
+			</div>
+		</div>
+	</section>
+	
+	<div class="ui-grid-row">
+		<div class="ui-g-2 ui-sm-4">
+			<app-admin-menu></app-admin-menu>
+		</div>
+		<div class="ui-g-10 ui-sm-8" style="padding: 15px;">
+			<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="patient">
+				<p-accordion> 
+					<p-accordionTab header="Demographic Info" selected="true">
+
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label i18n="@@userName" for="userName">User Name<font
+										color="red">*</font>
+									</label> <input type="text" pInputText class="form-control" id="userName"
+										[(ngModel)]="patient.user.userName" name="userName" #userName="ngModel">
+								</div>
+							</div>
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label i18n="@@password" for="password1">Mot de Passe<font
+										color="red">*</font></label> <input type="password" pPassword
+										class="form-control" id="password1"
+										[(ngModel)]="patient.user.password" name="password1"
+										#password1="ngModel">
+								</div>
+							</div>
+						</div>
+						
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label i18n="@@lastName" for="lastName">Last Name<font
+										color="red">*</font>:
+									</label> <input type="text" pInputText class="form-control"
+										id="lastName" required [(ngModel)]="patient.user.lastName"
+										name="lastName" #lastName="ngModel">
+									<div [hidden]="lastName.valid || lastName.pristine"
+										class="alert alert-danger" i18n="@@lastNameRequired">Nom
+										Requis</div>
+								</div>
+							</div>
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label i18n="@@firstName" for="firstName">First Name<font
+										color="red">*</font>:
+									</label> <input type="text" pInputText class="form-control"
+										id="firstName" required [(ngModel)]="patient.user.firstName"
+										name="firstName" #firstName="ngModel">
+									<div [hidden]="firstName.valid || firstName.pristine"
+										class="alert alert-danger" i18n="@@firstNameRequired">Prenom
+										Requis</div>
+								</div>
+							</div>
+						</div>
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label i18n="@@middleName" for="middleName">Middle Name</label> 
+									<input type="text" pInputText class="form-control" id="middleName"
+										[(ngModel)]="patient.user.middleName" name="middleName" #middleName="ngModel">
+								</div>
+							</div>
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label i18n="@@email" for="email">E-mail<font
+										color="red">*</font>
+									</label> <input type="text" pInputText class="form-control" id="email"
+										[(ngModel)]="patient.user.email" name="email" #email="ngModel">
+								</div>
+							</div>
+						</div>
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<div class="ui-grid-row">
+										<label i18n="@@sex" for="sex">Sex</label> 
+									</div>
+									<div class="ui-grid-row">
+										<p-radioButton name="sex" value="M" label="Male" [(ngModel)]="patient.user.sex"></p-radioButton>
+										<p-radioButton name="sex" value="F" label="Female" [(ngModel)]="patient.user.sex"></p-radioButton>
+									</div>
+								</div>
+							</div>
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label i18n="@@phone" for="phone">Phone<font
+										color="red">*</font>
+									</label> <input type="text" pInputText class="form-control" id="phone"
+										[(ngModel)]="patient.user.phone" name="phone" #phone="ngModel">
+								</div>
+							</div>
+						</div>
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label i18n="@@address" for="address">Address</label> 
+									<input type="text" pInputText class="form-control" id="address"
+										[(ngModel)]="patient.user.address" name="address" #address="ngModel">
+								</div>
+							</div>
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label i18n="@@city" for="city">City</label> 
+									<input type="text" pInputText class="form-control" id="city"
+										[(ngModel)]="patient.user.city" name="city" #city="ngModel">
+								</div>
+							</div>
+						</div>
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label i18n="@@country" for="country">Country</label> 
+									<p-autoComplete [(ngModel)]="patient.user.country"
+										(onDropdownClick)="countryDropdown.handleDropdownClick($event)"
+										[suggestions]="countryDropdown.filteredCountries" [dropdown]="true"
+										id="country" (completeMethod)="countryDropdown.filter($event)"
+										name="country" field="name" [size]="30" placeholder="{{COUNTRY}}"
+										[minLength]="1"></p-autoComplete>
+								</div>
+							</div>
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label i18n="@@zipCode" for="zipCode">Zip Code</label> 
+									<input type="text" pInputText class="form-control" id="zipCode"
+										[(ngModel)]="patient.user.zipCode" name="zipCode" #zipCode="ngModel">
+								</div>
+							</div>
+						</div>
+					</p-accordionTab> 
+					<p-accordionTab header="Contact Info">
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label i18n="@@contact" for="contact">Contact</label> 
+									<input type="text" pInputText class="form-control" id="contact"
+										[(ngModel)]="patient.contact" name="contact" #contact="ngModel">
+								</div>
+							</div>
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label i18n="@@contactPhone" for="contactPhone">Contact Phone</label> 
+									<input type="text" pInputText class="form-control" id="contactPhone"
+										[(ngModel)]="patient.contactPhone" name="contactPhone" #contactPhone="ngModel">
+								</div>
+							</div>
+						</div>
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label i18n="@@medicalHistory" for="medicalHistory">Medical History</label> 
+									<p-editor [(ngModel)]="patient.medicalHistory" [style]="{'height':'100px'}"></p-editor>
+								</div>
+							</div>
+							
+						</div>
+						
+					</p-accordionTab>
+				</p-accordion>
+				<br />
+						
+			</div>
+			<br />
+			<div *ngIf="error" class="alert alert-danger">{{error}}</div>
+			<div>
+				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+					<button type="button" pButton icon="fa-close" (click)="delete()"
+						label="Supprimer"></button>
+					<button type="button" pButton icon="fa-check" (click)="save()"
+						label="Sauvegarder"></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

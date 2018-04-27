@@ -1,0 +1,37 @@
+<div id="carousel-example-generic"
+	class="carousel slide cover overlay overflow-hidden max-height-100 cover-navbar-large-top margin-none"
+	data-ride="carousel">
+
+	<div class="carousel-inner" role="listbox">
+		<div class="item active">
+			<img src="assets/images/bg-top.jpg" width="100%" alt="Slider">
+		</div>
+	</div>
+</div>
+
+<div class="bg-white" style="padding-left: 0px;">
+	<div class="container" style="padding-left: 0px;">
+		<div class="ui-grid-row">
+			<div class="ui-grid-row">
+				<div class="ui-g-1 ui-sm-1"></div>
+				<div class="ui-g-10 ui-sm-10">
+					<header class="page-heading clearfix">
+						<h1 class="heading-title pull-left">{{news.title}}</h1>
+					</header>
+					<article class="news-item">
+						<p class="meta text-muted">
+							Publie par: <a href="#">{{news.author}}</a> | Poste le:
+							{{news.newsDate|date:'dd/MM/yyyy'}}
+						</p>
+						<p class="featured-image">
+							<img src="assets/images/news/{{news.pic}}" width="15%" alt=""
+								align="left" style="margin: 0px 10px" />
+						</p>
+					</article>
+				</div>
+				<div class="ui-g-1 ui-sm-1"></div>
+			</div>
+		</div>
+
+	</div>
+</div> 

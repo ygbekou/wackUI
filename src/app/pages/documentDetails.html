@@ -1,0 +1,86 @@
+<div role="main" class="main">
+	<section
+		class="parallax section section-text-light section-parallax section-center mt-0 mb-5"
+		data-plugin-parallax data-plugin-options="{'speed': 1.5}"
+		data-image-src="assets/images/slides/bg-top.jpg">
+	</section>
+
+		<div class="container" style="padding-left: 10px; max-width: 100%;">
+
+	<section class="call-to-action featured featured-secondary mb-5"
+		style="border-radius: 8px; padding:10px;" *ngIf="vote">
+		<div class="col-sm-9 col-lg-9 text-center">
+			<div class="call-to-action-content" style="width:100%;" >
+				<h3>
+					<strong>Il y a des scrutins qui vous attendent</strong>
+				</h3>
+				<p class="mb-0">
+					Faites votre <strong>devoir civique</strong> en votant
+			</div>
+		</div>
+		<div class="col-sm-3 col-lg-3 text-left">
+			<div class="call-to-action-btn">
+				<a href="#/vote" class="btn btn-lg btn-secondary">Je vote
+					maintenant!</a>
+			</div>
+		</div>
+	</section>
+	
+	<div class="ui-grid-row">
+		<div class="ui-g-2 ui-sm-4">
+			<app-admin-menu></app-admin-menu>
+		</div>
+		<div class="ui-g-10 ui-sm-8" style="padding: 15px;">
+			<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="document">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-12 ui-sm-12">
+						<div class="form-group">
+							<label i18n="@@patientId" for="patientId">Patient ID<font color="red">*</font></label>
+							<input type="text" pInputText class="form-control" id="matricule"
+								[(ngModel)]="document.patient.id" name="patientId" #patientId="ngModel">
+						</div>
+					</div>
+				</div>
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-12 ui-sm-12">
+						<div class="form-group">
+							<label i18n="@@file" for="file">Upload File<font color="red">*</font></label>
+							<input type="file" #tasknote [attr.multiple]="multiple ? true : null" (change)="upload()" >
+						</div>
+					</div>
+				</div>
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-12 ui-sm-12">
+						<div class="form-group">
+							<label i18n="@@doctor" for="doctor">Doctor</label> 
+							<p-autoComplete [(ngModel)]="document.doctor"
+								(onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
+								[suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
+								id="doctor" (completeMethod)="doctorDropdown.filter($event)"
+								name="doctor" field="name" [size]="30" placeholder="{{DOCTOR}}"
+								[minLength]="1"></p-autoComplete>
+						</div>
+					</div>
+				</div>
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-12 ui-sm-12">
+						<div class="form-group">
+							<label i18n="@@description" for="description">Description</label> 
+							<p-editor [(ngModel)]="document.description" [style]="{'height':'100px'}"></p-editor>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br />
+			<div *ngIf="error" class="alert alert-danger">{{error}}</div>
+			<div>
+				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+					<button type="button" pButton icon="fa-close" (click)="delete()"
+						label="Supprimer"></button>
+					<button type="button" pButton icon="fa-check" (click)="save()"
+						label="Sauvegarder"></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

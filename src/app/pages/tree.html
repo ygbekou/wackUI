@@ -1,0 +1,103 @@
+<div id="carousel-example-generic"
+	class="carousel slide cover overlay overflow-hidden max-height-100 cover-navbar-large-top margin-none"
+	data-ride="carousel">
+
+	<div class="carousel-inner" role="listbox">
+		<div class="item active">
+			<img src="assets/images/bg-top.jpg" width="100%" alt="Slider">
+		</div>
+	</div>
+</div>
+
+<div class="bg-white">
+	<div class="container">
+		<br />
+		<div class="row">
+
+			<form (ngSubmit)="search()" #searchForm="ngForm">
+				<div class="ui-grid ui-grid-responsive ui-fluid">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-2"></div>
+						<div class="ui-grid-col-6">
+							<input type="text" pInputText class="form-control" id="searchT"
+								required [(ngModel)]="searchText"
+								placeholder="{{USER_SEARCH_PARTS}}" name="searchT"
+								#searchT="ngModel">
+						</div>
+						<div class="ui-grid-col-2">
+							<button type="button" pButton icon="fa-search" (click)="search()"
+								label="Rechercher" style="margin-top: 0px; height: 35px;"></button>
+						</div>
+						<div class="ui-grid-col-2"></div>
+					</div>
+					<div class="ui-grid-row" *ngIf="users">
+						<div class="ui-grid-col-2"></div>
+						<div class="table-responsive ui-grid-col-8">
+
+							<p-dataTable [value]="users" sortField="firstName"
+								selectionMode="single" [(selection)]="user" [rows]="5"
+								[paginator]="true" (onRowSelect)="getSelectedUserTree()"
+								rowGroupMode="subheader"> <p-column
+								[style]="{'width':'25%'}" field="firstName" header="Prenom"></p-column>
+							<p-column [style]="{'width':'25%'}" field="lastName" header="Nom"></p-column>
+							<p-column [style]="{'width':'25%'}" field="cityOrigin"
+								header="Origine"></p-column> <p-column [style]="{'width':'25%'}"
+								field="cityResidence" header="Residence"></p-column> </p-dataTable>
+
+						</div>
+						<div class="ui-grid-col-2"></div>
+					</div>
+				</div>
+
+			</form>
+		</div>
+		<div class="row">
+			<div class="span6" style="float: none; margin: 0 auto;">
+				<div class="tree">
+					<ul *ngIf="familyTree.user">
+						<li><a *ngFor="let aSpouse of familyTree.spouses"
+							href="#/arbre" (click)="getUserTree(aSpouse)"
+							style="border: 1px solid #f4f4f4; color: #2191c0; font-weight: bold;"><img
+								src="assets/images/members/{{aSpouse.pic}}" width="110"
+								height="110" alt="Image"> {{aSpouse.firstName}} <br />
+								{{aSpouse.lastName}}</a> <a href="#/arbre"
+							style="border: 1px solid #f4f4f4; color: #2191c0; font-weight: bold;"
+							(click)="getParentTree(familyTree.user)"><img
+								src="assets/images/members/{{familyTree.user.pic}}" width="110"
+								height="110" alt="Image"> {{familyTree.user.firstName }} <br />
+								{{familyTree.user.lastName}}</a>
+							<ul *ngIf="familyTree.children.length>0">
+								<li *ngFor="let aChild of familyTree.children"><a
+									href="#/arbre" (click)="getUserTree(aChild.user)"
+									style="border: 1px solid #f4f4f4; color: #2191c0;">
+									<div class="childCount">{{aChild.childrenCount}}</div>
+									<img
+										src="assets/images/members/{{aChild.user.pic}}" width="110"
+										height="110" alt="Image"> {{aChild.user.firstName }} <br />
+										{{aChild.user.lastName}}
+										
+										
+										</a>
+										<!--
+									<ul *ngIf="aChild.children.length>0">
+										<li *ngFor="let aGrandChild of aChild.children"><a
+											href="#/arbre" (click)="getUserTree(aGrandChild)"
+											style="border: 1px solid #2191c0; color: #2191c0; font-size: 11px;"><img
+												src="assets/images/members/{{aGrandChild.pic}}" width="25"
+												pTooltip="Enter your username" height="25" alt="Image">
+												{{aGrandChild.firstName }} {{aGrandChild.lastName}}</a></li>
+									</ul>
+									-->
+									</li>
+
+							</ul></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<br/>
+<br/>
+	
+	</div>
+</div>

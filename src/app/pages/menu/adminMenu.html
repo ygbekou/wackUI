@@ -1,0 +1,82 @@
+
+<aside class="sidebar" data-plugin-sticky>
+
+	<h4 class="heading-primary">
+		<strong>Espace</strong> Administrator
+	</h4>
+
+	<ul class="nav nav-list flex-column mb-4 sort-source"
+		data-sort-id="portfolio" data-option-key="filter"
+		data-plugin-options="{'layoutMode': 'fitRows', 'filter': '*'}">
+		<li class="{{departmentDetails}}" *ngIf="user.id > 0">
+			<a href="#/admin/departmentDetails?departmentDetails=active" i18n="@@statistics">Add Department</a>
+		</li>
+		<li class="{{departmentList}}" *ngIf="user.id > 0">
+			<a href="#/admin/departmentList?departmentList=active" i18n="@@statistics">Department List</a>
+		</li>
+		<li class="{{doctorDetails}}" *ngIf="user.id > 0">
+			<a href="#/admin/employeeDetails?doctorDetails=active&groupId=1" i18n="@@statistics">Add Doctor</a>
+		</li>
+		<li class="{{doctorList}}" *ngIf="user.id > 0">
+			<a href="#/admin/employeeList?doctorList=active&groupId=1" i18n="@@statistics">Doctor List</a>
+		</li>
+		<li class="{{employeeDetails}}" *ngIf="user.id > 0">
+			<a href="#/admin/employeeDetails?employeeDetails=active" i18n="@@statistics">Add Employee</a>
+		</li>
+		<li class="{{employeeList}}" *ngIf="user.id > 0">
+			<a href="#/admin/employeeList?employeeList=active" i18n="@@statistics">Employee List</a>
+		</li>
+		<li class="{{patientDetails}}" *ngIf="user.id > 0">
+			<a href="#/admin/patientDetails?patientDetails=active&groupId=20" i18n="@@statistics">Add Patient</a>
+		</li>
+		<li class="{{patientList}}" *ngIf="user.id > 0">
+			<a href="#/admin/patientList?patientList=active&groupId=20" i18n="@@statistics">Patient List</a>
+		</li>
+		<li class="{{documentDetails}}" *ngIf="user.id > 0">
+			<a href="#/admin/documentDetails?documentDetails=active" i18n="@@statistics">Add Document</a>
+		</li>
+		<li class="{{documentList}}" *ngIf="user.id > 0">
+			<a href="#/admin/documentList?documentList=active" i18n="@@statistics">Document List</a>
+		</li>
+		<li class="{{scheduleDetails}}" *ngIf="user.id > 0">
+			<a href="#/admin/scheduleDetails?scheduleDetails=active" i18n="@@statistics">Add Schedule</a>
+		</li>
+		<li class="{{scheduleList}}" *ngIf="user.id > 0">
+			<a href="#/admin/scheduleList?scheduleList=active" i18n="@@statistics">Schedule List</a>
+		</li>
+		<li class="{{appointmentDetails}}" *ngIf="user.id > 0">
+			<a href="#/admin/appointmentDetails?appointmentDetails=active" i18n="@@statistics">Appointment</a>
+		</li>
+		<li class="{{caseStudyDetails}}" *ngIf="user.id > 0">
+			<a href="#/admin/caseStudyDetails?caseStudyDetails=active" i18n="@@statistics">Add Case Study</a>
+		</li>
+		<li class="{{caseStudyList}}" *ngIf="user.id > 0">
+			<a href="#/admin/caseStudyList?caseStudyList=active" i18n="@@statistics">Case Study List</a>
+		</li>
+		<li class="{{medicineCategoryDetails}}" *ngIf="user.id > 0">
+			<a href="#/admin/referenceDetails?referenceDetails=active&referenceType=Category&parentId=1" i18n="@@statistics">Add Medicine Category</a>
+		</li>
+		<li class="{{medicineCategoryList}}" *ngIf="user.id > 0">
+			<a href="#/admin/referenceList?referenceList=active&referenceType=Category&parentId=1" i18n="@@statistics">Medicine Category List</a>
+		</li>
+		<li class="{{manufacturerDetails}}" *ngIf="user.id > 0">
+			<a href="#/admin/referenceDetails?referenceDetails=active&referenceType=Manufacturer" i18n="@@statistics">Add Manufacturer</a>
+		</li>
+		<li class="{{manufacturerList}}" *ngIf="user.id > 0">
+			<a href="#/admin/referenceList?referenceList=active&referenceType=Manufacturer" i18n="@@statistics">Manufacturer List</a>
+		</li>
+		<li class="{{medicineDetails}}" *ngIf="user.id > 0">
+			<a href="#/admin/medicineDetails?medicineDetails=active" i18n="@@statistics">Add Medicine</a>
+		</li>
+		<li class="{{medicineList}}" *ngIf="user.id > 0">
+			<a href="#/admin/medicineList?medicineList=active" i18n="@@statistics">Medicine List</a>
+		</li>
+		
+		
+		<li class="{{adminProfile}}">
+			<a href="#/admin/adminProfile?adminProfile=active" i18n="@@statistics">Profile</a>
+		</li>
+	</ul>
+</aside>
+
+

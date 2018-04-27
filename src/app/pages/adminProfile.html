@@ -1,0 +1,313 @@
+ <div role="main" class="main">
+	<section
+		class="parallax section section-text-light section-parallax section-center mt-0 mb-5"
+		data-plugin-parallax data-plugin-options="{'speed': 1.5}"
+		data-image-src="assets/images/slides/bg-top.jpg"></section>
+					 
+	<div class="container" style="padding-left: 10px; max-width: 100%;">
+		<section class="call-to-action featured featured-secondary mb-5"
+		style="border-radius: 8px; padding:10px;" *ngIf="vote">
+		<div class="col-sm-9 col-lg-9 text-center">
+			<div class="call-to-action-content" style="width:100%;" >
+				<h3>
+					<strong>Il y a des scrutins qui vous attendent</strong>
+				</h3>
+				<p class="mb-0">
+					Faites votre <strong>devoir civique</strong> en votant
+			</div>
+		</div>
+		<div class="col-sm-3 col-lg-3 text-left">
+			<div class="call-to-action-btn">
+				<a href="#/vote" class="btn btn-lg btn-secondary">Je vote
+					maintenant!</a>
+			</div>
+		</div>
+	</section>
+
+		<div class="ui-grid-row">
+			<div class="ui-g-2 ui-sm-4">
+				<app-admin-menu></app-admin-menu>
+			</div>
+			<div class="ui-g-10 ui-sm-8" style="padding: 15px;">
+
+
+				<p-accordion> <p-accordionTab
+					header="{{user.firstName +' '+user.lastName+(user.position==null?'':' - '+user.position.name)}}"
+					[selected]="true">
+				<div class="ui-grid-row">
+					<div class="ui-g-2 ui-sm-12">
+						<span class="thumb-info thumb-info-centered-icons"> <span
+							class="thumb-info-wrapper"> <img
+								src="assets/images/members/{{user.pic}}?{{random}}" alt="">
+								<span class="thumb-info-action"> <a
+									href="#/admin/adminProfile" (click)="showLarge()"> <span
+										class="thumb-info-action-icon thumb-info-action-icon-primary"
+										title=""><i class="fa fa-search"></i></span>
+								</a> <p-fileUpload name="file" url="{{uploadFileUrl}}"
+										(onUpload)="onUpload($event)" maxFileSize="2097152" (onSelect)="checkFileSize($event)"
+										chooseLabel="Changer" mode="basic" auto="true"
+										style="width:30%">   </p-fileUpload>
+
+
+							</span>
+						</span>
+						</span>
+					</div>
+					<div class="ui-g-10 ui-sm-12">
+					<div *ngIf="error" class="alert alert-danger">{{error}}</div>
+					</div>
+				</div>
+				</p-accordionTab> <p-accordionTab header="Details" [selected]="false">
+
+				<form (ngSubmit)="saveUser()" #profileForm="ngForm">
+
+					<p-accordion> <p-accordionTab
+						header="Champs obligatoires" selected="true">
+
+					<div class="ui-grid-row">
+
+						<div class="ui-grid-col-6 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@lastName" for="lastName">Nom<font
+									color="red">*</font>:
+								</label> <input type="text" pInputText class="form-control"
+									id="lastName" required [(ngModel)]="user.lastName"
+									name="lastName" #lastName="ngModel">
+								<div [hidden]="lastName.valid || lastName.pristine"
+									class="alert alert-danger" i18n="@@lastNameRequired">Nom
+									Requis</div>
+							</div>
+						</div>
+						<div class="ui-grid-col-6 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@firstName" for="firstName">Prenom<font
+									color="red">*</font>:
+								</label> <input type="text" pInputText class="form-control"
+									id="firstName" required [(ngModel)]="user.firstName"
+									name="firstName" #firstName="ngModel">
+								<div [hidden]="firstName.valid || firstName.pristine"
+									class="alert alert-danger" i18n="@@firstNameRequired">Prenom
+									Requis</div>
+							</div>
+						</div>
+
+
+					</div>
+					<div class="ui-grid-row">
+
+						<div class="ui-grid-col-6 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@email" for="email">E-mail<font
+									color="red">*</font>
+								</label> <input type="text" pInputText class="form-control" id="email"
+									[(ngModel)]="user.email" name="email" #email="ngModel">
+							</div>
+						</div>
+						<div class="ui-grid-col-6 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@password" for="password1">Mot de Passe<font
+									color="red">*</font></label> <input type="password" pPassword
+									class="form-control" id="password1" [(ngModel)]="user.password"
+									name="password1" #password1="ngModel">
+							</div>
+						</div>
+					</div>
+					<div class="ui-grid-row">
+
+						<div class="ui-grid-col-6 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@cityResidence" for="cityResidence1">Lieu
+									de residence<font color="red">*</font>
+								</label> <input type="text" pInputText class="form-control"
+									id="cityResidence1" required [(ngModel)]="user.cityResidence"
+									name="cityResidence1" #cityResidence1="ngModel">
+								<div [hidden]="cityResidence1.valid || cityResidence1.pristine"
+									class="alert alert-danger" i18n="@@cityResidenceRequired">Lieu
+									de residence Requis</div>
+							</div>
+						</div>
+						<div class="ui-grid-col-6 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@countryResidence" for="countryResidence">Pays
+									de residence<font color="red">*</font>
+								</label> <br />
+								<p-autoComplete [(ngModel)]="user.countryResidence"
+									(onDropdownClick)="countryDropdown.handleDropdownClick($event)"
+									[suggestions]="countryDropdown.filteredCountries"
+									[dropdown]="true" id="countryResidence"
+									[style]="{'width':'100%'}"
+									(completeMethod)="countryDropdown.filter($event)"
+									name="countryResidence" field="name" [size]="30"
+									placeholder="{{COUNTRY_RESIDENCE}}" [minLength]="1"
+									#country="ngModel"></p-autoComplete>
+							</div>
+						</div>
+					</div>
+
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-6 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@cityResidence" for="cityResidence">Lieu
+									d'origine<font color="red">*</font>
+								</label> <input type="text" pInputText class="form-control"
+									id="cityResidence" required [(ngModel)]="user.cityOrigin"
+									name="cityResidence" #cityOrigin="ngModel">
+								<div [hidden]="cityOrigin.valid || cityOrigin.pristine"
+									class="alert alert-danger" i18n="@@cityResidenceRequired">Lieu
+									d'origine requis</div>
+							</div>
+						</div>
+						<div class="ui-grid-col-6 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@countryResidence" for="countryResidence">Pays
+									d'origine<font color="red">*</font>
+								</label> <br />
+								<p-autoComplete [(ngModel)]="user.countryOrigin"
+									(onDropdownClick)="countryDropdown.handleDropdownClick($event)"
+									[suggestions]="countryDropdown.filteredCountries"
+									[dropdown]="true" id="countryOrigin" [style]="{'width':'100%'}"
+									(completeMethod)="countryDropdown.filter($event)"
+									name="countryOrigin" field="name" [size]="30"
+									placeholder="{{COUNTRY_ORIGIN}}" [minLength]="1"
+									#project="ngModel"></p-autoComplete>
+							</div>
+						</div>
+
+
+					</div>
+
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-6 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@Iam" for="sex">Je suis<font color="red">*</font>:
+								</label>
+
+								<p-radioButton name="sex" value="F" label="{{FEMALE}}"
+									[(ngModel)]="user.sex"></p-radioButton>
+								<p-radioButton name="sex" value="M" label="{{MALE}}"
+									[(ngModel)]="user.sex"></p-radioButton>
+
+							</div>
+						</div>
+					</div>
+					<br />
+					<br />
+					</p-accordionTab> <p-accordionTab header="Conatcts" selected="true">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-4 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@birthDate" for="birthDate">Date de
+									Naissance</label><br />
+								<p-inputMask mask="99/99/9999" [(ngModel)]="user.birthDate"
+									placeholder="99/99/9999" slotChar="dd/mm/yyyy"
+									[style]="{'width':'100%'}" name="birthDate"
+									#birthDate="ngModel"></p-inputMask>
+							</div>
+						</div>
+						<div class="ui-grid-col-4 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@occupation" for="occupation">Occupation </label>
+								<input type="text" pInputText class="form-control"
+									id="occupation" [(ngModel)]="user.occupation" name="occupation"
+									#occupation="ngModel">
+							</div>
+						</div>
+						<div class="ui-grid-col-4 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@domain" for="domain">Secteur d'activite </label>
+								<br />
+								<p-autoComplete [(ngModel)]="user.domain"
+									(onDropdownClick)="domainDropdown.handleDropdownClick($event)"
+									[suggestions]="domainDropdown.filteredDomains"
+									[dropdown]="true" id="domain" [style]="{'width':'100%'}"
+									(completeMethod)="domainDropdown.filter($event)" name="domain"
+									field="name" [size]="30" placeholder="Domaine" [minLength]="1"
+									#domain="ngModel"></p-autoComplete>
+							</div>
+						</div>
+					</div>
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-4 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@address" for="address">Adresse</label> <input
+									type="text" pInputText class="form-control" id="address"
+									[(ngModel)]="user.address" name="address" #address="ngModel">
+							</div>
+						</div>
+						<div class="ui-grid-col-2 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@zipCode" for="zipCode">Code Postal</label> <input
+									type="text" pInputText class="form-control" id="zipCode"
+									[(ngModel)]="user.zipCode" name="zipCode" #zipCode="ngModel">
+							</div>
+						</div>
+						 <div class="ui-grid-col-2 ui-sm-12">
+								<div class="form-group">
+									<label i18n="@@state" for="state">Etat</label> <input
+										type="text" pInputText class="form-control" id="state"
+										[(ngModel)]="user.state" name="state" #state="ngModel">
+								</div>
+							</div>
+						<div class="ui-grid-col-4 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@phone" for="phone">Telephone</label> <input
+									type="text" pInputText class="form-control" id="phone"
+									[(ngModel)]="user.phone" name="phone" #phone="ngModel">
+
+							</div>
+						</div>
+					</div>
+
+
+					</p-accordionTab> <p-accordionTab header="Social" selected="true">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-4 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@address" for="facebook">Facebook</label> <input
+									type="text" pInputText class="form-control" id="facebook"
+									[(ngModel)]="user.facebook" name="facebook" #facebook="ngModel">
+							</div>
+						</div>
+						<div class="ui-grid-col-4 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@phone" for="linkedin">LinkedIn</label> <input
+									type="text" pInputText class="form-control" id="linkedin"
+									[(ngModel)]="user.linkedin" name="linkedin" #linkedin="ngModel">
+
+							</div>
+						</div>
+					</div>
+
+					</p-accordionTab> <p-accordionTab header="Resume" selected="true">
+
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-12">
+
+						</div>
+					</div>
+					</p-accordionTab> </p-accordion>
+					<br />
+					<div class="ui-grid-row">
+
+						<div class="ui-grid-col-6">
+							<button pButton type="submit" icon="fa fa-play-circle"
+								style="margin-top: 0px; width: 100%; height: 50px;"
+								label="{{SAVE_LABEL}}"></button>
+						</div>
+						<div class="ui-grid-col-6">
+							<div *ngIf="error" class="alert alert-info">{{error}}</div>
+						</div>
+					</div>
+				</form>
+
+
+				</p-accordionTab> </p-accordion>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<p-dialog header="Kozaɣ Yɔɔ Kandiyaa" [(visible)]="displayPic"	[responsive]="true" [modal]="true" width="750"  >
+<img alt="" src="assets/images/members/{{user.pic}}?{{random}}"
+	width="100%" alt=""> </p-dialog>
