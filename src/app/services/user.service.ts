@@ -37,7 +37,6 @@ export class UserService {
       .catch(this.handleError);
   }
 
-
   public search = (searchText: string): Observable<User[]> => {
     let toAdd = JSON.stringify(searchText);
     let actionUrl = Constants.apiServer + '/service/user/findPeople';
@@ -92,22 +91,11 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  public createUser = (user: User): Observable<User> => {
-    const toAdd = JSON.stringify(user);
-    const actionUrl = Constants.apiServer + '/service/user/createUser';
-    return this.http.post(actionUrl, toAdd, {headers: this.headers})
-      .map((response: Response) => {
-        return response.json();
-      })
-      .catch(this.handleError);
-  }
-
   public saveEmployee = (employee : Employee): Observable<Employee> => {
     
       let toAdd = JSON.stringify(employee);
       let re = /\"/gi;
       let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
-    alert(toSend)
       
       let actionUrl = Constants.apiServer + '/service/user/Employee/save';
       return this.http.post(actionUrl, toSend, { headers: this.headers })

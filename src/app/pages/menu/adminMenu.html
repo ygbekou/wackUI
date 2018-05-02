@@ -71,7 +71,12 @@
 		<li class="{{medicineList}}" *ngIf="user.id > 0">
 			<a href="#/admin/medicineList?medicineList=active" i18n="@@statistics">Medicine List</a>
 		</li>
-		
+		<li class="{{prescriptionDetails}}" *ngIf="user.id > 0">
+			<a href="#/admin/prescriptionDetails?prescriptionDetails=active" i18n="@@statistics">Add Prescription</a>
+		</li>
+		<li class="{{prescriptionList}}" *ngIf="user.id > 0">
+			<a href="#/admin/prescriptionList?prescriptionList=active" i18n="@@statistics">Prescription List</a>
+		</li>
 		
 		<li class="{{adminProfile}}">
 			<a href="#/admin/adminProfile?adminProfile=active" i18n="@@statistics">Profile</a>

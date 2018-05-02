@@ -18,5 +18,6 @@ export class User {
   city: string;
   country: string;
   zipCode: string;
+  birthDate: Date;
   status: number;
 }

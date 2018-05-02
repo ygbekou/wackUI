@@ -7,5 +7,6 @@ export class Patient {
   contact: string;
   contactPhone: string;
   medicalHistory: string;
+  name: string;
   status: number;
 }

@@ -5,3 +5,4 @@ export * from './dropdown.userGroup';
 export * from './dropdown.weekday';
 export * from './dropdown.category';
 export * from './dropdown.manufacturer';
+export * from './dropdown.medicine';

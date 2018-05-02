@@ -36,6 +36,8 @@ export class AdminMenu implements OnInit {
   public manufacturerList: string;
   public medicineDetails: string;
   public medicineList: string;
+  public prescriptionDetails: string;
+  public prescriptionList: string;
   public adminMain: string;
   public adminProfile: string;
   user: User;
@@ -80,6 +82,8 @@ export class AdminMenu implements OnInit {
         this.manufacturerList = params['manufacturerList'];
         this.medicineDetails = params['medicineDetails'];
         this.medicineList = params['medicineList'];
+        this.prescriptionDetails = params['prescriptionDetails'];
+        this.prescriptionList = params['prescriptionList'];
         this.adminMain = params['adminMain'];
         this.adminProfile = params['adminProfile'];
       })

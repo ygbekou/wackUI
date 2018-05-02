@@ -21,6 +21,8 @@ import { ReferenceDetails } from '../components/referenceDetails';
 import { ReferenceList } from '../components/referenceList';
 import { MedicineDetails } from '../components/medicineDetails';
 import { MedicineList } from '../components/medicineList';
+import { PrescriptionDetails } from '../components/prescriptionDetails';
+import { PrescriptionList } from '../components/prescriptionList';
  
 const routes: Routes = [
   {path: 'adminMain', component: AdminMain},
@@ -40,7 +42,9 @@ const routes: Routes = [
   {path: 'referenceDetails', component: ReferenceDetails},
   {path: 'referenceList', component: ReferenceList},
   {path: 'medicineDetails', component: MedicineDetails},
-  {path: 'medicineList', component: MedicineList}
+  {path: 'medicineList', component: MedicineList},
+  {path: 'prescriptionDetails', component: PrescriptionDetails},
+  {path: 'prescriptionList', component: PrescriptionList}
 ];
 
 @NgModule({
@@ -53,7 +57,7 @@ const routes: Routes = [
   declarations: [FileUploader, AdminMenu, AdminMain, DepartmentDetails, DepartmentList, 
               DocumentDetails, DocumentList, EmployeeDetails, EmployeeList, PatientDetails, PatientList,
             ScheduleDetails, ScheduleList, AppointmentDetails, CaseStudyDetails, CaseStudyList, 
-            ReferenceDetails, ReferenceList, MedicineDetails, MedicineList],
+            ReferenceDetails, ReferenceList, MedicineDetails, MedicineList, PrescriptionDetails, PrescriptionList],
 
   providers: [DepartmentDetails]
 })

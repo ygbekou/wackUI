@@ -31,159 +31,187 @@
 			<app-admin-menu></app-admin-menu>
 		</div>
 		<div class="ui-g-10 ui-sm-8" style="padding: 15px;">
-			<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="caseStudy">
+			<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="prescription">
 				<div class="ui-grid-row">
-					<div class="ui-grid-col-12 ui-sm-12">
+					<div class="ui-grid-col-4 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@patientId" for="patientId">Patient ID<font color="red">*</font></label>
+							<label i18n="@@patientMatricule" for="patientMatricule">Patient ID<font color="red">*</font></label>
+							<input type="text" pInputText class="form-control" id="patientMatricule" (change)="lookUpPatient()"
+								[(ngModel)]="prescription.patient.matricule" name="patientMatricule" #patientMatricule="ngModel">
+						</div>
+						<div class="form-group">
+							<label i18n="@@patientName" for="patientName">Patient Name</label>
 							<input type="text" pInputText class="form-control" id="matricule"
-								[(ngModel)]="caseStudy.patient.id" name="patientId" #patientId="ngModel">
+								[(ngModel)]="prescription.patient.name" name="patientName" #patientName="ngModel">
 						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-12 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@foodAllergies" for="foodAllergies">Food Allergies</label>
-							<input type="text" pInputText class="form-control" id="foodAllergies"
-								[(ngModel)]="caseStudy.foodAllergies" name="foodAllergies" #foodAllergies="ngModel">
+							<label i18n="@@patientBirthDate" for="patientSex">Sex</label>
+							<input type="text" pInputText class="form-control" id="patientSex"
+								[(ngModel)]="prescription.patient.user.sex" name="patientSex" #patientSex="ngModel">
 						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-12 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@tendencyBleed" for="tendencyBleed">Tendency Bleed</label>
-							<input type="text" pInputText class="form-control" id="tendencyBleed"
-								[(ngModel)]="caseStudy.tendencyBleed" name="tendencyBleed" #tendencyBleed="ngModel">
+							<label i18n="@@patientSex" for="patientBirthDate">Birth Date</label>
+							<input type="text" pInputText class="form-control" id="patientBirthDate"
+								[(ngModel)]="prescription.patient.user.birthDate" name="patientBirthDate" #patientBirthDate="ngModel">
 						</div>
+						
 					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-12 ui-sm-12">
+					<div class="ui-grid-col-4 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@heartDisease" for="heartDisease">Heart Disease</label>
-							<input type="text" pInputText class="form-control" id="heartDisease"
-								[(ngModel)]="caseStudy.heartDisease" name="heartDisease" #heartDisease="ngModel">
+							<label i18n="@@weight" for="weight">Weight<font color="red">*</font>
+							</label> <input type="text" pInputText class="form-control" id="weight"
+								[(ngModel)]="prescription.weight" name="weight" #weight="ngModel">
 						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-12 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@highBloodPressure" for="highBloodPressure">High Blood Pressure</label>
-							<input type="text" pInputText class="form-control" id="highBloodPressure"
-								[(ngModel)]="caseStudy.highBloodPressure" name="highBloodPressure" #highBloodPressure="ngModel">
+							<label i18n="@@bloodPressure" for="bloodPressure">Blood Pressure<font color="red">*</font>
+							</label> <input type="text" pInputText class="form-control" id="bloodPressure"
+								[(ngModel)]="prescription.bloodPressure" name="bloodPressure" #bloodPressure="ngModel">
 						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-12 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@diabetic" for="diabetic">Diabetic</label>
-							<input type="text" pInputText class="form-control" id="diabetic"
-								[(ngModel)]="caseStudy.diabetic" name="diabetic" #diabetic="ngModel">
+							<label i18n="@@reference" for="reference">Reference<font color="red">*</font>
+							</label> <input type="text" pInputText class="form-control" id="reference"
+								[(ngModel)]="prescription.reference" name="reference" #reference="ngModel">
+						</div>
+						<div class="ui-grid-row">
+							<label i18n="@@prescriptionType" for="prescriptionType">Prescription Type</label>
+						</div>
+						<div class="ui-grid-row">
+							<p-radioButton name="prescriptionType" value="0" label="New" [(ngModel)]="prescription.prescriptionType"></p-radioButton>
+							<p-radioButton name="prescriptionType" value="1" label="Old" [(ngModel)]="prescription.prescriptionType"></p-radioButton>
 						</div>
 					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-12 ui-sm-12">
+					<div class="ui-grid-col-4 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@surgery" for="surgery">Surgery</label>
-							<input type="text" pInputText class="form-control" id="surgery"
-								[(ngModel)]="caseStudy.surgery" name="surgery" #surgery="ngModel">
+							<label i18n="@@appointmentId" for="appointmentId">Appointment ID<font color="red">*</font>
+							</label> <input type="text" pInputText class="form-control" id="appointmentId"
+								[(ngModel)]="prescription.appointment.id" name="appointmentId" #appointmentId="ngModel">
 						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-12 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@accident" for="accident">Accident</label>
-							<input type="text" pInputText class="form-control" id="accident"
-								[(ngModel)]="caseStudy.accident" name="accident" #accident="ngModel">
+							<label i18n="@@prescriptionDate" for="Appointment Date">Appointment Date<font color="red">*</font></label> 
+							<p-calendar [(ngModel)]="prescription.prescriptionDate"></p-calendar>
 						</div>
 					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-12 ui-sm-12">
-						<div class="form-group">
-							<label i18n="@@others" for="others">Others</label>
-							<input type="text" pInputText class="form-control" id="others"
-								[(ngModel)]="caseStudy.others" name="others" #others="ngModel">
-						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-12 ui-sm-12">
-						<div class="form-group">
-							<label i18n="@@familyMedicalHistory" for="familyMedicalHistory">Family Medical History</label>
-							<input type="text" pInputText class="form-control" id="familyMedicalHistory"
-								[(ngModel)]="caseStudy.familyMedicalHistory" name="familyMedicalHistory" #familyMedicalHistory="ngModel">
-						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-12 ui-sm-12">
-						<div class="form-group">
-							<label i18n="@@currentMedication" for="currentMedication">Current Medication</label>
-							<input type="text" pInputText class="form-control" id="currentMedication"
-								[(ngModel)]="caseStudy.currentMedication" name="currentMedication" #currentMedication="ngModel">
-						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-12 ui-sm-12">
-						<div class="form-group">
-							<label i18n="@@femalePregnancy" for="femalePregnancy">Female Pregnancy</label>
-							<input type="text" pInputText class="form-control" id="femalePregnancy"
-								[(ngModel)]="caseStudy.femalePregnancy" name="femalePregnancy" #femalePregnancy="ngModel">
-						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-12 ui-sm-12">
-						<div class="form-group">
-							<label i18n="@@breastFeeding" for="breastFeeding">Breast Feeding</label>
-							<input type="text" pInputText class="form-control" id="breastFeeding"
-								[(ngModel)]="caseStudy.breastFeeding" name="breastFeeding" #breastFeeding="ngModel">
-						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-12 ui-sm-12">
-						<div class="form-group">
-							<label i18n="@@healthInsurance" for="healthInsurance">Health Insurance</label>
-							<input type="text" pInputText class="form-control" id="healthInsurance"
-								[(ngModel)]="caseStudy.healthInsurance" name="healthInsurance" #healthInsurance="ngModel">
-						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-12 ui-sm-12">
-						<div class="form-group">
-							<label i18n="@@lowIncome" for="lowIncome">Low Income</label>
-							<input type="text" pInputText class="form-control" id="lowIncome"
-								[(ngModel)]="caseStudy.lowIncome" name="lowIncome" #lowIncome="ngModel">
-						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-12 ui-sm-12">
-						<div class="form-group">
-							<label i18n="@@reference" for="reference">Reference</label>
-							<input type="text" pInputText class="form-control" id="reference"
-								[(ngModel)]="caseStudy.reference" name="reference" #reference="ngModel">
-						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<label i18n="@@status" for="status">Status</label>
-				</div>
-				<div class="ui-grid-row">
-					<p-radioButton name="status" value="0" label="Actif" [(ngModel)]="caseStudy.status"></p-radioButton>
-					<p-radioButton name="status" value="1" label="Inactif" [(ngModel)]="caseStudy.status"></p-radioButton>
 				</div>
 			</div>
+			
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-12 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@chiefComplain" for="chiefComplain">Chief Complaint
+						</label> <input type="text" pInputText class="form-control" id="chiefComplain"
+							[(ngModel)]="prescription.chiefComplain" name="chiefComplain" #chiefComplain="ngModel">
+					</div>
+				</div>
+			</div>
+			
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-12 ui-sm-12">
+					<p-table [columns]="medicineCols" [value]="prescription.prescriptionMedicines">
+					    <ng-template pTemplate="header" let-medicineCols>
+					        <tr>
+					            <th *ngFor="let col of medicineCols" [pSortableColumn]="col.field">
+					                {{col.header}}
+					                <p-sortIcon [field]="col.field"></p-sortIcon>
+					            </th>
+					            <th>Action</th>
+					        </tr>
+					    </ng-template>
+					    <ng-template pTemplate="body" let-rowData let-columns="columns">
+					        <tr>			           
+					            <td *ngFor="let col of columns" pEditableColumn>
+					            	<p-cellEditor *ngIf="col.header != 'Name'">
+					                    <ng-template pTemplate="input">
+					                        <input type="text" [(ngModel)]="rowData[col.field]">
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+					                        {{rowData[col.field]}}
+					                    </ng-template>
+					                </p-cellEditor>
+					                <p-cellEditor *ngIf="col.header == 'Name'">
+					                    <ng-template pTemplate="input">
+					                        <p-autoComplete [(ngModel)]="rowData[col.field]"
+												(onDropdownClick)="medicineDropdown.handleDropdownClick($event)"
+												[suggestions]="medicineDropdown.filteredMedicines" [dropdown]="true"
+												(completeMethod)="medicineDropdown.filter($event)"
+												name="name" field="name" [size]="30" placeholder=""
+												[minLength]="1">
+											</p-autoComplete>
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+					                        {{rowData[col.field].name}}
+					                    </ng-template>
+					                </p-cellEditor>
+					            </td>
+					            <td>
+					            	<button type="button" pButton icon="fa-plus" style="float: left"
+										></button>
+									<button type="button" pButton icon="fa-eraser" style="float: left"
+										></button>
+					            </td>
+					        </tr>
+					    </ng-template>
+					</p-table>
+				</div>
+			</div>
+			
+			<br/>
+			<br />
+			
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-12 ui-sm-12">
+					<p-table [columns]="diagnosisCols" [value]="prescription.prescriptionDiagnoses">
+					    <ng-template pTemplate="header" let-diagnosisCols>
+					        <tr>
+					            <th *ngFor="let col of diagnosisCols" [pSortableColumn]="col.field">
+					                {{col.header}}
+					                <p-sortIcon [field]="col.field"></p-sortIcon>
+					            </th>
+					            <th>Action</th>
+					        </tr>
+					    </ng-template>
+					    <ng-template pTemplate="body" let-rowData let-columns="columns">
+					        <tr>			           
+					            <td *ngFor="let col of columns" pEditableColumn>
+					            	<p-cellEditor>
+					                    <ng-template pTemplate="input">
+					                        <input type="text" [(ngModel)]="rowData[col.field]">
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+					                        {{rowData[col.field]}}
+					                    </ng-template>
+					                </p-cellEditor>
+					            </td>
+					            <td>
+					            	<button type="button" pButton icon="fa-plus" style="float: left"
+										></button>
+									<button type="button" pButton icon="fa-eraser" style="float: left"
+										></button>
+					            </td>
+					        </tr>
+					    </ng-template>
+					</p-table>
+				</div>
+			</div>
+			
+			<br/>
+			<br/>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@visitingFees" for="visitingFees">Visiting Fees
+						</label> <input type="text" pInputText class="form-control" id="visitingFees"
+							[(ngModel)]="prescription.visitingFees" name="visitingFees" #visitingFees="ngModel">
+					</div>
+				</div>
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@patientNotes" for="patientNotes">Patient Notes
+						</label> <input type="text" pInputText class="form-control" id="patientNotes"
+							[(ngModel)]="prescription.patientNotes" name="patientNotes" #patientNotes="ngModel">
+					</div>
+				</div>
+			</div>
+			<br/>
 			<br />
 			<div *ngIf="error" class="alert alert-danger">{{error}}</div>
 			<div>
