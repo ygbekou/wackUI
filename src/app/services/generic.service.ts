@@ -5,17 +5,31 @@ import {Constants} from '../app.constants';
 import {Country} from '../models/country';
 import {User} from '../models/user';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
+import {SelectItem} from 'primeng/api';
 
 @Injectable()
 export class GenericService {
 
   private actionUrl: string;
   private headers: Headers;
+  
+  public bloodGroups: SelectItem[];
 
   constructor(private http: Http) {
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');
+    
+    this.bloodGroups = [
+            {label: 'A+', value: 'A+'},
+            {label: 'A-', value: 'A-'},
+            {label: 'B+', value: 'B+'},
+            {label: 'B-', value: 'B-'},
+            {label: 'O+', value: 'O+'},
+            {label: 'O-', value: 'O-'},
+            {label: 'AB+', value: 'AB+'},
+            {label: 'AB-', value: 'AB-'}
+        ];
   }
 
   public getAllCountries = (): Observable<Country[]> => {

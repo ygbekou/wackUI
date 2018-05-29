@@ -86,60 +86,6 @@ export class DocumentDetails implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.document = null;
   }
-
-  myUploader(event) {
-    //event.files == files to upload
-    for (let file of event.files) {
-   
-      this.uploadedFiles.push(file);
-    } 
-  }
-  
-  onUpload(event) {
-      for(let file of event.files) {
-          this.uploadedFiles.push(file);
-      }
-  
-      //this.msgs = [];
-      //this.msgs.push({severity: 'info', summary: 'File Uploaded', detail: ''});
-  }
-  
-      upload() {
-//        let inputEl = this.input.nativeElement;
-//        if (inputEl.files.length == 0) return;
-//
-//        let files :FileList = inputEl.files;
-//        const formData = new FormData();
-//        for(var i = 0; i < files.length; i++){
-//            alert(files[i].name)
-//            formData.append('file', files[i], files[i].name);
-//        }
-//  
-//        formData.append('id', new Blob([JSON.stringify('id')],
-//        {
-//            type: "application/json"
-//        }));
-//        
-//        alert(formData)
-//        
-//        this.genericService.uploadFileWithFormData(formData)
-//        .subscribe(result => {
-//          if (result.id > 0) {
-//            this.document = result
-//          }
-//          else {
-//            this.error = Constants.saveFailed;
-//            this.displayDialog = true;
-//          }
-//        })
-//        
-        
-        //this.http
-        //    .post('http://localhost:8080/service/fileUploader/uploadFile', formData)
-         //   .subscribe();
-
-    }
-  
   
   fileChange(event): void {
         let inputEl = this.input.nativeElement;

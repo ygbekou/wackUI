@@ -90,19 +90,20 @@ export class Login implements OnInit {
               this.globalEventsManager.showNavBar.emit(this.user);
 
               this.user = JSON.parse(Cookie.get('user'));
-              if (this.user.userGroup.id == 3) {//student
-                this.router.navigate(["/student/studentMain"]);
-              } else if (this.user.userGroup.id == 2) {//teacher
-                this.router.navigate(["/teacher/teacherMain"]);
-              } else if (this.user.userGroup.id == 1 || this.user.userGroup.id == 5) {//admin + secretaire
-                alert(this.user.userGroup.id)
-                this.router.navigate(["/admin/adminMain"]);
-              } else if (this.user.userGroup.id == 4) {//parent
-                this.router.navigate(["/parent/parentMain"]);
-              } else {
-                this.router.navigate(["/"]);
-
-              }
+              this.router.navigate(["/admin/adminMain"]);
+//              if (this.user.userGroup.id == 3) {//student
+//                this.router.navigate(["/student/studentMain"]);
+//              } else if (this.user.userGroup.id == 2) {//teacher
+//                this.router.navigate(["/teacher/teacherMain"]);
+//              } else if (this.user.userGroup.id == 1 || this.user.userGroup.id == 5) {//admin + secretaire
+//                alert(this.user.userGroup.id)
+//                this.router.navigate(["/admin/adminMain"]);
+//              } else if (this.user.userGroup.id == 4) {//parent
+//                this.router.navigate(["/parent/parentMain"]);
+//              } else {
+//                this.router.navigate(["/"]);
+//
+//              }
             }
             else {
               this.error = Constants.INVALID_USER_PASS;
@@ -151,7 +152,7 @@ export class Login implements OnInit {
         
         patient.user = user;
         
-        this.userService.savePatient(patient)
+        this.userService.savePatient(patient, null)
           .subscribe(result => {
             
             if (result == null) {

@@ -29,17 +29,15 @@
 			<div class="ui-g-2 ui-sm-4">
 				<app-admin-menu></app-admin-menu>
 			</div>
-			<div class="ui-g-10 ui-sm-8" style="padding: 15px;">
-
-				<p-tabView (onChange)="onTabChange($event)"> 
-					<p-tabPanel header="E-MAIL" leftIcon="fa-envelope-o">
-						
-					</p-tabPanel> 
-					<p-tabPanel header="Positions" leftIcon="fa-sitemap">
-						
-					</p-tabPanel> 
-				</p-tabView>
-
+			<div class="ui-g">
+			    <div class="ui-g-6"><button type="button" pButton (click)="navigate('appointmentModule', '/admin/adminAppointment')"
+						label="Appointment"></button></div>
+			    <div class="ui-g-6"><button type="button" pButton (click)="navigate('outpatientModule', '/admin/adminAppointment')"
+						label="Outpatient Management"></button></div>
+				<div class="ui-g-6"><button type="button" pButton (click)="navigate('healthCheckupModule', '/admin/adminAppointment')"
+						label="Health Checkup"></button></div>
+				<div class="ui-g-6"><button type="button" pButton (click)="navigate('laboratoryModule', '/admin/adminAppointment')"
+						label="Laboratory"></button></div>
 			</div>
 		</div>
 	</div>

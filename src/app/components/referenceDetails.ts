@@ -34,10 +34,11 @@ export class ReferenceDetails implements OnInit, OnDestroy {
       private route: ActivatedRoute,
       private router: Router
     ) {
-      
+      this.reference = new Reference();
   }
 
   ngOnInit(): void {
+    this.reference = new Reference();
     let referenceId = null;
     this.route
         .queryParams

@@ -1,0 +1,213 @@
+<div role="main" class="main">
+	<section
+		class="parallax section section-text-light section-parallax section-center mt-0 mb-5"
+		data-plugin-parallax data-plugin-options="{'speed': 1.5}"
+		data-image-src="assets/images/slides/bg-top.jpg">
+	</section>
+
+		<div class="container" style="padding-left: 10px; max-width: 100%;">
+
+	<section class="call-to-action featured featured-secondary mb-5"
+		style="border-radius: 8px; padding:10px;" *ngIf="vote">
+		<div class="col-sm-9 col-lg-9 text-center">
+			<div class="call-to-action-content" style="width:100%;" >
+				<h3>
+					<strong>Il y a des scrutins qui vous attendent</strong>
+				</h3>
+				<p class="mb-0">
+					Faites votre <strong>devoir civique</strong> en votant
+			</div>
+		</div>
+		<div class="col-sm-3 col-lg-3 text-left">
+			<div class="call-to-action-btn">
+				<a href="#/vote" class="btn btn-lg btn-secondary">Je vote
+					maintenant!</a>
+			</div>
+		</div>
+	</section>
+	
+	<div class="ui-grid-row">
+		<div class="ui-g-2 ui-sm-4">
+			<app-admin-menu></app-admin-menu>
+		</div>
+		<div class="ui-g-10 ui-sm-8" style="padding: 15px;">
+			<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="invoice">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-4 ui-sm-12">
+						<div class="form-group">
+							<label i18n="@@patientMatricule" for="patientMatricule">Patient ID<font color="red">*</font></label>
+							<input type="text" pInputText class="form-control" id="patientMatricule" (change)="lookUpPatient()"
+								[(ngModel)]="invoice.patient.matricule" name="patientMatricule" #patientMatricule="ngModel">
+						</div>
+						<div class="form-group">
+							<label i18n="@@patientName" for="patientName">Patient Name</label>
+							<input type="text" pInputText class="form-control" id="matricule"
+								[(ngModel)]="invoice.patient.name" name="patientName" #patientName="ngModel">
+						</div>
+						<div class="form-group">
+							<label i18n="@@patientBirthDate" for="patientSex">Sex</label>
+							<input type="text" pInputText class="form-control" id="patientSex"
+								[(ngModel)]="invoice.patient.user.sex" name="patientSex" #patientSex="ngModel">
+						</div>
+						<div class="form-group">
+							<label i18n="@@patientSex" for="patientBirthDate">Birth Date</label>
+							<input type="text" pInputText class="form-control" id="patientBirthDate"
+								[(ngModel)]="invoice.patient.user.birthDate" name="patientBirthDate" #patientBirthDate="ngModel">
+						</div>
+						
+					</div>
+					<div class="ui-grid-col-4 ui-sm-12">
+						<div class="form-group">
+							<label i18n="@@invoiceDate" for="invoiceDate">Date<font color="red">*</font></label> 
+							<p-calendar [(ngModel)]="invoice.invoiceDate"></p-calendar>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-12 ui-sm-12">
+					<p-table [columns]="accountCols" [value]="invoice.invoiceAccounts" (change)="calculateTotal()">
+					    <ng-template pTemplate="header" let-accountCols>
+					        <tr>
+					            <th *ngFor="let col of accountCols" [pSortableColumn]="col.field">
+					                {{col.header}}
+					                <p-sortIcon [field]="col.field"></p-sortIcon>
+					            </th>
+					            <th>Action</th>
+					        </tr>
+					    </ng-template>
+					    <ng-template pTemplate="body" let-rowData let-columns="columns">
+					        <tr>			           
+					            <td *ngFor="let col of columns" [pEditableColumn]="rowData" [pEditableColumnField]="rowData[col.field]">
+					            	<p-cellEditor *ngIf="col.header != 'Name' && col.header != 'Quantity' && col.header != 'Price'">
+					                    <ng-template pTemplate="input">
+					                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled">
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+					                        {{rowData[col.field]}}
+					                    </ng-template>
+					                </p-cellEditor>
+					                <p-cellEditor *ngIf="col.header == 'Quantity' || col.header == 'Price'">
+					                    <ng-template pTemplate="input">
+					                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled">
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+					                        {{rowData[col.field]}}
+					                    </ng-template>
+					                </p-cellEditor>
+					                <p-cellEditor *ngIf="col.header == 'Name'">
+					                    <ng-template pTemplate="input">
+					                        <p-autoComplete [(ngModel)]="rowData[col.field]"
+												(onDropdownClick)="accountDropdown.handleDropdownClick($event)"
+												[suggestions]="accountDropdown.filteredAccounts" [dropdown]="true"
+												(completeMethod)="accountDropdown.filter($event)"
+												name="name" field="name" [size]="30" placeholder=""
+												[minLength]="1">
+											</p-autoComplete>
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+					                        {{rowData[col.field].name}}
+					                    </ng-template>
+					                </p-cellEditor>
+					            </td>
+					            <td>
+					            	<button type="button" pButton icon="fa-plus" style="float:left" (click)="addRow()"></button>
+									<button type="button" pButton icon="fa-eraser" style="float:left"></button>
+					            </td>
+					        </tr>
+					    </ng-template>
+					</p-table>
+				</div>
+			</div>
+			
+			<br/>
+			<br />
+			
+			
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-6 ui-sm-12">
+					<div class="form-group"></div>
+				</div>
+				<div class="ui-grid-col-6 ui-sm-12">
+					<div class="ui-grid-row">
+						<label i18n="@@subTotal" for="subTotal">Sub Total </label> 
+						<input type="text" pInputText id="subTotal" [disabled]="true"
+							[(ngModel)]="invoice.subTotal" name="subTotal" #subTotal="ngModel">
+					</div>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-6 ui-sm-12">
+					<div class="form-group"></div>
+				</div>
+				<div class="ui-grid-col-6 ui-sm-12">
+					<div class="ui-grid-row">
+						<label i18n="@@taxes" for="taxes">Taxes </label> 
+						<input type="text" pInputText id="taxes" (change)="calculateGrandTotal()"
+							[(ngModel)]="invoice.taxes" name="taxes" #taxes="ngModel">
+					</div>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-6 ui-sm-12">
+					<div class="form-group"></div>
+				</div>
+				<div class="ui-grid-col-6 ui-sm-12">
+					<div class="ui-grid-row">
+						<label i18n="@@discount" for="discount">Discount </label> 
+						<input type="text" pInputText id="discount" (change)="calculateGrandTotal(); calculateDue()"
+							[(ngModel)]="invoice.discount" name="discount" #discount="ngModel">
+					</div>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-6 ui-sm-12">
+					<div class="form-group"></div>
+				</div>
+				<div class="ui-grid-col-6 ui-sm-12">
+					<div class="ui-grid-row">
+						<label i18n="@@grandTotal" for="grandTotal">Grand Total </label> 
+						<input type="text" pInputText id="grandTotal" [disabled]="true"
+							[(ngModel)]="invoice.grandTotal" name="grandTotal" #grandTotal="ngModel">
+					</div>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-6 ui-sm-12">
+					<div class="form-group"></div>
+				</div>
+				<div class="ui-grid-col-6 ui-sm-12">
+					<div class="ui-grid-row">
+						<label i18n="@@paid" for="paid">Paid </label> 
+						<input type="text" pInputText id="paid" (change)="calculateDue()"
+							[(ngModel)]="invoice.paid" name="paid" #paid="ngModel">
+					</div>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-6 ui-sm-12">
+					<div class="form-group"></div>
+				</div>
+				<div class="ui-grid-col-6 ui-sm-12">
+					<div class="ui-grid-row">
+						<label i18n="@@due" for="due">Due </label> 
+						<input type="text" pInputText id="due" [disabled]="true"
+							[(ngModel)]="invoice.due" name="due" #due="ngModel">
+					</div>
+				</div>
+			</div>
+			<br/>
+			<br />
+			<div *ngIf="error" class="alert alert-danger">{{error}}</div>
+			<div>
+				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+					<button type="button" pButton icon="fa-close" (click)="delete()"
+						label="Supprimer"></button>
+					<button type="button" pButton icon="fa-check" (click)="save()"
+						label="Sauvegarder"></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

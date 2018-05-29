@@ -1,131 +1,93 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import {Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef, Input} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Department } from '../models/department';
 import { Constants } from '../app.constants';
 import { Appointment } from '../models/appointment';
-import { Schedule } from '../models/schedule';
-import { Employee } from '../models/employee';
 import { Patient } from '../models/patient';
 import { EditorModule } from 'primeng/editor';
-import { DoctorDropdown, DepartmentDropdown } from './dropdowns';
+import { CountryDropdown, ReligionDropdown, OccupationDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
+import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { User } from '../models/user';  
-import { GenericService, AppointmentService } from '../services';
+import { GenericService, UserService } from '../services';
 
 @Component({
   selector: 'app-appointment-details',
   templateUrl: '../pages/appointmentDetails.html',
-  providers: [GenericService, AppointmentService, DoctorDropdown, DepartmentDropdown]
+  providers: [GenericService]
 })
 export class AppointmentDetails implements OnInit, OnDestroy {
   
-  events: any[];
-  headerConfig: any;
-  
   public error: String = '';
+  displayDialog: boolean;
+  appointment: Appointment = new Appointment();
   
-  doctorDropdown: DoctorDropdown;
-  departmentDropdown: DepartmentDropdown;
-  displayEdit: boolean = false;
-  appointment: Appointment;
+  DETAIL: string = Constants.DETAIL;
+  ADD_IMAGE: string = Constants.ADD_IMAGE;
+  ADD_LABEL: string = Constants.ADD_LABEL;  
+  COUNTRY: string = Constants.COUNTRY;
+  ROLE: string = Constants.ROLE;
+  SELECT_OPTION: string = Constants.SELECT_OPTION;
   
+  @ViewChild('uploadFile') input: ElementRef;
+  formData = new FormData();
   
   constructor
     (
       private genericService: GenericService,
-      private appointmentService: AppointmentService,
-      private docDropdown: DoctorDropdown,
-      private dptDropdown: DepartmentDropdown,
+      private userService: UserService,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
     ) {
-        this.doctorDropdown = docDropdown;
-        this.departmentDropdown = dptDropdown;
-    }
+
+  }
 
   ngOnInit(): void {
 
-     this.headerConfig = {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,agendaWeek,agendaDay'
-        };
-    
-      this.appointment = new Appointment();
-      this.appointment.department = new Department();
-      this.appointment.doctor = new Employee();
-      this.appointment.patient = new Patient();
-    
-  }
-  
-  ngOnDestroy() {
-    
-  }
-
-  save() {
-    try {
-      this.error = '';
-      this.genericService.save(this.appointment, "Appointment")
-        .subscribe(result => {
-          if (result.id > 0) {
-            this.appointment = result
-          }
-          else {
-            this.error = Constants.saveFailed;
-          }
-        })
-    }
-    catch (e) {
-      console.log(e);
-    }
-  }
-  
-  addEventClick(e) {
-    
-      if (this.appointment.doctor.id == null || this.appointment.department.id == null) {
-        alert('Please Select a Department and a Doctor to add an appointment.')
-        return;
-      }
-      this.displayEdit = true;
-      this.appointment.appointmentDate = e.date.format();    
-   }
-  
-  editEventClick(e) {
-    
-    let eventId = e.calEvent.id;
-    if (eventId != null && eventId > 0) {
-              this.genericService.getOne(eventId, 'Appointment')
+    let appointmentId = null;
+    this.route
+        .queryParams
+        .subscribe(params => {          
+          
+          this.appointment = new Appointment(); 
+          this.appointment.patient = new Patient();
+          
+          appointmentId = params['appointmentId'];
+          
+          if (appointmentId != null) {
+              this.genericService.getOne(appointmentId, 'Appointment')
                   .subscribe(result => {
                 if (result.id > 0) {
                   this.appointment = result
-                  this.displayEdit = true;
                 }
                 else {
                   this.error = Constants.saveFailed;
+                  this.displayDialog = true;
                 }
               })
-          }
-      
-   }
-  
-  getAppointments() {
-    this.events = [];
-    if (this.appointment.doctor.id != null || this.appointment.department.id != null) {
-      let departmentId = this.appointment.department.id == null ? 0 : this.appointment.department.id;
-      let doctorId = this.appointment.doctor.id == null ? 0 : this.appointment.doctor.id;
-      this.appointmentService.getAppointments(departmentId , doctorId)
-          .subscribe(result => {
-        if (result.length > 0) {
-          this.events = result
-        }
-        else {
-          this.error = Constants.saveFailed;
-        }
-      })
-    }
+          } 
+        });
+    
   }
   
+  getAppointment(appointmentId: number) {
+    this.genericService.getOne(appointmentId, 'Appointment')
+        .subscribe(result => {
+      if (result.id > 0) {
+        this.appointment = result
+      }
+      else {
+        this.error = Constants.saveFailed;
+        this.displayDialog = true;
+      }
+    })
+  }
   
+  ngOnDestroy() {
+    this.appointment = null;
+  }
+
+  save() {
+  }
+
  }

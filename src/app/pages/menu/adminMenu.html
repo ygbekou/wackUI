@@ -8,76 +8,129 @@
 	<ul class="nav nav-list flex-column mb-4 sort-source"
 		data-sort-id="portfolio" data-option-key="filter"
 		data-plugin-options="{'layoutMode': 'fitRows', 'filter': '*'}">
-		<li class="{{departmentDetails}}" *ngIf="user.id > 0">
+		<li class="{{payerTypeDetails}}" *ngIf="user.id > 0 && isAvailable('payerTypeDetails')">
+			<a href="#/admin/referenceDetails?referenceDetails=active&referenceType=PayerType" i18n="@@statistics">Add Payer Type</a>
+		</li>
+		<li class="{{payerTypeList}}" *ngIf="user.id > 0 && isAvailable('payerTypeList')">
+			<a href="#/admin/referenceList?referenceList=active&referenceType=PayerType" i18n="@@statistics">Payer Type List</a>
+		</li>
+		<li class="{{religionDetails}}" *ngIf="user.id > 0 && isAvailable('religionDetails')">
+			<a href="#/admin/referenceDetails?referenceDetails=active&referenceType=Religion" i18n="@@statistics">Add Religion</a>
+		</li>
+		<li class="{{religionList}}" *ngIf="user.id > 0 && isAvailable('religionList')">
+			<a href="#/admin/referenceList?referenceList=active&referenceType=Religion" i18n="@@statistics">Religion List</a>
+		</li>
+		<li class="{{occupationDetails}}" *ngIf="user.id > 0 && isAvailable('occupationDetails')">
+			<a href="#/admin/referenceDetails?referenceDetails=active&referenceType=Occupation" i18n="@@statistics">Add Occupation</a>
+		</li>
+		<li class="{{occupationList}}" *ngIf="user.id > 0 && isAvailable('occupationList')">
+			<a href="#/admin/referenceList?referenceList=active&referenceType=Occupation" i18n="@@statistics">Occupation List</a>
+		</li>
+		<li class="{{departmentDetails}}" *ngIf="user.id > 0 && isAvailable('departmentDetails')">
 			<a href="#/admin/departmentDetails?departmentDetails=active" i18n="@@statistics">Add Department</a>
 		</li>
-		<li class="{{departmentList}}" *ngIf="user.id > 0">
+		<li class="{{departmentList}}" *ngIf="user.id > 0 && isAvailable('departmentList')">
 			<a href="#/admin/departmentList?departmentList=active" i18n="@@statistics">Department List</a>
 		</li>
-		<li class="{{doctorDetails}}" *ngIf="user.id > 0">
+		<li class="{{doctorDetails}}" *ngIf="user.id > 0 && isAvailable('doctorDetails')">
 			<a href="#/admin/employeeDetails?doctorDetails=active&groupId=1" i18n="@@statistics">Add Doctor</a>
 		</li>
-		<li class="{{doctorList}}" *ngIf="user.id > 0">
+		<li class="{{doctorList}}" *ngIf="user.id > 0 && isAvailable('doctorList')">
 			<a href="#/admin/employeeList?doctorList=active&groupId=1" i18n="@@statistics">Doctor List</a>
 		</li>
-		<li class="{{employeeDetails}}" *ngIf="user.id > 0">
+		<li class="{{employeeDetails}}" *ngIf="user.id > 0 && isAvailable('employeeDetails')">
 			<a href="#/admin/employeeDetails?employeeDetails=active" i18n="@@statistics">Add Employee</a>
 		</li>
-		<li class="{{employeeList}}" *ngIf="user.id > 0">
+		<li class="{{employeeList}}" *ngIf="user.id > 0 && isAvailable('employeeList')">
 			<a href="#/admin/employeeList?employeeList=active" i18n="@@statistics">Employee List</a>
 		</li>
-		<li class="{{patientDetails}}" *ngIf="user.id > 0">
-			<a href="#/admin/patientDetails?patientDetails=active&groupId=20" i18n="@@statistics">Add Patient</a>
+		<li class="{{adminPatient}}" *ngIf="user.id > 0 && isAvailable('adminPatient')">
+			<a href="#/admin/adminPatient?adminPatient=active&groupId=20" i18n="@@statistics">Patient Registration</a>
 		</li>
-		<li class="{{patientList}}" *ngIf="user.id > 0">
+		<li class="{{patientList}}" *ngIf="user.id > 0 && isAvailable('patientList')">
 			<a href="#/admin/patientList?patientList=active&groupId=20" i18n="@@statistics">Patient List</a>
 		</li>
-		<li class="{{documentDetails}}" *ngIf="user.id > 0">
+		<li class="{{documentDetails}}" *ngIf="user.id > 0 && isAvailable('documentDetails')">
 			<a href="#/admin/documentDetails?documentDetails=active" i18n="@@statistics">Add Document</a>
 		</li>
-		<li class="{{documentList}}" *ngIf="user.id > 0">
+		<li class="{{documentList}}" *ngIf="user.id > 0 && isAvailable('documentList')">
 			<a href="#/admin/documentList?documentList=active" i18n="@@statistics">Document List</a>
 		</li>
-		<li class="{{scheduleDetails}}" *ngIf="user.id > 0">
+		<li class="{{scheduleDetails}}" *ngIf="user.id > 0 && isAvailable('scheduleDetails')">
 			<a href="#/admin/scheduleDetails?scheduleDetails=active" i18n="@@statistics">Add Schedule</a>
 		</li>
-		<li class="{{scheduleList}}" *ngIf="user.id > 0">
+		<li class="{{scheduleList}}" *ngIf="user.id > 0 && isAvailable('scheduleList')">
 			<a href="#/admin/scheduleList?scheduleList=active" i18n="@@statistics">Schedule List</a>
 		</li>
-		<li class="{{appointmentDetails}}" *ngIf="user.id > 0">
-			<a href="#/admin/appointmentDetails?appointmentDetails=active" i18n="@@statistics">Appointment</a>
+		<li class="{{appointmentScheduler}}" *ngIf="user.id > 0 && isAvailable('appointmentScheduler')">
+			<a href="#/admin/appointmentScheduler?appointmentScheduler=active" i18n="@@statistics">Appointment</a>
 		</li>
-		<li class="{{caseStudyDetails}}" *ngIf="user.id > 0">
+		<li class="{{caseStudyDetails}}" *ngIf="user.id > 0 && isAvailable('caseStudyDetails')">
 			<a href="#/admin/caseStudyDetails?caseStudyDetails=active" i18n="@@statistics">Add Case Study</a>
 		</li>
-		<li class="{{caseStudyList}}" *ngIf="user.id > 0">
+		<li class="{{caseStudyList}}" *ngIf="user.id > 0 && isAvailable('caseStudyList')">
 			<a href="#/admin/caseStudyList?caseStudyList=active" i18n="@@statistics">Case Study List</a>
 		</li>
-		<li class="{{medicineCategoryDetails}}" *ngIf="user.id > 0">
+		<li class="{{medicineCategoryDetails}}" *ngIf="user.id > 0 && isAvailable('medicineCategoryDetails')">
 			<a href="#/admin/referenceDetails?referenceDetails=active&referenceType=Category&parentId=1" i18n="@@statistics">Add Medicine Category</a>
 		</li>
-		<li class="{{medicineCategoryList}}" *ngIf="user.id > 0">
+		<li class="{{medicineCategoryList}}" *ngIf="user.id > 0 && isAvailable('medicineCategoryList')">
 			<a href="#/admin/referenceList?referenceList=active&referenceType=Category&parentId=1" i18n="@@statistics">Medicine Category List</a>
 		</li>
-		<li class="{{manufacturerDetails}}" *ngIf="user.id > 0">
+		<li class="{{manufacturerDetails}}" *ngIf="user.id > 0 && isAvailable('manufacturerDetails')">
 			<a href="#/admin/referenceDetails?referenceDetails=active&referenceType=Manufacturer" i18n="@@statistics">Add Manufacturer</a>
 		</li>
-		<li class="{{manufacturerList}}" *ngIf="user.id > 0">
+		<li class="{{manufacturerList}}" *ngIf="user.id > 0 && isAvailable('manufacturerList')">
 			<a href="#/admin/referenceList?referenceList=active&referenceType=Manufacturer" i18n="@@statistics">Manufacturer List</a>
 		</li>
-		<li class="{{medicineDetails}}" *ngIf="user.id > 0">
+		<li class="{{medicineDetails}}" *ngIf="user.id > 0 && isAvailable('medicineDetails')">
 			<a href="#/admin/medicineDetails?medicineDetails=active" i18n="@@statistics">Add Medicine</a>
 		</li>
-		<li class="{{medicineList}}" *ngIf="user.id > 0">
+		<li class="{{medicineList}}" *ngIf="user.id > 0 && isAvailable('medicineList')">
 			<a href="#/admin/medicineList?medicineList=active" i18n="@@statistics">Medicine List</a>
 		</li>
-		<li class="{{prescriptionDetails}}" *ngIf="user.id > 0">
+		<li class="{{prescriptionDetails}}" *ngIf="user.id > 0 && isAvailable('prescriptionDetails')">
 			<a href="#/admin/prescriptionDetails?prescriptionDetails=active" i18n="@@statistics">Add Prescription</a>
 		</li>
-		<li class="{{prescriptionList}}" *ngIf="user.id > 0">
+		<li class="{{prescriptionList}}" *ngIf="user.id > 0 && isAvailable('prescriptionList')">
 			<a href="#/admin/prescriptionList?prescriptionList=active" i18n="@@statistics">Prescription List</a>
 		</li>
-		
+		<li class="{{accountDetails}}" *ngIf="user.id > 0 && isAvailable('accountDetails')">
+			<a href="#/admin/accountDetails?accountDetails=active" i18n="@@statistics">Add Account</a>
+		</li>
+		<li class="{{accountList}}" *ngIf="user.id > 0 && isAvailable('accountList')">
+			<a href="#/admin/accountList?accountList=active" i18n="@@statistics">Account List</a>
+		</li>
+		<li class="{{invoiceDetails}}" *ngIf="user.id > 0 && isAvailable('invoiceDetails')">
+			<a href="#/admin/invoiceDetails?invoiceDetails=active" i18n="@@statistics">Add Invoice</a>
+		</li>
+		<li class="{{invoiceList}}" *ngIf="user.id > 0 && isAvailable('invoiceList')">
+			<a href="#/admin/invoiceList?invoiceList=active" i18n="@@statistics">Invoice List</a>
+		</li>
+		<li class="{{paymentDetails}}" *ngIf="user.id > 0 && isAvailable('paymentDetails')">
+			<a href="#/admin/paymentDetails?paymentDetails=active" i18n="@@statistics">Add Payment</a>
+		</li>
+		<li class="{{paymentList}}" *ngIf="user.id > 0 && isAvailable('paymentList')">
+			<a href="#/admin/paymentList?paymentList=active" i18n="@@statistics">Payment List</a>
+		</li>
+		<li class="{{insuranceDetails}}" *ngIf="user.id > 0 && isAvailable('insuranceDetails')">
+			<a href="#/admin/insuranceDetails?insuranceDetails=active" i18n="@@statistics">Add Insurance</a>
+		</li>
+		<li class="{{insuranceList}}" *ngIf="user.id > 0 && isAvailable('insuranceList')">
+			<a href="#/admin/insuranceList?insuranceList=active" i18n="@@statistics">Insurance List</a>
+		</li>
+		<li class="{{serviceDetails}}" *ngIf="user.id > 0 && isAvailable('serviceDetails')">
+			<a href="#/admin/serviceDetails?serviceDetails=active" i18n="@@statistics">Add Service</a>
+		</li>
+		<li class="{{serviceList}}" *ngIf="user.id > 0 && isAvailable('serviceList')">
+			<a href="#/admin/serviceList?serviceList=active" i18n="@@statistics">Service List</a>
+		</li>
+		<li class="{{packageDetails}}" *ngIf="user.id > 0 && isAvailable('packageDetails')">
+			<a href="#/admin/packageDetails?packageDetails=active" i18n="@@statistics">Add Package</a>
+		</li>
+		<li class="{{packageList}}" *ngIf="user.id > 0 && isAvailable('packageList')">
+			<a href="#/admin/packageList?packageList=active" i18n="@@statistics">Package List</a>
+		</li>
 		<li class="{{adminProfile}}">
 			<a href="#/admin/adminProfile?adminProfile=active" i18n="@@statistics">Profile</a>
 		</li>

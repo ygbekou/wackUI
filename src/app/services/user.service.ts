@@ -111,14 +111,20 @@ export class UserService {
         .catch(this.handleError);
    }
   
-   public savePatient = (patient : Patient): Observable<Patient> => {
-    
+   public savePatient = (patient : Patient, formData: FormData): Observable<Patient> => {
+      
+      let head = new Headers();
       let toAdd = JSON.stringify(patient);
       let re = /\"/gi;
       let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
       
+      formData.append('dto', new Blob([toSend],
+      {
+          type: "application/json"
+      }));
+     
       let actionUrl = Constants.apiServer + '/service/user/Patient/save';
-      return this.http.post(actionUrl, toSend, { headers: this.headers })
+      return this.http.post(actionUrl, formData, { headers: head })
         .map((response: Response) => {
             if (response && response.json()) {
               const error = response.json() && response.json().error;
