@@ -129,7 +129,7 @@ export class UserService {
             if (response && response.json()) {
               const error = response.json() && response.json().error;
               if (error == null) {
-                Cookie.set('user', JSON.stringify(response.json()));
+                //Cookie.set('user', JSON.stringify(response.json()));
               }
             }
             return response.json();

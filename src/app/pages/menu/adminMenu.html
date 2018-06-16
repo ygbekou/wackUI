@@ -131,6 +131,12 @@
 		<li class="{{packageList}}" *ngIf="user.id > 0 && isAvailable('packageList')">
 			<a href="#/admin/packageList?packageList=active" i18n="@@statistics">Package List</a>
 		</li>
+		<li class="{{billDetails}}" *ngIf="user.id > 0 && isAvailable('billDetails')">
+			<a href="#/admin/billDetails?billDetails=active" i18n="@@statistics">Add Bill</a>
+		</li>
+		<li class="{{billList}}" *ngIf="user.id > 0 && isAvailable('billList')">
+			<a href="#/admin/billList?billList=active" i18n="@@statistics">Bill List</a>
+		</li>
 		<li class="{{adminProfile}}">
 			<a href="#/admin/adminProfile?adminProfile=active" i18n="@@statistics">Profile</a>
 		</li>

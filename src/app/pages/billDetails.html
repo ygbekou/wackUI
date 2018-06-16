@@ -1,0 +1,309 @@
+<div role="main" class="main">
+	<section
+		class="parallax section section-text-light section-parallax section-center mt-0 mb-5"
+		data-plugin-parallax data-plugin-options="{'speed': 1.5}"
+		data-image-src="assets/images/slides/bg-top.jpg">
+	</section>
+
+		<div class="container" style="padding-left: 10px; max-width: 100%;">
+
+	<section class="call-to-action featured featured-secondary mb-5"
+		style="border-radius: 8px; padding:10px;" *ngIf="vote">
+		<div class="col-sm-9 col-lg-9 text-center">
+			<div class="call-to-action-content" style="width:100%;" >
+				<h3>
+					<strong>Il y a des scrutins qui vous attendent</strong>
+				</h3>
+				<p class="mb-0">
+					Faites votre <strong>devoir civique</strong> en votant
+			</div>
+		</div>
+		<div class="col-sm-3 col-lg-3 text-left">
+			<div class="call-to-action-btn">
+				<a href="#/vote" class="btn btn-lg btn-secondary">Je vote
+					maintenant!</a>
+			</div>
+		</div>
+	</section>
+	
+	<div class="ui-grid-row">
+		<div class="ui-g-2 ui-sm-4">
+			<app-admin-menu></app-admin-menu>
+		</div>
+		<div class="ui-g-10 ui-sm-8" style="padding: 15px;">
+			<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="bill">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-4 ui-sm-12">
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-3 ui-sm-12">
+								<label i18n="@@patientMatricule" for="patientMatricule">Patient ID<font color="red">*</font></label>
+							</div>
+							<div class="ui-grid-col-8 ui-sm-12">
+								<input type="text" pInputText class="form-control" id="patientMatricule" (change)="lookUpPatient()"
+								[(ngModel)]="patient.matricule" name="patientMatricule" #patientMatricule="ngModel">
+							</div>
+							<div class="ui-grid-col-1 ui-sm-12">
+							</div>
+						</div>
+					</div>
+					<div class="ui-grid-col-4 ui-sm-12">
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-3 ui-sm-12">
+								<label i18n="@@patientName" for="patientName">Patient Name</label>
+							</div>
+							<div class="ui-grid-col-8 ui-sm-12">
+								{{patient.name}}
+							</div>
+							<div class="ui-grid-col-1 ui-sm-12">
+							</div>
+						</div>
+					</div>
+					<div class="ui-grid-col-4 ui-sm-12">
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-3 ui-sm-12">
+								<label i18n="@@patientBirthDate" for="patientSex">Sex</label>
+							</div>
+							<div class="ui-grid-col-8 ui-sm-12">
+								{{patient.user.sex}}
+							</div>
+							<div class="ui-grid-col-1 ui-sm-12">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-4 ui-sm-12">
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-3 ui-sm-12">
+								<label i18n="@@patientSex" for="patientBirthDate">Birth Date: </label>
+							</div>
+							<div class="ui-grid-col-8 ui-sm-12">
+								{{patient.user.birthDate | date:'dd/MM/yyyy'}}
+							</div>
+							<div class="ui-grid-col-1 ui-sm-12">
+							</div>
+						</div>				
+					</div>
+					<div class="ui-grid-col-4 ui-sm-12">
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-3 ui-sm-12">
+								<label i18n="@@billDate" for="billDate">Date<font color="red">*</font></label> 
+							</div>
+							<div class="ui-grid-col-8 ui-sm-12">
+								<p-calendar [(ngModel)]="bill.billDate"></p-calendar>
+							</div>
+							<div class="ui-grid-col-1 ui-sm-12">
+							</div>
+						</div>
+					</div>
+					<div class="ui-grid-col-4 ui-sm-12">
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-3 ui-sm-12">
+								<label i18n="@@appointment" for="appointment">Appointment</label>
+							</div> 
+							<div class="ui-grid-col-8 ui-sm-12">
+								<p-autoComplete [(ngModel)]="bill.appointment"
+									(onDropdownClick)="appointmentDropdown.handleDropdownClick($event)"
+									[suggestions]="appointmentDropdown.filteredAppointments" [dropdown]="true"
+									(completeMethod)="appointmentDropdown.filter($event)"
+									name="name" field="description" [size]="30" placeholder=""
+									[minLength]="1">
+								</p-autoComplete>
+							</div>
+							<div class="ui-grid-col-1 ui-sm-12">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<br/>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-12 ui-sm-12">
+					<p-table [columns]="serviceCols" [value]="bill.billServices" (change)="calculateTotal()">
+						<ng-template pTemplate="caption">
+					        List of Services
+					    </ng-template>
+					    <ng-template pTemplate="header" let-accountCols>
+					        <tr>
+					            <th *ngFor="let col of serviceCols" [pSortableColumn]="col.field">
+					                {{col.header}}
+					                <p-sortIcon [field]="col.field"></p-sortIcon>
+					            </th>
+					            <th>Action</th>
+					        </tr>
+					    </ng-template>
+					    <ng-template pTemplate="body" let-rowData let-columns="columns">
+					        <tr>			           
+					            <td *ngFor="let col of columns" [pEditableColumn]="rowData" [pEditableColumnField]="rowData[col.field]">
+					            	<p-cellEditor *ngIf="col.field != 'service' && col.field != 'doctor' && col.field != 'quantity' && col.field != 'unitPrice' && 
+					                		col.field != 'discountAmount' && col.field != 'payerAmount' && col.field != 'patientAmount'">
+					                    <ng-template pTemplate="input">
+					                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled">
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+					                        {{rowData[col.field]}}
+					                    </ng-template>
+					                </p-cellEditor>
+					                <p-cellEditor *ngIf="col.field == 'quantity' || col.field == 'unitPrice' || 
+					                		col.field == 'discountAmount' || col.field == 'payerAmount' || col.field == 'patientAmount'">
+					                    <ng-template pTemplate="input">
+					                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled">
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+					                        {{rowData[col.field]}}
+					                    </ng-template>
+					                </p-cellEditor>
+					                <p-cellEditor *ngIf="col.field == 'service'">
+					                    <ng-template pTemplate="input">
+					                        <p-autoComplete [(ngModel)]="rowData[col.field]"
+												(onDropdownClick)="serviceDropdown.handleDropdownClick($event)"
+												[suggestions]="serviceDropdown.filteredServices" [dropdown]="true"
+												(completeMethod)="serviceDropdown.filter($event)"
+												name="name" field="name" [size]="30" placeholder=""
+												[minLength]="1">
+											</p-autoComplete>
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+					                        {{rowData[col.field].name}}
+					                    </ng-template>
+					                </p-cellEditor>
+					                <p-cellEditor *ngIf="col.field == 'doctor'">
+					                    <ng-template pTemplate="input">
+					                        <p-autoComplete [(ngModel)]="rowData[col.field]"
+												(onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
+												[suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
+												(completeMethod)="doctorDropdown.filter($event)"
+												name="name" field="name" [size]="30" placeholder=""
+												[minLength]="1">
+											</p-autoComplete>
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+					                        {{rowData[col.field].name}}
+					                    </ng-template>
+					                </p-cellEditor>
+					            </td>
+					            <td>
+					            	<button type="button" pButton icon="fa-plus" style="float:left" (click)="addRow()"></button>
+									<button type="button" pButton icon="fa-eraser" style="float:left"></button>
+					            </td>
+					        </tr>
+					    </ng-template>
+					</p-table>
+				</div>
+			</div>
+			
+			<br/>
+			<br />
+			
+			
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-7 ui-sm-12">					
+					<p-table [columns]="billPaymentCols" [value]="bill.billPayments" (onEditComplete)="savePayment($event)" *ngIf="bill.id">
+						<ng-template pTemplate="caption">
+					        List of Payments
+					    </ng-template>
+					    <ng-template pTemplate="header" let-accountCols>
+					        <tr>
+					            <th *ngFor="let col of billPaymentCols" [pSortableColumn]="col.field">
+					                {{col.header}}
+					                <p-sortIcon [field]="col.field"></p-sortIcon>
+					            </th>
+					            <th>Action</th>
+					        </tr>
+					    </ng-template>
+					    <ng-template pTemplate="body" let-rowData let-columns="columns">
+					        <tr>			           
+					            <td *ngFor="let col of columns" [pEditableColumn]="rowData">
+					            	<p-cellEditor>
+					                    <ng-template pTemplate="input">
+					                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled">
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+					                        {{rowData[col.field]}}
+					                    </ng-template>
+					                </p-cellEditor>
+					            </td>	
+					            <td>
+					            	<button type="button" pButton icon="fa-plus" style="float:left" (click)="addPaymentRow()"></button>
+									<button type="button" pButton icon="fa-eraser" style="float:left"></button>
+					            </td>
+					        </tr>
+					    </ng-template>
+					</p-table>
+				</div>
+				<div class="ui-grid-col-1 ui-sm-12">
+					<div class="form-group"></div>
+				</div>
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-4 ui-sm-12">
+							<label i18n="@@subTotal" for="subTotal">Sub Total </label> 
+						</div>
+						<div class="ui-grid-col-6 ui-sm-12">
+							<input type="text" pInputText id="subTotal" [disabled]="true"
+							[(ngModel)]="bill.subTotal" name="subTotal" #subTotal="ngModel">
+						</div>
+					</div>
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-4 ui-sm-12">
+							<label i18n="@@taxes" for="taxes">Taxes </label> 
+						</div>
+						<div class="ui-grid-col-6 ui-sm-12">
+							<input type="text" pInputText id="taxes" (change)="calculateGrandTotal()"
+								[(ngModel)]="bill.taxes" name="taxes" #taxes="ngModel">
+						</div>
+					</div>
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-4 ui-sm-12">
+							<label i18n="@@discount" for="discount">Discount </label> 
+						</div>
+						<div class="ui-grid-col-6 ui-sm-12">
+							<input type="text" pInputText id="discount" (change)="calculateGrandTotal(); calculateDue()"
+								[(ngModel)]="bill.discount" name="discount" #discount="ngModel">
+						</div>
+					</div>
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-4 ui-sm-12">
+							<label i18n="@@grandTotal" for="grandTotal">Grand Total </label> 
+						</div>
+						<div class="ui-grid-col-6 ui-sm-12">
+							<input type="text" pInputText id="grandTotal" [disabled]="true"
+								[(ngModel)]="bill.grandTotal" name="grandTotal" #grandTotal="ngModel">
+						</div>
+					</div>
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-4 ui-sm-12">
+							<label i18n="@@paid" for="paid">Paid </label> 
+						</div>
+						<div class="ui-grid-col-6 ui-sm-12">
+							<input type="text" pInputText id="paid" (change)="calculateDue()"
+								[(ngModel)]="bill.paid" name="paid" #paid="ngModel">
+						</div>
+					</div>
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-4 ui-sm-12">
+							<label i18n="@@due" for="due">Due </label> 
+						</div>
+						<div class="ui-grid-col-6 ui-sm-12">
+							<input type="text" pInputText id="due" [disabled]="true"
+								[(ngModel)]="bill.due" name="due" #due="ngModel">
+						</div>
+					</div>
+				</div>
+			</div>
+				
+			<br/>
+			<br />
+			<div *ngIf="error" class="alert alert-danger">{{error}}</div>
+			<div>
+				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+					<button type="button" pButton icon="fa-close" (click)="delete()"
+						label="Supprimer"></button>
+					<button type="button" pButton icon="fa-check" (click)="save()"
+						label="Sauvegarder"></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

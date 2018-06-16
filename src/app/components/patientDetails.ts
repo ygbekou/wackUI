@@ -5,7 +5,7 @@ import { Patient } from '../models/patient';
 import { UserGroup } from '../models/userGroup';
 import { FileUploader } from './fileUploader';
 import { EditorModule } from 'primeng/editor';
-import { CountryDropdown, ReligionDropdown, OccupationDropdown } from './dropdowns';
+import { CountryDropdown, ReligionDropdown, OccupationDropdown, PayerTypeDropdown, InsuranceDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { User } from '../models/user';  
@@ -14,7 +14,7 @@ import { GenericService, UserService } from '../services';
 @Component({
   selector: 'app-patient-details',
   templateUrl: '../pages/patientDetails.html',
-  providers: [GenericService, CountryDropdown, ReligionDropdown, OccupationDropdown]
+  providers: [GenericService, CountryDropdown, ReligionDropdown, OccupationDropdown, PayerTypeDropdown, InsuranceDropdown]
 })
 export class PatientDetails implements OnInit, OnDestroy {
   
@@ -24,6 +24,8 @@ export class PatientDetails implements OnInit, OnDestroy {
   countryDropdown:  CountryDropdown;
   religionDropdown:  ReligionDropdown;
   occupationDropdown:  OccupationDropdown;
+  payerTypeDropdown: PayerTypeDropdown
+  insuranceDropdown: InsuranceDropdown
   
   DETAIL: string = Constants.DETAIL;
   ADD_IMAGE: string = Constants.ADD_IMAGE;
@@ -42,6 +44,8 @@ export class PatientDetails implements OnInit, OnDestroy {
       private cntryDropdown: CountryDropdown,
       private rlgDropdown: ReligionDropdown,
       private occDropdown: OccupationDropdown,
+      private pTypeDropdown: PayerTypeDropdown,
+      private insDropdown: InsuranceDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
@@ -49,6 +53,8 @@ export class PatientDetails implements OnInit, OnDestroy {
       this.countryDropdown = cntryDropdown;
       this.religionDropdown = rlgDropdown;
       this.occupationDropdown = occDropdown;
+      this.payerTypeDropdown = pTypeDropdown;
+      this.insuranceDropdown = insDropdown;
   }
 
   ngOnInit(): void {

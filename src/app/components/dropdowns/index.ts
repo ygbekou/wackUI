@@ -12,3 +12,5 @@ export * from './dropdown.package';
 export * from './dropdown.insurance';
 export * from './dropdown.religion';
 export * from './dropdown.occupation';
+export * from './dropdown.payerType';
+export * from './dropdown.appointment';

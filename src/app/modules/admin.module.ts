@@ -38,6 +38,8 @@ import { PackageDetails } from '../components/packageDetails';
 import { PackageList } from '../components/packageList';
 import { ServiceDetails } from '../components/serviceDetails';
 import { ServiceList } from '../components/serviceList';
+import { BillDetails } from '../components/billDetails';
+import { BillList } from '../components/billList';
 
 import { AdminPatient } from '../components/adminPatient';
  
@@ -77,6 +79,8 @@ const routes: Routes = [
   {path: 'serviceList', component: ServiceList},
   {path: 'packageDetails', component: PackageDetails},
   {path: 'packageList', component: PackageList},
+  {path: 'billDetails', component: BillDetails},
+  {path: 'billList', component: BillList},
   {path: 'adminPatient', component: AdminPatient}
 ];
 
@@ -92,7 +96,7 @@ const routes: Routes = [
             ScheduleList, AppointmentScheduler, AppointmentDetails, AppointmentList, CaseStudyDetails, CaseStudyList, 
             ReferenceDetails, ReferenceList, MedicineDetails, MedicineList, PrescriptionDetails, PrescriptionList,
             AccountDetails, AccountList, InvoiceDetails, InvoiceList, PaymentDetails, PaymentList, InsuranceDetails, 
-            InsuranceList, ServiceDetails, ServiceList, PackageDetails, PackageList, AdminPatient],
+            InsuranceList, ServiceDetails, ServiceList, PackageDetails, PackageList, BillDetails, BillList, AdminPatient],
 
   providers: [DepartmentDetails]
 })
