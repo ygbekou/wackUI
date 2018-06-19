@@ -40,6 +40,8 @@ import { ServiceDetails } from '../components/serviceDetails';
 import { ServiceList } from '../components/serviceList';
 import { BillDetails } from '../components/billDetails';
 import { BillList } from '../components/billList';
+import { VitalSignDetails } from '../components/vitalSignDetails';
+import { VitalSignList } from '../components/vitalSignList';
 
 import { AdminPatient } from '../components/adminPatient';
  
@@ -81,6 +83,8 @@ const routes: Routes = [
   {path: 'packageList', component: PackageList},
   {path: 'billDetails', component: BillDetails},
   {path: 'billList', component: BillList},
+  {path: 'vitalSignDetails', component: VitalSignDetails},
+  {path: 'vitalSignList', component: VitalSignList},
   {path: 'adminPatient', component: AdminPatient}
 ];
 
@@ -96,7 +100,8 @@ const routes: Routes = [
             ScheduleList, AppointmentScheduler, AppointmentDetails, AppointmentList, CaseStudyDetails, CaseStudyList, 
             ReferenceDetails, ReferenceList, MedicineDetails, MedicineList, PrescriptionDetails, PrescriptionList,
             AccountDetails, AccountList, InvoiceDetails, InvoiceList, PaymentDetails, PaymentList, InsuranceDetails, 
-            InsuranceList, ServiceDetails, ServiceList, PackageDetails, PackageList, BillDetails, BillList, AdminPatient],
+            InsuranceList, ServiceDetails, ServiceList, PackageDetails, PackageList, BillDetails, BillList, VitalSignDetails, VitalSignList,
+            AdminPatient],
 
   providers: [DepartmentDetails]
 })

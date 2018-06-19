@@ -93,6 +93,12 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
    }
   
   editEventClick(e) {
+     console.info(e)
+    this.appointment.patient = new Patient();
+     this.displayEdit = true;
+     this.appointment.appointmentDate = e.calEvent.start._i.split("T")[0];    
+     this.appointment.beginTime = e.calEvent.start._i.split("T")[1];
+     this.appointment.endTime = e.calEvent.end._i.split("T")[1];
     
     let eventId = e.calEvent.id;
     if (eventId != null && eventId > 0) {

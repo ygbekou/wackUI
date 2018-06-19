@@ -63,6 +63,8 @@ export class AdminMenu implements OnInit {
   public payerTypeList: string;
   public billDetails: string;
   public billList: string;
+  public vitalSignDetails: string;
+  public vitalSignList: string;
   public adminMain: string;
   public adminProfile: string;
   user: User;
@@ -77,7 +79,7 @@ export class AdminMenu implements OnInit {
     
     this.menus["appointmentModule"] = ['adminPatient', 'patientList', 'scheduleDetails', 'scheduleList', 'appointmentScheduler'];
     this.menus["outpatientModule"] = ['payerTypeDetails', 'payerTypeList', 'adminPatient', 'patientList', 'prescriptionDetails', 
-      'prescriptionList', 'billDetails', 'billList'];
+      'prescriptionList', 'billDetails', 'billList', 'vitalSignDetails', 'vitalSignList'];
 
   }
 
@@ -140,6 +142,8 @@ export class AdminMenu implements OnInit {
         this.payerTypeList = params['payerTypeList'];
         this.billDetails = params['billDetails'];
         this.billList = params['billList'];
+        this.vitalSignDetails = params['vitalSignDetails'];
+        this.vitalSignList = params['vitalSignList'];
         this.adminMain = params['adminMain'];
         this.adminProfile = params['adminProfile'];
       })

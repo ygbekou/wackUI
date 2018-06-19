@@ -68,15 +68,13 @@
 				<div class="ui-grid-col-6ui-sm-12">
 					<div class="form-group">
 						<label i18n="@@beginTime" for="beginTime">Start Time<font color="red">*</font></label> 
-						<p-calendar [(ngModel)]="appointment.beginTime" [stepMinute]="5" dataType="string" 
-							timeOnly="true" showTime="false" hourFormat="24"></p-calendar>
+						<input type="text" pInputText id="beginTime" [(ngModel)]="appointment.beginTime" name="beginTime" #beginTime="ngModel">
 					</div>
 				</div>
 				<div class="ui-grid-col-6ui-sm-12">
 					<div class="form-group">
 						<label i18n="@@endTime" for="endTime">End Time<font color="red">*</font></label> 
-						<p-calendar [(ngModel)]="appointment.endTime" [stepMinute]="5" dataType="string" 
-							timeOnly="true" showTime="false" hourFormat="24"></p-calendar>
+						<input type="text" pInputText id="endTime" [(ngModel)]="appointment.endTime" name="endTime" #endTime="ngModel">
 					</div>
 				</div>
 			</div>

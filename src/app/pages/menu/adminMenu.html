@@ -137,6 +137,12 @@
 		<li class="{{billList}}" *ngIf="user.id > 0 && isAvailable('billList')">
 			<a href="#/admin/billList?billList=active" i18n="@@statistics">Bill List</a>
 		</li>
+		<li class="{{vitalSignDetails}}" *ngIf="user.id > 0 && isAvailable('billDetails')">
+			<a href="#/admin/vitalSignDetails?vitalSignDetails=active" i18n="@@statistics">Add Vital Sign</a>
+		</li>
+		<li class="{{vitalSignList}}" *ngIf="user.id > 0 && isAvailable('vitalSignList')">
+			<a href="#/admin/vitalSignList?vitalSignList=active" i18n="@@statistics">Vital Sign List</a>
+		</li>
 		<li class="{{adminProfile}}">
 			<a href="#/admin/adminProfile?adminProfile=active" i18n="@@statistics">Profile</a>
 		</li>
