@@ -3,7 +3,7 @@ import { Appointment } from './appointment';
 export class VitalSign {
   id: number;
   appointment: Appointment;
-  vitalSignDatatime: Date = new Date();
+  vitalSignDatetime: Date = new Date();
   temperature: number;
   pulse: string;
   respiration: string;

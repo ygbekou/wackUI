@@ -1,4 +1,3 @@
-import { Medicine } from './medicine';
 
 export class PrescriptionDiagnosis {
   id: number;

@@ -31,7 +31,7 @@
 			<app-admin-menu></app-admin-menu>
 		</div>
 		<div class="ui-g-10 ui-sm-8" style="padding: 15px;">
-			<p-table [columns]="cols" [value]="patients">
+			<p-table [columns]="cols" [value]="patients" [responsive]="true">
 			    <ng-template pTemplate="header" let-columns>
 			        <tr>
 			            <th *ngFor="let col of columns" [pSortableColumn]="col.field">

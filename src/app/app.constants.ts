@@ -41,4 +41,7 @@ export class Constants {
   public static PASSWORD_NOT_SENT = 'Le mot de passe n\'a pu etre envoye. Assurez-vous que vous avez entre un E-mail valide';
   public static PASSWORD_SENT = 'Le mot de passe vous a ete envoye a l\'addresse: ';
   public static LOCALE = 'fr-FR';
+  
+  public static CATEGORY_MEDICINE = 1;
+  public static CATEGORY_BED = 2;
 }

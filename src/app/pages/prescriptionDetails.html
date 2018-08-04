@@ -1,105 +1,43 @@
-<div role="main" class="main">
-	<section
-		class="parallax section section-text-light section-parallax section-center mt-0 mb-5"
-		data-plugin-parallax data-plugin-options="{'speed': 1.5}"
-		data-image-src="assets/images/slides/bg-top.jpg">
-	</section>
-
-		<div class="container" style="padding-left: 10px; max-width: 100%;">
-
-	<section class="call-to-action featured featured-secondary mb-5"
-		style="border-radius: 8px; padding:10px;" *ngIf="vote">
-		<div class="col-sm-9 col-lg-9 text-center">
-			<div class="call-to-action-content" style="width:100%;" >
-				<h3>
-					<strong>Il y a des scrutins qui vous attendent</strong>
-				</h3>
-				<p class="mb-0">
-					Faites votre <strong>devoir civique</strong> en votant
-			</div>
-		</div>
-		<div class="col-sm-3 col-lg-3 text-left">
-			<div class="call-to-action-btn">
-				<a href="#/vote" class="btn btn-lg btn-secondary">Je vote
-					maintenant!</a>
-			</div>
-		</div>
-	</section>
-	
-	<div class="ui-grid-row">
-		<div class="ui-g-2 ui-sm-4">
-			<app-admin-menu></app-admin-menu>
-		</div>
-		<div class="ui-g-10 ui-sm-8" style="padding: 15px;">
-			<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="prescription">
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="form-group">
-							<label i18n="@@patientMatricule" for="patientMatricule">Patient ID<font color="red">*</font></label>
-							<input type="text" pInputText class="form-control" id="patientMatricule" (change)="lookUpPatient()"
-								[(ngModel)]="prescription.patient.matricule" name="patientMatricule" #patientMatricule="ngModel">
+<div class="ui-grid-row">
+	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+		<div class="ui-grid ui-grid-responsive" *ngIf="prescription">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-3 ui-sm-12">
+							<label i18n="@@prescriptionDatetime" for="prescriptionDatetime">Presc. Date Time<font color="red">*</font></label> 
 						</div>
-						<div class="form-group">
-							<label i18n="@@patientName" for="patientName">Patient Name</label>
-							<input type="text" pInputText class="form-control" id="matricule"
-								[(ngModel)]="prescription.patient.name" name="patientName" #patientName="ngModel">
+						<div class="ui-grid-col-8 ui-sm-12">
+							<p-calendar [(ngModel)]="prescription.prescriptionDatetime" [showTime]="true"></p-calendar>
 						</div>
-						<div class="form-group">
-							<label i18n="@@patientBirthDate" for="patientSex">Sex</label>
-							<input type="text" pInputText class="form-control" id="patientSex"
-								[(ngModel)]="prescription.patient.user.sex" name="patientSex" #patientSex="ngModel">
-						</div>
-						<div class="form-group">
-							<label i18n="@@patientSex" for="patientBirthDate">Birth Date</label>
-							<input type="text" pInputText class="form-control" id="patientBirthDate"
-								[(ngModel)]="prescription.patient.user.birthDate" name="patientBirthDate" #patientBirthDate="ngModel">
-						</div>
-						
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="form-group">
-							<label i18n="@@weight" for="weight">Weight<font color="red">*</font>
-							</label> <input type="text" pInputText class="form-control" id="weight"
-								[(ngModel)]="prescription.weight" name="weight" #weight="ngModel">
-						</div>
-						<div class="form-group">
-							<label i18n="@@bloodPressure" for="bloodPressure">Blood Pressure<font color="red">*</font>
-							</label> <input type="text" pInputText class="form-control" id="bloodPressure"
-								[(ngModel)]="prescription.bloodPressure" name="bloodPressure" #bloodPressure="ngModel">
-						</div>
-						<div class="form-group">
-							<label i18n="@@reference" for="reference">Reference<font color="red">*</font>
-							</label> <input type="text" pInputText class="form-control" id="reference"
-								[(ngModel)]="prescription.reference" name="reference" #reference="ngModel">
-						</div>
-						<div class="ui-grid-row">
-							<label i18n="@@prescriptionType" for="prescriptionType">Prescription Type</label>
-						</div>
-						<div class="ui-grid-row">
-							<p-radioButton name="prescriptionType" value="0" label="New" [(ngModel)]="prescription.prescriptionType"></p-radioButton>
-							<p-radioButton name="prescriptionType" value="1" label="Old" [(ngModel)]="prescription.prescriptionType"></p-radioButton>
-						</div>
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="form-group">
-							<label i18n="@@appointmentId" for="appointmentId">Appointment ID<font color="red">*</font>
-							</label> <input type="text" pInputText class="form-control" id="appointmentId"
-								[(ngModel)]="prescription.appointment.id" name="appointmentId" #appointmentId="ngModel">
-						</div>
-						<div class="form-group">
-							<label i18n="@@prescriptionDate" for="Appointment Date">Appointment Date<font color="red">*</font></label> 
-							<p-calendar [(ngModel)]="prescription.prescriptionDate"></p-calendar>
+						<div class="ui-grid-col-1 ui-sm-12">
 						</div>
 					</div>
 				</div>
-			</div>
-			
-			<div class="ui-grid-row">
-				<div class="ui-grid-col-12 ui-sm-12">
-					<div class="form-group">
-						<label i18n="@@chiefComplain" for="chiefComplain">Chief Complaint
-						</label> <input type="text" pInputText class="form-control" id="chiefComplain"
-							[(ngModel)]="prescription.chiefComplain" name="chiefComplain" #chiefComplain="ngModel">
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-3 ui-sm-12">
+							<label i18n="@@prescriptionType" for="prescriptionType">Prescription Type<font color="red">*</font></label> 
+						</div>
+						<div class="ui-grid-col-8 ui-sm-12">
+							<p-radioButton name="prescriptionType" value="0" label="New" [(ngModel)]="prescription.prescriptionType"></p-radioButton>
+							<p-radioButton name="prescriptionType" value="1" label="Old" [(ngModel)]="prescription.prescriptionType"></p-radioButton>
+						</div>
+						<div class="ui-grid-col-1 ui-sm-12">
+						</div>
+					</div>
+				</div>
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-3 ui-sm-12">
+							<label i18n="@@notes" for="notes">Notes</label> 
+						</div>
+						<div class="ui-grid-col-8 ui-sm-12">
+							<textarea pInputTextarea id="notes" rows="4" cols="40" pInputTextarea maxlength="1000" 
+								[(ngModel)]="prescription.notes" #notes="ngModel"> </textarea>							
+						</div>
+						<div class="ui-grid-col-1 ui-sm-12">
+						</div>
 					</div>
 				</div>
 			</div>
@@ -182,45 +120,20 @@
 					                </p-cellEditor>
 					            </td>
 					            <td>
-					            	<button type="button" pButton icon="fa-plus" style="float: left"
-										></button>
-									<button type="button" pButton icon="fa-eraser" style="float: left"
-										></button>
+					            	<button type="button" pButton icon="fa-plus" style="float: left"></button>
+									<button type="button" pButton icon="fa-eraser" style="float: left"></button>
 					            </td>
 					        </tr>
 					    </ng-template>
 					</p-table>
 				</div>
 			</div>
-			
-			<br/>
-			<br/>
-			<div class="ui-grid-row">
-				<div class="ui-grid-col-4 ui-sm-12">
-					<div class="form-group">
-						<label i18n="@@visitingFees" for="visitingFees">Visiting Fees
-						</label> <input type="text" pInputText class="form-control" id="visitingFees"
-							[(ngModel)]="prescription.visitingFees" name="visitingFees" #visitingFees="ngModel">
-					</div>
-				</div>
-				<div class="ui-grid-col-4 ui-sm-12">
-					<div class="form-group">
-						<label i18n="@@patientNotes" for="patientNotes">Patient Notes
-						</label> <input type="text" pInputText class="form-control" id="patientNotes"
-							[(ngModel)]="prescription.patientNotes" name="patientNotes" #patientNotes="ngModel">
-					</div>
-				</div>
-			</div>
-			<br/>
-			<br />
 			<div *ngIf="error" class="alert alert-danger">{{error}}</div>
-			<div>
-				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-					<button type="button" pButton icon="fa-close" (click)="delete()"
-						label="Supprimer"></button>
-					<button type="button" pButton icon="fa-check" (click)="save()"
-						label="Sauvegarder"></button>
-				</div>
+			<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+				<button type="button" pButton icon="fa-close" (click)="delete()"
+					label="Supprimer"></button>
+				<button type="button" pButton icon="fa-check" (click)="save()"
+					label="Sauvegarder"></button>
 			</div>
 		</div>
 	</div>

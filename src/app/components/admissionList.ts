@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@ang
 import { Employee } from '../models/employee';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../app.constants';
-import { PatientAdmission } from '../models/patientAdmission';
+import { Admission } from '../models/admission';
 import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
@@ -11,14 +11,14 @@ import { GenericService } from '../services';
 
 @Component({
   selector: 'app-patientAdmission-list',
-  templateUrl: '../pages/patientAdmissionList.html',
+  templateUrl: '../pages/admissionList.html',
   providers: [GenericService]
 })
-export class PatientAdmissionList implements OnInit, OnDestroy {
+export class AdmissionList implements OnInit, OnDestroy {
   
   public error: String = '';
   displayDialog: boolean;
-  patientAdmissions: PatientAdmission[] = [];
+  admissions: Admission[] = [];
   cols: any[];
   
   DETAIL: string = Constants.DETAIL;
@@ -38,16 +38,11 @@ export class PatientAdmissionList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
+            { field: 'admissionNumber', header: 'Admission No' },
+            { field: 'admissionDatetime', header: 'Date', type:'date' },
             { field: 'patientId', header: 'Patient ID' },
             { field: 'patientName', header: 'Patient Name' },
-            { field: 'doctorName', header: 'Doctor' },
-            { field: 'packageName', header: 'Package' },
-            { field: 'insuranceName', header: 'Insurance' },
-            { field: 'policyNumber', header: 'POlicy Number' },
-            { field: 'contactName', header: 'Contact Name' },
-            { field: 'contactRelation', header: 'Contact Relation' },
-            { field: 'contactPhone', header: 'Contant Phone' },
-            { field: 'contactAddress', header: 'Contant Address' },
+            
             { field: 'status', header: 'Status', type:'string' }
         ];
     
@@ -59,43 +54,43 @@ export class PatientAdmissionList implements OnInit, OnDestroy {
             
             parameters.push('e.status = |status|0|Integer')
             
-            this.genericService.getAllByCriteria('PAtientAdmission', parameters)
-              .subscribe((data: PatientAdmission[]) => 
+            this.genericService.getAllByCriteria('Admission', parameters)
+              .subscribe((data: Admission[]) => 
               { 
-                this.patientAdmissions = data 
+                this.admissions = data 
               },
               error => console.log(error),
-              () => console.log('Get all Patient Admission complete'));
+              () => console.log('Get all Admission complete'));
           });
   }
  
   
   ngOnDestroy() {
-    this.patientAdmissions = null;
+    this.admissions = null;
   }
   
-  edit(patientAdmissionId : number) {
+  edit(admissionId : number) {
     try {
       let navigationExtras: NavigationExtras = {
         queryParams: {
-          "patientAdmissionId": patientAdmissionId,
+          "admissionId": admissionId,
         }
       }
-      this.router.navigate(["/admin/patientAdmissionDetails"], navigationExtras);
+      this.router.navigate(["/admin/adminAdmission"], navigationExtras);
     }
     catch (e) {
       console.log(e);
     }
   }
 
-  delete(patientAdmissionId : number) {
+  delete(admissionId : number) {
     try {
       let navigationExtras: NavigationExtras = {
         queryParams: {
-          "patientAdmissionId": patientAdmissionId,
+          "admissionId": admissionId,
         }
       }
-      this.router.navigate(["/admin/patientAdmissionDetails"], navigationExtras);
+      this.router.navigate(["/admin/admissionDetails"], navigationExtras);
     }
     catch (e) {
       console.log(e);

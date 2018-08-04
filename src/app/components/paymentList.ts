@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../app.constants';
+import { Admission } from '../models/admission';
 import { Payment } from '../models/payment';
 import { Cookie } from 'ng2-cookies/ng2-cookies'; 
-import { GenericService } from '../services';
+import { GenericService, AppointmentService } from '../services';
 
 @Component({
   selector: 'app-payment-list',
@@ -23,6 +24,7 @@ export class PaymentList implements OnInit, OnDestroy {
   
   constructor
     (
+    private appointmentService: AppointmentService,
     private genericService: GenericService,
     private changeDetectorRef: ChangeDetectorRef,
     private router: Router,
@@ -82,4 +84,6 @@ export class PaymentList implements OnInit, OnDestroy {
     }
   }
 
+  
+ 
  }

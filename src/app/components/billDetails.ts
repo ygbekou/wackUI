@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@ang
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../app.constants';
 import { Appointment } from '../models/appointment';
-import { PatientAdmission } from '../models/patientAdmission';
+import { Admission } from '../models/admission';
 import { Bill } from '../models/bill';
 import { BillPayment } from '../models/billPayment';
 import { BillService } from '../models/billService';
@@ -39,7 +39,6 @@ export class BillDetails implements OnInit, OnDestroy {
   SELECT_OPTION: string = Constants.SELECT_OPTION;
   
   patient: Patient = new Patient();
-  //billPayments: BillPayment[] = [];
   
   
   constructor
@@ -82,7 +81,7 @@ export class BillDetails implements OnInit, OnDestroy {
         .queryParams
         .subscribe(params => {          
           
-          this.bill.patientAdmission = new PatientAdmission();
+          this.bill.admission = new Admission();
           this.bill.appointment = new Appointment();
           this.addRow();
           this.addPaymentRow();

@@ -61,10 +61,25 @@ export class AdminMenu implements OnInit {
   public packageList: string;
   public payerTypeDetails: string;
   public payerTypeList: string;
+  public doctorOrderTypeDetails: string;
+  public doctorOrderTypeList: string;
+  public doctorOrderPriorityDetails: string;
+  public doctorOrderPriorityList: string;
+  public doctorOrderKindDetails: string;
+  public doctorOrderKindList: string;
   public billDetails: string;
   public billList: string;
   public vitalSignDetails: string;
   public vitalSignList: string;
+  public doctorOrderDetails: string;
+  public doctorOrderList: string;
+  public admissionDetails: string;
+  public visitDetails: string;
+  public admissionList: string;
+  public doctorTransfer: string;
+  public bedTransfer: string;
+  public adminBedStatus: string;
+  public adminReference: string;
   public adminMain: string;
   public adminProfile: string;
   user: User;
@@ -78,8 +93,16 @@ export class AdminMenu implements OnInit {
   ) {
     
     this.menus["appointmentModule"] = ['adminPatient', 'patientList', 'scheduleDetails', 'scheduleList', 'appointmentScheduler'];
-    this.menus["outpatientModule"] = ['payerTypeDetails', 'payerTypeList', 'adminPatient', 'patientList', 'prescriptionDetails', 
-      'prescriptionList', 'billDetails', 'billList', 'vitalSignDetails', 'vitalSignList'];
+    this.menus["outpatientModule"] = ['payerTypeDetails', 'payerTypeList', 'doctorOrderTypeDetails', 'doctorOrderTypeList', 
+      'doctorOrderPriorityDetails', 'doctorOrderPriorityList', 'doctorOrderKindDetails', 'doctorOrderKindList', 'adminPatient', 
+      'patientList', 'prescriptionDetails', 'prescriptionList', 'billDetails', 'billList', 'vitalSignDetails', 'vitalSignList', 
+      'doctorOrderDetails', 'doctorOrderList', 'visitDetails'];
+    this.menus["inpatientModule"] = ['departmentDetails', 'departmentList', 'adminBedStatus', 'adminReference', 'diagnosisDetails', 
+      'diagnosisList', 'payerTypeDetails', 'payerTypeList', 'doctorDetails', 'doctorList', 'doctorOrderTypeDetails', 'doctorOrderTypeList', 
+      'manufacturerDetails', 'manufacturerList', 'medicineCategoryDetails', 'medicineCategoryList', 'medicineDetails', 'medicineList',
+      'doctorOrderPriorityDetails', 'doctorOrderPriorityList', 'doctorOrderKindDetails', 'doctorOrderKindList', 'adminPatient', 
+      'patientList', 'prescriptionDetails', 'prescriptionList', 'billDetails', 'billList', 'vitalSignDetails', 'vitalSignList', 
+      'doctorOrderDetails', 'doctorOrderList', 'admissionDetails', 'admissionList', 'doctorTransfer', 'bedTransfer'];
 
   }
 
@@ -140,12 +163,27 @@ export class AdminMenu implements OnInit {
         this.packageList = params['packageList'];
         this.payerTypeDetails = params['payerTypeDetails'];
         this.payerTypeList = params['payerTypeList'];
+        this.doctorOrderTypeDetails = params['doctorOrderTypeDetails'];
+        this.doctorOrderTypeList = params['doctorOrderTypeList'];
+        this.doctorOrderPriorityDetails = params['doctorOrderPriorityDetails'];
+        this.doctorOrderPriorityList = params['doctorOrderPriorityList'];
+        this.doctorOrderKindDetails = params['doctorOrderKindDetails'];
+        this.doctorOrderKindList = params['doctorOrderKindList'];
         this.billDetails = params['billDetails'];
         this.billList = params['billList'];
         this.vitalSignDetails = params['vitalSignDetails'];
         this.vitalSignList = params['vitalSignList'];
+        this.doctorOrderDetails = params['doctorOrderDetails'];
+        this.doctorOrderList = params['doctorOrderList'];
+        this.admissionDetails = params['admissionDetails'];
+        this.admissionList = params['admissionList'];
+        this.doctorTransfer = params['doctorTransfer'];
+        this.bedTransfer = params['bedTransfer'];
+        this.adminBedStatus = params['adminBedStatus'];
+        this.adminReference = params['adminReference'];
         this.adminMain = params['adminMain'];
         this.adminProfile = params['adminProfile'];
+        this.visitDetails = params['visitDetails'];
       })
   }
   

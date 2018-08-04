@@ -39,15 +39,14 @@ export class VitalSignList implements OnInit, OnDestroy {
             { field: 'vitalSignDatetime', header: 'Date', type:'date' },
             { field: 'patientId', header: 'Patient ID' },
             { field: 'patientName', header: 'Patient Name' },
-            { field: 'vitalSignDatatime', header: 'Date Time', type: 'Date' },
             { field: 'temperature', header: 'Temperature' },
             { field: 'pulse', header: 'Pulse' },
             { field: 'respiration', header: 'Respiration' },
             { field: 'bloodPressure', header: 'Blood Pressure' },
             { field: 'bloodSugar', header: 'Blood Sugar' },
             { field: 'pain', header: 'Pain' },
-            { field: 'weight', header: 'Weight' },
-            { field: 'height', header: 'Height' },
+            { field: 'weight', header: 'Weight(pound)' },
+            { field: 'height', header: 'Height(in)' },
             { field: 'bmi', header: 'BMI' }
         ];
     

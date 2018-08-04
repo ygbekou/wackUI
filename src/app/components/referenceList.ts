@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { Reference } from '../models/reference';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../app.constants';
@@ -6,7 +6,7 @@ import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { User } from '../models/user';  
-import { GenericService } from '../services';
+import { GenericService, GlobalEventsManager } from '../services';
 
 @Component({
   selector: 'app-reference-list',
@@ -22,38 +22,49 @@ export class ReferenceList implements OnInit, OnDestroy {
   
   referenceType: string = null;
   parentId: number = null;
+  hiddenMenu: boolean = false;
+  @Output() referenceIdEvent = new EventEmitter<string>();
   
   DETAIL: string = Constants.DETAIL;
   ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
+  ADD_LABEL: string = Constants.ADD_LABEL; 
   
   constructor
     (
     private genericService: GenericService,
+    private globalEventsManager: GlobalEventsManager,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
     ) {
-
-    
   }
 
   ngOnInit(): void {
     this.cols = [
             { field: 'name', header: 'Name' },
             { field: 'description', header: 'Description' },
-            { field: 'status', header: 'Status' }
+            { field: 'statusDesc', header: 'Status' }
         ];
     
     this.route
         .queryParams
         .subscribe(params => {
           this.referenceType = params['referenceType'];
+          if (this.referenceType == null) {
+            this.referenceType = this.globalEventsManager.selectedReferenceType;
+            this.hiddenMenu = true;
+          } else {
+            this.hiddenMenu = false;
+          }
+          
           this.parentId = params['parentId'];
+          if (this.parentId == null) {
+            this.parentId = this.globalEventsManager.selectedParentId;
+          } 
           
           let parameters: string [] = []; 
             
-          if (this.parentId != null) {
+          if (this.parentId != null && this.referenceType == 'Category') {
             parameters.push('e.parent.id = |parentId|' + this.parentId + '|Long')
           } 
           
@@ -76,17 +87,22 @@ export class ReferenceList implements OnInit, OnDestroy {
   
   edit(referenceId : number, referenceType) {
     try {
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          "referenceId": referenceId,
-          "referenceType": referenceType
+      if (this.hiddenMenu) {
+        this.referenceIdEvent.emit(referenceId + '');
+      } else {
+        let navigationExtras: NavigationExtras = {
+          queryParams: {
+            "referenceId": referenceId,
+            "referenceType": referenceType
+          }
         }
+        this.router.navigate(["/admin/referenceDetails"], navigationExtras);
       }
-      this.router.navigate(["/admin/referenceDetails"], navigationExtras);
     }
     catch (e) {
       console.log(e);
     }
+    
   }
 
   delete(referenceId : number) {

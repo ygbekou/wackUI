@@ -1,0 +1,53 @@
+<div role="main" class="main">
+	<section
+		class="parallax section section-text-light section-parallax section-center mt-0 mb-5"
+		data-plugin-parallax data-plugin-options="{'speed': 1.5}"
+		data-image-src="assets/images/slides/bg-top.jpg">
+	</section>
+
+		<div class="container" style="padding-left: 10px; max-width: 100%;">
+	
+	<div class="ui-grid-row">
+		<div class="ui-g-2 ui-sm-4">
+			<app-admin-menu></app-admin-menu>
+		</div>
+		<div class="ui-g-10 ui-sm-8" style="padding: 15px;">
+			
+			<p-tabView (onChange)="onTabChange($event)"> 
+			 	<p-tabPanel header="Symptom Group">
+			    	<div *ngIf="activeTab == 0">
+				        <app-reference-details></app-reference-details>
+				        <br/> 
+				        <br/>
+				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Category')"></app-reference-list>
+				    </div>
+			    </p-tabPanel>
+			    <p-tabPanel header="Symptom">
+			    	<div *ngIf="activeTab == 1">
+				        <app-referenceWithCategory-details></app-referenceWithCategory-details>
+				        <br/> 
+				        <br/>
+				        <app-referenceWithCategory-list (referenceWithCategoryIdEvent)="onReferenceWithCategorySelected($event, 'Symptom')"></app-referenceWithCategory-list>
+				    </div>
+			    </p-tabPanel>
+			    <p-tabPanel header="Allergy Type">
+			    	<div *ngIf="activeTab == 2">
+				        <app-reference-details></app-reference-details>
+				        <br/> 
+				        <br/>
+				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Category')"></app-reference-list>
+				    </div>
+			    </p-tabPanel>
+			    <p-tabPanel header="Allergy">
+			    	<div *ngIf="activeTab == 3">
+				        <app-referenceWithCategory-details></app-referenceWithCategory-details>
+				        <br/> 
+				        <br/>
+				        <app-referenceWithCategory-list (referenceWithCategoryIdEvent)="onReferenceWithCategorySelected($event, 'Allergy')"></app-referenceWithCategory-list>
+				    </div>
+			    </p-tabPanel>
+			</p-tabView>
+		</div>
+
+	</div>
+</div>

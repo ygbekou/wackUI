@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../app.constants';
 import { Appointment } from '../models/appointment';
@@ -20,7 +20,7 @@ export class VitalSignDetails implements OnInit, OnDestroy {
   
   public error: String = '';
   displayDialog: boolean;
-  vitalSign: VitalSign = new VitalSign();
+  @Input() vitalSign: VitalSign = new VitalSign();
  
   appointmentDropdown: AppointmentDropdown;
   
@@ -59,6 +59,7 @@ export class VitalSignDetails implements OnInit, OnDestroy {
                   .subscribe(result => {
                 if (result.id > 0) {
                   this.vitalSign = result
+                  this.vitalSign.vitalSignDatetime = new Date(this.vitalSign.vitalSignDatetime);
                   this.patient = this.vitalSign.appointment.patient;
                 }
                 else {
@@ -85,8 +86,7 @@ export class VitalSignDetails implements OnInit, OnDestroy {
         .subscribe(result => {
           alert(result.id)
           if (result.id > 0) {
-            this.vitalSign = result
-            console.info(this.vitalSign);
+            this.vitalSign = result;
           }
           else {
             this.error = Constants.saveFailed;

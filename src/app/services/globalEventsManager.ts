@@ -12,6 +12,11 @@ export class GlobalEventsManager {
     currentModuleName = this.moduleNameSource.asObservable();
     currentPatientId = this.patientIdSource.asObservable();
   
+    selectedReferenceType: string;
+    selectedReferenceWithCategoryType: string;
+    selectedParentId: number;
+    selectedAdmissionId: number;
+  
     constructor() {
 
     }

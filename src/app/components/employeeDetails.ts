@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Department } from '../models/department';
 import { Constants } from '../app.constants';
@@ -18,6 +18,9 @@ import { GenericService, UserService } from '../services';
   providers: [GenericService, DepartmentDropdown, UserGroupDropdown, CountryDropdown]
 })
 export class EmployeeDetails implements OnInit, OnDestroy {
+  
+  @ViewChild('uploadFile') input: ElementRef;
+  formData = new FormData();
   
   public error: String = '';
   displayDialog: boolean;
@@ -86,9 +89,18 @@ export class EmployeeDetails implements OnInit, OnDestroy {
   }
 
   save() {
+    this.formData = new FormData();
+    let inputEl = this.input.nativeElement;
+    if (inputEl.files.length == 0) return;
+    
+    let files :FileList = inputEl.files;
+    for(var i = 0; i < files.length; i++){
+        this.formData.append('file', files[i], files[i].name);
+    }
+    
     try {
       this.error = '';
-      this.userService.saveEmployee(this.employee)
+      this.userService.saveEmployee(this.employee, this.formData)
         .subscribe(result => {
           if (result.id > 0) {
             this.employee = result

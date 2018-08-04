@@ -1,11 +1,11 @@
 import { Appointment } from './appointment';
 import { BillPayment } from './billPayment';
 import { BillService } from './billService';
-import { PatientAdmission } from './patientAdmission';
+import { Admission } from './admission';
 
 export class Bill {
   id: number;
-  patientAdmission: PatientAdmission;
+  admission: Admission;
   appointment: Appointment;
   billDate: Date = new Date();
   subTotal: number;

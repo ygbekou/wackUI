@@ -91,14 +91,20 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  public saveEmployee = (employee : Employee): Observable<Employee> => {
+  public saveEmployee = (employee : Employee, formData: FormData): Observable<Employee> => {
     
+      let head = new Headers();
       let toAdd = JSON.stringify(employee);
       let re = /\"/gi;
       let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
+    
+    formData.append('dto', new Blob([toSend],
+      {
+          type: "application/json"
+      }));
       
       let actionUrl = Constants.apiServer + '/service/user/Employee/save';
-      return this.http.post(actionUrl, toSend, { headers: this.headers })
+      return this.http.post(actionUrl, formData, { headers: head })
         .map((response: Response) => {
             if (response && response.json()) {
               const error = response.json() && response.json().error;

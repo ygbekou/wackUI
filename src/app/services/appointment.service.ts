@@ -26,20 +26,6 @@ export class AppointmentService {
       .catch(this.handleError);
   }
 
-  public savePrescription = (prescription : Prescription): Observable<Prescription> => {
-    
-      let toAdd = JSON.stringify(prescription);
-      let re = /\"/gi;
-      let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
-      
-      let actionUrl = Constants.apiServer + '/service/appointment/prescription/save';
-      return this.http.post(actionUrl, toSend, { headers: this.headers })
-        .map((response: Response) => {
-            return response.json();
-        })
-        .catch(this.handleError);
-   }
-  
   private handleError(error: Response) {
     console.error(error);
     return Observable.throw(error.json().error || 'Server error');

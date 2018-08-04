@@ -2,6 +2,7 @@ import { Country } from './country';
 import { Insurance } from './insurance';
 import { Reference } from './reference';
 import { User } from './user';
+import { VitalSign } from './vitalSign';
 
 export class Patient {
   id: number;
@@ -9,9 +10,12 @@ export class Patient {
   user: User;
   religion: Reference;
   occupation: Reference;
+  maritalStatus: Reference;
   nationality: Country;
   contact: string;
   contactPhone: string;
+  referral: string;
+  referralPhone: string;
   medicalHistory: string;
   name: string;
   bloodGroup: string;
@@ -24,4 +28,16 @@ export class Patient {
   insurance: Insurance;
   policyNumber: string;
   insuranceExpiryDate: Date;
+  
+  payerTypeName: string;
+  maritalStatusName: string;
+  occupationName: string;
+  nationalityName: string;
+  
+  vitalSign: VitalSign;
+  
+  constructor() {
+    this.user = new User();
+    this.vitalSign = new VitalSign();
+  }
 }

@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../app.constants';
+import { Admission } from '../models/admission';
 import { Appointment } from '../models/appointment';
 import { CaseStudy } from '../models/caseStudy';
 import { Medicine } from '../models/medicine';
 import { Patient } from '../models/patient';
 import { Prescription } from '../models/prescription';
+import { Diagnosis } from '../models/diagnosis';
 import { PrescriptionDiagnosis } from '../models/prescriptionDiagnosis';
 import { PrescriptionMedicine } from '../models/prescriptionMedicine';
 import { EditorModule } from 'primeng/editor';
@@ -13,12 +15,12 @@ import { DoctorDropdown, MedicineDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { User } from '../models/user';  
-import { GenericService, AppointmentService } from '../services';
+import { GenericService, AdmissionService, GlobalEventsManager } from '../services';
 
 @Component({
   selector: 'app-prescription-details',
   templateUrl: '../pages/prescriptionDetails.html',
-  providers: [GenericService, AppointmentService, MedicineDropdown]
+  providers: [GenericService, AdmissionService, MedicineDropdown]
 })
 export class PrescriptionDetails implements OnInit, OnDestroy {
   
@@ -40,8 +42,9 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
   
   constructor
     (
+      private globalEventsManager: GlobalEventsManager,
       private genericService: GenericService,
-      private appointmentService: AppointmentService,
+      private admissionService: AdmissionService,
       private mdDropdown: MedicineDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
@@ -56,7 +59,10 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
      this.medicineCols = [
             { field: 'medicine', header: 'Name' },
             { field: 'type', header: 'Type' },
-            { field: 'instructions', header: 'Instructions' }
+            { field: 'dosage', header: 'Dosage' },
+            { field: 'quantity', header: 'Quantity' },
+            { field: 'frequency', header: 'Frequency' },
+            { field: 'numberOfDays', header: 'Number Of Days' }
         ];
     
      this.diagnosisCols = [
@@ -69,9 +75,7 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
         .queryParams
         .subscribe(params => {          
           
-          this.prescription.patient = new Patient();
-          this.prescription.patient.user = new User();
-          this.prescription.appointment = new Appointment();
+          this.prescription.admission = new Admission();
           let pm =  new PrescriptionMedicine();
           pm.medicine = new Medicine();
           this.prescription.prescriptionMedicines.push(pm);
@@ -106,7 +110,9 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
     
     try {
       this.error = '';
-      this.appointmentService.savePrescription(this.prescription)
+      this.prescription.admission = new Admission();
+      this.prescription.admission.id = this.globalEventsManager.selectedAdmissionId;
+      this.admissionService.savePrescription(this.prescription)
         .subscribe(result => {
           alert(result.id)
           if (result.id > 0) {
@@ -124,21 +130,19 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
     }
   }
   
-  lookUpPatient() {
-    
-    let parameters: string [] = []; 
-            
-    parameters.push('e.matricule = |matricule|' + this.prescription.patient.matricule + '|String')
-    
-    this.genericService.getAllByCriteria('Patient', parameters)
-      .subscribe((data: Patient[]) => 
-      { 
-        if (data.length > 0) {
-          this.prescription.patient = data[0];
-        }
-      },
-      error => console.log(error),
-      () => console.log('Get Patient complete'));
+  
+  getPrescription(prescriptionId: number) {
+    this.admissionService.getPrescription(prescriptionId)
+        .subscribe(result => {
+      if (result.id > 0) {
+        this.prescription = result
+        this.prescription.prescriptionDatetime = new Date(this.prescription.prescriptionDatetime);
+      }
+      else {
+        this.error = Constants.saveFailed;
+        this.displayDialog = true;
+      }
+    })
   }
-
- }
+  
+}

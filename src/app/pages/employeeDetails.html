@@ -36,7 +36,7 @@
 					<p-accordionTab header="Demographic Info" selected="true">
 
 						<div class="ui-grid-row">
-							<div class="ui-grid-col-6 ui-sm-12">
+							<div class="ui-grid-col-4 ui-sm-12">
 								<div class="form-group">
 									<label i18n="@@userName" for="userName">User Name<font
 										color="red">*</font>
@@ -44,13 +44,23 @@
 										[(ngModel)]="employee.user.userName" name="userName" #userName="ngModel">
 								</div>
 							</div>
-							<div class="ui-grid-col-6 ui-sm-12">
+							<div class="ui-grid-col-4 ui-sm-12">
 								<div class="form-group">
 									<label i18n="@@password" for="password1">Mot de Passe<font
 										color="red">*</font></label> <input type="password" pPassword
 										class="form-control" id="password1"
 										[(ngModel)]="employee.user.password" name="password1"
 										#password1="ngModel">
+								</div>
+							</div>
+							<div class="ui-grid-col-4 ui-sm-12">
+								<div class="ui-grid-col-2">
+									<img class="thumb" src="assets/images/User/{{employee.user.picture}}" alt="" />
+								</div>
+								<div class="ui-grid-col-12 ui-sm-12">
+									<div class="form-group">
+										<input type="file" #uploadFile [attr.multiple]="multiple ? true : null" >
+									</div>
 								</div>
 							</div>
 						</div>

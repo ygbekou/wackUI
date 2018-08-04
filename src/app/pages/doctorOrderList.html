@@ -31,7 +31,7 @@
 			<app-admin-menu></app-admin-menu>
 		</div>
 		<div class="ui-g-10 ui-sm-8" style="padding: 15px;">
-			<p-table [columns]="cols" [value]="prescriptions">
+			<p-table [columns]="cols" [value]="doctorOrders">
 			    <ng-template pTemplate="header" let-columns>
 			        <tr>
 			            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
@@ -44,7 +44,12 @@
 			    <ng-template pTemplate="body" let-rowData let-columns="columns">
 			        <tr>			           
 			            <td *ngFor="let col of columns">
-			                {{rowData[col.field]}}
+			            	<div *ngIf="col.type != 'date'">
+			                	{{rowData[col.field]}}
+			                </div>
+			                <div *ngIf="col.type == 'date'">
+			                	{{rowData[col.field]  | date:'dd/MM/yyyy hh:mm'}}
+			                </div>
 			            </td>
 			            <td>
 			            	<button type="button" pButton icon="fa-edit" style="float: left"

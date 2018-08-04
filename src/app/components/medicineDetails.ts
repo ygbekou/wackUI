@@ -8,7 +8,7 @@ import { EditorModule } from 'primeng/editor';
 import { CategoryDropdown, ManufacturerDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
-import { GenericService } from '../services';
+import { GenericService, GlobalEventsManager } from '../services';
 
 @Component({
   selector: 'app-medicine-details',
@@ -34,6 +34,7 @@ export class MedicineDetails implements OnInit, OnDestroy {
   constructor
     (
       private genericService: GenericService,
+      private globalEventsManager: GlobalEventsManager,
       private ctgDropdown: CategoryDropdown,
       private mfctDropdown: ManufacturerDropdown,
       private changeDetectorRef: ChangeDetectorRef,
@@ -42,6 +43,7 @@ export class MedicineDetails implements OnInit, OnDestroy {
     ) {
       this.categoryDropdown = ctgDropdown;
       this.manufacturerDropdown = mfctDropdown;
+      this.categoryDropdown.getAllCategories(1);
   }
 
   ngOnInit(): void {
