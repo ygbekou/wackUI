@@ -40,7 +40,8 @@ export class VisitDetails implements OnInit, OnDestroy {
   ROLE: string = Constants.ROLE;
   SELECT_OPTION: string = Constants.SELECT_OPTION;
   
-  allergyGroups: Reference[] = [];
+  vaccineGroups: Reference[] = [];
+  
   constructor
     (
       private genericService: GenericService,
@@ -54,19 +55,6 @@ export class VisitDetails implements OnInit, OnDestroy {
 
   
   ngOnInit(): void {
-    
-    
-    this.visitService.getActiveAllergies()
-      .subscribe((data: Reference[]) => 
-      { 
-        console.info(data)
-        if (data.length > 0) {
-          this.allergyGroups = data;
-        }
-      },
-      error => console.log(error),
-      () => console.log('Get Patient complete'));
-    
     
     let visitId = null;
     this.route
@@ -112,7 +100,13 @@ export class VisitDetails implements OnInit, OnDestroy {
   }
 
   save() {
-    alert(this.visit)
+ 
+    let selecteds = Object.keys(this.visit.allergies).filter((item, index) => {
+        return this.visit.allergies[item];
+    });
+    
+    
+    
     this.visit.patient = this.patient;
     try {
       this.error = '';

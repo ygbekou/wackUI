@@ -77,7 +77,9 @@ export class AdminReference implements OnInit {
       this.globalEventsManager.selectedParentId = 4;
       this.globalEventsManager.selectedReferenceWithCategoryType = "Allergy";
       this.categoryDropdown.getAllCategories(4);
-    }
+    } else if (evt.index == 4) {
+      this.globalEventsManager.selectedReferenceType = "Vaccine";
+    } 
   }
 
 

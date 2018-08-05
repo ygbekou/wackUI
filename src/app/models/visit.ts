@@ -12,10 +12,12 @@ export class Visit {
   
   vitalSign: VitalSign;
   allergies: Reference[];
+  vaccines: Reference[];
   
   constructor() {
     this.vitalSign = new VitalSign(); 
     this.allergies = [];
+    this.vaccines = [];
   }
   
 }

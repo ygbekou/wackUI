@@ -46,6 +46,14 @@
 				        <app-referenceWithCategory-list (referenceWithCategoryIdEvent)="onReferenceWithCategorySelected($event, 'Allergy')"></app-referenceWithCategory-list>
 				    </div>
 			    </p-tabPanel>
+			    <p-tabPanel header="Vaccine">
+			    	<div *ngIf="activeTab == 4">
+				        <app-reference-details></app-reference-details>
+				        <br/> 
+				        <br/>
+				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Vaccine')"></app-reference-list>
+				    </div>
+			    </p-tabPanel>
 			</p-tabView>
 		</div>
 

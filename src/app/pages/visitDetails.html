@@ -173,22 +173,12 @@
 					<br/>
 					<p-tabView (onChange)="onTabChange($event)"> 
 					 	<p-tabPanel header="VITAL/HISTORY">
-					 		<app-vitalSign-details [vitalSign]="visit.vitalSign"></app-vitalSign-details>
+					 		<app-vitalSign-details [vitalSign]="visit.vitalSign"></app-vitalSign-details>					 		
 					 		
-					 		ALLERGIES
-					 		<div class="ui-grid-row" *ngFor="let allergyGroup of allergyGroups">
-								<div class="ui-grid-col-1 ui-sm-12" >
-					 				{{allergyGroup.name}}:
-					 			</div>
-					 			<div class="ui-grid-col-11 ui-sm-12" >
-					 				<p-checkbox id="status" 
-					 					(checked)="visit.allergies && -1 !== visit.allergies.indexOf(allergy) ? 'checked' : '' "
-					 				 	label="{{allergy.name}}" (handleChange)="updateAllergy($event)"
-					 				 	*ngFor="let allergy of allergyGroup.childs; let i = index"></p-checkbox>
-					 			</div>
-					 		</div>
+					 		<app-allergy-details [allergies]="visit.allergies"></app-allergy-details>	
 					 		
-					 		
+					 		<app-vaccine-details [vaccines]="visit.vaccines"></app-vaccine-details>	
+					 			 		 		
 						</p-tabPanel>
 						<p-tabPanel header="SYMPTOMS">
 						</p-tabPanel>

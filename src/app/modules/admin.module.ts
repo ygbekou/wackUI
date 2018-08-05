@@ -64,6 +64,8 @@ import { CategoryDropdown } from '../components/dropdowns';
 import {AdminPatient} from '../components/adminPatient';
 import {AdminAdmission} from '../components/adminAdmission';
 import {VisitDetails} from '../components/visitDetails';
+import {AllergyDetails} from '../components/allergyDetails';
+import {VaccineDetails} from '../components/vaccineDetails';
 
 const routes: Routes = [
   {path: 'adminMain', component: AdminMain},
@@ -136,7 +138,7 @@ const routes: Routes = [
     ReferenceList, ReferenceWithCategoryDetails, ReferenceWithCategoryList, MedicineDetails, MedicineList, 
     PrescriptionDetails, PrescriptionList, AccountDetails, AccountList,
     InvoiceDetails, InvoiceList, PaymentDetails, PaymentList, InsuranceDetails, InsuranceList, ServiceDetails,
-    ServiceList, PackageDetails, PackageList, BillDetails, BillList, VitalSignDetails, VitalSignList,
+    ServiceList, PackageDetails, PackageList, BillDetails, BillList, VitalSignDetails, VitalSignList, AllergyDetails, VaccineDetails,
     DoctorOrderDetails, DoctorOrderList, AdmissionDetails, AdmissionList, DoctorTransfer, FloorDetails, FloorList,
     RoomDetails, RoomList, BedDetails, BedList, AdminPatient, AdminAdmission, AdminBedStatus, AdmissionDiagnoses,
     AdminReference, VisitDetails],
