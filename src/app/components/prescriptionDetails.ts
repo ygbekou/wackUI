@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../app.constants';
 import { Admission } from '../models/admission';
@@ -15,6 +15,7 @@ import { DoctorDropdown, MedicineDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { User } from '../models/user';  
+import { Visit } from '../models/visit';
 import { GenericService, AdmissionService, GlobalEventsManager } from '../services';
 
 @Component({
@@ -39,6 +40,9 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
   COUNTRY: string = Constants.COUNTRY;
   ROLE: string = Constants.ROLE;
   SELECT_OPTION: string = Constants.SELECT_OPTION;
+  
+  @Input() admission: Admission;
+  @Input() visit: Visit;
   
   constructor
     (
@@ -75,7 +79,6 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
         .queryParams
         .subscribe(params => {          
           
-          this.prescription.admission = new Admission();
           let pm =  new PrescriptionMedicine();
           pm.medicine = new Medicine();
           this.prescription.prescriptionMedicines.push(pm);
@@ -110,8 +113,9 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
     
     try {
       this.error = '';
-      this.prescription.admission = new Admission();
-      this.prescription.admission.id = this.globalEventsManager.selectedAdmissionId;
+      alert(this.visit.id)
+      this.prescription.visit = this.visit;
+      
       this.admissionService.savePrescription(this.prescription)
         .subscribe(result => {
           alert(result.id)

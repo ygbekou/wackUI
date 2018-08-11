@@ -1,11 +1,13 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../app.constants';
+import { Admission } from '../models/admission';
 import { DoctorOrder } from '../models/doctorOrder';
 import { VitalSign } from '../models/vitalSign';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { User } from '../models/user';  
+import { Visit } from '../models/visit';
 import { GenericService } from '../services';
 
 @Component({
@@ -22,7 +24,11 @@ export class DoctorOrderList implements OnInit, OnDestroy {
   
   DETAIL: string = Constants.DETAIL;
   ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
+  ADD_LABEL: string = Constants.ADD_LABEL;
+    
+  @Input() visit: Visit;
+  @Input() admission: Admission;
+  @Output() doctorOrderIdEvent = new EventEmitter<string>();
   
   constructor
     (
@@ -38,8 +44,6 @@ export class DoctorOrderList implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.cols = [
             { field: 'doctorOrderDatetime', header: 'Date Time', type:'date' },
-            { field: 'patientId', header: 'Patient ID' },
-            { field: 'patientName', header: 'Patient Name' },
             { field: 'doctorOrderTypeName', header: 'Type' },
             { field: 'description', header: 'Description' }
         ];
@@ -48,7 +52,17 @@ export class DoctorOrderList implements OnInit, OnDestroy {
         .queryParams
         .subscribe(params => {          
           
-            this.genericService.getAll('DoctorOrder')
+            let parameters: string [] = []; 
+            
+            parameters.push('e.status = |status|0|Integer')
+            if (this.visit.id > 0)  {
+              parameters.push('e.visit.id = |visitId|' + this.visit.id + '|Long')
+            } 
+            if (this.admission.id > 0)  {
+              parameters.push('e.admission.id = |admissionId|' + this.admission.id + '|Long')
+            } 
+            
+            this.genericService.getAllByCriteria('DoctorOrder', parameters)
               .subscribe((data: DoctorOrder[]) => 
               { 
                 this.doctorOrders = data 
@@ -63,18 +77,8 @@ export class DoctorOrderList implements OnInit, OnDestroy {
     this.doctorOrders = null;
   }
   
-  edit(doctorOrderId : number) {
-    try {
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          "doctorOrderId": doctorOrderId,
-        }
-      }
-      this.router.navigate(["/admin/doctorOrderDetails"], navigationExtras);
-    }
-    catch (e) {
-      console.log(e);
-    }
+  edit(doctorOrderId: string) {
+    this.doctorOrderIdEvent.emit(doctorOrderId);
   }
 
   delete(doctorOrderId : number) {

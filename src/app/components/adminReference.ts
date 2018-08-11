@@ -7,6 +7,7 @@ import { Patient } from '../models/patient';
 import { UserGroup } from '../models/userGroup';
 import { GenericService, UserService, GlobalEventsManager } from '../services';
 import { CategoryDropdown } from './dropdowns';
+import { MedicineDetails } from './medicineDetails';
 import { ReferenceDetails } from './referenceDetails';
 import { ReferenceList } from './referenceList';
 import { ReferenceWithCategoryDetails } from './referenceWithCategoryDetails';
@@ -21,6 +22,8 @@ export class AdminReference implements OnInit {
 
   @ViewChild(ReferenceDetails) referenceDetails: ReferenceDetails;
   @ViewChild(ReferenceWithCategoryDetails) referenceWithCategoryDetails: ReferenceWithCategoryDetails;
+  @ViewChild(MedicineDetails) medicineDetails: MedicineDetails;
+  
   public user: User;
   public patient: Patient;
   public activeTab = 0;
@@ -60,6 +63,11 @@ export class AdminReference implements OnInit {
     this.referenceWithCategoryDetails.getReferenceWithCategory(referenceWithCategoryId, referenceWithCategoryType);
   }
   
+  onMedicineSelected($event) {
+    let medicineId = $event;
+    this.medicineDetails.getMedicine(medicineId);
+  }
+  
   onTabChange(evt) {
     this.activeTab = evt.index;
     if (evt.index == 0) {
@@ -79,8 +87,29 @@ export class AdminReference implements OnInit {
       this.categoryDropdown.getAllCategories(4);
     } else if (evt.index == 4) {
       this.globalEventsManager.selectedReferenceType = "Vaccine";
-    } 
-  }
+    } else if (evt.index == 5) {
+      this.globalEventsManager.selectedReferenceType = "MedicalHistory";
+    }  else if (evt.index == 6) {
+      this.globalEventsManager.selectedReferenceType = "SocialHistory";
+    } else if (evt.index == 7) {
+      this.globalEventsManager.selectedReferenceType = "PayerType";
+    } else if (evt.index == 8) {
+      this.globalEventsManager.selectedReferenceType = "DoctorOrderType";
+    } else if (evt.index == 9) {
+      this.globalEventsManager.selectedReferenceType = "DoctorOrderPriority";
+    } else if (evt.index == 10) {
+      this.globalEventsManager.selectedReferenceType = "DoctorOrderKind";
+    } else if (evt.index == 11) {
+      this.globalEventsManager.selectedReferenceType = "Department";
+    } else if (evt.index == 13) {
+      this.globalEventsManager.selectedParentId = Constants.CATEGORY_MEDICINE;
+      this.globalEventsManager.selectedReferenceType = "Category";
+      this.referenceDetails.parentId = Constants.CATEGORY_MEDICINE;
+    } else if (evt.index == 14) {
+      this.globalEventsManager.selectedParentId = Constants.CATEGORY_MEDICINE;
+      this.categoryDropdown.getAllCategories(Constants.CATEGORY_MEDICINE);
+    }
+  } 
 
 
 }

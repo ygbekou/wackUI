@@ -79,6 +79,19 @@ export class MedicineDetails implements OnInit, OnDestroy {
     this.medicine = null;
   }
 
+  getMedicine(medicineId: number) {
+    this.genericService.getOne(medicineId, 'Medicine')
+        .subscribe(result => {
+      if (result.id > 0) {
+        this.medicine = result
+      }
+      else {
+        this.error = Constants.saveFailed;
+        this.displayDialog = true;
+      }
+    })
+  }
+  
   save() {
     try {
       this.error = '';

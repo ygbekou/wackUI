@@ -53,6 +53,19 @@
 									</div>
 								</div>
 							</div>
+							<div class="ui-grid-col-4 ui-sm-12">
+								<div class="ui-grid-row">
+									<div class="ui-grid-col-3 ui-sm-12">
+										<label i18n="@@chiefOfComplain" for="chiefOfComplain">Chief Of Complain<font color="red">*</font></label> 
+									</div>
+									<div class="ui-grid-col-8 ui-sm-12">
+										<textarea pInputTextarea id="chiefOfComplain" rows="4" cols="40" pInputTextarea maxlength="1000" 
+											[(ngModel)]="visit.chiefOfComplain" #chiefOfComplain="ngModel"> </textarea>	
+									</div>
+									<div class="ui-grid-col-1 ui-sm-12">
+									</div>
+								</div>
+							</div>
 						</div>
 						<div class="ui-grid-row">
 							<div class="ui-grid-col-4 ui-sm-12">
@@ -173,14 +186,43 @@
 					<br/>
 					<p-tabView (onChange)="onTabChange($event)"> 
 					 	<p-tabPanel header="VITAL/HISTORY">
-					 		<app-vitalSign-details [vitalSign]="visit.vitalSign"></app-vitalSign-details>					 		
-					 		
-					 		<app-allergy-details [allergies]="visit.allergies"></app-allergy-details>	
-					 		
-					 		<app-vaccine-details [vaccines]="visit.vaccines"></app-vaccine-details>	
-					 			 		 		
+					 		<p-tabView> 
+					 			<p-tabPanel header="Vital Sign/Allergies">
+							 		<app-vitalSign-details [vitalSign]="visit.vitalSign"></app-vitalSign-details>					 							 		
+							 		<br/>
+							 		<br/>
+							 		<app-allergy-details [visit]="visit"></app-allergy-details>	
+							 		<br/>
+							 		<br/>
+							 		<app-vaccine-details [givenVaccines]="visit.givenVaccines"></app-vaccine-details>	
+							 	</p-tabPanel>
+							 	<p-tabPanel header="SYMPTOMS">
+							 		<app-symptom-details [visit]="visit"></app-symptom-details>	
+								</p-tabPanel>
+							 	<p-tabPanel header="Medical History">
+							 		<app-medicalHistory-details [visit]="visit"></app-medicalHistory-details>	
+							 	</p-tabPanel>
+							 	<p-tabPanel header="Social History">
+							 		<app-socialHistory-details [visit]="visit"></app-socialHistory-details>
+							 	</p-tabPanel>
+							 	<p-tabPanel header="Ocular History">
+							 	</p-tabPanel>
+					 		</p-tabView>
 						</p-tabPanel>
-						<p-tabPanel header="SYMPTOMS">
+						<p-tabPanel header="DOCTOR ORDERS" *ngIf="visit.id > 0">
+							<app-doctorOrder-details [visit]="visit"></app-doctorOrder-details>
+							<br/>
+						    <br/>
+						    <app-doctorOrder-list [visit]="visit" (doctorOrderIdEvent)="onDoctorOrderSelected($event)"></app-doctorOrder-list>							
+						</p-tabPanel>
+						<p-tabPanel header="DIAGNOSES" *ngIf="visit.id > 0">
+							<app-admissionDiagnoses [visit]="visit"></app-admissionDiagnoses>
+						</p-tabPanel>
+						<p-tabPanel header="PRESCRIPTIONS" *ngIf="visit.id > 0">
+							<app-prescription-details></app-prescription-details>
+					        <br/>
+					        <br/>
+					        <app-prescription-list [visit]="visit" (prescriptionIdEvent)="onPrescriptionSelected($event)"></app-prescription-list>
 						</p-tabPanel>
 						<p-tabPanel header="INVESTIGATIONS">
 						</p-tabPanel>

@@ -75,6 +75,7 @@ export class AdminMenu implements OnInit {
   public doctorOrderList: string;
   public admissionDetails: string;
   public visitDetails: string;
+  public visitList: string;
   public admissionList: string;
   public doctorTransfer: string;
   public bedTransfer: string;
@@ -93,16 +94,11 @@ export class AdminMenu implements OnInit {
   ) {
     
     this.menus["appointmentModule"] = ['adminPatient', 'patientList', 'scheduleDetails', 'scheduleList', 'appointmentScheduler'];
-    this.menus["outpatientModule"] = ['payerTypeDetails', 'payerTypeList', 'doctorOrderTypeDetails', 'doctorOrderTypeList', 
-      'doctorOrderPriorityDetails', 'doctorOrderPriorityList', 'doctorOrderKindDetails', 'doctorOrderKindList', 'adminPatient', 
-      'patientList', 'prescriptionDetails', 'prescriptionList', 'billDetails', 'billList', 'vitalSignDetails', 'vitalSignList', 
-      'doctorOrderDetails', 'doctorOrderList', 'visitDetails'];
-    this.menus["inpatientModule"] = ['departmentDetails', 'departmentList', 'adminBedStatus', 'adminReference', 'diagnosisDetails', 
-      'diagnosisList', 'payerTypeDetails', 'payerTypeList', 'doctorDetails', 'doctorList', 'doctorOrderTypeDetails', 'doctorOrderTypeList', 
-      'manufacturerDetails', 'manufacturerList', 'medicineCategoryDetails', 'medicineCategoryList', 'medicineDetails', 'medicineList',
-      'doctorOrderPriorityDetails', 'doctorOrderPriorityList', 'doctorOrderKindDetails', 'doctorOrderKindList', 'adminPatient', 
-      'patientList', 'prescriptionDetails', 'prescriptionList', 'billDetails', 'billList', 'vitalSignDetails', 'vitalSignList', 
-      'doctorOrderDetails', 'doctorOrderList', 'admissionDetails', 'admissionList', 'doctorTransfer', 'bedTransfer'];
+    
+    this.menus["outpatientModule"] = ['adminReference', 'adminPatient', 'patientList', 'billDetails', 'billList', 'visitDetails', 'visitList'];
+    
+    this.menus["inpatientModule"] = ['adminBedStatus', 'adminReference', 'doctorDetails', 'doctorList', 'adminPatient', 'patientList', 
+      'billDetails', 'billList', 'admissionDetails', 'admissionList', 'doctorTransfer', 'bedTransfer'];
 
   }
 
@@ -161,8 +157,6 @@ export class AdminMenu implements OnInit {
         this.serviceList = params['serviceList'];
         this.packageDetails = params['packageDetails'];
         this.packageList = params['packageList'];
-        this.payerTypeDetails = params['payerTypeDetails'];
-        this.payerTypeList = params['payerTypeList'];
         this.doctorOrderTypeDetails = params['doctorOrderTypeDetails'];
         this.doctorOrderTypeList = params['doctorOrderTypeList'];
         this.doctorOrderPriorityDetails = params['doctorOrderPriorityDetails'];
@@ -184,6 +178,7 @@ export class AdminMenu implements OnInit {
         this.adminMain = params['adminMain'];
         this.adminProfile = params['adminProfile'];
         this.visitDetails = params['visitDetails'];
+        this.visitList = params['visitList'];
       })
   }
   

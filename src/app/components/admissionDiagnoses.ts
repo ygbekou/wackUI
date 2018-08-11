@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Reference } from '../models/reference';
 import { Constants } from '../app.constants';
 import { Admission } from '../models/admission';
+import { Visit } from '../models/visit';
 import { AdmissionDiagnosis } from '../models/admissionDiagnosis';
 import { Diagnosis } from '../models/diagnosis';
 import { FileUploader } from './fileUploader';
@@ -15,7 +16,7 @@ import { GenericService, GlobalEventsManager, AdmissionService } from '../servic
 @Component({ 
   selector: 'app-admissionDiagnoses',
   templateUrl: '../pages/admissionDiagnoses.html',
-  providers: [GenericService, DiagnosisDropdown]
+  providers: [GenericService, AdmissionService, DiagnosisDropdown]
   
 }) 
 export class AdmissionDiagnoses implements OnInit, OnDestroy {
@@ -26,6 +27,9 @@ export class AdmissionDiagnoses implements OnInit, OnDestroy {
    
   diagnosisCols: any[];
   admissionDiagnoses: AdmissionDiagnosis[] = [];
+  parentId: number;
+  parentEntity: string;
+  entity: string;
   
   hiddenMenu: boolean = true;
   
@@ -34,8 +38,9 @@ export class AdmissionDiagnoses implements OnInit, OnDestroy {
   DETAIL: string = Constants.DETAIL;
   ADD_IMAGE: string = Constants.ADD_IMAGE;
   ADD_LABEL: string = Constants.ADD_LABEL;  
-  
+   
   @Input() admission: Admission;
+  @Input() visit: Visit;
   
   constructor
     (
@@ -62,52 +67,30 @@ export class AdmissionDiagnoses implements OnInit, OnDestroy {
     
     this.admissionDiagnoses.push(new AdmissionDiagnosis());
     
-    this.clear();
-    let admissionDiagnosisId = null;
-    this.route
-        .queryParams
-        .subscribe(params => {
-          admissionDiagnosisId = params['admissionDiagnosisId'];
-          
-          if (admissionDiagnosisId != null) {
-              this.genericService.getOne(admissionDiagnosisId, 'AdmissionDiagnosis')
-                  .subscribe(result => {
-                if (result.id > 0) {
-                  this.admissionDiagnosis = result
-                }
-                else {
-                  this.error = Constants.saveFailed;
-                  this.displayDialog = true;
-                }
-              })
-          }
-        });
-    
+    if (this.visit.id > 0){
+      this.parentId = this.visit.id;
+      this.parentEntity = 'visit';
+      this.entity = 'VisitDiagnosis';
+    }
+    if (this.admission.id > 0){
+      this.parentId = this.admission.id;
+      this.parentEntity = 'admission';
+      this.entity = 'AdmissionDiagnosis';
+    }
   }
   
   ngOnDestroy() {
     this.admissionDiagnosis = null;
   }
-
-  getAdmissionDiagnosis(admissionDiagnosisId: number) {
-    this.genericService.getOne(admissionDiagnosisId, 'AdmissionDiagnosis')
-        .subscribe(result => {
-      if (result.id > 0) {
-        this.admissionDiagnosis = result
-      }
-      else {
-        this.error = Constants.saveFailed;
-        this.displayDialog = true;
-      }
-    })
-  }
   
   saveDiagnosis(rowData) {
     rowData.admission = this.admission;
+    rowData.visit = this.visit;
+    
     try {
       this.error = '';
       
-      this.genericService.save(rowData, 'AdmissionDiagnosis')
+      this.genericService.save(rowData, this.entity)
         .subscribe(result => {
           if (result.id > 0) {
             rowData = result
@@ -129,8 +112,9 @@ export class AdmissionDiagnoses implements OnInit, OnDestroy {
     this.admissionDiagnosis.diagnosis = new Diagnosis()
   }
   
-  getAdmissionDiagnoses() {
-    this.admissionService.getAdmissionDiagnoses(+this.admission.id)
+  getDiagnoses() {
+    
+    this.admissionService.getDiagnoses(+this.parentId, this.parentEntity)
      .subscribe((data: AdmissionDiagnosis[]) => 
       { 
         this.admissionDiagnoses = data;
@@ -142,6 +126,6 @@ export class AdmissionDiagnoses implements OnInit, OnDestroy {
         }
       },
       error => console.log(error),
-      () => console.log('Get Patient Admission Diagnoses complete'));
+      () => console.log('Get Patient Diagnoses complete'));
   }
 }

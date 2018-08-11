@@ -1,8 +1,10 @@
 import { Admission } from './admission';
 import { Diagnosis } from './diagnosis';
+import { Visit } from './visit';
 
 export class AdmissionDiagnosis {
   admission: Admission;
+  visit: Visit;
   diagnosis: Diagnosis;
   instructions: string;
   

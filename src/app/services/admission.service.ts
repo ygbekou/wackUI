@@ -53,9 +53,9 @@ export class AdmissionService {
         .catch(this.handleError);
    }
   
-   public getAdmissionDiagnoses = (admissionId: number): Observable<AdmissionDiagnosis[]> => {
+   public getDiagnoses = (parentId: number, entity: string): Observable<AdmissionDiagnosis[]> => {
    
-      let actionUrl = Constants.apiServer + '/service/admission/diagnosis/' + admissionId + '/all';
+      let actionUrl = Constants.apiServer + '/service/' + entity + '/diagnosis/' + parentId + '/all';
       return this.http.get(actionUrl, { headers: this.headers })
         .map((response: Response) => {
             if (response && response.json()) {
@@ -69,9 +69,9 @@ export class AdmissionService {
         .catch(this.handleError);
    }
   
-  public getAdmissionPrescriptions = (admissionId: number): Observable<Prescription[]> => {
+  public getPrescriptions = (parentId: number, entity: string): Observable<Prescription[]> => {
    
-      let actionUrl = Constants.apiServer + '/service/admission/prescription/' + admissionId + '/all';
+      let actionUrl = Constants.apiServer + '/service/' + entity + '/prescription/' + parentId + '/all';
       return this.http.get(actionUrl, { headers: this.headers })
         .map((response: Response) => {
             if (response && response.json()) {

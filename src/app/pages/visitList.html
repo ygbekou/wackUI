@@ -31,26 +31,31 @@
 			<app-admin-menu></app-admin-menu>
 		</div>
 		<div class="ui-g-10 ui-sm-8" style="padding: 15px;">
-			<p-table [value]="departments">
-			    <ng-template pTemplate="header">
+			<p-table [columns]="cols" [value]="visits">
+			    <ng-template pTemplate="header" let-columns>
 			        <tr>
-			            <th *ngFor="let col of cols" [pSortableColumn]="col.field">
+			            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
 			                {{col.header}}
 			                <p-sortIcon [field]="col.field"></p-sortIcon>
 			            </th>
 			            <th>Action</th>
 			        </tr>
 			    </ng-template>
-			    <ng-template pTemplate="body" let-department>
-			        <tr>
-			            <td *ngFor="let col of cols">
-			                    {{department[col.field]}}
+			    <ng-template pTemplate="body" let-rowData let-columns="columns">
+			        <tr>			           
+			            <td *ngFor="let col of columns">
+			                <div *ngIf="col.type != 'date'">
+			                	{{rowData[col.field]}}
+			                </div>
+			                <div *ngIf="col.type == 'date'">
+			                	{{rowData[col.field]  | date:'dd/MM/yyyy hh:mm'}}
+			                </div>
 			            </td>
 			            <td>
 			            	<button type="button" pButton icon="fa-edit" style="float: left"
-								(click)="edit(department.id)"></button>
+								(click)="edit(rowData.id)"></button>
 							<button type="button" pButton icon="fa-eraser" style="float: left"
-								(click)="delete(department.id)"></button>
+								(click)="delete(rowData.id)"></button>
 			            </td>
 			        </tr>
 			    </ng-template>

@@ -2,8 +2,6 @@ import {Routes, RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {AdminMain} from '../components/adminMain';
 import {AdminAppointment} from '../components/adminAppointment';
-import {DepartmentDetails} from '../components/departmentDetails';
-import {DepartmentList} from '../components/departmentList';
 import {DocumentDetails} from '../components/documentDetails';
 import {DocumentList} from '../components/documentList';
 import {ScheduleDetails} from '../components/scheduleDetails';
@@ -64,14 +62,16 @@ import { CategoryDropdown } from '../components/dropdowns';
 import {AdminPatient} from '../components/adminPatient';
 import {AdminAdmission} from '../components/adminAdmission';
 import {VisitDetails} from '../components/visitDetails';
+import {VisitList} from '../components/visitList';
 import {AllergyDetails} from '../components/allergyDetails';
+import {SymptomDetails} from '../components/symptomDetails';
+import {MedicalHistoryDetails} from '../components/medicalHistoryDetails';
+import {SocialHistoryDetails} from '../components/socialHistoryDetails';
 import {VaccineDetails} from '../components/vaccineDetails';
 
 const routes: Routes = [
   {path: 'adminMain', component: AdminMain},
   {path: 'adminAppointment', component: AdminAppointment},
-  {path: 'departmentDetails', component: DepartmentDetails},
-  {path: 'departmentList', component: DepartmentList},
   {path: 'employeeDetails', component: EmployeeDetails},
   {path: 'employeeList', component: EmployeeList},
   {path: 'patientDetails', component: PatientDetails},
@@ -119,6 +119,7 @@ const routes: Routes = [
   {path: 'bedDetails', component: BedDetails},
   {path: 'bedList', component: BedList},
   {path: 'visitDetails', component: VisitDetails},
+  {path: 'visitList', component: VisitList},
   {path: 'adminPatient', component: AdminPatient},
   {path: 'adminAdmission', component: AdminAdmission},
   {path: 'adminBedStatus', component: AdminBedStatus},
@@ -132,18 +133,19 @@ const routes: Routes = [
 
   exports: [CommonSharedModule],
 
-  declarations: [FileUploader, AdminMenu, AdminMain, AdminAppointment, DepartmentDetails, DepartmentList, DocumentDetails,
+  declarations: [FileUploader, AdminMenu, AdminMain, AdminAppointment, DocumentDetails,
     DocumentList, EmployeeDetails, EmployeeList, PatientDetails, PatientList, ScheduleDetails, ScheduleList,
     AppointmentScheduler, AppointmentDetails, AppointmentList, CaseStudyDetails, CaseStudyList, ReferenceDetails,
     ReferenceList, ReferenceWithCategoryDetails, ReferenceWithCategoryList, MedicineDetails, MedicineList, 
     PrescriptionDetails, PrescriptionList, AccountDetails, AccountList,
     InvoiceDetails, InvoiceList, PaymentDetails, PaymentList, InsuranceDetails, InsuranceList, ServiceDetails,
-    ServiceList, PackageDetails, PackageList, BillDetails, BillList, VitalSignDetails, VitalSignList, AllergyDetails, VaccineDetails,
+    ServiceList, PackageDetails, PackageList, BillDetails, BillList, VitalSignDetails, VitalSignList, AllergyDetails, 
+    MedicalHistoryDetails, SocialHistoryDetails, VaccineDetails, SymptomDetails, 
     DoctorOrderDetails, DoctorOrderList, AdmissionDetails, AdmissionList, DoctorTransfer, FloorDetails, FloorList,
     RoomDetails, RoomList, BedDetails, BedList, AdminPatient, AdminAdmission, AdminBedStatus, AdmissionDiagnoses,
-    AdminReference, VisitDetails],
+    AdminReference, VisitDetails, VisitList],
 
-  providers: [DepartmentDetails, CategoryDropdown]
+  providers: [CategoryDropdown]
 })
 
 export class AdminModule {}

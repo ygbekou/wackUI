@@ -9,27 +9,23 @@ import { Visit } from '../models/visit';
 import { GenericService, GlobalEventsManager, VisitService } from '../services';
  
 @Component({
-  selector: 'app-allergy-details',
-  template: `ALLERGIES
-            <div class="ui-grid-row" *ngFor="let allergyGroup of allergyGroups">
-              <div class="ui-grid-col-1 ui-sm-12" >
-                {{allergyGroup.name}}:
-              </div>
-              <div class="ui-grid-col-11 ui-sm-12" >
-                <p-checkbox id="status" 
-                  [(ngModel)]="visit.selectedAllergies" [value]="allergy.id"
-                  label="{{allergy.name}}"
-                  *ngFor="let allergy of allergyGroup.childs; let i = index"></p-checkbox>
-              </div>
-            </div>`,
+  selector: 'app-medicalHistory-details',
+  template: `<div class="ui-grid-row">
+                <div class="ui-grid-col-11 ui-sm-12" >
+                  <p-checkbox id="status" 
+                    [(ngModel)]="visit.selectedMedicalHistories" [value]="medicalHistory.id"
+                    label="{{medicalHistory.name}}"
+                    *ngFor="let medicalHistory of medicalHistories; let i = index"></p-checkbox>
+                </div>
+              </div>`, 
   providers: [GenericService, VisitService]
 })
-export class AllergyDetails implements OnInit, OnDestroy {
+export class MedicalHistoryDetails implements OnInit, OnDestroy {
   
   public error: String = '';
   displayDialog: boolean;
   @Input() visit: Visit = new Visit();
-  allergyGroups: Reference[] = [];
+  medicalHistories: Reference[] = [];
  
   constructor
     (
@@ -43,20 +39,20 @@ export class AllergyDetails implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     
-    this.visitService.getActiveElements('allergy')
+    this.visitService.getActiveElements('medicalhistory')
       .subscribe((data: Reference[]) => 
       { 
         console.info(data)
         if (data.length > 0) {
-          this.allergyGroups = data;
+          this.medicalHistories = data;
         }
       },
       error => console.log(error),
-      () => console.log('Get ative allergies complete'));
+      () => console.log('Get ative medicalHistories complete'));
 
   }
   
   ngOnDestroy() {
-    this.allergyGroups = null;
+    this.medicalHistories = null;
   }
  }

@@ -220,7 +220,7 @@ export class AdmissionDetails implements OnInit, OnDestroy {
   onTabChange(evt) {
     this.activeTab = evt.index;
     if (evt.index == 1) {
-      this.admissionDiagnoses.getAdmissionDiagnoses();
+      this.admissionDiagnoses.getDiagnoses();
     } 
     else if (evt.index == 2) {
     } 

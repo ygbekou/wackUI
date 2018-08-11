@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@ang
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../app.constants';
 import { Country } from '../models/country';
+import { GivenVaccine } from '../models/givenVaccine';
 import { Patient } from '../models/patient';
 import { Visit } from '../models/visit';
 import { Reference } from '../models/reference';
@@ -12,6 +13,7 @@ import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, Mul
 import { User } from '../models/user';  
 import { GenericService, GlobalEventsManager, VisitService } from '../services';
 import { AdmissionDiagnoses } from './admissionDiagnoses';
+import { DoctorOrderDetails } from './doctorOrderDetails';
 import { PrescriptionDetails } from './prescriptionDetails';
 import { PrescriptionList } from './prescriptionList';
  
@@ -42,6 +44,11 @@ export class VisitDetails implements OnInit, OnDestroy {
   
   vaccineGroups: Reference[] = [];
   
+  @ViewChild(DoctorOrderDetails) doctorOrderDetails: DoctorOrderDetails;
+  @ViewChild(AdmissionDiagnoses) admissionDiagnoses: AdmissionDiagnoses;
+  @ViewChild(PrescriptionDetails) prescriptionDetails: PrescriptionDetails;
+  @ViewChild(PrescriptionList) prescriptionList: PrescriptionList;
+  
   constructor
     (
       private genericService: GenericService,
@@ -63,6 +70,8 @@ export class VisitDetails implements OnInit, OnDestroy {
           
           this.visit.patient = new Patient();
           this.visit.patient.user = new User();
+          let gv =  new GivenVaccine();
+          this.visit.givenVaccines.push(gv);
           
           visitId = params['visitId'];
           if (visitId != null) {
@@ -90,22 +99,16 @@ export class VisitDetails implements OnInit, OnDestroy {
   
   updateAllergy(event) {
     console.info(event)
-    if (-1 !== this.visit.allergies.indexOf(event.source.name)) {
+    if (-1 !== this.visit.selectedAllergies.indexOf(event.source.name)) {
       if (event.checked) {
-        this.visit.allergies.push(event.source.name);
+        this.visit.selectedAllergies.push(event.source.name);
       } else {
-        this.visit.allergies.splice(this.visit.allergies.indexOf(event.source.name), 1);
+        this.visit.selectedAllergies.splice(this.visit.selectedAllergies.indexOf(event.source.name), 1);
       }
     }
   }
 
   save() {
- 
-    let selecteds = Object.keys(this.visit.allergies).filter((item, index) => {
-        return this.visit.allergies[item];
-    });
-    
-    
     
     this.visit.patient = this.patient;
     try {
@@ -118,7 +121,7 @@ export class VisitDetails implements OnInit, OnDestroy {
             this.visit = result
             console.info(this.visit);
           }
-          else {
+          else { 
             this.error = Constants.saveFailed;
             this.displayDialog = true;
           }
@@ -155,7 +158,23 @@ export class VisitDetails implements OnInit, OnDestroy {
      
     } 
     else if (evt.index == 2) {
+      this.admissionDiagnoses.getDiagnoses();
     } 
+    else if (evt.index == 3) {
+      this.prescriptionDetails.visit = this.visit;
+      this.prescriptionList.visit = this.visit;
+      this.prescriptionList.getPrescriptions();
+    }
+  }
+  
+  onDoctorOrderSelected($event) {
+    let doctorOrderId = $event;
+    this.doctorOrderDetails.getDoctorOrder(doctorOrderId);
+  }
+  
+   onPrescriptionSelected($event) {
+    let prescriptionId = $event;
+    this.prescriptionDetails.getPrescription(prescriptionId);
   }
   
   

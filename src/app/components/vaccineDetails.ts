@@ -1,62 +1,94 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../app.constants';
+import { GivenVaccine } from '../models/givenVaccine';
 import { Reference } from '../models/reference';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { User } from '../models/user';  
 import { Visit } from '../models/visit';
 import { GenericService, GlobalEventsManager, VisitService } from '../services';
+import { VaccineDropdown } from './dropdowns';
  
 @Component({
   selector: 'app-vaccine-details',
   template: `IMMUNIZATIONS
-            <div class="ui-grid-row" *ngFor="let vaccineGroup of vaccineGroups">
-              <div class="ui-grid-col-1 ui-sm-12" >
-                {{vaccineGroup.name}}:
-              </div>
-              <div class="ui-grid-col-11 ui-sm-12" >
-                <p-checkbox id="status" 
-                  [(ngModel)]="vaccines" [value]="vaccine.id"
-                  label="{{vaccine.name}}"
-                  *ngFor="let vaccine of vaccineGroup.childs; let i = index"></p-checkbox>
-              </div>
-            </div>`,
-  providers: [GenericService, VisitService]
+             <p-table [columns]="vaccineCols" [value]="givenVaccines">
+                <ng-template pTemplate="header" let-vaccineCols>
+                    <tr>
+                        <th *ngFor="let col of vaccineCols" [pSortableColumn]="col.field">
+                            {{col.header}}
+                            <p-sortIcon [field]="col.field"></p-sortIcon>
+                        </th>
+                        <th>Action</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr>                 
+                        <td *ngFor="let col of columns" pEditableColumn>
+                          <p-cellEditor *ngIf="col.field == 'givenDate'">
+                                <ng-template pTemplate="input">
+                                    <p-calendar [(ngModel)]="rowData[col.field]"></p-calendar>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData[col.field]}}
+                                </ng-template>
+                            </p-cellEditor>
+                            <p-cellEditor *ngIf="col.field == 'vaccine'">
+                                <ng-template pTemplate="input">
+                                    <p-autoComplete [(ngModel)]="rowData[col.field]"
+                                    (onDropdownClick)="vaccineDropdown.handleDropdownClick($event)"
+                                    [suggestions]="vaccineDropdown.filteredVaccines" [dropdown]="true"
+                                    (completeMethod)="vaccineDropdown.filter($event)"
+                                    name="name" field="name" [size]="30" placeholder=""
+                                    [minLength]="1">
+                                  </p-autoComplete>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData[col.field].name}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                          <button type="button" pButton icon="fa-plus" style="float: left"></button>
+                          <button type="button" pButton icon="fa-eraser" style="float: left"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>`,
+  providers: [GenericService, VisitService, VaccineDropdown]
 })
 export class VaccineDetails implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
-  @Input() vaccines: Reference[] = [];
-  vaccineGroups: Reference[] = [];
- 
-  constructor
-    (
-      private genericService: GenericService,
-      private visitService: VisitService,
-      private changeDetectorRef: ChangeDetectorRef,
-      private route: ActivatedRoute,
-      private router: Router
-    ) {
-  }
-
-  ngOnInit(): void {
+    public error: String = '';
+    displayDialog: boolean;
+    @Input() givenVaccines: GivenVaccine[] = [];
     
-    this.visitService.getActiveElements('vaccine')
-      .subscribe((data: Reference[]) => 
-      { 
-        console.info(data)
-        if (data.length > 0) {
-          this.vaccineGroups = data;
-        }
-      },
-      error => console.log(error),
-      () => console.log('Get ative vaccines complete'));
+    vaccineCols: any[];
+    vaccineDropdown: VaccineDropdown;
+   
+    constructor
+      (
+        private genericService: GenericService,
+        private visitService: VisitService,
+        private vacDropdown: VaccineDropdown,
+        private changeDetectorRef: ChangeDetectorRef,
+        private route: ActivatedRoute,
+        private router: Router
+      ) {
+      this.vaccineDropdown = vacDropdown;
+    }
 
-  }
+    ngOnInit(): void {
+      
+      this.vaccineCols = [
+              { field: 'vaccine', header: 'Name' },
+              { field: 'givenDate', header: 'Given Date', type: 'Date' }
+          ];
   
-  ngOnDestroy() {
-    this.vaccineGroups = null;
-  }
+    }
+    
+    ngOnDestroy() {
+      
+    }
  }

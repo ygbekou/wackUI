@@ -50,7 +50,7 @@ export class VisitService {
   
   public getActiveElements = (elementType: string): Observable<Reference[]> => {
    
-      let actionUrl = Constants.apiServer + '/service/visit/' + elementType + '/all/active';
+      let actionUrl = Constants.apiServer + '/service/reference/' + elementType + '/all/active';
       return this.http.get(actionUrl, { headers: this.headers })
         .map((response: Response) => {
             if (response && response.json()) {

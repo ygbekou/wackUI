@@ -77,6 +77,28 @@ export class GenericService {
         .catch(this.handleError);
    }
   
+  public saveDoctorOrder = (entity: any): Observable<any> => {
+   
+      let toAdd = JSON.stringify(entity);
+      alert(toAdd)
+      let re = /\"/gi;
+      let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
+      
+      let actionUrl = Constants.apiServer + '/service/DoctorOrder/saveDoctorOrder';
+      return this.http.post(actionUrl, toSend, { headers: this.headers })
+        .map((response: Response) => {
+            if (response && response.json()) {
+              const error = response.json() && response.json().error;
+              if (error == null) {
+                
+              }
+            }
+            return response.json();
+        })
+        .catch(this.handleError);
+   }
+  
+  
    public saveWithFile = (entity: any, entityClass: string, formData: FormData): Observable<any> => {
    
       let head = new Headers();

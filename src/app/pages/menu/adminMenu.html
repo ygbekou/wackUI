@@ -167,7 +167,7 @@
 		<li class="{{billList}}" *ngIf="user.id > 0 && isAvailable('billList')">
 			<a href="#/admin/billList?billList=active" i18n="@@statistics">Bill List</a>
 		</li>
-		<li class="{{vitalSignDetails}}" *ngIf="user.id > 0 && isAvailable('billDetails')">
+		<li class="{{vitalSignDetails}}" *ngIf="user.id > 0 && isAvailable('vitalSignDetails')">
 			<a href="#/admin/vitalSignDetails?vitalSignDetails=active" i18n="@@statistics">Add Vital Signs</a>
 		</li>
 		<li class="{{vitalSignList}}" *ngIf="user.id > 0 && isAvailable('vitalSignList')">
@@ -181,6 +181,9 @@
 		</li>
 		<li class="{{visitDetails}}" *ngIf="user.id > 0 && isAvailable('visitDetails')">
 			<a href="#/admin/visitDetails?visitDetails=active" i18n="@@statistics">Add Patient Visit</a>
+		</li>
+		<li class="{{visitList}}" *ngIf="user.id > 0 && isAvailable('visitList')">
+			<a href="#/admin/visitList?visitList=active" i18n="@@statistics">Patient Visit List</a>
 		</li>
 		<li class="{{admissionDetails}}" *ngIf="user.id > 0 && isAvailable('admissionDetails')">
 			<a href="#/admin/adminAdmission?adminAdmission=active" i18n="@@statistics">Add Patient Admission</a>

@@ -1,29 +1,29 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Employee } from '../models/employee';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../app.constants';
-import { Medicine } from '../models/medicine';
+import { Visit } from '../models/visit';
 import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
+import { User } from '../models/user';  
 import { GenericService } from '../services';
 
 @Component({
-  selector: 'app-medicine-list',
-  templateUrl: '../pages/medicineList.html',
+  selector: 'app-visit-list',
+  templateUrl: '../pages/visitList.html',
   providers: [GenericService]
 })
-export class MedicineList implements OnInit, OnDestroy {
+export class VisitList implements OnInit, OnDestroy {
   
   public error: String = '';
   displayDialog: boolean;
-  medicines: Medicine[] = [];
+  visits: Visit[] = [];
   cols: any[];
   
   DETAIL: string = Constants.DETAIL;
   ADD_IMAGE: string = Constants.ADD_IMAGE;
   ADD_LABEL: string = Constants.ADD_LABEL;  
-  
-  @Output() medicineIdEvent = new EventEmitter<string>();
   
   constructor
     (
@@ -38,11 +38,10 @@ export class MedicineList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'categoryName', header: 'Category' },
-            { field: 'manufacturerName', header: 'Manufacturer' },
-            { field: 'name', header: 'Name' },
-            { field: 'description', header: 'Description' },
-            { field: 'price', header: 'Price' },
+            { field: 'id', header: 'Visit ID' },
+            { field: 'visitDatetime', header: 'Date', type:'date' },
+            { field: 'patientId', header: 'Patient ID' },
+            { field: 'patientName', header: 'Patient Name' },
             { field: 'status', header: 'Status', type:'string' }
         ];
     
@@ -54,34 +53,43 @@ export class MedicineList implements OnInit, OnDestroy {
             
             parameters.push('e.status = |status|0|Integer')
             
-            this.genericService.getAllByCriteria('Medicine', parameters)
-              .subscribe((data: Medicine[]) => 
+            this.genericService.getAllByCriteria('Visit', parameters)
+              .subscribe((data: Visit[]) => 
               { 
-                this.medicines = data 
-                console.info(this.medicines)
+                this.visits = data 
               },
               error => console.log(error),
-              () => console.log('Get all Medicine complete'));
+              () => console.log('Get all Admission complete'));
           });
   }
  
   
   ngOnDestroy() {
-    this.medicines = null;
+    this.visits = null;
   }
   
-  edit(medicineId: number) {
-      this.medicineIdEvent.emit(medicineId + '');
-  }
-
-  delete(medicineId : number) {
+  edit(visitId : number) {
     try {
       let navigationExtras: NavigationExtras = {
         queryParams: {
-          "medicineId": medicineId,
+          "visitId": visitId,
         }
       }
-      this.router.navigate(["/admin/medicineDetails"], navigationExtras);
+      this.router.navigate(["/admin/visitDetails"], navigationExtras);
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
+
+  delete(visitId : number) {
+    try {
+      let navigationExtras: NavigationExtras = {
+        queryParams: {
+          "visitId": visitId,
+        }
+      }
+      this.router.navigate(["/admin/visitDetails"], navigationExtras);
     }
     catch (e) {
       console.log(e);

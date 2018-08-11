@@ -20,4 +20,8 @@ export class User {
   zipCode: string;
   birthDate: Date;
   status: number;
+  
+  constructor() {
+    this.userGroup = new UserGroup();
+  }
 }

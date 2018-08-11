@@ -1,10 +1,13 @@
+import { Admission } from './admission';
 import { Appointment } from './appointment';
 import { Employee } from './employee';
 import { Reference } from './reference';
+import { Visit } from './visit';
 
 export class DoctorOrder {
   id: number;
-  appointment: Appointment;
+  admission: Admission;
+  visit: Visit;
   doctorOrderType: Reference;
   doctorOrderPriority: Reference;
   doctorOrderKind: Reference;
@@ -13,5 +16,8 @@ export class DoctorOrder {
   receivedDatetime: Date;
   description: string;
   status: number;
+  
+  constructor() {
+  }
   
 }

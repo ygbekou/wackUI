@@ -22,3 +22,4 @@ export * from './dropdown.floor';
 export * from './dropdown.room';
 export * from './dropdown.bed';
 export * from './dropdown.diagnosis';
+export * from './dropdown.vaccine';

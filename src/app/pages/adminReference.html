@@ -54,6 +54,86 @@
 				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Vaccine')"></app-reference-list>
 				    </div>
 			    </p-tabPanel>
+			    <p-tabPanel header="Medical History">
+			    	<div *ngIf="activeTab == 5">
+				        <app-reference-details></app-reference-details>
+				        <br/> 
+				        <br/>
+				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'MedicalHistory')"></app-reference-list>
+				    </div>
+			    </p-tabPanel>
+			    <p-tabPanel header="Social History">
+			    	<div *ngIf="activeTab == 6">
+				        <app-reference-details></app-reference-details>
+				        <br/> 
+				        <br/>
+				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'SocialHistory')"></app-reference-list>
+				    </div>
+			    </p-tabPanel>
+			    <p-tabPanel header="Payer Type">
+			    	<div *ngIf="activeTab == 7">
+				        <app-reference-details></app-reference-details>
+				        <br/> 
+				        <br/>
+				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'PayerType')"></app-reference-list>
+				    </div>
+			    </p-tabPanel>
+			    <p-tabPanel header="Doctor Order Type">
+			    	<div *ngIf="activeTab == 8">
+				        <app-reference-details></app-reference-details>
+				        <br/> 
+				        <br/>
+				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'DoctorOrderType')"></app-reference-list>
+				    </div>
+			    </p-tabPanel>
+			    <p-tabPanel header="Doctor Order Priority">
+			    	<div *ngIf="activeTab == 9">
+				        <app-reference-details></app-reference-details>
+				        <br/> 
+				        <br/>
+				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'DoctorOrderPriority')"></app-reference-list>
+				    </div>
+			    </p-tabPanel>
+			    <p-tabPanel header="Doctor Order Kind">
+			    	<div *ngIf="activeTab == 10">
+				        <app-reference-details></app-reference-details>
+				        <br/> 
+				        <br/>
+				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'DoctorOrderKind')"></app-reference-list>
+				    </div>
+			    </p-tabPanel>
+			    <p-tabPanel id="department" header="Department">
+			    	<div *ngIf="activeTab == 11">
+				        <app-reference-details></app-reference-details>
+				        <br/> 
+				        <br/>
+				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Department')"></app-reference-list>
+				    </div>
+			    </p-tabPanel>
+			    <p-tabPanel id="manufacturer" header="Manufacturer">
+			    	<div *ngIf="activeTab == 12">
+				        <app-reference-details></app-reference-details>
+				        <br/> 
+				        <br/>
+				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Manufacturer')"></app-reference-list>
+				    </div>
+			    </p-tabPanel>
+			    <p-tabPanel id="medicineType" header="Medicine Type">
+			    	<div *ngIf="activeTab == 13">
+				        <app-reference-details></app-reference-details>
+				        <br/> 
+				        <br/>
+				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Category')"></app-reference-list>
+				    </div>
+			    </p-tabPanel>
+			    <p-tabPanel id="medicine" header="Medicine">
+			    	<div *ngIf="activeTab == 14">
+				        <app-medicine-details></app-medicine-details>
+				        <br/> 
+				        <br/>
+				        <app-medicine-list (medicineIdEvent)="onMedicineSelected($event)"></app-medicine-list>
+				    </div>
+			    </p-tabPanel>
 			</p-tabView>
 		</div>
 
