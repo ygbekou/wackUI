@@ -42,7 +42,7 @@ export class SymptomDetails implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     
-    this.visitService.getActiveElements('symptom')
+    this.genericService.getActiveElements('symptom')
       .subscribe((data: Reference[]) => 
       { 
         console.info(data)

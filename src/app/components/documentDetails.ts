@@ -72,7 +72,7 @@ export class DocumentDetails implements OnInit, OnDestroy {
                 this.document = result
               }
               else {
-                this.error = Constants.saveFailed;
+                this.error = Constants.SAVE_UNSUCCESSFUL;
                 this.displayDialog = true;
               }
             })
@@ -142,7 +142,7 @@ export class DocumentDetails implements OnInit, OnDestroy {
             this.document = result
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../app.constants';
-import { Medicine } from '../models/medicine';
+import { Product } from '../models/product';
 import { Reference } from '../models/reference';
 import { FileUploader } from './fileUploader';
 import { EditorModule } from 'primeng/editor';
@@ -19,7 +19,7 @@ export class MedicineDetails implements OnInit, OnDestroy {
   
   public error: String = '';
   displayDialog: boolean;
-  medicine: Medicine = new Medicine();
+  medicine: Product = new Product();
   categoryDropdown: CategoryDropdown;
   manufacturerDropdown: ManufacturerDropdown;
   
@@ -43,7 +43,7 @@ export class MedicineDetails implements OnInit, OnDestroy {
     ) {
       this.categoryDropdown = ctgDropdown;
       this.manufacturerDropdown = mfctDropdown;
-      this.categoryDropdown.getAllCategories(1);
+      this.categoryDropdown.getAllCategories(Constants.CATEGORY_MEDICINE);
   }
 
   ngOnInit(): void {
@@ -64,7 +64,7 @@ export class MedicineDetails implements OnInit, OnDestroy {
                   this.medicine = result
                 }
                 else {
-                  this.error = Constants.saveFailed;
+                  this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
               })
@@ -86,7 +86,7 @@ export class MedicineDetails implements OnInit, OnDestroy {
         this.medicine = result
       }
       else {
-        this.error = Constants.saveFailed;
+        this.error = Constants.SAVE_UNSUCCESSFUL;
         this.displayDialog = true;
       }
     })
@@ -101,7 +101,7 @@ export class MedicineDetails implements OnInit, OnDestroy {
             this.medicine = result
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })

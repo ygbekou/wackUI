@@ -28,7 +28,8 @@ export class Constants {
   public static DEAD = 'Decede';
   public static MISSING_REQUIRED_FIELD = 'Veuillez remplir tous les champs requis';
   public static ERROR_OCCURRED = 'Une erreur systeme s\'est produite';
-  public static saveFailed = 'La sauvegarde n\'a pas marche. Verifiez tous les champs.';
+  public static SAVE_UNSUCCESSFUL = 'La sauvegarde n\'a pas marche. Verifiez tous les champs.';
+  public static SAVE_SUCCESSFUL = 'La sauvegarde n\'a pas marche. Verifiez tous les champs.';
   
   public static SEND_ME_MY_PASSWORD = 'Envoyez-moi mon mot de passe';
   
@@ -44,4 +45,5 @@ export class Constants {
   
   public static CATEGORY_MEDICINE = 1;
   public static CATEGORY_BED = 2;
+  public static CATEGORY_SERVICE_TARIF = 6;
 }

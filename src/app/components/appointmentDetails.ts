@@ -61,7 +61,7 @@ export class AppointmentDetails implements OnInit, OnDestroy {
                   this.appointment = result
                 }
                 else {
-                  this.error = Constants.saveFailed;
+                  this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
               })
@@ -77,7 +77,7 @@ export class AppointmentDetails implements OnInit, OnDestroy {
         this.appointment = result
       }
       else {
-        this.error = Constants.saveFailed;
+        this.error = Constants.SAVE_UNSUCCESSFUL;
         this.displayDialog = true;
       }
     })

@@ -65,7 +65,7 @@ export class PaymentDetails implements OnInit, OnDestroy {
                 this.payment = result
               }
               else {
-                this.error = Constants.saveFailed;
+                this.error = Constants.SAVE_UNSUCCESSFUL;
                 this.displayDialog = true;
               }
             })
@@ -89,7 +89,7 @@ export class PaymentDetails implements OnInit, OnDestroy {
             this.payment = result
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })

@@ -48,7 +48,7 @@ export class AccountDetails implements OnInit, OnDestroy {
                   this.account = result
                 }
                 else {
-                  this.error = Constants.saveFailed;
+                  this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
               })
@@ -70,7 +70,7 @@ export class AccountDetails implements OnInit, OnDestroy {
             this.account = result
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })

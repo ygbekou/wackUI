@@ -15,15 +15,34 @@
 							</div>
 						</div>
 					</div>
+					<br/>
+					<div class="ui-grid-col-4 ui-sm-12">
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-3 ui-sm-12">
+								<label i18n="@@doctorOrderPriority" for="doctorOrderPriority">Doctor Order Priority</label>
+							</div>
+							<div class="ui-grid-col-8 ui-sm-12"> 
+								<p-autoComplete [(ngModel)]="doctorOrder.doctorOrderPriority"
+									(onDropdownClick)="doctorOrderPriorityDropdown.handleDropdownClick($event)"
+									[suggestions]="doctorOrderPriorityDropdown.filteredDoctorOrderPriorities" [dropdown]="true"
+									id="doctorOrderPriority" (completeMethod)="doctorOrderPriorityDropdown.filter($event)"
+									name="doctorOrderPriority" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
+									[minLength]="1"></p-autoComplete>
+							</div>									
+							<div class="ui-grid-col-1 ui-sm-12">
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-4 ui-sm-12">
 						<div class="ui-grid-row">
 							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@doctorOrderType" for="doctorOrderType">Doctor Order Type</label>
+								<label i18n="@@doctorOrderType" for="doctorOrderType">Type</label>
 							</div>
 							<div class="ui-grid-col-8 ui-sm-12"> 
-								<p-autoComplete [(ngModel)]="doctorOrder.doctorOrderType"
+								<p-autoComplete [(ngModel)]="doctorOrder.doctorOrderType" 
+									(ngModelChange)="toggleTypeDropdown($event)"
 									(onDropdownClick)="doctorOrderTypeDropdown.handleDropdownClick($event)"
 									[suggestions]="doctorOrderTypeDropdown.filteredDoctorOrderTypes" [dropdown]="true"
 									id="doctorOrderType" (completeMethod)="doctorOrderTypeDropdown.filter($event)"
@@ -36,15 +55,17 @@
 						<br/>
 						<div class="ui-grid-row">
 							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@doctorOrderPriority" for="doctorOrderPriority">Doctor Order Priority</label>
+								<label i18n="@@labTest" for="labTest">Lab Test/Group<font color="red">*</font></label>
 							</div>
-							<div class="ui-grid-col-8 ui-sm-12"> 
-								<p-autoComplete [(ngModel)]="doctorOrder.doctorOrderPriority"
-									(onDropdownClick)="doctorOrderPriorityDropdown.handleDropdownClick($event)"
-									[suggestions]="doctorOrderPriorityDropdown.filteredDoctorOrderPriorities" [dropdown]="true"
-									id="doctorOrderPriority" (completeMethod)="doctorOrderPriorityDropdown.filter($event)"
-									name="doctorOrderPriority" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
-									[minLength]="1"></p-autoComplete>
+							<div>
+								<p-pickList [source]="labTestDropdown.labTests" [target]="doctorOrder.labTests"
+									sourceHeader="Available" targetHeader="Selected" [responsive]="true" filterBy="name" >
+								    <ng-template let-labTest pTemplate="item">
+								        <div class="ui-helper-clearfix">
+								            <div style="font-size:14px;float:left;margin:15px 5px 0 0">{{labTest.name}}</div>
+								        </div>
+								    </ng-template>
+								</p-pickList>
 							</div>									
 							<div class="ui-grid-col-1 ui-sm-12">
 							</div>

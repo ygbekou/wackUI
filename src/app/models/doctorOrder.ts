@@ -1,7 +1,9 @@
 import { Admission } from './admission';
 import { Appointment } from './appointment';
 import { Employee } from './employee';
+import { LabTest } from './labTest';
 import { Reference } from './reference';
+import { Service } from './service';
 import { Visit } from './visit';
 
 export class DoctorOrder {
@@ -17,7 +19,10 @@ export class DoctorOrder {
   description: string;
   status: number;
   
+  labTests: LabTest[] = [];
+  
   constructor() {
+    this.doctorOrderType = new Reference();
   }
   
 }

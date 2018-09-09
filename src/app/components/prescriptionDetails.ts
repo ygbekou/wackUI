@@ -4,7 +4,7 @@ import { Constants } from '../app.constants';
 import { Admission } from '../models/admission';
 import { Appointment } from '../models/appointment';
 import { CaseStudy } from '../models/caseStudy';
-import { Medicine } from '../models/medicine';
+import { Product } from '../models/product';
 import { Patient } from '../models/patient';
 import { Prescription } from '../models/prescription';
 import { Diagnosis } from '../models/diagnosis';
@@ -80,7 +80,7 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
         .subscribe(params => {          
           
           let pm =  new PrescriptionMedicine();
-          pm.medicine = new Medicine();
+          pm.medicine = new Product();
           this.prescription.prescriptionMedicines.push(pm);
           let pd =  new PrescriptionDiagnosis();
           this.prescription.prescriptionDiagnoses.push(pd);
@@ -94,7 +94,7 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
                   this.prescription = result
                 }
                 else {
-                  this.error = Constants.saveFailed;
+                  this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
               })
@@ -124,7 +124,7 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
             console.info(this.prescription);
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })
@@ -143,7 +143,7 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
         this.prescription.prescriptionDatetime = new Date(this.prescription.prescriptionDatetime);
       }
       else {
-        this.error = Constants.saveFailed;
+        this.error = Constants.SAVE_UNSUCCESSFUL;
         this.displayDialog = true;
       }
     })

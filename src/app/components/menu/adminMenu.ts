@@ -83,6 +83,9 @@ export class AdminMenu implements OnInit {
   public adminReference: string;
   public adminMain: string;
   public adminProfile: string;
+  public investigationDetails: string;
+  public investigationList: string;
+  
   user: User;
   
   moduleName: string;
@@ -95,10 +98,14 @@ export class AdminMenu implements OnInit {
     
     this.menus["appointmentModule"] = ['adminPatient', 'patientList', 'scheduleDetails', 'scheduleList', 'appointmentScheduler'];
     
-    this.menus["outpatientModule"] = ['adminReference', 'adminPatient', 'patientList', 'billDetails', 'billList', 'visitDetails', 'visitList'];
+    this.menus["outpatientModule"] = ['adminReference', 'serviceDetails', 'adminPatient', 'patientList', 'billDetails', 'billList', 'visitDetails', 'visitList'];
     
-    this.menus["inpatientModule"] = ['adminBedStatus', 'adminReference', 'doctorDetails', 'doctorList', 'adminPatient', 'patientList', 
+    this.menus["inpatientModule"] = ['adminBedStatus', 'adminReference', 'serviceDetails', 'doctorDetails', 'doctorList', 'adminPatient', 'patientList', 
       'billDetails', 'billList', 'admissionDetails', 'admissionList', 'doctorTransfer', 'bedTransfer'];
+    
+    this.menus["laboratoryModule"] = ['adminReference', 'investigationDetails', 'investigationList'];
+    
+    this.menus["pharmacyModule"] = ['adminReference'];
 
   }
 
@@ -179,6 +186,8 @@ export class AdminMenu implements OnInit {
         this.adminProfile = params['adminProfile'];
         this.visitDetails = params['visitDetails'];
         this.visitList = params['visitList'];
+        this.investigationDetails = params['investigationDetails'];
+        this.investigationList = params['investigationList'];
       })
   }
   

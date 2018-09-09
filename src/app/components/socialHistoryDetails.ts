@@ -39,7 +39,7 @@ export class SocialHistoryDetails implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     
-    this.visitService.getActiveElements('socialhistory')
+    this.genericService.getActiveElements('socialhistory')
       .subscribe((data: Reference[]) => 
       { 
         console.info(data)

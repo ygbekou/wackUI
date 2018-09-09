@@ -43,7 +43,7 @@ export class AllergyDetails implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     
-    this.visitService.getActiveElements('allergy')
+    this.genericService.getActiveElements('allergy')
       .subscribe((data: Reference[]) => 
       { 
         console.info(data)

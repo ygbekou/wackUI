@@ -71,7 +71,7 @@ export class BedDetails implements OnInit, OnDestroy {
                   this.bed = result
                 }
                 else {
-                  this.error = Constants.saveFailed;
+                  this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
               })
@@ -91,7 +91,7 @@ export class BedDetails implements OnInit, OnDestroy {
         this.bed = result
       }
       else {
-        this.error = Constants.saveFailed;
+        this.error = Constants.SAVE_UNSUCCESSFUL;
         this.displayDialog = true;
       }
     })
@@ -113,7 +113,7 @@ export class BedDetails implements OnInit, OnDestroy {
             this.bed = result
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })

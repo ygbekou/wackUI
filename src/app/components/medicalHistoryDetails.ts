@@ -39,7 +39,7 @@ export class MedicalHistoryDetails implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     
-    this.visitService.getActiveElements('medicalhistory')
+    this.genericService.getActiveElements('medicalhistory')
       .subscribe((data: Reference[]) => 
       { 
         console.info(data)

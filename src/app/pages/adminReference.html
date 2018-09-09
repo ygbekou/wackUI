@@ -134,6 +134,38 @@
 				        <app-medicine-list (medicineIdEvent)="onMedicineSelected($event)"></app-medicine-list>
 				    </div>
 			    </p-tabPanel>
+			    <p-tabPanel id="serviceTarifType" header="Service Department/Tarif">
+			    	<div *ngIf="activeTab == 15">
+				        <app-reference-details></app-reference-details>
+				        <br/> 
+				        <br/>
+				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Category')"></app-reference-list>
+				    </div>
+			    </p-tabPanel>
+			    <p-tabPanel id="labTestMethod" header="Lab Test Method">
+			    	<div *ngIf="activeTab == 16">
+				        <app-reference-details></app-reference-details>
+				        <br/> 
+				        <br/>
+				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'LabTestMethod')"></app-reference-list>
+				    </div>
+			    </p-tabPanel>
+			    <p-tabPanel id="labTestUnit" header="Lab Test Unit">
+			    	<div *ngIf="activeTab == 17">
+				        <app-reference-details></app-reference-details>
+				        <br/> 
+				        <br/>
+				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'LabTestUnit')"></app-reference-list>
+				    </div>
+			    </p-tabPanel>
+			    <p-tabPanel id="labTest" header="Lab Test">
+			    	<div *ngIf="activeTab == 18">
+				        <app-labTest-details></app-labTest-details>
+				        <br/> 
+				        <br/>
+				        <app-labTest-list (labTestIdEvent)="onLabTestSelected($event)"></app-labTest-list>
+				    </div>
+			    </p-tabPanel>
 			</p-tabView>
 		</div>
 

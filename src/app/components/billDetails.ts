@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../app.constants';
 import { Appointment } from '../models/appointment';
@@ -10,16 +10,17 @@ import { Employee } from '../models/employee';
 import { Patient } from '../models/patient';
 import { Service } from '../models/service';
 import { EditorModule } from 'primeng/editor';
-import { DoctorDropdown, ServiceDropdown, AppointmentDropdown } from './dropdowns';
+import { DoctorDropdown, ServiceDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { User } from '../models/user';  
+import { Visit } from '../models/visit';
 import { GenericService, BillingService } from '../services';
 
 @Component({ 
   selector: 'app-bill-details',
   templateUrl: '../pages/billDetails.html',
-  providers: [GenericService, BillingService, ServiceDropdown, AppointmentDropdown, DoctorDropdown]
+  providers: [GenericService, BillingService, ServiceDropdown, DoctorDropdown]
 })
 export class BillDetails implements OnInit, OnDestroy {
   
@@ -30,7 +31,6 @@ export class BillDetails implements OnInit, OnDestroy {
   billPaymentCols: any[];
   
   serviceDropdown: ServiceDropdown;
-  appointmentDropdown: AppointmentDropdown;
   doctorDropdown: DoctorDropdown;
   
   DETAIL: string = Constants.DETAIL;
@@ -40,20 +40,23 @@ export class BillDetails implements OnInit, OnDestroy {
   
   patient: Patient = new Patient();
   
+  @Input() visit: Visit;
+  @Input() admission: Admission;
+  
+  itemNumber: string;
+  itemNumberLabel: string = 'Visit';
   
   constructor
     (
       private genericService: GenericService,
       private billingService: BillingService,
       private srvDropdown: ServiceDropdown,
-      private aptDropdown: AppointmentDropdown,
       private dctDropdown: DoctorDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
     ) {
     this.serviceDropdown = srvDropdown;
-    this.appointmentDropdown = aptDropdown;
     this.doctorDropdown = dctDropdown;
     this.patient.user = new User();
   }
@@ -100,7 +103,7 @@ export class BillDetails implements OnInit, OnDestroy {
                     this.addPaymentRow();
                 }
                 else {
-                  this.error = Constants.saveFailed;
+                  this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
               })
@@ -166,7 +169,7 @@ export class BillDetails implements OnInit, OnDestroy {
             console.info(rowData.data);
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })
@@ -184,7 +187,7 @@ export class BillDetails implements OnInit, OnDestroy {
             console.info(this.bill);
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })
@@ -194,21 +197,17 @@ export class BillDetails implements OnInit, OnDestroy {
     }
   }
   
-  lookUpPatient() {
+  lookUpVisit() {
     let parameters: string [] = []; 
             
-    parameters.push('e.matricule = |matricule|' + this.patient.matricule + '|String')
-    let patientMatricule = this.patient.matricule;
-    this.patient = new Patient()
-    this.patient.matricule = patientMatricule;
+    parameters.push('e.visitNumber = |visitNumber|' + this.itemNumber + '|String')
     
-    this.genericService.getAllByCriteria('Patient', parameters)
-      .subscribe((data: Patient[]) => 
+    this.billingService.getBillByItemNumber(this.itemNumber)
+      .subscribe((data: Bill) => 
       { 
-        if (data.length > 0) {
-          this.patient = data[0];
-          this.appointmentDropdown.patientId = this.patient.id;
-          this.appointmentDropdown.getAllAppointments();
+        if (data) {
+          this.bill = data;
+          this.patient = this.bill.visit.patient;
         }
       },
       error => console.log(error),

@@ -15,7 +15,7 @@ import {
   CalendarModule, RadioButtonModule, DropdownModule, InputMaskModule, OverlayPanelModule,
   AutoCompleteModule, DataTableModule, DialogModule, ListboxModule, AccordionModule,
   GalleriaModule, MessagesModule, TreeModule, TreeNode, OrganizationChartModule,
-  DataGridModule, PanelModule, UIChart, PickListModule, ScheduleModule
+  DataGridModule, PanelModule, UIChart, PickListModule, ScheduleModule, ToolbarModule
 } from 'primeng/primeng';
 
 
@@ -29,7 +29,7 @@ import {
     PasswordModule, DataListModule, CheckboxModule, InputTextModule, ListboxModule, CarouselModule,
     CalendarModule, RadioButtonModule, DropdownModule, AutoCompleteModule, ScheduleModule, ProgressBarModule,
     DataTableModule, DialogModule, GalleriaModule, MessagesModule, TreeModule, AccordionModule,
-    DataGridModule, PanelModule, ScheduleModule, LightboxModule,TableModule
+    DataGridModule, PanelModule, ScheduleModule, LightboxModule, TableModule, ToolbarModule
   ],
 
   exports: [
@@ -41,7 +41,8 @@ import {
     StepsModule, InputTextareaModule, GrowlModule, ChartModule, SelectButtonModule, ListboxModule, AccordionModule, LightboxModule,
     PasswordModule, DataListModule, CheckboxModule, InputTextModule, InputMaskModule, ScheduleModule, CarouselModule, OverlayPanelModule,
     CalendarModule, RadioButtonModule, DropdownModule, AutoCompleteModule, UIChart, PickListModule, OrganizationChartModule,
-    DataTableModule, DialogModule, GalleriaModule, MessagesModule, TreeModule, DataGridModule, PanelModule, ScheduleModule,TableModule
+    DataTableModule, DialogModule, GalleriaModule, MessagesModule, TreeModule, DataGridModule, PanelModule, ScheduleModule,TableModule,
+    ToolbarModule
   ],
 })
 

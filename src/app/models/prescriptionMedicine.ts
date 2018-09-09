@@ -1,8 +1,8 @@
-import { Medicine } from './medicine';
+import { Product } from './product';
 
 export class PrescriptionMedicine {
   id: number;
-  medicine: Medicine;
+  medicine: Product;
   medType: string;
   dosage: string;
   quantity: number;

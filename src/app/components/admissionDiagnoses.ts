@@ -96,7 +96,7 @@ export class AdmissionDiagnoses implements OnInit, OnDestroy {
             rowData = result
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })

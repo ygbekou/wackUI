@@ -63,7 +63,7 @@ export class VitalSignDetails implements OnInit, OnDestroy {
                   this.patient = this.vitalSign.appointment.patient;
                 }
                 else {
-                  this.error = Constants.saveFailed;
+                  this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
               })
@@ -89,7 +89,7 @@ export class VitalSignDetails implements OnInit, OnDestroy {
             this.vitalSign = result;
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })

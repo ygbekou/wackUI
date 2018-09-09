@@ -64,7 +64,7 @@ export class RoomDetails implements OnInit, OnDestroy {
                   this.room = result
                 }
                 else {
-                  this.error = Constants.saveFailed;
+                  this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
               })
@@ -84,7 +84,7 @@ export class RoomDetails implements OnInit, OnDestroy {
         this.room = result
       }
       else {
-        this.error = Constants.saveFailed;
+        this.error = Constants.SAVE_UNSUCCESSFUL;
         this.displayDialog = true;
       }
     })
@@ -105,7 +105,7 @@ export class RoomDetails implements OnInit, OnDestroy {
             this.room = result
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })
@@ -117,7 +117,6 @@ export class RoomDetails implements OnInit, OnDestroy {
 
   
   populateFloorDropdown(event) {
-    alert(this.room.floor.building.id)
     this.floorDropdown.buildingId = this.room.floor.building.id;
     this.floorDropdown.getAllFloors();
   }

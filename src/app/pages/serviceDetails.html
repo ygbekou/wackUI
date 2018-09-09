@@ -42,6 +42,20 @@
 				</div>
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-4">
+						<label i18n="@@doctorOrderType" for="doctorOrderType">Service Type<font color="red">*</font></label> 
+					</div>
+					<div class="ui-grid-col-8">
+						<p-autoComplete [(ngModel)]="service.serviceType"
+							(onDropdownClick)="doctorOrderTypeDropdown.handleDropdownClick($event)"
+							[suggestions]="doctorOrderTypeDropdown.filteredDoctorOrderTypes" [dropdown]="true"
+							id="doctorOrderType" (completeMethod)="doctorOrderTypeDropdown.filter($event)"
+							name="doctorOrderType" field="name" [size]="30" placeholder=""
+							[minLength]="1">
+						</p-autoComplete>
+					</div>
+				</div>
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-4">
 						<label for="description">Description</label>
 					</div>
 					<div class="ui-grid-col-8">

@@ -66,6 +66,7 @@ export class DoctorOrderList implements OnInit, OnDestroy {
               .subscribe((data: DoctorOrder[]) => 
               { 
                 this.doctorOrders = data 
+                console.info(this.doctorOrders);
               },
               error => console.log(error),
               () => console.log('Get all DoctorOrders complete'));

@@ -3,6 +3,7 @@ import {Http, Response, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import {Constants} from '../app.constants';
 import {Country} from '../models/country';
+import { Reference } from '../models/reference';
 import {User} from '../models/user';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {SelectItem} from 'primeng/api';
@@ -172,6 +173,22 @@ export class GenericService {
     
       let actionUrl = Constants.apiServer + '/service/fileUploader/uploadFile';
       return this.http.post(actionUrl, formData, { headers: head })
+        .map((response: Response) => {
+            if (response && response.json()) {
+              const error = response.json() && response.json().error;
+              if (error == null) {
+                
+              }
+            }
+            return response.json();
+        })
+        .catch(this.handleError);
+   }
+  
+  public getActiveElements = (elementType: string): Observable<Reference[]> => {
+   
+      let actionUrl = Constants.apiServer + '/service/reference/' + elementType + '/all/active';
+      return this.http.get(actionUrl, { headers: this.headers })
         .map((response: Response) => {
             if (response && response.json()) {
               const error = response.json() && response.json().error;

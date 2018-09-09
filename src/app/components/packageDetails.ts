@@ -68,7 +68,7 @@ export class PackageDetails implements OnInit, OnDestroy {
                   this.pckage = result
                 }
                 else {
-                  this.error = Constants.saveFailed;
+                  this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
               })
@@ -102,7 +102,7 @@ export class PackageDetails implements OnInit, OnDestroy {
             console.info(this.pckage);
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })

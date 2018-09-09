@@ -57,7 +57,7 @@ export class CaseStudyDetails implements OnInit, OnDestroy {
                   this.caseStudy = result
                 }
                 else {
-                  this.error = Constants.saveFailed;
+                  this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
               })
@@ -81,7 +81,7 @@ export class CaseStudyDetails implements OnInit, OnDestroy {
             this.caseStudy = result
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })

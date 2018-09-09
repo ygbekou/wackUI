@@ -68,6 +68,12 @@ import {SymptomDetails} from '../components/symptomDetails';
 import {MedicalHistoryDetails} from '../components/medicalHistoryDetails';
 import {SocialHistoryDetails} from '../components/socialHistoryDetails';
 import {VaccineDetails} from '../components/vaccineDetails';
+import {DischargeDetails} from '../components/dischargeDetails';
+import {LabTestDetails} from '../components/labTestDetails';
+import {LabTestList} from '../components/labTestList';
+
+import {InvestigationDetails} from '../components/investigationDetails';
+import {InvestigationList} from '../components/investigationList';
 
 const routes: Routes = [
   {path: 'adminMain', component: AdminMain},
@@ -123,7 +129,9 @@ const routes: Routes = [
   {path: 'adminPatient', component: AdminPatient},
   {path: 'adminAdmission', component: AdminAdmission},
   {path: 'adminBedStatus', component: AdminBedStatus},
-  {path: 'adminReference', component: AdminReference}
+  {path: 'adminReference', component: AdminReference},
+  {path: 'investigationDetails', component: InvestigationDetails},
+  {path: 'investigationList', component: InvestigationList},
 ];
 
 @NgModule({
@@ -143,7 +151,8 @@ const routes: Routes = [
     MedicalHistoryDetails, SocialHistoryDetails, VaccineDetails, SymptomDetails, 
     DoctorOrderDetails, DoctorOrderList, AdmissionDetails, AdmissionList, DoctorTransfer, FloorDetails, FloorList,
     RoomDetails, RoomList, BedDetails, BedList, AdminPatient, AdminAdmission, AdminBedStatus, AdmissionDiagnoses,
-    AdminReference, VisitDetails, VisitList],
+    AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails, 
+    InvestigationList],
 
   providers: [CategoryDropdown]
 })

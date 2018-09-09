@@ -7,17 +7,20 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { User } from '../models/user';  
 import { GenericService } from '../services';
+import { DoctorOrderTypeDropdown } from './dropdowns';
 
 @Component({
   selector: 'app-service-details',
   templateUrl: '../pages/serviceDetails.html',
-  providers: [GenericService]
+  providers: [GenericService, DoctorOrderTypeDropdown]
 })
 export class ServiceDetails implements OnInit, OnDestroy {
   
   public error: String = '';
   displayDialog: boolean;
   service: Service = new Service();
+  
+  doctorOrderTypeDropdown: DoctorOrderTypeDropdown;
   
   DETAIL: string = Constants.DETAIL;
   ADD_IMAGE: string = Constants.ADD_IMAGE;
@@ -26,11 +29,12 @@ export class ServiceDetails implements OnInit, OnDestroy {
   constructor
     (
       private genericService: GenericService,
+      docOrderTypeDropdown: DoctorOrderTypeDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
     ) {
-      
+      this.doctorOrderTypeDropdown = docOrderTypeDropdown;
   }
 
   ngOnInit(): void {
@@ -47,7 +51,7 @@ export class ServiceDetails implements OnInit, OnDestroy {
                   this.service = result
                 }
                 else {
-                  this.error = Constants.saveFailed;
+                  this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
               })
@@ -69,7 +73,7 @@ export class ServiceDetails implements OnInit, OnDestroy {
             this.service = result
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })

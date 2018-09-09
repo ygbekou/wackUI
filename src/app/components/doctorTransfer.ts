@@ -134,7 +134,7 @@ export class DoctorTransfer implements OnInit, OnDestroy {
               this.admission.doctorAssignment = result
             }
             else {
-              this.error = Constants.saveFailed;
+              this.error = Constants.SAVE_UNSUCCESSFUL;
               this.displayDialog = true;
             }
           })
@@ -157,7 +157,7 @@ export class DoctorTransfer implements OnInit, OnDestroy {
               this.admission.bedAssignment = result
             }
             else {
-              this.error = Constants.saveFailed;
+              this.error = Constants.SAVE_UNSUCCESSFUL;
               this.displayDialog = true;
             }
           })

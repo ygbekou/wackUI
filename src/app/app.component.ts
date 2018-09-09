@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
       }
     }
     this.globalEventsManager.showNavBar.subscribe((data: boolean) => {
-      console.log('globalEventsManager reached');
+      //console.log('globalEventsManager reached');
       this.user = JSON.parse(Cookie.get('user'));
     }, error => console.log(error));
   }

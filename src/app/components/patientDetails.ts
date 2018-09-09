@@ -75,7 +75,7 @@ export class PatientDetails implements OnInit, OnDestroy {
                   this.patient = result
                 }
                 else {
-                  this.error = Constants.saveFailed;
+                  this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
               })
@@ -112,7 +112,7 @@ export class PatientDetails implements OnInit, OnDestroy {
             this.patient = result
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })

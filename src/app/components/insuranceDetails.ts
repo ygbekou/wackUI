@@ -54,7 +54,7 @@ export class InsuranceDetails implements OnInit, OnDestroy {
                   this.insurance = result
                 }
                 else {
-                  this.error = Constants.saveFailed;
+                  this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
               })
@@ -76,7 +76,7 @@ export class InsuranceDetails implements OnInit, OnDestroy {
             this.insurance = result
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })

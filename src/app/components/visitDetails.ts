@@ -122,7 +122,7 @@ export class VisitDetails implements OnInit, OnDestroy {
             console.info(this.visit);
           }
           else { 
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })

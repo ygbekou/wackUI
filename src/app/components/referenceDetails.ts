@@ -73,7 +73,7 @@ export class ReferenceDetails implements OnInit, OnDestroy {
                   this.reference = result
                 }
                 else {
-                  this.error = Constants.saveFailed;
+                  this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
               })
@@ -93,7 +93,7 @@ export class ReferenceDetails implements OnInit, OnDestroy {
         this.reference = result
       }
       else {
-        this.error = Constants.saveFailed;
+        this.error = Constants.SAVE_UNSUCCESSFUL;
         this.displayDialog = true;
       }
     })
@@ -121,7 +121,7 @@ export class ReferenceDetails implements OnInit, OnDestroy {
             this.reference = result
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })

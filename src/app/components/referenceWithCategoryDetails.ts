@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../app.constants';
-import { Medicine } from '../models/medicine';
+import { Product } from '../models/product';
 import { Reference } from '../models/reference';
 import { ReferenceWithCategory } from '../models/referenceWithCategory';
 import { FileUploader } from './fileUploader';
@@ -60,7 +60,7 @@ export class ReferenceWithCategoryDetails implements OnInit, OnDestroy {
                   this.referenceWithCategory = result
                 }
                 else {
-                  this.error = Constants.saveFailed;
+                  this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
               })
@@ -84,7 +84,7 @@ export class ReferenceWithCategoryDetails implements OnInit, OnDestroy {
             this.referenceWithCategory = result
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })
@@ -101,7 +101,7 @@ export class ReferenceWithCategoryDetails implements OnInit, OnDestroy {
         this.referenceWithCategory = result
       }
       else {
-        this.error = Constants.saveFailed;
+        this.error = Constants.SAVE_UNSUCCESSFUL;
         this.displayDialog = true;
       }
     })

@@ -7,17 +7,19 @@ import { DoctorOrder } from '../models/doctorOrder';
 import { VitalSign } from '../models/vitalSign';
 import { Patient } from '../models/patient';
 import { EditorModule } from 'primeng/editor';
-import { DoctorOrderTypeDropdown, DoctorOrderPriorityDropdown, DoctorOrderKindDropdown, DoctorDropdown } from './dropdowns';
+import { DoctorOrderTypeDropdown, DoctorOrderPriorityDropdown, DoctorOrderKindDropdown, DoctorDropdown, ServiceDropdown, LabTestDropdown} from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
+import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule, PickListModule } from 'primeng/primeng';
 import { User } from '../models/user';  
 import { Visit } from '../models/visit';
-import { GenericService } from '../services';
+import { Service } from '../models/service';
+import { GenericService, VisitService } from '../services';
 
 @Component({ 
   selector: 'app-doctorOrder-details',
   templateUrl: '../pages/doctorOrderDetails.html', 
-  providers: [GenericService, DoctorDropdown, DoctorOrderTypeDropdown, DoctorOrderPriorityDropdown, DoctorOrderKindDropdown]
+  providers: [GenericService, DoctorDropdown, DoctorOrderTypeDropdown, 
+    DoctorOrderPriorityDropdown, DoctorOrderKindDropdown, LabTestDropdown]
 })
 export class DoctorOrderDetails implements OnInit, OnDestroy {
   
@@ -29,6 +31,7 @@ export class DoctorOrderDetails implements OnInit, OnDestroy {
   doctorOrderPriorityDropdown: DoctorOrderPriorityDropdown;
   doctorOrderKindDropdown: DoctorOrderKindDropdown;
   doctorDropdown: DoctorDropdown;
+  labTestDropdown: LabTestDropdown;
   
   DETAIL: string = Constants.DETAIL;
   ADD_IMAGE: string = Constants.ADD_IMAGE;
@@ -42,10 +45,12 @@ export class DoctorOrderDetails implements OnInit, OnDestroy {
   constructor
     (
       private genericService: GenericService,
+      private visitService: VisitService,
       private dotDropdown: DoctorOrderTypeDropdown,
       private dopDropdown: DoctorOrderPriorityDropdown,
       private dokDropdown: DoctorOrderKindDropdown,
       private docDropdown: DoctorDropdown,
+      private lbtDropdown: LabTestDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
@@ -54,6 +59,7 @@ export class DoctorOrderDetails implements OnInit, OnDestroy {
     this.doctorOrderPriorityDropdown = dopDropdown;
     this.doctorOrderKindDropdown = dokDropdown;
     this.doctorDropdown = docDropdown;
+    this.labTestDropdown = lbtDropdown;
     this.user = new User();
   }
 
@@ -79,7 +85,7 @@ export class DoctorOrderDetails implements OnInit, OnDestroy {
                     this.doctorOrder.receivedDatetime = new Date(this.doctorOrder.receivedDatetime);
                 }
                 else {
-                  this.error = Constants.saveFailed;
+                  this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
               })
@@ -108,13 +114,13 @@ export class DoctorOrderDetails implements OnInit, OnDestroy {
         return;
       }
       
-      this.genericService.save(this.doctorOrder, "DoctorOrder")
+      this.visitService.saveDoctorOrder(this.doctorOrder)
         .subscribe(result => {
           if (result.id > 0) {
-            this.doctorOrder = result
+            this.doctorOrder = result;
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })
@@ -133,10 +139,18 @@ export class DoctorOrderDetails implements OnInit, OnDestroy {
         this.doctorOrder.receivedDatetime = new Date(this.doctorOrder.receivedDatetime);
       }
       else {
-        this.error = Constants.saveFailed;
+        this.error = Constants.SAVE_UNSUCCESSFUL;
         this.displayDialog = true;
       }
     })
   }
   
+  
+//  populateServiceDropdown(event) {
+//    this.serviceDropdown.getServices(this.doctorOrder.service.serviceType.id);
+//  }
+  
+  toggleTypeDropdown(event) {
+    
+  }
  }

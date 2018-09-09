@@ -171,7 +171,7 @@ export class AdmissionDetails implements OnInit, OnDestroy {
             console.info(this.admission);
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })

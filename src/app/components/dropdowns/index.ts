@@ -23,3 +23,7 @@ export * from './dropdown.room';
 export * from './dropdown.bed';
 export * from './dropdown.diagnosis';
 export * from './dropdown.vaccine';
+export * from './dropdown.labTestMethod';
+export * from './dropdown.labTestGroup';
+export * from './dropdown.labTestUnit';
+export * from './dropdown.labTest';

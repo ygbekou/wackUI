@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import {Constants} from '../app.constants';
+import { DoctorOrder } from '../models/doctorOrder';
 import { Reference } from '../models/reference';
 import { Visit } from '../models/visit';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
@@ -11,6 +12,8 @@ export class VisitService {
 
   private actionUrl: string;
   private headers: Headers;
+  
+  public physicianApprovedList: Reference[] = [];
 
   constructor(private http: Http) {
     this.headers = new Headers();
@@ -48,17 +51,15 @@ export class VisitService {
         .catch(this.handleError);
    }
   
-  public getActiveElements = (elementType: string): Observable<Reference[]> => {
-   
-      let actionUrl = Constants.apiServer + '/service/reference/' + elementType + '/all/active';
-      return this.http.get(actionUrl, { headers: this.headers })
+  public saveDoctorOrder = (doctorOrder : DoctorOrder): Observable<DoctorOrder> => {
+    
+      let toAdd = JSON.stringify(doctorOrder);
+      let re = /\"/gi;
+      let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
+      
+      let actionUrl = Constants.apiServer + '/service/visit/doctororder/save';
+      return this.http.post(actionUrl, toSend, { headers: this.headers })
         .map((response: Response) => {
-            if (response && response.json()) {
-              const error = response.json() && response.json().error;
-              if (error == null) {
-                
-              }
-            }
             return response.json();
         })
         .catch(this.handleError);

@@ -73,7 +73,7 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
             this.appointment = result
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
           }
         })
     }
@@ -109,7 +109,7 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
                   this.displayEdit = true;
                 }
                 else {
-                  this.error = Constants.saveFailed;
+                  this.error = Constants.SAVE_UNSUCCESSFUL;
                 }
               })
           }
@@ -127,7 +127,7 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
           this.events = result
         }
         else {
-          this.error = Constants.saveFailed;
+          this.error = Constants.SAVE_UNSUCCESSFUL;
         }
       })
     }

@@ -66,7 +66,7 @@ export class ScheduleDetails implements OnInit, OnDestroy {
                   this.schedule = result
                 }
                 else {
-                  this.error = Constants.saveFailed;
+                  this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
               })
@@ -90,7 +90,7 @@ export class ScheduleDetails implements OnInit, OnDestroy {
             this.schedule = result
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })

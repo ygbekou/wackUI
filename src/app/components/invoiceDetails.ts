@@ -72,7 +72,7 @@ export class InvoiceDetails implements OnInit, OnDestroy {
                   this.invoice = result
                 }
                 else {
-                  this.error = Constants.saveFailed;
+                  this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
               })
@@ -132,7 +132,7 @@ export class InvoiceDetails implements OnInit, OnDestroy {
             console.info(this.invoice);
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })

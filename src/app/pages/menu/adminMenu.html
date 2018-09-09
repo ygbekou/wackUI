@@ -150,10 +150,10 @@
 			<a href="#/admin/insuranceList?insuranceList=active" i18n="@@statistics">Insurance List</a>
 		</li>
 		<li class="{{serviceDetails}}" *ngIf="user.id > 0 && isAvailable('serviceDetails')">
-			<a href="#/admin/serviceDetails?serviceDetails=active" i18n="@@statistics">Add Service</a>
+			<a href="#/admin/serviceDetails?serviceDetails=active" i18n="@@statistics">Add Service Tarif</a>
 		</li>
 		<li class="{{serviceList}}" *ngIf="user.id > 0 && isAvailable('serviceList')">
-			<a href="#/admin/serviceList?serviceList=active" i18n="@@statistics">Service List</a>
+			<a href="#/admin/serviceList?serviceList=active" i18n="@@statistics">Service Tarif List</a>
 		</li>
 		<li class="{{packageDetails}}" *ngIf="user.id > 0 && isAvailable('packageDetails')">
 			<a href="#/admin/packageDetails?packageDetails=active" i18n="@@statistics">Add Package</a>
@@ -194,7 +194,13 @@
 		<li class="{{doctorTransfer}}" *ngIf="user.id > 0 && isAvailable('doctorTransfer')">
 			<a href="#/admin/doctorTransfer?doctorTransfer=active&transferType=DOCTOR" i18n="@@statistics">Doctor Transfer</a>
 		</li>
-		<li class="{{bedTransfer}}" *ngIf="user.id > 0 && isAvailable('bedTransfer')">
+		<li class="{{investigationDetails}}" *ngIf="user.id > 0 && isAvailable('investigationDetails')">
+			<a href="#/admin/investigationDetails?investigationDetails=active" i18n="@@statistics">Investigation Details</a>
+		</li>
+		<li class="{{investigationList}}" *ngIf="user.id > 0 && isAvailable('investigationList')">
+			<a href="#/admin/investigationList?investigationList=active" i18n="@@statistics">Investigation List</a>
+		</li>
+		<li class="{{investigationDetails}}" *ngIf="user.id > 0 && isAvailable('bedTransfer')">
 			<a href="#/admin/doctorTransfer?bedTransfer=active&transferType=BED" i18n="@@statistics">Bed Transfer</a>
 		</li>
 		<li class="{{adminProfile}}">

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../app.constants';
-import { Medicine } from '../models/medicine';
+import { Product } from '../models/product';
 import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
@@ -16,7 +16,7 @@ export class MedicineList implements OnInit, OnDestroy {
   
   public error: String = '';
   displayDialog: boolean;
-  medicines: Medicine[] = [];
+  medicines: Product[] = [];
   cols: any[];
   
   DETAIL: string = Constants.DETAIL;
@@ -55,7 +55,7 @@ export class MedicineList implements OnInit, OnDestroy {
             parameters.push('e.status = |status|0|Integer')
             
             this.genericService.getAllByCriteria('Medicine', parameters)
-              .subscribe((data: Medicine[]) => 
+              .subscribe((data: Product[]) => 
               { 
                 this.medicines = data 
                 console.info(this.medicines)

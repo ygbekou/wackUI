@@ -62,6 +62,23 @@ export class BillingService {
         .catch(this.handleError);
    }
   
+  public getBillByItemNumber = (itemNumber: string): Observable<any> => {
+   
+      let actionUrl = Constants.apiServer + '/service/billing/bill/itemNumber/' + itemNumber;
+      return this.http.get(actionUrl, { headers: this.headers })
+        .map((response: Response) => {
+            if (response && response.json()) {
+              const error = response.json() && response.json().error;
+              if (error == null) {
+                
+              }
+            }
+            return response.json();
+        })
+        .catch(this.handleError);
+   }
+  
+  
   private handleError(error: Response) {
     console.error(error);
     return Observable.throw(error.json().error || 'Server error');

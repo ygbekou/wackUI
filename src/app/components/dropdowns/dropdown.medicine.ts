@@ -1,13 +1,13 @@
 import { Injectable, OnInit } from '@angular/core';
 import { DropdownUtil } from './dropdown.util';
 import { GenericService } from '../../services/generic.service';
-import { Medicine } from '../../models/medicine';
+import { Product } from '../../models/product';
  
 @Injectable()
 export class MedicineDropdown {
   
-  filteredMedicines : Medicine[];
-  medicines : Medicine[] = []; 
+  filteredMedicines : Product[];
+  medicines : Product[] = []; 
   
   constructor(
     private genericService: GenericService) {
@@ -25,7 +25,7 @@ export class MedicineDropdown {
   }
   
   private getAllMedicines(): void {
-    this.genericService.getAll('Medicine')
+    this.genericService.getAll('Product')
       .subscribe((data: any[]) => {
         this.medicines = data
       },

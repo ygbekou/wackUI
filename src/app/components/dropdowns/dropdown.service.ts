@@ -34,4 +34,19 @@ export class ServiceDropdown {
       () => console.log('Get All Services Complete'));
   }
   
+  public getServices(serviceTypeId: number): void {
+    let parameters: string [] = []; 
+            
+    parameters.push('e.serviceType.id = |serviceTypeId|' + serviceTypeId + '|Long')
+    
+    this.genericService.getAllByCriteria('Service', parameters)
+      .subscribe((data: any[]) => {
+        this.services = data
+        
+      },
+        
+      error => console.log(error),
+      () => console.log('Get services Complete'));
+  }
+  
 }

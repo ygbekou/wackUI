@@ -60,7 +60,7 @@ export class FloorDetails implements OnInit, OnDestroy {
                   this.floor = result
                 }
                 else {
-                  this.error = Constants.saveFailed;
+                  this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
               })
@@ -80,7 +80,7 @@ export class FloorDetails implements OnInit, OnDestroy {
         this.floor = result
       }
       else {
-        this.error = Constants.saveFailed;
+        this.error = Constants.SAVE_UNSUCCESSFUL;
         this.displayDialog = true;
       }
     })
@@ -100,7 +100,7 @@ export class FloorDetails implements OnInit, OnDestroy {
             this.floor = result
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })

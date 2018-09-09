@@ -7,6 +7,8 @@ import { Patient } from '../models/patient';
 import { UserGroup } from '../models/userGroup';
 import { GenericService, UserService, GlobalEventsManager } from '../services';
 import { CategoryDropdown } from './dropdowns';
+import { LabTestDetails } from './labTestDetails';
+import { LabTestList } from './labTestList';
 import { MedicineDetails } from './medicineDetails';
 import { ReferenceDetails } from './referenceDetails';
 import { ReferenceList } from './referenceList';
@@ -23,6 +25,8 @@ export class AdminReference implements OnInit {
   @ViewChild(ReferenceDetails) referenceDetails: ReferenceDetails;
   @ViewChild(ReferenceWithCategoryDetails) referenceWithCategoryDetails: ReferenceWithCategoryDetails;
   @ViewChild(MedicineDetails) medicineDetails: MedicineDetails;
+  @ViewChild(LabTestDetails) labTestDetails: LabTestDetails;
+  @ViewChild(LabTestList) labTestList: LabTestList;
   
   public user: User;
   public patient: Patient;
@@ -68,6 +72,11 @@ export class AdminReference implements OnInit {
     this.medicineDetails.getMedicine(medicineId);
   }
   
+  onLabTestSelected($event) {
+    let labTestId = $event;
+    this.labTestDetails.getLabTest(labTestId);
+  }
+  
   onTabChange(evt) {
     this.activeTab = evt.index;
     if (evt.index == 0) {
@@ -108,8 +117,16 @@ export class AdminReference implements OnInit {
     } else if (evt.index == 14) {
       this.globalEventsManager.selectedParentId = Constants.CATEGORY_MEDICINE;
       this.categoryDropdown.getAllCategories(Constants.CATEGORY_MEDICINE);
-    }
-  } 
-
-
+    } else if (evt.index == 15) {
+      this.globalEventsManager.selectedParentId = Constants.CATEGORY_SERVICE_TARIF;
+      this.globalEventsManager.selectedReferenceType = "Category";
+      this.referenceDetails.parentId = Constants.CATEGORY_SERVICE_TARIF;
+    } else if (evt.index == 16) {
+      this.globalEventsManager.selectedReferenceType = "LabTestMethod";
+    } else if (evt.index == 17) {
+      this.globalEventsManager.selectedReferenceType = "LabTestUnit";
+    } else if (evt.index == 18) {
+      this.labTestList.getAllLabTests();
+    } 
+  }
 }

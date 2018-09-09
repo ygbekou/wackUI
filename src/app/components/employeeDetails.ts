@@ -70,7 +70,7 @@ export class EmployeeDetails implements OnInit, OnDestroy {
                   this.employee = result
                 }
                 else {
-                  this.error = Constants.saveFailed;
+                  this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
               })
@@ -106,7 +106,7 @@ export class EmployeeDetails implements OnInit, OnDestroy {
             this.employee = result
           }
           else {
-            this.error = Constants.saveFailed;
+            this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
         })

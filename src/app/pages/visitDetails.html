@@ -196,7 +196,7 @@
 							 		<br/>
 							 		<app-vaccine-details [givenVaccines]="visit.givenVaccines"></app-vaccine-details>	
 							 	</p-tabPanel>
-							 	<p-tabPanel header="SYMPTOMS">
+							 	<p-tabPanel header="Symptoms">
 							 		<app-symptom-details [visit]="visit"></app-symptom-details>	
 								</p-tabPanel>
 							 	<p-tabPanel header="Medical History">
@@ -205,7 +205,7 @@
 							 	<p-tabPanel header="Social History">
 							 		<app-socialHistory-details [visit]="visit"></app-socialHistory-details>
 							 	</p-tabPanel>
-							 	<p-tabPanel header="Ocular History">
+							 	<p-tabPanel header="Home Medications">
 							 	</p-tabPanel>
 					 		</p-tabView>
 						</p-tabPanel>
@@ -224,11 +224,16 @@
 					        <br/>
 					        <app-prescription-list [visit]="visit" (prescriptionIdEvent)="onPrescriptionSelected($event)"></app-prescription-list>
 						</p-tabPanel>
-						<p-tabPanel header="INVESTIGATIONS">
+						<p-tabPanel header="INVESTIGATIONS" *ngIf="visit.id > 0">
+							<app-investigation-details></app-investigation-details>
+					        <br/>
+					        <br/>
+					        <app-investigation-list [visit]="visit"></app-investigation-list>
 						</p-tabPanel>
-						<p-tabPanel header="MEDICATIONS">
-						</p-tabPanel>
-						<p-tabPanel header="ADVICE">
+						<p-tabPanel header="DISCHARGE FORM" *ngIf="visit.id > 0">
+							<div *ngIf="activeTab == 4">
+								<app-discharge-details [visit]="visit"></app-discharge-details>
+							</div>
 						</p-tabPanel>
 					</p-tabView>
 						

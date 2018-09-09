@@ -5,4 +5,5 @@ export * from './account.service';
 export * from './billing.service';
 export * from './admission.service';
 export * from './visit.service';
+export * from './investigation.service';
 export * from './globalEventsManager';
