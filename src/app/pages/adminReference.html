@@ -166,6 +166,14 @@
 				        <app-labTest-list (labTestIdEvent)="onLabTestSelected($event)"></app-labTest-list>
 				    </div>
 			    </p-tabPanel>
+			    <p-tabPanel id="supplier" header="Supplier">
+			    	<div *ngIf="activeTab == 19">
+				        <app-supplier-details></app-supplier-details>
+				        <br/> 
+				        <br/>
+				        <app-supplier-list (supplierIdEvent)="onSupplierSelected($event)"></app-supplier-list>
+				    </div>
+			    </p-tabPanel>
 			</p-tabView>
 		</div>
 

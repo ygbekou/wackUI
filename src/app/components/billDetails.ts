@@ -24,7 +24,7 @@ import { GenericService, BillingService } from '../services';
 })
 export class BillDetails implements OnInit, OnDestroy {
   
-  public error: String = '';
+  public error: string = '';
   displayDialog: boolean;
   bill: Bill = new Bill();
   serviceCols: any[];

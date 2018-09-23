@@ -4,34 +4,34 @@ import { GenericService } from '../../services/generic.service';
 import { Product } from '../../models/product';
  
 @Injectable()
-export class MedicineDropdown {
+export class ProductDropdown {
   
-  filteredMedicines : Product[];
-  medicines : Product[] = []; 
+  filteredProducts : Product[];
+  products : Product[] = []; 
   
   constructor(
     private genericService: GenericService) {
-    this.getAllMedicines();
+    this.getAllProducts();
   }
   
   filter(event) {
-    this.filteredMedicines = DropdownUtil.filter(event, this.medicines);
+    this.filteredProducts = DropdownUtil.filter(event, this.products);
   }
   
   handleDropdownClick(event) {
     setTimeout(() => {
-      this.filteredMedicines = this.medicines;
+      this.filteredProducts = this.products;
     }, 10)
   }
   
-  private getAllMedicines(): void {
+  private getAllProducts(): void {
     this.genericService.getAll('Product')
       .subscribe((data: any[]) => {
-        this.medicines = data
+        this.products = data
       },
         
       error => console.log(error),
-      () => console.log('Get All Medicines Complete'));
+      () => console.log('Get All Products Complete'));
   }
   
 }

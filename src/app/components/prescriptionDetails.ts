@@ -11,7 +11,7 @@ import { Diagnosis } from '../models/diagnosis';
 import { PrescriptionDiagnosis } from '../models/prescriptionDiagnosis';
 import { PrescriptionMedicine } from '../models/prescriptionMedicine';
 import { EditorModule } from 'primeng/editor';
-import { DoctorDropdown, MedicineDropdown } from './dropdowns';
+import { DoctorDropdown, ProductDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { User } from '../models/user';  
@@ -21,7 +21,7 @@ import { GenericService, AdmissionService, GlobalEventsManager } from '../servic
 @Component({
   selector: 'app-prescription-details',
   templateUrl: '../pages/prescriptionDetails.html',
-  providers: [GenericService, AdmissionService, MedicineDropdown]
+  providers: [GenericService, AdmissionService, ProductDropdown]
 })
 export class PrescriptionDetails implements OnInit, OnDestroy {
   
@@ -31,7 +31,7 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
   medicineCols: any[];
   diagnosisCols: any[];
   
-  medicineDropdown: MedicineDropdown;
+  productDropdown: ProductDropdown;
   
   DETAIL: string = Constants.DETAIL;
   ADD_IMAGE: string = Constants.ADD_IMAGE;
@@ -49,12 +49,12 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
       private globalEventsManager: GlobalEventsManager,
       private genericService: GenericService,
       private admissionService: AdmissionService,
-      private mdDropdown: MedicineDropdown,
+      private pdDropdown: ProductDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
     ) {
-    this.medicineDropdown = mdDropdown;
+    this.productDropdown = pdDropdown;
     
   }
 

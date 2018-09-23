@@ -3,25 +3,25 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../app.constants';
 import { Product } from '../models/product';
 import { Reference } from '../models/reference';
+import { Supplier } from '../models/supplier';
 import { FileUploader } from './fileUploader';
 import { EditorModule } from 'primeng/editor';
-import { CategoryDropdown, ManufacturerDropdown } from './dropdowns';
+import { CountryDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { GenericService, GlobalEventsManager } from '../services';
 
 @Component({
-  selector: 'app-medicine-details',
-  templateUrl: '../pages/medicineDetails.html',
-  providers: [GenericService, CategoryDropdown, ManufacturerDropdown]
+  selector: 'app-supplier-details',
+  templateUrl: '../pages/supplierDetails.html',
+  providers: [GenericService, CountryDropdown]
 })
-export class MedicineDetails implements OnInit, OnDestroy {
+export class SupplierDetails implements OnInit, OnDestroy {
   
   public error: String = '';
   displayDialog: boolean;
-  medicine: Product = new Product();
-  categoryDropdown: CategoryDropdown;
-  manufacturerDropdown: ManufacturerDropdown;
+  supplier: Supplier = new Supplier();
+  countryDropdown:  CountryDropdown;
   
   DETAIL: string = Constants.DETAIL;
   ADD_IMAGE: string = Constants.ADD_IMAGE;
@@ -35,33 +35,28 @@ export class MedicineDetails implements OnInit, OnDestroy {
     (
       private genericService: GenericService,
       private globalEventsManager: GlobalEventsManager,
-      private ctgDropdown: CategoryDropdown,
-      private mfctDropdown: ManufacturerDropdown,
+      private cntryDropdown: CountryDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
     ) {
-      this.categoryDropdown = ctgDropdown;
-      this.manufacturerDropdown = mfctDropdown;
-      this.categoryDropdown.getAllCategories(Constants.CATEGORY_MEDICINE);
+    this.countryDropdown = cntryDropdown;
   }
 
   ngOnInit(): void {
 
-    let medicineId = null;
+    let supplierId = null;
     this.route
         .queryParams
-        .subscribe(params => {          
+        .subscribe(params => {         
           
-          this.medicine.category = new Reference();
+          supplierId = params['supplierId'];
           
-          medicineId = params['medicineId'];
-          
-          if (medicineId != null) {
-              this.genericService.getOne(medicineId, 'Product')
+          if (supplierId != null) {
+              this.genericService.getOne(supplierId, 'com.qkcare.model.stocks.Supplier')
                   .subscribe(result => {
                 if (result.id > 0) {
-                  this.medicine = result
+                  this.supplier = result
                 }
                 else {
                   this.error = Constants.SAVE_UNSUCCESSFUL;
@@ -76,14 +71,14 @@ export class MedicineDetails implements OnInit, OnDestroy {
   }
   
   ngOnDestroy() {
-    this.medicine = null;
+    this.supplier = null;
   }
 
-  getMedicine(medicineId: number) {
-    this.genericService.getOne(medicineId, 'Product')
+  getSupplier(supplierId: number) {
+    this.genericService.getOne(supplierId, 'com.qkcare.model.stocks.Supplier')
         .subscribe(result => {
       if (result.id > 0) {
-        this.medicine = result
+        this.supplier = result
       }
       else {
         this.error = Constants.SAVE_UNSUCCESSFUL;
@@ -95,10 +90,10 @@ export class MedicineDetails implements OnInit, OnDestroy {
   save() {
     try {
       this.error = '';
-      this.genericService.save(this.medicine, "Product")
+      this.genericService.save(this.supplier, "com.qkcare.model.stocks.Supplier")
         .subscribe(result => {
           if (result.id > 0) {
-            this.medicine = result
+            this.supplier = result
           }
           else {
             this.error = Constants.SAVE_UNSUCCESSFUL;

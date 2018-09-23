@@ -1,29 +1,29 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../app.constants';
-import { Product } from '../models/product';
+import { Supplier } from '../models/supplier';
 import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { GenericService } from '../services';
 
 @Component({
-  selector: 'app-medicine-list',
-  templateUrl: '../pages/medicineList.html',
+  selector: 'app-supplier-list',
+  templateUrl: '../pages/supplierList.html',
   providers: [GenericService]
 })
-export class MedicineList implements OnInit, OnDestroy {
+export class SupplierList implements OnInit, OnDestroy {
   
   public error: String = '';
   displayDialog: boolean;
-  medicines: Product[] = [];
+  suppliers: Supplier[] = [];
   cols: any[];
   
   DETAIL: string = Constants.DETAIL;
   ADD_IMAGE: string = Constants.ADD_IMAGE;
   ADD_LABEL: string = Constants.ADD_LABEL;  
   
-  @Output() medicineIdEvent = new EventEmitter<string>();
+  @Output() supplierIdEvent = new EventEmitter<string>();
   
   constructor
     (
@@ -38,12 +38,15 @@ export class MedicineList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'categoryName', header: 'Category' },
-            { field: 'manufacturerName', header: 'Manufacturer' },
             { field: 'name', header: 'Name' },
-            { field: 'description', header: 'Description' },
-            { field: 'price', header: 'Price' },
-            { field: 'status', header: 'Status', type:'string' }
+            { field: 'contactName', header: 'Contact' },
+            { field: 'address', header: 'Address' },
+            { field: 'city', header: 'City' },
+            { field: 'country', header: 'Country' },
+            { field: 'email', header: 'Email' },
+            { field: 'homePhone', header: 'Home Phone' },
+            { field: 'mobilePhone', header: 'Mobile Phone' },
+            { field: 'fax', header: 'Fax' }
         ];
     
     this.route
@@ -54,38 +57,49 @@ export class MedicineList implements OnInit, OnDestroy {
             
             parameters.push('e.status = |status|0|Integer')
             
-            this.genericService.getAllByCriteria('Product', parameters)
-              .subscribe((data: Product[]) => 
+            this.genericService.getAllByCriteria('Supplier', parameters)
+              .subscribe((data: Supplier[]) => 
               { 
-                this.medicines = data 
-                console.info(this.medicines)
+                this.suppliers = data 
+                console.info(this.suppliers)
               },
               error => console.log(error),
-              () => console.log('Get all Product complete'));
+              () => console.log('Get all Supplier complete'));
           });
   }
  
   
   ngOnDestroy() {
-    this.medicines = null;
+    this.suppliers = null;
   }
   
-  edit(medicineId: number) {
-      this.medicineIdEvent.emit(medicineId + '');
+  edit(supplierId: number) {
+      this.supplierIdEvent.emit(supplierId + '');
   }
 
-  delete(medicineId : number) {
+  delete(supplierId : number) {
     try {
       let navigationExtras: NavigationExtras = {
         queryParams: {
-          "medicineId": medicineId,
+          "supplierId": supplierId,
         }
       }
-      this.router.navigate(["/admin/medicineDetails"], navigationExtras);
+      this.router.navigate(["/admin/supplierDetails"], navigationExtras);
     }
     catch (e) {
       console.log(e);
     }
+  }
+  
+  getAllSuppliers() {
+    this.genericService.getAll('com.qkcare.model.stocks.Supplier')
+      .subscribe((data: Supplier[]) => 
+      { 
+        this.suppliers = data 
+        console.info(this.suppliers)
+      },
+      error => console.log(error),
+      () => console.log('Get all Suppliers complete'));
   }
 
  }

@@ -200,8 +200,14 @@
 		<li class="{{investigationList}}" *ngIf="user.id > 0 && isAvailable('investigationList')">
 			<a href="#/admin/investigationList?investigationList=active" i18n="@@statistics">Investigation List</a>
 		</li>
-		<li class="{{investigationDetails}}" *ngIf="user.id > 0 && isAvailable('bedTransfer')">
-			<a href="#/admin/doctorTransfer?bedTransfer=active&transferType=BED" i18n="@@statistics">Bed Transfer</a>
+		<li class="{{purchaseOrderDetails}}" *ngIf="user.id > 0 && isAvailable('purchaseOrderDetails')">
+			<a href="#/admin/purchaseOrderDetails?purchaseOrderDetails=active" i18n="@@statistics">Purchase Order</a>
+		</li>
+		<li class="{{purchaseOrderList}}" *ngIf="user.id > 0 && isAvailable('purchaseOrderList')">
+			<a href="#/admin/purchaseOrderList?purchaseOrderList=active" i18n="@@statistics">Purchase Order List</a>
+		</li>
+		<li class="{{receiveOrderDetails}}" *ngIf="user.id > 0 && isAvailable('receiveOrderDetails')">
+			<a href="#/admin/receiveOrderDetails?receiveOrderDetails=active" i18n="@@statistics">Receiving Order</a>
 		</li>
 		<li class="{{adminProfile}}">
 			<a href="#/admin/adminProfile?adminProfile=active" i18n="@@statistics">Profile</a>

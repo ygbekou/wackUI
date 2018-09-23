@@ -9,7 +9,7 @@ import {Diagnosis} from '../models/diagnosis';
 import {Investigation} from '../models/investigation';
 import {LabTest} from '../models/labTest';
 import {EditorModule} from 'primeng/editor';
-import {DoctorDropdown, MedicineDropdown, LabTestDropdown} from './dropdowns';
+import {DoctorDropdown, ProductDropdown, LabTestDropdown} from './dropdowns';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule} from 'primeng/primeng';
 import {User} from '../models/user';

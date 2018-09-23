@@ -13,6 +13,8 @@ import { MedicineDetails } from './medicineDetails';
 import { ReferenceDetails } from './referenceDetails';
 import { ReferenceList } from './referenceList';
 import { ReferenceWithCategoryDetails } from './referenceWithCategoryDetails';
+import { SupplierDetails } from './supplierDetails';
+import { SupplierList } from './supplierList';
 
 @Component({
   selector: 'app-admin-reference',
@@ -27,6 +29,8 @@ export class AdminReference implements OnInit {
   @ViewChild(MedicineDetails) medicineDetails: MedicineDetails;
   @ViewChild(LabTestDetails) labTestDetails: LabTestDetails;
   @ViewChild(LabTestList) labTestList: LabTestList;
+  @ViewChild(SupplierDetails) supplierDetails: SupplierDetails;
+  @ViewChild(SupplierList) supplierList: SupplierList;
   
   public user: User;
   public patient: Patient;
@@ -75,6 +79,11 @@ export class AdminReference implements OnInit {
   onLabTestSelected($event) {
     let labTestId = $event;
     this.labTestDetails.getLabTest(labTestId);
+  }
+  
+  onSupplierSelected($event) {
+    let supplierId = $event;
+    this.supplierDetails.getSupplier(supplierId);
   }
   
   onTabChange(evt) {
@@ -127,6 +136,8 @@ export class AdminReference implements OnInit {
       this.globalEventsManager.selectedReferenceType = "LabTestUnit";
     } else if (evt.index == 18) {
       this.labTestList.getAllLabTests();
+    } else if (evt.index == 19) {
+      this.supplierList.getAllSuppliers();
     } 
   }
 }

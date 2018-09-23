@@ -1,0 +1,36 @@
+import { Employee } from '../employee';
+import { Product } from '../product';
+import { Supplier } from '../supplier';
+
+export class PurchaseOrder {
+  id: number;
+  supplier: Supplier;
+  requestor: Employee;
+  shipTo: Employee;
+  purchaseOrderDate: Date = new Date();
+  comments: string;
+  subTotal: number;
+  taxes: number;
+  discount: number;
+  grandTotal: number;
+  paid: number;
+  due: number;
+  status: number;
+  
+  purchaseOrderProducts: PurchaseOrderProduct[] = [];
+  
+  constructor() {
+    this.purchaseOrderProducts.push(new PurchaseOrderProduct())
+  }
+  
+}
+
+export class PurchaseOrderProduct {
+  id: number;
+  product: Product;
+  quantity: number;
+  unitPrice: number;
+  totalAmount: number;
+  discountPercentage: number;
+  discountAmount: number;
+}

@@ -61,6 +61,8 @@ export class AdminMenu implements OnInit {
   public packageList: string;
   public payerTypeDetails: string;
   public payerTypeList: string;
+  public diagnosisDetails: string;
+  public diagnosisList: string;
   public doctorOrderTypeDetails: string;
   public doctorOrderTypeList: string;
   public doctorOrderPriorityDetails: string;
@@ -85,6 +87,9 @@ export class AdminMenu implements OnInit {
   public adminProfile: string;
   public investigationDetails: string;
   public investigationList: string;
+  public purchaseOrderDetails: string;
+  public purchaseOrderList: string;
+  public receiveOrderDetails: string;
   
   user: User;
   
@@ -105,7 +110,7 @@ export class AdminMenu implements OnInit {
     
     this.menus["laboratoryModule"] = ['adminReference', 'investigationDetails', 'investigationList'];
     
-    this.menus["pharmacyModule"] = ['adminReference'];
+    this.menus["pharmacyModule"] = ['adminReference', 'purchaseOrderDetails', 'purchaseOrderList', 'receiveOrderDetails'];
 
   }
 
@@ -188,6 +193,9 @@ export class AdminMenu implements OnInit {
         this.visitList = params['visitList'];
         this.investigationDetails = params['investigationDetails'];
         this.investigationList = params['investigationList'];
+        this.purchaseOrderDetails = params['purchaseOrderDetails'];
+        this.purchaseOrderList = params['purchaseOrderList'];
+        this.receiveOrderDetails = params['receiveOrderDetails'];
       })
   }
   

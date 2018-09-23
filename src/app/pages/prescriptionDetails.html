@@ -68,9 +68,9 @@
 					                <p-cellEditor *ngIf="col.header == 'Name'">
 					                    <ng-template pTemplate="input">
 					                        <p-autoComplete [(ngModel)]="rowData[col.field]"
-												(onDropdownClick)="medicineDropdown.handleDropdownClick($event)"
-												[suggestions]="medicineDropdown.filteredMedicines" [dropdown]="true"
-												(completeMethod)="medicineDropdown.filter($event)"
+												(onDropdownClick)="productDropdown.handleDropdownClick($event)"
+												[suggestions]="productDropdown.filteredProducts" [dropdown]="true"
+												(completeMethod)="productDropdown.filter($event)"
 												name="name" field="name" [size]="30" placeholder=""
 												[minLength]="1">
 											</p-autoComplete>
