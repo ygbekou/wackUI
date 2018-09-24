@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
       }
 
       if (this.user == null) {
-                  alert(this.user)
+         //         alert(this.user)
         // console.log('User1= '+this.user);
         this.user = new User();
         this.user.id = 0;

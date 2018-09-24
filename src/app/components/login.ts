@@ -5,7 +5,7 @@ import {UserService} from '../services/user.service';
 import {GenericService} from '../services/generic.service';
 import {Constants} from '../app.constants';
 import {User} from '../models/user';
-import {Country} from '../models/Country';
+import {Country} from '../models/country';
 import {AppComponent} from '../app.component';
 import { Department } from '../models/department';
 import { Employee } from '../models/employee';

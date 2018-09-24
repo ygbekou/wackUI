@@ -21,6 +21,7 @@ import {GlobalEventsManager} from './services/globalEventsManager';
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, FormsModule, HttpModule, CommonSharedModule,
+    
     RouterModule.forRoot(routes, {
       useHash: true
     })
