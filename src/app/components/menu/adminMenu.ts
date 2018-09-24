@@ -90,6 +90,11 @@ export class AdminMenu implements OnInit {
   public purchaseOrderDetails: string;
   public purchaseOrderList: string;
   public receiveOrderDetails: string;
+  public receiveOrderList: string;
+  public outPatientSaleDetails: string;
+  public outPatientSaleList: string;
+  public inPatientSaleDetails: string;
+  public inPatientSaleList: string;
   
   user: User;
   
@@ -110,7 +115,8 @@ export class AdminMenu implements OnInit {
     
     this.menus["laboratoryModule"] = ['adminReference', 'investigationDetails', 'investigationList'];
     
-    this.menus["pharmacyModule"] = ['adminReference', 'purchaseOrderDetails', 'purchaseOrderList', 'receiveOrderDetails'];
+    this.menus["pharmacyModule"] = ['adminReference', 'purchaseOrderDetails', 'purchaseOrderList', 'receiveOrderDetails', 
+      'receiveOrderList', 'outPatientSaleDetails', 'outPatientSaleList', 'inPatientSaleDetails', 'inPatientSaleList'];
 
   }
 
@@ -196,6 +202,11 @@ export class AdminMenu implements OnInit {
         this.purchaseOrderDetails = params['purchaseOrderDetails'];
         this.purchaseOrderList = params['purchaseOrderList'];
         this.receiveOrderDetails = params['receiveOrderDetails'];
+        this.receiveOrderList = params['receiveOrderList'];
+        this.outPatientSaleDetails = params['outPatientSaleDetails'];
+        this.outPatientSaleList = params['outPatientSaleList'];
+        this.inPatientSaleDetails = params['inPatientSaleDetails'];
+        this.inPatientSaleList = params['inPatientSaleList'];
       })
   }
   

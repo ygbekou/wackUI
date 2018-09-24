@@ -78,7 +78,7 @@ export class AdminBedStatus implements OnInit {
     } else if (evt.index == 1) {
       this.activeTab = 1
       this.globalEventsManager.selectedReferenceType = "Category";
-      this.globalEventsManager.selectedParentId = 100;
+      this.globalEventsManager.selectedParentId = Constants.CATEGORY_BED;
     } else if (evt.index == 2) {
       this.activeTab = 2
       this.globalEventsManager.selectedReferenceType = "Building";

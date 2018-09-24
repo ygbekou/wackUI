@@ -37,7 +37,7 @@ export class ReceiveOrderDetails implements OnInit, OnDestroy {
   constructor
     (
       private genericService: GenericService,
-      private purchaseOrderService: PurchasingService,
+      private purchasingService: PurchasingService,
       private splDropdown: SupplierDropdown,
       private pdtDropdown: ProductDropdown,
       private employeeDropdown: EmployeeDropdown,
@@ -59,15 +59,15 @@ export class ReceiveOrderDetails implements OnInit, OnDestroy {
             { field: 'notes', header: 'Notes'}
         ]; 
     
-    let purchaseOrderId = null;
+    let receiveOrderId = null;
     this.route
         .queryParams
         .subscribe(params => {          
           
-          purchaseOrderId = params['purchaseOrderId'];
+          receiveOrderId = params['receiveOrderId'];
           
-          if (purchaseOrderId != null) {
-              this.purchaseOrderService.getPurchaseOrder(purchaseOrderId)
+          if (receiveOrderId != null) {
+              this.purchasingService.getReceiveOrder(receiveOrderId)
                   .subscribe(result => {
                 if (result.id > 0) {
                   this.receiveOrder = result
@@ -94,15 +94,12 @@ export class ReceiveOrderDetails implements OnInit, OnDestroy {
     return value != undefined ? value : 0;
   } 
   
-  save(isDone: boolean) {
-    
-    if (isDone) {
-      this.receiveOrder.status = 2;
-    }
+  save(status: number) {
+    this.receiveOrder.status = status;
     
     try {
       this.error = '';
-      this.purchaseOrderService.saveReceiveOrder(this.receiveOrder)
+      this.purchasingService.saveReceiveOrder(this.receiveOrder)
         .subscribe(result => {
           if (result.id > 0) {
             this.receiveOrder = result
@@ -121,7 +118,7 @@ export class ReceiveOrderDetails implements OnInit, OnDestroy {
   
   lookUpPurchaseOrder() {
     
-    this.purchaseOrderService.getNewReceiveOrder(this.purchaseOrderId)
+    this.purchasingService.getNewReceiveOrder(this.purchaseOrderId)
       .subscribe((data: ReceiveOrder) => 
       { 
 

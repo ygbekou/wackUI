@@ -209,6 +209,21 @@
 		<li class="{{receiveOrderDetails}}" *ngIf="user.id > 0 && isAvailable('receiveOrderDetails')">
 			<a href="#/admin/receiveOrderDetails?receiveOrderDetails=active" i18n="@@statistics">Receiving Order</a>
 		</li>
+		<li class="{{receiveOrderList}}" *ngIf="user.id > 0 && isAvailable('receiveOrderList')">
+			<a href="#/admin/receiveOrderList?receiveOrderList=active" i18n="@@statistics">Receiving List</a>
+		</li>
+		<li class="{{outPatientSaleDetails}}" *ngIf="user.id > 0 && isAvailable('outPatientSaleDetails')">
+			<a href="#/admin/patientSaleDetails?patientSaleDetails=active&itemNumberLabel=Visit" i18n="@@statistics">OPD Sale</a>
+		</li>
+		<li class="{{outPatientSaleList}}" *ngIf="user.id > 0 && isAvailable('outPatientSaleList')">
+			<a href="#/admin/patientSaleList?patientSaleList=active&itemNumberLabel=Visit" i18n="@@statistics">OPD Sale List</a>
+		</li>
+		<li class="{{inPatientSaleDetails}}" *ngIf="user.id > 0 && isAvailable('inPatientSaleDetails')">
+			<a href="#/admin/patientSaleDetails?patientSaleDetails=active&itemNumberLabel=Admission" i18n="@@statistics">IPD Sale</a>
+		</li>
+		<li class="{{inPatientSaleList}}" *ngIf="user.id > 0 && isAvailable('inPatientSaleList')">
+			<a href="#/admin/patientSaleList?patientSaleList=active&itemNumberLabel=Admission" i18n="@@statistics">IPD Sale List</a>
+		</li>
 		<li class="{{adminProfile}}">
 			<a href="#/admin/adminProfile?adminProfile=active" i18n="@@statistics">Profile</a>
 		</li>

@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import {Constants} from '../app.constants';
+import { PatientSale } from '../models/stocks/patientSale';
 import { PurchaseOrder, PurchaseOrderProduct } from '../models/stocks/purchaseOrder';
 import { ReceiveOrder } from '../models/stocks/receiveOrder';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
@@ -65,6 +66,54 @@ export class PurchasingService {
   public getNewReceiveOrder = (id: number): Observable<any> => {
    
       let actionUrl = Constants.apiServer + '/service/purchasing/purchaseOrder/newReceiveOrder/' + id;
+      return this.http.get(actionUrl, { headers: this.headers })
+        .map((response: Response) => {
+            if (response && response.json()) {
+              const error = response.json() && response.json().error;
+              if (error == null) {
+                
+              }
+            }
+            return response.json();
+        })
+        .catch(this.handleError);
+   }
+  
+   public getReceiveOrder = (id: number): Observable<any> => {
+   
+      let actionUrl = Constants.apiServer + '/service/purchasing/receiveOrder/' + id;
+      return this.http.get(actionUrl, { headers: this.headers })
+        .map((response: Response) => {
+            if (response && response.json()) {
+              const error = response.json() && response.json().error;
+              if (error == null) {
+                
+              }
+            }
+            return response.json();
+        })
+        .catch(this.handleError);
+   }
+  
+  
+  // Patient Sale 
+    public savePatientSale = (patientSale : PatientSale): Observable<PatientSale> => {
+    
+      let toAdd = JSON.stringify(patientSale);
+      let re = /\"/gi;
+      let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
+      
+      let actionUrl = Constants.apiServer + '/service/purchasing/patientSale/save';
+      return this.http.post(actionUrl, toSend, { headers: this.headers })
+        .map((response: Response) => {
+            return response.json();
+        })
+        .catch(this.handleError);
+   }
+  
+  public getPatientSale = (id: number): Observable<any> => {
+   
+      let actionUrl = Constants.apiServer + '/service/purchasing/patientSale/' + id;
       return this.http.get(actionUrl, { headers: this.headers })
         .map((response: Response) => {
             if (response && response.json()) {

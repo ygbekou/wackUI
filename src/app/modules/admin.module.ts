@@ -80,6 +80,9 @@ import {InvestigationList} from '../components/investigationList';
 import {PurchaseOrderDetails} from '../components/stocks/purchaseOrderDetails';
 import {PurchaseOrderList} from '../components/stocks/purchaseOrderList';
 import {ReceiveOrderDetails} from '../components/stocks/receiveOrderDetails';
+import {ReceiveOrderList} from '../components/stocks/receiveOrderList';
+import {PatientSaleDetails} from '../components/stocks/patientSaleDetails';
+import {PatientSaleList} from '../components/stocks/patientSaleList';
 
 const routes: Routes = [
   {path: 'adminMain', component: AdminMain},
@@ -141,6 +144,9 @@ const routes: Routes = [
   {path: 'purchaseOrderDetails', component: PurchaseOrderDetails},
   {path: 'purchaseOrderList', component: PurchaseOrderList},
   {path: 'receiveOrderDetails', component: ReceiveOrderDetails},
+  {path: 'receiveOrderList', component: ReceiveOrderList},
+  {path: 'patientSaleDetails', component: PatientSaleDetails},
+  {path: 'patientSaleList', component: PatientSaleList},
 ];
 
 @NgModule({
@@ -161,7 +167,8 @@ const routes: Routes = [
     DoctorOrderDetails, DoctorOrderList, AdmissionDetails, AdmissionList, DoctorTransfer, FloorDetails, FloorList,
     RoomDetails, RoomList, BedDetails, BedList, AdminPatient, AdminAdmission, AdminBedStatus, AdmissionDiagnoses,
     AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails, 
-    InvestigationList, SupplierDetails, SupplierList, PurchaseOrderDetails, PurchaseOrderList, ReceiveOrderDetails],
+    InvestigationList, SupplierDetails, SupplierList, PurchaseOrderDetails, PurchaseOrderList, ReceiveOrderDetails,
+    ReceiveOrderList, PatientSaleDetails, PatientSaleList],
 
   providers: [CategoryDropdown]
 })

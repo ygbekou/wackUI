@@ -80,8 +80,7 @@ export class PurchaseOrderDetails implements OnInit, OnDestroy {
               
           }
      });
-    
-    console.info(this.purchaseOrder)
+   
   }
   
   ngOnDestroy() {
