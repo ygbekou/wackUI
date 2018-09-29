@@ -50,8 +50,8 @@ import { VaccineDropdown } from './dropdowns';
                             </p-cellEditor>
                         </td>
                         <td>
-                          <button type="button" pButton icon="fa-plus" style="float: left"></button>
-                          <button type="button" pButton icon="fa-eraser" style="float: left"></button>
+                          <button type="button" pButton icon="fa fa-plus" ></button>&nbsp;&nbsp;
+                          <button type="button" pButton icon="fa fa-eraser" ></button>
                         </td>
                     </tr>
                 </ng-template>

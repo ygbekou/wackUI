@@ -1,308 +1,252 @@
 
-			<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="admission">
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@patientMatricule" for="patientMatricule">Patient ID<font color="red">*</font></label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								<input type="text" pInputText class="form-control" id="patientMatricule" (change)="lookUpPatient()"
-								[(ngModel)]="patient.matricule" name="patientMatricule" #patientMatricule="ngModel">
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
-				</div>
-				<hr>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@patientAdmissionId" for="patientAdmissionId">Admission No.</label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								{{admission.admissionNumber}}
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@patientAdmissionDate" for="patientAdmissionDate">Adm. Date Time<font color="red">*</font></label> 
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								<p-calendar [(ngModel)]="admission.admissionDatetime" [showTime]="true"></p-calendar>
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@patientName" for="patientName">Patient Name</label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								{{patient.name}}
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@patientBirthDate" for="patientBirthDate">Birth Date: </label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								{{patient.user.birthDate | date:'dd/MM/yyyy'}}
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>				
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@patientSex" for="patientSex">Gender</label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								{{patient.user.sex}}
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@patientMaritalStatus" for="patientMaritalStatus">Marital Status</label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								{{patient.maritalStatusName}}
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@occupationName" for="occupationName">Occupation: </label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								{{patient.occupationName}}
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>				
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@nationality" for="nationality">Nationality</label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								{{patient.nationalityName}}
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="admission">
+	<div class="ui-grid-row">
+		<div class="ui-grid-col-4 ui-sm-12">
 			<div class="ui-grid-row">
-				<div class="ui-grid-col-4 ui-sm-12">
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3 ui-sm-12">
-							<label i18n="@@payerType" for="payerType">Payer Type</label>
-						</div>
-						<div class="ui-grid-col-8 ui-sm-12">
-							{{patient.payerTypeName}}
-						</div>
-						<div class="ui-grid-col-1 ui-sm-12">
-						</div>
-					</div>
+				<div class="ui-grid-col-3 ui-sm-12">
+					<label i18n="@@patientMatricule" for="patientMatricule">Patient
+						ID<font color="red">*</font>
+					</label>
 				</div>
-				<div class="ui-grid-col-4 ui-sm-12">
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3 ui-sm-12">
-							<label i18n="@@referral" for="referral">Referral: </label>
-						</div>
-						<div class="ui-grid-col-8 ui-sm-12">
-							{{patient.referral}}
-						</div>
-						<div class="ui-grid-col-1 ui-sm-12">
-						</div>
-					</div>				
+				<div class="ui-grid-col-8 ui-sm-12">
+					<input type="text" pInputText class="form-control"
+						id="patientMatricule" (change)="lookUpPatient()"
+						[(ngModel)]="patient.matricule" name="patientMatricule"
+						#patientMatricule="ngModel">
 				</div>
-				<div class="ui-grid-col-4 ui-sm-12">
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3 ui-sm-12">
-							<label i18n="@@referralPhone" for="referralPhone">Referral Phone</label>
-						</div>
-						<div class="ui-grid-col-8 ui-sm-12">
-							{{patient.referralPhone}}
-						</div>
-						<div class="ui-grid-col-1 ui-sm-12">
-						</div>
-					</div>
-				</div>
+				<div class="ui-grid-col-1 ui-sm-12"></div>
 			</div>
-			
-			<br/>
-			<p-tabView (onChange)="onTabChange($event)"> 
-			 	<p-tabPanel header="Admission Details">
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-4 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@building" for="building">Building</label>
-								</div> 
-								<div class="ui-grid-col-8 ui-sm-12">
-									<p-autoComplete [(ngModel)]="admission.bedAssignment.bed.room.floor.building" 
-										(ngModelChange)="populateFloorDropdown($event)"
-										(onDropdownClick)="buildingDropdown.handleDropdownClick($event)"
-										[suggestions]="buildingDropdown.filteredBuildings" [dropdown]="true"
-										(completeMethod)="buildingDropdown.filter($event)"
-										name="name" field="name" [size]="30" placeholder=""
-										[minLength]="1">
-									</p-autoComplete>
-								</div>
-								<div class="ui-grid-col-1 ui-sm-12">
-								</div>
-							</div>
-						</div>
-						<div class="ui-grid-col-4 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@floor" for="floor">Floor</label>
-								</div> 
-								<div class="ui-grid-col-8 ui-sm-12">
-									<p-autoComplete [(ngModel)]="admission.bedAssignment.bed.room.floor" 
-										(ngModelChange)="populateRoomDropdown($event)"
-										(onDropdownClick)="floorDropdown.handleDropdownClick($event)"
-										[suggestions]="floorDropdown.filteredFloors" [dropdown]="true"
-										(completeMethod)="floorDropdown.filter($event)"
-										name="name" field="name" [size]="30" placeholder=""
-										[minLength]="1">
-									</p-autoComplete>
-								</div>
-								<div class="ui-grid-col-1 ui-sm-12">
-								</div>
-							</div>
-						</div>
-						<div class="ui-grid-col-4 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@room" for="room">Room</label>
-								</div> 
-								<div class="ui-grid-col-8 ui-sm-12">
-									<p-autoComplete [(ngModel)]="admission.bedAssignment.bed.room"
-										(ngModelChange)="populateBedDropdown($event)"
-										(onDropdownClick)="roomDropdown.handleDropdownClick($event)"
-										[suggestions]="roomDropdown.filteredRooms" [dropdown]="true"
-										(completeMethod)="roomDropdown.filter($event)"
-										name="name" field="name" [size]="30" placeholder=""
-										[minLength]="1">
-									</p-autoComplete>
-								</div>
-								<div class="ui-grid-col-1 ui-sm-12">
-								</div>
-							</div>
-						</div>
-					</div>
-					<br/>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-4 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@category" for="category">Category<font color="red">*</font></label> 
-								</div> 
-								<div class="ui-grid-col-8 ui-sm-12">
-									<p-autoComplete [(ngModel)]="admission.bedAssignment.bed.category"
-										(ngModelChange)="populateBedDropdown($event)"
-										(onDropdownClick)="categoryDropdown.handleDropdownClick($event)"
-										[suggestions]="categoryDropdown.filteredCategories" [dropdown]="true"
-										id="medicine" (completeMethod)="categoryDropdown.filter($event)"
-										name="medicine" field="name" [size]="30" placeholder=""
-										[minLength]="1"></p-autoComplete>
-								</div>
-								<div class="ui-grid-col-1 ui-sm-12">
-								</div>
-							</div>
-						</div>
-						<div class="ui-grid-col-4 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@bed" for="bed">Bed</label>
-								</div> 
-								<div class="ui-grid-col-8 ui-sm-12">
-									<p-autoComplete [(ngModel)]="admission.bedAssignment.bed"
-										(onDropdownClick)="bedDropdown.handleDropdownClick($event)"
-										[suggestions]="bedDropdown.filteredBeds" [dropdown]="true"
-										(completeMethod)="bedDropdown.filter($event)"
-										name="name" field="bedNumber" [size]="30" placeholder=""
-										[minLength]="1">
-									</p-autoComplete>
-								</div>
-								<div class="ui-grid-col-1 ui-sm-12">
-								</div>
-							</div>
-						</div>
-						<div class="ui-grid-col-4 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@doctor" for="doctor">Doctor</label>
-								</div> 
-								<div class="ui-grid-col-8 ui-sm-12">
-									<p-autoComplete [(ngModel)]="admission.doctorAssignment.doctor"
-										(onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
-										[suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
-										(completeMethod)="doctorDropdown.filter($event)"
-										name="name" field="name" [size]="30" placeholder=""
-										[minLength]="1">
-									</p-autoComplete>
-								</div>
-								<div class="ui-grid-col-1 ui-sm-12">
-								</div>
-							</div>
-						</div>
-					</div>
-					<div *ngIf="error" class="alert alert-danger">{{error}}</div>
-					<div>
-						<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-							<button type="button" pButton icon="fa fa-close" (click)="delete()"
-								label="Supprimer"></button>
-							<button type="button" pButton icon="fa fa-check" (click)="save()"
-								label="Sauvegarder"></button>
-						</div>
-					</div>
-					</p-tabPanel>
-				<p-tabPanel header="Diagnoses" *ngIf="admission.id > 0">
-				    <app-admissionDiagnoses [admission]="admission"></app-admissionDiagnoses>
-				</p-tabPanel>
-				<p-tabPanel header="Prescriptions" *ngIf="admission.id > 0">
-					<div *ngIf="activeTab == 2">
-				        <app-prescription-details></app-prescription-details>
-				        <br/>
-				        <br/>
-				        <app-prescription-list [admission]="admission" (prescriptionIdEvent)="onPrescriptionSelected($event)"></app-prescription-list>
-				    </div>
-				</p-tabPanel>
-			</p-tabView>
-				
-			<br/>
-			<br />
-			
-			
-	
-	
+		</div>
+	</div>
+	<hr>
+	<div class="ui-grid-row">
+		<div class="ui-grid-col-4 ui-sm-12">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3 ui-sm-12">
+					<label i18n="@@patientAdmissionId" for="patientAdmissionId">Admission
+						No.</label>
+				</div>
+				<div class="ui-grid-col-8 ui-sm-12">
+					{{admission.admissionNumber}}</div>
+				<div class="ui-grid-col-1 ui-sm-12"></div>
+			</div>
+		</div>
+		<div class="ui-grid-col-4 ui-sm-12">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3 ui-sm-12">
+					<label i18n="@@patientAdmissionDate" for="patientAdmissionDate">Adm.
+						Date Time<font color="red">*</font>
+					</label>
+				</div>
+				<div class="ui-grid-col-8 ui-sm-12">
+					<p-calendar [(ngModel)]="admission.admissionDatetime"
+						[showTime]="true"></p-calendar>
+				</div>
+				<div class="ui-grid-col-1 ui-sm-12"></div>
+			</div>
+		</div>
+	</div>
+	<div class="ui-grid-row">
+		<div class="ui-grid-col-4 ui-sm-12">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3 ui-sm-12">
+					<label i18n="@@patientName" for="patientName">Patient Name</label>
+				</div>
+				<div class="ui-grid-col-8 ui-sm-12">{{patient.name}}</div>
+				<div class="ui-grid-col-1 ui-sm-12"></div>
+			</div>
+		</div>
+		<div class="ui-grid-col-4 ui-sm-12">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3 ui-sm-12">
+					<label i18n="@@patientBirthDate" for="patientBirthDate">Birth
+						Date: </label>
+				</div>
+				<div class="ui-grid-col-8 ui-sm-12">{{patient.user.birthDate |
+					date:'dd/MM/yyyy'}}</div>
+				<div class="ui-grid-col-1 ui-sm-12"></div>
+			</div>
+		</div>
+		<div class="ui-grid-col-4 ui-sm-12">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3 ui-sm-12">
+					<label i18n="@@patientSex" for="patientSex">Gender</label>
+				</div>
+				<div class="ui-grid-col-8 ui-sm-12">{{patient.user.sex}}</div>
+				<div class="ui-grid-col-1 ui-sm-12"></div>
+			</div>
+		</div>
+	</div>
+	<div class="ui-grid-row">
+		<div class="ui-grid-col-4 ui-sm-12">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3 ui-sm-12">
+					<label i18n="@@patientMaritalStatus" for="patientMaritalStatus">Marital
+						Status</label>
+				</div>
+				<div class="ui-grid-col-8 ui-sm-12">
+					{{patient.maritalStatusName}}</div>
+				<div class="ui-grid-col-1 ui-sm-12"></div>
+			</div>
+		</div>
+		<div class="ui-grid-col-4 ui-sm-12">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3 ui-sm-12">
+					<label i18n="@@occupationName" for="occupationName">Occupation:
+					</label>
+				</div>
+				<div class="ui-grid-col-8 ui-sm-12">
+					{{patient.occupationName}}</div>
+				<div class="ui-grid-col-1 ui-sm-12"></div>
+			</div>
+		</div>
+		<div class="ui-grid-col-4 ui-sm-12">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3 ui-sm-12">
+					<label i18n="@@nationality" for="nationality">Nationality</label>
+				</div>
+				<div class="ui-grid-col-8 ui-sm-12">
+					{{patient.nationalityName}}</div>
+				<div class="ui-grid-col-1 ui-sm-12"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="ui-grid-row">
+	<div class="ui-grid-col-4 ui-sm-12">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3 ui-sm-12">
+				<label i18n="@@payerType" for="payerType">Payer Type</label>
+			</div>
+			<div class="ui-grid-col-8 ui-sm-12">{{patient.payerTypeName}}</div>
+			<div class="ui-grid-col-1 ui-sm-12"></div>
+		</div>
+	</div>
+	<div class="ui-grid-col-4 ui-sm-12">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3 ui-sm-12">
+				<label i18n="@@referral" for="referral">Referral: </label>
+			</div>
+			<div class="ui-grid-col-8 ui-sm-12">{{patient.referral}}</div>
+			<div class="ui-grid-col-1 ui-sm-12"></div>
+		</div>
+	</div>
+	<div class="ui-grid-col-4 ui-sm-12">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3 ui-sm-12">
+				<label i18n="@@referralPhone" for="referralPhone">Referral
+					Phone</label>
+			</div>
+			<div class="ui-grid-col-8 ui-sm-12">{{patient.referralPhone}}</div>
+			<div class="ui-grid-col-1 ui-sm-12"></div>
+		</div>
+	</div>
+</div>
+
+<br />
+<p-tabView (onChange)="onTabChange($event)"> <p-tabPanel
+	header="Admission Details">
+<div class="ui-grid-row">
+	<div class="ui-grid-col-4 ui-sm-12">
+		<div class="form-group">
+			<label i18n="@@building" for="building">Building</label>
+			<p-autoComplete
+				[(ngModel)]="admission.bedAssignment.bed.room.floor.building"
+				(ngModelChange)="populateFloorDropdown($event)"
+				(onDropdownClick)="buildingDropdown.handleDropdownClick($event)"
+				[suggestions]="buildingDropdown.filteredBuildings" [dropdown]="true"
+				(completeMethod)="buildingDropdown.filter($event)" name="name"
+				field="name" [size]="30" placeholder="" [minLength]="1">
+			</p-autoComplete>
+		</div>
+	</div>
+	<div class="ui-grid-col-4 ui-sm-12">
+		<div class="form-group">
+			<label i18n="@@floor" for="floor">Floor</label>
+			<p-autoComplete [(ngModel)]="admission.bedAssignment.bed.room.floor"
+				(ngModelChange)="populateRoomDropdown($event)"
+				(onDropdownClick)="floorDropdown.handleDropdownClick($event)"
+				[suggestions]="floorDropdown.filteredFloors" [dropdown]="true"
+				(completeMethod)="floorDropdown.filter($event)" name="name"
+				field="name" [size]="30" placeholder="" [minLength]="1">
+			</p-autoComplete>
+		</div>
+
+	</div>
+	<div class="ui-grid-col-4 ui-sm-12">
+		<div class="form-group">
+			<label i18n="@@room" for="room">Room</label>
+			<p-autoComplete [(ngModel)]="admission.bedAssignment.bed.room"
+				(ngModelChange)="populateBedDropdown($event)"
+				(onDropdownClick)="roomDropdown.handleDropdownClick($event)"
+				[suggestions]="roomDropdown.filteredRooms" [dropdown]="true"
+				(completeMethod)="roomDropdown.filter($event)" name="name"
+				field="name" [size]="30" placeholder="" [minLength]="1">
+			</p-autoComplete>
+		</div>
+	</div>
+</div>
+<br />
+<div class="ui-grid-row">
+	<div class="ui-grid-col-4 ui-sm-12">
+		<div class="form-group">
+			<label i18n="@@category" for="category">Category<font
+				color="red">*</font></label>
+			<p-autoComplete [(ngModel)]="admission.bedAssignment.bed.category"
+				(ngModelChange)="populateBedDropdown($event)"
+				(onDropdownClick)="categoryDropdown.handleDropdownClick($event)"
+				[suggestions]="categoryDropdown.filteredCategories"
+				[dropdown]="true" id="medicine"
+				(completeMethod)="categoryDropdown.filter($event)" name="medicine"
+				field="name" [size]="30" placeholder="" [minLength]="1"></p-autoComplete>
+
+		</div>
+	</div>
+	<div class="ui-grid-col-4 ui-sm-12">
+		<div class="form-group">
+			<label i18n="@@bed" for="bed">Bed</label>
+			<p-autoComplete [(ngModel)]="admission.bedAssignment.bed"
+				(onDropdownClick)="bedDropdown.handleDropdownClick($event)"
+				[suggestions]="bedDropdown.filteredBeds" [dropdown]="true"
+				(completeMethod)="bedDropdown.filter($event)" name="name"
+				field="bedNumber" [size]="30" placeholder="" [minLength]="1">
+			</p-autoComplete>
+		</div>
+	</div>
+	<div class="ui-grid-col-4 ui-sm-12">
+		<div class="form-group">
+			<label i18n="@@doctor" for="doctor">Doctor</label>
+			<p-autoComplete [(ngModel)]="admission.doctorAssignment.doctor"
+				(onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
+				[suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
+				(completeMethod)="doctorDropdown.filter($event)" name="name"
+				field="name" [size]="30" placeholder="" [minLength]="1">
+			</p-autoComplete>
+		</div>
+	</div>
+</div>
+<br />
+<div *ngIf="error" class="alert alert-danger">{{error}}</div>
+
+<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+	<button type="button" pButton icon="fa fa-close" (click)="delete()"
+		label="Supprimer"></button>
+	&nbsp;
+	<button type="button" pButton icon="fa fa-check" (click)="save()"
+		label="Sauvegarder"></button>
+</div>
+</p-tabPanel> <p-tabPanel header="Diagnoses" *ngIf="admission.id > 0"> <app-admissionDiagnoses
+	[admission]="admission"></app-admissionDiagnoses> </p-tabPanel> <p-tabPanel
+	header="Prescriptions" *ngIf="admission.id > 0">
+<div *ngIf="activeTab == 2">
+	<app-prescription-details></app-prescription-details>
+	<br /> <br />
+	<app-prescription-list [admission]="admission"
+		(prescriptionIdEvent)="onPrescriptionSelected($event)"></app-prescription-list>
+</div>
+</p-tabPanel> </p-tabView>
+
+
+
+
+

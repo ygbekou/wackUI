@@ -1,89 +1,67 @@
-<div role="main" class="main">
-	<section
-		class="parallax section section-text-light section-parallax section-center mt-0 mb-5"
-		data-plugin-parallax data-plugin-options="{'speed': 1.5}"
-		data-image-src="assets/images/slides/bg-top.jpg" *ngIf="!hiddenMenu">
-	</section>
 
-		<div class="container" style="padding-left: 10px; max-width: 100%;">
-	
-	<div class="ui-grid-row">
-		<div class="ui-g-2 ui-sm-4" *ngIf="!hiddenMenu">
-			<app-admin-menu></app-admin-menu>
+<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+	<div class="ui-grid-row" *ngIf="showCategory">
+		<div class="ui-grid-col-3 ui-sm-12">
+			<label i18n="@@category" for="category">Category</label>
 		</div>
-		<div class="ui-g-10 ui-sm-8" style="padding: 15px;">
-			<div class="ui-grid-row" *ngIf="showCategory">
-				<div class="ui-grid-col-3 ui-sm-12">
-					<label i18n="@@category" for="category">Category</label>
-				</div> 
-				<div class="ui-grid-col-8 ui-sm-12">
-					<p-autoComplete [(ngModel)]="category"
-						(onDropdownClick)="categoryDropdown.handleDropdownClick($event)"
-						[suggestions]="categoryDropdown.filteredCategories" [dropdown]="true"
-						(completeMethod)="categoryDropdown.filter($event)"
-						name="name" field="name" [size]="30" placeholder=""
-						[minLength]="1">
-					</p-autoComplete>
-				</div>
-				<div class="ui-grid-col-1 ui-sm-12">
-				</div>
-			</div>
-			<br/>
-			<br/>
-			
-			<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="reference">
+		<div class="ui-grid-col-8 ui-sm-12">
+			<p-autoComplete [(ngModel)]="category"
+				(onDropdownClick)="categoryDropdown.handleDropdownClick($event)"
+				[suggestions]="categoryDropdown.filteredCategories"
+				[dropdown]="true" (completeMethod)="categoryDropdown.filter($event)"
+				name="name" field="name" [size]="30" placeholder="" [minLength]="1">
+			</p-autoComplete>
+		</div>
+		<div class="ui-grid-col-1 ui-sm-12"></div>
+	</div>
+	<br /> <br />
+
+	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="reference">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label for="name">Name</label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								<input pInputText id="name" [(ngModel)]="reference.name" required />
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
+					<div class="ui-grid-col-3 ui-sm-12">
+						<label for="name">Name</label>
 					</div>
-					<div class="ui-grid-col-6 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label for="description">Description</label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								<textarea pInputTextarea id="description" [(ngModel)]="reference.description"> </textarea>
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
+					<div class="ui-grid-col-8 ui-sm-12">
+						<input pInputText id="name" [(ngModel)]="reference.name" required />
 					</div>
-					<div class="ui-grid-col-2 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label for="rank">Status</label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								<p-radioButton name="status" value="0" label="Actif" [(ngModel)]="reference.status"></p-radioButton>
-								<p-radioButton name="status" value="1" label="Inactif" [(ngModel)]="reference.status"></p-radioButton>										
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
+					<div class="ui-grid-col-1 ui-sm-12"></div>
 				</div>
 			</div>
-			<br />
-			<div *ngIf="error" class="alert alert-danger">{{error}}</div>
-			<div>
-				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-					<button type="button" pButton icon="fa fa-close" (click)="clear()"
-						label="Clear"></button>
-					<button type="button" pButton icon="fa fa-close" (click)="delete()"
-						label="Supprimer"></button>
-					<button type="button" pButton icon="fa fa-check" (click)="save()"
-						label="Sauvegarder"></button>
+			<div class="ui-grid-col-6 ui-sm-12">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-3 ui-sm-12">
+						<label for="description">Description</label>
+					</div>
+					<div class="ui-grid-col-8 ui-sm-12">
+						<textarea pInputTextarea id="description"
+							[(ngModel)]="reference.description"> </textarea>
+					</div>
+					<div class="ui-grid-col-1 ui-sm-12"></div>
 				</div>
 			</div>
+			<div class="ui-grid-col-2 ui-sm-12">
+				<p-radioButton name="status" value="0" label="Actif"
+					[(ngModel)]="reference.status"></p-radioButton>
+				<p-radioButton name="status" value="1" label="Inactif"
+					[(ngModel)]="reference.status"></p-radioButton>
+
+			</div>
+		</div>
+	</div>
+	<br />
+	<div *ngIf="error" class="alert alert-danger">{{error}}</div>
+	<div>
+		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+			<button type="button" pButton icon="fa fa-close" (click)="clear()"
+				label="Clear"></button>
+			&nbsp;&nbsp;
+			<button type="button" pButton icon="fa fa-close" (click)="delete()"
+				label="Supprimer"></button>
+			&nbsp;&nbsp;
+			<button type="button" pButton icon="fa fa-check" (click)="save()"
+				label="Sauvegarder"></button>
 		</div>
 	</div>
 </div>

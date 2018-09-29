@@ -99,20 +99,14 @@
 					
 					<div class="ui-grid-row">
 						<div class="ui-grid-col-4 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@labTest" for="labTest">Lab Test/Group<font color="red">*</font></label> 
-								</div>
-								<div class="ui-grid-col-8 ui-sm-12">
+								<div class="form-group">
+									<label i18n="@@labTest" for="labTest">Lab Test/Group<font color="red">*</font></label>  
 									<p-autoComplete [(ngModel)]="investigation.labTest" (ngModelChange)="populateLabTests($event)"
 									(onDropdownClick)="labTestDropdown.handleDropdownClick($event)"
 									[suggestions]="labTestDropdown.filteredLabTests" [dropdown]="true"
 									id="labTest" (completeMethod)="labTestDropdown.filter($event)"
 									name="labTest" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
-									[minLength]="1"></p-autoComplete>
-								</div>
-								<div class="ui-grid-col-1 ui-sm-12">
-								</div>
+									[minLength]="1"></p-autoComplete> 
 							</div>
 						</div>
 						<div class="ui-grid-col-4 ui-sm-12">
@@ -132,7 +126,7 @@
 					<div *ngIf="error" class="alert alert-danger">{{error}}</div>
 					<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 						<button type="button" pButton icon="fa fa-close" (click)="delete()"
-							label="Supprimer"></button>
+							label="Supprimer"></button> &nbsp;
 						<button type="button" pButton icon="fa fa-check" (click)="save()"
 							label="Sauvegarder"></button>
 					</div>

@@ -2,7 +2,7 @@
 		<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
 			<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="schedule">
 				<div class="ui-grid-row">
-					<div class="ui-grid-col-12 ui-sm-12">
+					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
 							<label i18n="@@doctor" for="doctor">Doctor<font color="red">*</font></label> 
 							<p-autoComplete [(ngModel)]="schedule.doctor"
@@ -13,9 +13,7 @@
 								[minLength]="1"></p-autoComplete>
 						</div>
 					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-12 ui-sm-12">
+					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
 							<label i18n="@@availableDays" for="availableDays">Available Days<font color="red">*</font></label> 
 							<p-autoComplete [(ngModel)]="schedule.weekday"
@@ -26,15 +24,15 @@
 								[minLength]="1"></p-autoComplete>
 						</div>
 					</div>
-				</div>
+				</div> 
 				<div class="ui-grid-row">
-					<div class="ui-grid-col-6ui-sm-12">
+					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
 							<label i18n="@@beginTime" for="beginTime">Start Time<font color="red">*</font></label> 
 							<p-calendar [(ngModel)]="schedule.beginTime" [stepMinute]="5" dataType="string" timeOnly="true" showTime="false" hourFormat="24"></p-calendar>
 						</div>
 					</div>
-					<div class="ui-grid-col-6ui-sm-12">
+					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
 							<label i18n="@@endTime" for="endTime">End Time<font color="red">*</font></label> 
 							<p-calendar [(ngModel)]="schedule.endTime" [stepMinute]="5" dataType="string" timeOnly="true" showTime="false" hourFormat="24"></p-calendar>
@@ -55,7 +53,7 @@
 			<div>
 				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 					<button type="button" pButton icon="fa fa-close" (click)="delete()"
-						label="Supprimer"></button>
+						label="Supprimer"></button> &nbsp;
 					<button type="button" pButton icon="fa fa-check" (click)="save()"
 						label="Sauvegarder"></button>
 				</div>

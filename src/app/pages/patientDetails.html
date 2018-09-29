@@ -110,6 +110,17 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="ui-grid-row">
+		<div class="ui-grid-col-12 ui-sm-12">
+			<div class="form-group">
+				<label i18n="@@medicalHistory" for="medicalHistory">Medical
+					History</label>
+				<p-editor [(ngModel)]="patient.medicalHistory"
+					[style]="{'height':'100px'}"></p-editor>
+			</div>
+		</div>
+	</div>
 	</p-accordionTab> <p-accordionTab header="Contact Info">
 	<div class="ui-grid-row">
 		<div class="ui-grid-col-4 ui-sm-12">
@@ -179,16 +190,8 @@
 					name="contactPhone" #contactPhone="ngModel">
 			</div>
 		</div>
-		<div class="ui-grid-col-6 ui-sm-12">
-			<div class="form-group">
-				<label i18n="@@medicalHistory" for="medicalHistory">Medical
-					History</label>
-				<p-editor [(ngModel)]="patient.medicalHistory"
-					[style]="{'height':'100px'}"></p-editor>
-			</div>
-		</div>
-	</div>
 
+	</div>
 	</p-accordionTab> <p-accordionTab header="Payer Info">
 	<div class="ui-grid-col-4 ui-sm-12">
 		<div class="form-group">
@@ -271,12 +274,12 @@
 </div>
 <br />
 <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-<div>
-	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-		<button type="button" pButton icon="fa fa-close" (click)="delete()"
-			label="Supprimer"></button>
-		<button type="button" pButton icon="fa fa-check" (click)="save()"
-			label="Sauvegarder"></button>
-	</div>
+
+<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+	<button type="button" pButton icon="fa fa-close" (click)="delete()"
+		label="Supprimer"></button> &nbsp;
+	<button type="button" pButton icon="fa fa-check" (click)="save()"
+		label="Sauvegarder"></button>
 </div>
+
 

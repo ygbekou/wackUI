@@ -1,166 +1,122 @@
-<div role="main" class="main">
-	<section
-		class="parallax section section-text-light section-parallax section-center mt-0 mb-5"
-		data-plugin-parallax data-plugin-options="{'speed': 1.5}"
-		data-image-src="assets/images/slides/bg-top.jpg" *ngIf="!hiddenMenu">
-	</section>
-
-		<div class="container" style="padding-left: 10px; max-width: 100%;">
-
-	<section class="call-to-action featured featured-secondary mb-5"
-		style="border-radius: 8px; padding:10px;" *ngIf="!hiddenMenu">
-		<div class="col-sm-9 col-lg-9 text-center">
-			<div class="call-to-action-content" style="width:100%;" >
-				<h3>
-					<strong>Il y a des scrutins qui vous attendent</strong>
-				</h3>
-				<p class="mb-0">
-					Faites votre <strong>devoir civique</strong> en votant
-			</div>
-		</div>
-		<div class="col-sm-3 col-lg-3 text-left">
-			<div class="call-to-action-btn">
-				<a href="#/vote" class="btn btn-lg btn-secondary">Je vote
-					maintenant!</a>
-			</div>
-		</div>
-	</section>
-	
-	<div class="ui-grid-row">
-		<div class="ui-g-2 ui-sm-4" *ngIf="!hiddenMenu">
-			<app-admin-menu></app-admin-menu>
-		</div>
-		<div class="ui-g-10 ui-sm-8" style="padding: 15px;">
-			<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="bed">
+<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="bed">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label for="name">Name</label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								<input pInputText id="name" [(ngModel)]="bed.bedNumber" required />
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
+					<div class="ui-grid-col-3 ui-sm-12">
+						<label for="name">Name</label>
 					</div>
 					<div class="ui-grid-col-8 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label for="description">Description</label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								<textarea pInputTextarea id="description" [(ngModel)]="bed.description"> </textarea>
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
+						<input pInputText id="name" [(ngModel)]="bed.bedNumber" required />
 					</div>
+					<div class="ui-grid-col-1 ui-sm-12"></div>
 				</div>
-				
+			</div>
+			<div class="ui-grid-col-8 ui-sm-12">
 				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@building" for="building">Building</label>
-							</div> 
-							<div class="ui-grid-col-8 ui-sm-12">
-								<p-autoComplete [(ngModel)]="bed.room.floor.building" (ngModelChange)="populateFloorDropdown($event)"
-									(onDropdownClick)="buildingDropdown.handleDropdownClick($event)"
-									[suggestions]="buildingDropdown.filteredBuildings" [dropdown]="true"
-									(completeMethod)="buildingDropdown.filter($event)"
-									name="name" field="name" [size]="30" placeholder=""
-									[minLength]="1">
-								</p-autoComplete>
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
+					<div class="ui-grid-col-3 ui-sm-12">
+						<label for="description">Description</label>
 					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@floor" for="floor">Floor</label>
-							</div> 
-							<div class="ui-grid-col-8 ui-sm-12">
-								<p-autoComplete [(ngModel)]="bed.room.floor" (ngModelChange)="populateRoomDropdown($event)"
-									(onDropdownClick)="floorDropdown.handleDropdownClick($event)"
-									[suggestions]="floorDropdown.filteredFloors" [dropdown]="true"
-									(completeMethod)="floorDropdown.filter($event)"
-									name="name" field="name" [size]="30" placeholder=""
-									[minLength]="1">
-								</p-autoComplete>
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
+					<div class="ui-grid-col-8 ui-sm-12">
+						<textarea pInputTextarea id="description"
+							[(ngModel)]="bed.description"> </textarea>
 					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@room" for="room">Room</label>
-							</div> 
-							<div class="ui-grid-col-8 ui-sm-12">
-								<p-autoComplete [(ngModel)]="bed.room"
-									(onDropdownClick)="roomDropdown.handleDropdownClick($event)"
-									[suggestions]="roomDropdown.filteredRooms" [dropdown]="true"
-									(completeMethod)="roomDropdown.filter($event)"
-									name="name" field="name" [size]="30" placeholder=""
-									[minLength]="1">
-								</p-autoComplete>
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
+					<div class="ui-grid-col-1 ui-sm-12"></div>
 				</div>
-				<br/>
+			</div>
+		</div>
+
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@category" for="category">Category<font color="red">*</font></label> 
-							</div> 
-							<div class="ui-grid-col-8 ui-sm-12">
-								<p-autoComplete [(ngModel)]="bed.category"
-									(onDropdownClick)="categoryDropdown.handleDropdownClick($event)"
-									[suggestions]="categoryDropdown.filteredCategories" [dropdown]="true"
-									id="medicine" (completeMethod)="categoryDropdown.filter($event)"
-									name="medicine" field="name" [size]="30" placeholder=""
-									[minLength]="1"></p-autoComplete>
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
+					<div class="ui-grid-col-3 ui-sm-12">
+						<label i18n="@@building" for="building">Building</label>
 					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label for="rank">Status</label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								<p-radioButton name="status" value="0" label="Actif" [(ngModel)]="bed.status"></p-radioButton>
-								<p-radioButton name="status" value="1" label="Inactif" [(ngModel)]="bed.status"></p-radioButton>										
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
+					<div class="ui-grid-col-9 ui-sm-12">
+						<p-autoComplete [(ngModel)]="bed.room.floor.building"
+							(ngModelChange)="populateFloorDropdown($event)"
+							(onDropdownClick)="buildingDropdown.handleDropdownClick($event)"
+							[suggestions]="buildingDropdown.filteredBuildings"
+							[dropdown]="true"
+							(completeMethod)="buildingDropdown.filter($event)" name="name"
+							field="name" [size]="30" placeholder="" [minLength]="1">
+						</p-autoComplete>
+					</div> 
+				</div>
+			</div>
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-3 ui-sm-12">
+						<label i18n="@@floor" for="floor">Floor</label>
+					</div>
+					<div class="ui-grid-col-9 ui-sm-12">
+						<p-autoComplete [(ngModel)]="bed.room.floor"
+							(ngModelChange)="populateRoomDropdown($event)"
+							(onDropdownClick)="floorDropdown.handleDropdownClick($event)"
+							[suggestions]="floorDropdown.filteredFloors" [dropdown]="true"
+							(completeMethod)="floorDropdown.filter($event)" name="name"
+							field="name" [size]="30" placeholder="" [minLength]="1">
+						</p-autoComplete>
+					</div> 
+				</div>
+			</div>
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-3 ui-sm-12">
+						<label i18n="@@room" for="room">Room</label>
+					</div>
+					<div class="ui-grid-col-9 ui-sm-12">
+						<p-autoComplete [(ngModel)]="bed.room"
+							(onDropdownClick)="roomDropdown.handleDropdownClick($event)"
+							[suggestions]="roomDropdown.filteredRooms" [dropdown]="true"
+							(completeMethod)="roomDropdown.filter($event)" name="name"
+							field="name" [size]="30" placeholder="" [minLength]="1">
+						</p-autoComplete>
 					</div>
 				</div>
 			</div>
-			<br />
-			<div *ngIf="error" class="alert alert-danger">{{error}}</div>
-			<div>
-				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-					<button type="button" pButton icon="fa fa-close" (click)="clear()"
-						label="Clear"></button>
-					<button type="button" pButton icon="fa fa-close" (click)="delete()"
-						label="Supprimer"></button>
-					<button type="button" pButton icon="fa fa-check" (click)="save()"
-						label="Sauvegarder"></button>
+		</div>
+		<br />
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-3 ui-sm-12">
+						<label i18n="@@category" for="category">Category<font
+							color="red">*</font></label>
+					</div>
+					<div class="ui-grid-col-9 ui-sm-12">
+						<p-autoComplete [(ngModel)]="bed.category"
+							(onDropdownClick)="categoryDropdown.handleDropdownClick($event)"
+							[suggestions]="categoryDropdown.filteredCategories"
+							[dropdown]="true" id="medicine"
+							(completeMethod)="categoryDropdown.filter($event)"
+							name="medicine" field="name" [size]="30" placeholder=""
+							[minLength]="1"></p-autoComplete>
+					</div> 
 				</div>
+			</div>
+			<div class="ui-grid-col-4 ui-sm-12">
+				<p-radioButton name="status" value="0" label="Actif"
+					[(ngModel)]="bed.status"></p-radioButton>
+				<p-radioButton name="status" value="1" label="Inactif"
+					[(ngModel)]="bed.status"></p-radioButton>
+
 			</div>
 		</div>
 	</div>
+	<br />
+	<div *ngIf="error" class="alert alert-danger">{{error}}</div>
+	 
+		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+			<button type="button" pButton icon="fa fa-close" (click)="clear()"
+				label="Clear"></button>
+			&nbsp;&nbsp;
+			<button type="button" pButton icon="fa fa-close" (click)="delete()"
+				label="Supprimer"></button>
+			&nbsp;&nbsp;
+			<button type="button" pButton icon="fa fa-check" (click)="save()"
+				label="Sauvegarder"></button>
+		</div>
+ 
 </div>
+

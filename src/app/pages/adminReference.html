@@ -3,7 +3,7 @@
 			
 			<p-tabView (onChange)="onTabChange($event)"> 
 			 	<p-tabPanel header="Symptom Group">
-			    	<div *ngIf="activeTab == 0">
+			    	<div *ngIf="activeTab == 0" class="ui-grid-row">
 				        <app-reference-details></app-reference-details>
 				        <br/> 
 				        <br/>
@@ -11,7 +11,7 @@
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel header="Symptom">
-			    	<div *ngIf="activeTab == 1">
+			    	<div *ngIf="activeTab == 1" class="ui-grid-row">
 				        <app-referenceWithCategory-details></app-referenceWithCategory-details>
 				        <br/> 
 				        <br/>
@@ -19,7 +19,7 @@
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel header="Allergy Type">
-			    	<div *ngIf="activeTab == 2">
+			    	<div *ngIf="activeTab == 2" class="ui-grid-row">
 				        <app-reference-details></app-reference-details>
 				        <br/> 
 				        <br/>
@@ -27,7 +27,7 @@
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel header="Allergy">
-			    	<div *ngIf="activeTab == 3">
+			    	<div *ngIf="activeTab == 3" class="ui-grid-row">
 				        <app-referenceWithCategory-details></app-referenceWithCategory-details>
 				        <br/> 
 				        <br/>
@@ -35,7 +35,7 @@
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel header="Vaccine">
-			    	<div *ngIf="activeTab == 4">
+			    	<div *ngIf="activeTab == 4" class="ui-grid-row">
 				        <app-reference-details></app-reference-details>
 				        <br/> 
 				        <br/>
@@ -43,7 +43,7 @@
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel header="Medical History">
-			    	<div *ngIf="activeTab == 5">
+			    	<div *ngIf="activeTab == 5" class="ui-grid-row">
 				        <app-reference-details></app-reference-details>
 				        <br/> 
 				        <br/>
@@ -51,7 +51,7 @@
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel header="Social History">
-			    	<div *ngIf="activeTab == 6">
+			    	<div *ngIf="activeTab == 6" class="ui-grid-row">
 				        <app-reference-details></app-reference-details>
 				        <br/> 
 				        <br/>
@@ -59,7 +59,7 @@
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel header="Payer Type">
-			    	<div *ngIf="activeTab == 7">
+			    	<div *ngIf="activeTab == 7" class="ui-grid-row">
 				        <app-reference-details></app-reference-details>
 				        <br/> 
 				        <br/>
@@ -67,7 +67,7 @@
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel header="Doctor Order Type">
-			    	<div *ngIf="activeTab == 8">
+			    	<div *ngIf="activeTab == 8" class="ui-grid-row">
 				        <app-reference-details></app-reference-details>
 				        <br/> 
 				        <br/>
@@ -75,7 +75,7 @@
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel header="Doctor Order Priority">
-			    	<div *ngIf="activeTab == 9">
+			    	<div *ngIf="activeTab == 9" class="ui-grid-row">
 				        <app-reference-details></app-reference-details>
 				        <br/> 
 				        <br/>
@@ -83,7 +83,7 @@
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel header="Doctor Order Kind">
-			    	<div *ngIf="activeTab == 10">
+			    	<div *ngIf="activeTab == 10" class="ui-grid-row">
 				        <app-reference-details></app-reference-details>
 				        <br/> 
 				        <br/>
@@ -91,7 +91,7 @@
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel id="department" header="Department">
-			    	<div *ngIf="activeTab == 11">
+			    	<div *ngIf="activeTab == 11" class="ui-grid-row">
 				        <app-reference-details></app-reference-details>
 				        <br/> 
 				        <br/>
@@ -99,7 +99,7 @@
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel id="manufacturer" header="Manufacturer">
-			    	<div *ngIf="activeTab == 12">
+			    	<div *ngIf="activeTab == 12" class="ui-grid-row">
 				        <app-reference-details></app-reference-details>
 				        <br/> 
 				        <br/>
@@ -107,7 +107,7 @@
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel id="medicineType" header="Medicine Type">
-			    	<div *ngIf="activeTab == 13">
+			    	<div *ngIf="activeTab == 13" class="ui-grid-row">
 				        <app-reference-details></app-reference-details>
 				        <br/> 
 				        <br/>
@@ -115,7 +115,7 @@
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel id="medicine" header="Medicine">
-			    	<div *ngIf="activeTab == 14">
+			    	<div *ngIf="activeTab == 14" class="ui-grid-row">
 				        <app-medicine-details></app-medicine-details>
 				        <br/> 
 				        <br/>
@@ -123,7 +123,7 @@
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel id="serviceTarifType" header="Service Department/Tarif">
-			    	<div *ngIf="activeTab == 15">
+			    	<div *ngIf="activeTab == 15" class="ui-grid-row">
 				        <app-reference-details></app-reference-details>
 				        <br/> 
 				        <br/>
@@ -131,7 +131,7 @@
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel id="labTestMethod" header="Lab Test Method">
-			    	<div *ngIf="activeTab == 16">
+			    	<div *ngIf="activeTab == 16" class="ui-grid-row">
 				        <app-reference-details></app-reference-details>
 				        <br/> 
 				        <br/>
@@ -139,7 +139,7 @@
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel id="labTestUnit" header="Lab Test Unit">
-			    	<div *ngIf="activeTab == 17">
+			    	<div *ngIf="activeTab == 17" class="ui-grid-row">
 				        <app-reference-details></app-reference-details>
 				        <br/> 
 				        <br/>
@@ -147,7 +147,7 @@
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel id="labTest" header="Lab Test">
-			    	<div *ngIf="activeTab == 18">
+			    	<div *ngIf="activeTab == 18" class="ui-grid-row">
 				        <app-labTest-details></app-labTest-details>
 				        <br/> 
 				        <br/>
