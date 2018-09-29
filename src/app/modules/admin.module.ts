@@ -57,7 +57,7 @@ import {BedList} from '../components/bedList';
 import {AdminBedStatus} from '../components/adminBedStatus';
 import {AdmissionDiagnoses} from '../components/admissionDiagnoses';
 import {AdminReference} from '../components/adminReference';
-import {CategoryDropdown} from '../components/dropdowns';
+import {CategoryDropdown, PackageDropdown} from '../components/dropdowns';
 
 
 import {AdminPatient} from '../components/adminPatient';
@@ -156,7 +156,7 @@ const routes: Routes = [
     AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails,
     InvestigationList],
 
-  providers: [CategoryDropdown]
+  providers: [CategoryDropdown, PackageDropdown]
 })
 
 export class AdminModule {}
