@@ -7,7 +7,8 @@ import { DoctorOrder } from '../models/doctorOrder';
 import { VitalSign } from '../models/vitalSign';
 import { Patient } from '../models/patient';
 import { EditorModule } from 'primeng/editor';
-import { DoctorOrderTypeDropdown, DoctorOrderPriorityDropdown, DoctorOrderKindDropdown, DoctorDropdown, ServiceDropdown, LabTestDropdown} from './dropdowns';
+import { DoctorOrderTypeDropdown, DoctorOrderPriorityDropdown, DoctorOrderKindDropdown, DoctorDropdown, 
+  ServiceDropdown, LabTestDropdown, ProductDropdown} from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule, PickListModule } from 'primeng/primeng';
 import { User } from '../models/user';  
@@ -18,7 +19,7 @@ import { GenericService, VisitService } from '../services';
 @Component({ 
   selector: 'app-doctorOrder-details',
   templateUrl: '../pages/doctorOrderDetails.html', 
-  providers: [GenericService, DoctorDropdown, DoctorOrderTypeDropdown, 
+  providers: [GenericService, DoctorDropdown, DoctorOrderTypeDropdown, ProductDropdown, 
     DoctorOrderPriorityDropdown, DoctorOrderKindDropdown, LabTestDropdown]
 })
 export class DoctorOrderDetails implements OnInit, OnDestroy {
@@ -51,6 +52,7 @@ export class DoctorOrderDetails implements OnInit, OnDestroy {
       private dokDropdown: DoctorOrderKindDropdown,
       private docDropdown: DoctorDropdown,
       private lbtDropdown: LabTestDropdown,
+      private productDropdown: ProductDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
