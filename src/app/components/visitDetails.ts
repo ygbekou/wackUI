@@ -7,7 +7,7 @@ import { Patient } from '../models/patient';
 import { Visit } from '../models/visit';
 import { Reference } from '../models/reference';
 import { EditorModule } from 'primeng/editor';
-import {  } from './dropdowns';
+import { PackageDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { User } from '../models/user';  
@@ -53,6 +53,7 @@ export class VisitDetails implements OnInit, OnDestroy {
     (
       private genericService: GenericService,
       private visitService: VisitService,
+      private packageDropdown: PackageDropdown,
       private globalEventsManager: GlobalEventsManager,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,

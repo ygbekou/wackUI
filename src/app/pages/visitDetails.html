@@ -18,31 +18,67 @@
 						</div>
 						<hr>
 						<div class="ui-grid-row">
-							<div class="ui-grid-col-4 ui-sm-12">
+							<div class="ui-grid-col-6 ui-sm-12">
 								<div class="ui-grid-row">
-									<div class="ui-grid-col-3 ui-sm-12">
-										<label i18n="@@visitNumber" for="visitNumber">Visit No.</label>
+									<div class="ui-grid-col-4 ui-sm-12">
+										<div class="ui-grid-row">
+											<div class="ui-grid-col-6 ui-sm-12">
+												<label i18n="@@visitNumber" for="visitNumber">Visit No.</label>
+											</div>
+											<div class="ui-grid-col-5 ui-sm-12">
+												{{visit.visitNumber}}
+											</div>
+											<div class="ui-grid-col-1 ui-sm-12">
+											</div>
+										</div>
 									</div>
 									<div class="ui-grid-col-8 ui-sm-12">
-										{{visit.visitNumber}}
+										<div class="ui-grid-row">
+											<div class="ui-grid-col-3 ui-sm-12">
+												<label i18n="@@visitDatetime" for="visitDatetime">Visit Date Time<font color="red">*</font></label> 
+											</div>
+											<div class="ui-grid-col-8 ui-sm-12">
+												<p-calendar [(ngModel)]="visit.visitDatetime" [showTime]="true"></p-calendar>
+											</div>
+											<div class="ui-grid-col-1 ui-sm-12">
+											</div>
+										</div>
 									</div>
-									<div class="ui-grid-col-1 ui-sm-12">
+								</div>
+								<div class="ui-grid-row">
+									<div class="ui-grid-col-4 ui-sm-12">
+										<div class="ui-grid-row">
+											<div class="ui-grid-col-6 ui-sm-12">
+												<label i18n="@@isHealthCheckup" for="isHealthCheckup">Is Health Checkup?</label>
+											</div>
+											<div class="ui-grid-col-5 ui-sm-12">
+												<p-checkbox id="isHealthCheckupSel" [(ngModel)]="visit.isHealthCheckupSel" [value]="1"></p-checkbox>
+											</div>
+											<div class="ui-grid-col-1 ui-sm-12">
+											</div>
+										</div>
+									</div>
+									<div class="ui-grid-col-8 ui-sm-12">
+										<div class="ui-grid-row">
+											<div class="ui-grid-col-3 ui-sm-12">
+												<label i18n="@@package" for="package">Package<font color="red">*</font></label> 
+											</div>
+											<div class="ui-grid-col-8 ui-sm-12">
+												<p-autoComplete [(ngModel)]="visit.pckage"
+													(onDropdownClick)="packageDropdown.handleDropdownClick($event)"
+													[suggestions]="packageDropdown.filteredPackages" [dropdown]="true"
+													(completeMethod)="packageDropdown.filter($event)"
+													name="package" field="name" [size]="30" placeholder=""
+													[minLength]="1">
+												</p-autoComplete>
+											</div>
+											<div class="ui-grid-col-1 ui-sm-12">
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-							<div class="ui-grid-col-4 ui-sm-12">
-								<div class="ui-grid-row">
-									<div class="ui-grid-col-3 ui-sm-12">
-										<label i18n="@@visitDatetime" for="visitDatetime">Visit Date Time<font color="red">*</font></label> 
-									</div>
-									<div class="ui-grid-col-8 ui-sm-12">
-										<p-calendar [(ngModel)]="visit.visitDatetime" [showTime]="true"></p-calendar>
-									</div>
-									<div class="ui-grid-col-1 ui-sm-12">
-									</div>
-								</div>
-							</div>
-							<div class="ui-grid-col-4 ui-sm-12">
+							<div class="ui-grid-col-6 ui-sm-12">
 								<div class="ui-grid-row">
 									<div class="ui-grid-col-3 ui-sm-12">
 										<label i18n="@@chiefOfComplain" for="chiefOfComplain">Chief Of Complain<font color="red">*</font></label> 
@@ -56,6 +92,7 @@
 								</div>
 							</div>
 						</div>
+						
 						<div class="ui-grid-row">
 							<div class="ui-grid-col-4 ui-sm-12">
 								<div class="ui-grid-row">

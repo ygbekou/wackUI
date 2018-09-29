@@ -72,7 +72,9 @@ export class AppMenuComponent implements OnInit {
           {label: 'Nouvelle facture', icon: 'fa fa-plus', routerLink: ['/admin/billDetails']},
           {label: 'Anciennes Factures', icon: 'fa fa-search', routerLink: ['/admin/billList']},
           {label: 'Ajouter un tarif', icon: 'fa fa-plus', routerLink: ['/admin/serviceDetails']},
-          {label: 'Liste des tarifs', icon: 'fa fa-search', routerLink: ['/admin/serviceList']}
+          {label: 'Liste des tarifs', icon: 'fa fa-search', routerLink: ['/admin/serviceList']},
+          {label: 'Ajouter un paquet', icon: 'fa fa-plus', routerLink: ['/admin/packageDetails']},
+          {label: 'Liste des paquets', icon: 'fa fa-search', routerLink: ['/admin/packageList']}
         ]
       },
       {

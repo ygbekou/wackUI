@@ -1,5 +1,6 @@
 import { Employee } from './Employee';
 import { GivenVaccine } from './givenVaccine';
+import { Package } from './package';
 import { Patient } from './patient';
 import { Reference } from './reference';
 import { VitalSign } from './vitalSign';
@@ -9,8 +10,10 @@ export class Visit {
   visitNumber: string;
   chiefOfComplain: string;
   patient: Patient;
+  pckage: Package;
   visitDatetime: Date = new Date();
   status: number;
+  isHealthCheckupSel: number;
   
   vitalSign: VitalSign;
   selectedAllergies: Reference[];
