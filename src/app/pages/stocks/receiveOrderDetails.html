@@ -1,0 +1,134 @@
+<div role="main" class="main">
+	<section
+		class="parallax section section-text-light section-parallax section-center mt-0 mb-5"
+		data-plugin-parallax data-plugin-options="{'speed': 1.5}"
+		data-image-src="assets/images/slides/bg-top.jpg">
+	</section>
+
+		<div class="container" style="padding-left: 10px; max-width: 100%;">
+	
+	<div class="ui-grid-row">
+		<div class="ui-g-2 ui-sm-4">
+			<app-admin-menu></app-admin-menu>
+		</div>
+		<div class="ui-g-10 ui-sm-8" style="padding: 15px;">
+			<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="receiveOrder">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-4 ui-sm-12">
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-3 ui-sm-12">
+								<label i18n="@@purchaseOrderId" for="purchaseOrderId">Purchase Order Id</label>
+							</div>
+							<div class="ui-grid-col-8 ui-sm-12">
+								<input type="text" pInputText class="form-control" id="purchaseOrderId" (change)="lookUpPurchaseOrder()"
+								[(ngModel)]="purchaseOrderId" name="purchaseOrderId" #purchaseOrderID="ngModel">
+							</div>
+							<div class="ui-grid-col-1 ui-sm-12">
+							</div>
+						</div>
+					</div>
+				</div>
+				<br/>
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-4 ui-sm-12">
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-3 ui-sm-12">
+								<label i18n="@@supplier" for="supplier">Supplier</label>
+							</div> 
+							<div class="ui-grid-col-8 ui-sm-12">
+								<span *ngIf="receiveOrder.purchaseOrder && receiveOrder.purchaseOrder.supplier">
+									{{receiveOrder.purchaseOrder.supplier.name}}
+								</span>
+							</div>
+							<div class="ui-grid-col-1 ui-sm-12">
+							</div>
+						</div>
+					</div>
+					<div class="ui-grid-col-4 ui-sm-12">
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-3 ui-sm-12">
+								<label i18n="@@deliveryDate" for="deliveryDate">Delivery Date<font color="red">*</font></label> 
+							</div>
+							<div class="ui-grid-col-8 ui-sm-12">
+								<p-calendar [(ngModel)]="receiveOrder.deliveryDate"></p-calendar>
+							</div>
+							<div class="ui-grid-col-1 ui-sm-12">
+							</div>
+						</div>
+					</div>
+					<div class="ui-grid-col-4 ui-sm-12">
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-3 ui-sm-12">
+								<label i18n="@@deliveryNotes" for="deliveryNotes">Delivery Notes</label> 
+							</div>
+							<div class="ui-grid-col-8 ui-sm-12">
+								<textarea pInputTextarea id="deliveryNotes" rows="4" cols="40" pInputTextarea maxlength="1000" 
+									[(ngModel)]="receiveOrder.deliveryNote" #notes="ngModel"> </textarea>							
+							</div>
+							<div class="ui-grid-col-1 ui-sm-12">
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div>
+				
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-7 ui-sm-12">					
+					<p-table [columns]="orderProductCols" [value]="receiveOrder.receiveOrderProducts">
+						<ng-template pTemplate="caption">
+					        List of Products
+					    </ng-template>
+					    <ng-template pTemplate="header" let-orderProductCols>
+					        <tr>
+					            <th *ngFor="let col of orderProductCols" [pSortableColumn]="col.field">
+					                {{col.header}}
+					                <p-sortIcon [field]="col.field"></p-sortIcon>
+					            </th>
+					        </tr>
+					    </ng-template>
+					    <ng-template pTemplate="body" let-rowData let-columns="columns">
+					        <tr>			           
+					            <td *ngFor="let col of columns" [pEditableColumn]="rowData" [pEditableColumnField]="rowData[col.field]">
+					                <p-cellEditor *ngIf="col.field != 'quantity'">
+					                    <ng-template pTemplate="input">
+					                        {{rowData[col.field]}}
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+					                        {{rowData[col.field]}}
+					                    </ng-template>
+					                </p-cellEditor>
+					      			<p-cellEditor *ngIf="col.field == 'quantity'">
+					                    <ng-template pTemplate="input">
+					                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled">
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+					                        {{rowData[col.field]}}
+					                    </ng-template>
+					                </p-cellEditor>
+					            </td>
+					        </tr>
+					    </ng-template>
+					</p-table>
+				</div>
+				
+				<br/>
+			</div>
+			
+			<br/>
+			
+			<br/>
+			<br />
+			<div *ngIf="error" class="alert alert-danger">{{error}}</div>
+			<div>
+				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+					<button type="button" pButton icon="fa-close" (click)="delete()"
+						label="Supprimer"></button>
+					<button type="button" pButton icon="fa-check" (click)="save(1)"
+						label="Sauvegarder"></button>
+					<button type="button" pButton icon="fa-check" (click)="save(2)"
+						label="Done"></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

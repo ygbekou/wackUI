@@ -22,7 +22,7 @@ export class AppointmentService {
     this.actionUrl = Constants.apiServer + '/service/appointment/department/' + departmentId + '/doctor/' + doctorId;
 
     return this.http.get(this.actionUrl)
-      .map((response: Response) => <ScheduleEvent>response.json())
+      .map((response: Response) => <ScheduleEvent[]>response.json())
       .catch(this.handleError);
   }
 

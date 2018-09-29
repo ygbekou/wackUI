@@ -144,12 +144,15 @@ export class AdminMenu implements OnInit {
         this.appointmentScheduler = params['appointmentScheduler'];
         this.caseStudyDetails = params['caseStudyDetails'];
         this.caseStudyList = params['caseStudyList'];
+        
         this.medicineCategoryDetails = params['medicineCategoryDetails'];
         this.medicineCategoryList = params['medicineCategoryList'];
         this.manufacturerDetails = params['manufacturerDetails'];
         this.manufacturerList = params['manufacturerList'];
         this.medicineDetails = params['medicineDetails'];
         this.medicineList = params['medicineList'];
+        
+        
         this.prescriptionDetails = params['prescriptionDetails'];
         this.prescriptionList = params['prescriptionList'];
         this.accountDetails = params['accountDetails'];

@@ -1,36 +1,5 @@
-<div role="main" class="main">
-	<section
-		class="parallax section section-text-light section-parallax section-center mt-0 mb-5"
-		data-plugin-parallax data-plugin-options="{'speed': 1.5}"
-		data-image-src="assets/images/slides/bg-top.jpg">
-	</section>
-
-		<div class="container" style="padding-left: 10px; max-width: 100%;">
-
-	<section class="call-to-action featured featured-secondary mb-5"
-		style="border-radius: 8px; padding:10px;" *ngIf="vote">
-		<div class="col-sm-9 col-lg-9 text-center">
-			<div class="call-to-action-content" style="width:100%;" >
-				<h3>
-					<strong>Il y a des scrutins qui vous attendent</strong>
-				</h3>
-				<p class="mb-0">
-					Faites votre <strong>devoir civique</strong> en votant
-			</div>
-		</div>
-		<div class="col-sm-3 col-lg-3 text-left">
-			<div class="call-to-action-btn">
-				<a href="#/vote" class="btn btn-lg btn-secondary">Je vote
-					maintenant!</a>
-			</div>
-		</div>
-	</section>
-	
-	<div class="ui-grid-row">
-		<div class="ui-g-2 ui-sm-4">
-			<app-admin-menu></app-admin-menu>
-		</div>
-		<div class="ui-g-10 ui-sm-8" style="padding: 15px;">
+<div class="ui-grid-row"> 
+		<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
 			
 			<p-tabView (onChange)="onTabChange($event)"> 
 			 	<p-tabPanel header="Ward">
@@ -85,4 +54,4 @@
 		</div>
 
 	</div>
-</div>
+ 

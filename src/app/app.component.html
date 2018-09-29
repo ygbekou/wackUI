@@ -1,120 +1,33 @@
+<div class="layout-wrapper" (click)="onLayoutClick()"
+     [ngClass]="{'layout-wrapper-overlay-sidebar': isOverlay(),
+                'layout-wrapper-overlay-sidebar-active': overlayMenuActive,
+                'layout-wrapper-sidebar-inactive': staticMenuDesktopInactive,
+                'layout-wrapper-sidebar-mobile-active': staticMenuMobileActive}">
+    <app-topbar></app-topbar>
 
-<header id="header" class="header-semi-transparent"
-	data-plugin-options="{'stickyEnabled': true, 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': true, 'stickyStartAt': 1, 'stickySetTop': '0'}">
-	<div class="header-body">
-		<div class="header-container container">
-			<div class="header-row">
-				<div class="header-column">
-					<div class="header-row">
-						<div class="header-logo">
-							<a href="/"> <img alt="Kozah" height="100"
-								src="assets/images/logo.png">
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="header-column justify-content-end">
-					<div class="header-row">
-						<div class="header-nav header-nav-stripe">
-							<div
-								class="header-nav-main header-nav-main-square header-nav-main-effect-2 header-nav-main-sub-effect-1">
-								<nav class="collapse navbar-collapse">
-									<ul class="nav nav-pills" id="mainNav">
-										<li><a class="nav-link active" href="/"> Home </a></li>
-										<li><a class="nav-link" href="#/videoImage"
-											onClick="closeNav();"> Images & Videos </a></li>
-										<li><a class="nav-link" href="#/statuts"
-											onClick="closeNav();"> Statuts </a></li>
-										<li><a class="nav-link" href="#/reglements" onClick="closeNav();">
-												Reglements </a></li>
-										<li><a class="nav-link" href="#/projects" onClick="closeNav();"> Projets </a></li>
-										<li><a class="nav-link" href="#/contact" onClick="closeNav();"> Contact </a></li>
-										<li *ngIf="user.id === 0"><a href="#/login?action=0"
-											class="nav-link" onClick="closeNav();"> Connexion </a></li>
-										<li *ngIf="user.id > 0 && user.userGroup.id === 1"><a onClick="closeNav();"
-											href="#/admin/adminMain?adminMain=active" class="nav-link">
-												Administration </a></li>
-										<li *ngIf="user.id > 0 && user.userGroup.id > 1"><a onClick="closeNav();"
-											href="#/admin/adminProfile" class="nav-link"> Espace
-												membre </a></li>
-										<li *ngIf="user.id>0"><a (click)="logout()" href="#/"
-											class="nav-link"> Déconnexion</a></li>
-										<li *ngIf="user.id===0"><a href="#/login?action=1" onClick="closeNav();"
-											class="nav-link"> Inscription </a></li>
-									</ul>
-								</nav>
-							</div>
-							<ul class="header-social-icons social-icons d-none d-sm-block">
-								<li class="social-icons-facebook"><a
-									href="https://www.facebook.com/Kozaɣ-Yɔɔ-Kandiyaa-536960160024721/"
-									target="_blank" title="Facebook"><i class="fa fa-facebook"></i></a></li>
-								<li class="social-icons-twitter"><a
-									href="https://twitter.com/kozahus/" target="_blank"
-									title="Twitter"><i class="fa fa-twitter"></i></a></li>
-								<li class="social-icons-linkedin"><a
-									href="https://www.linkedin.com/in/sentinelle-kozah-amerique-99692915a/"
-									target="_blank" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
-							</ul>
-							<button class="btn header-btn-collapse-nav"
-								data-toggle="collapse" data-target=".header-nav-main nav">
-								<i class="fa fa-bars"></i>
-							</button>						
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</header>
+    <app-megamenu></app-megamenu>
 
+    <div class="layout-sidebar" (click)="onMenuClick($event)"
+         [ngClass]="{'layout-sidebar-dark': menuMode !== 'light',
+         'layout-sidebar-gradient':  menuMode === 'gradient'}">
+        <p-scrollPanel #layoutMenuScroller [style]="{height: '100%' }">
+            <div class="sidebar-scroll-content">
+                <app-inline-profile *ngIf="profileMode=='inline'"></app-inline-profile>
+                <app-menu [reset]="resetMenu"></app-menu>
+            </div>
+        </p-scrollPanel>
+    </div>
 
-<router-outlet></router-outlet>
+    <app-rightpanel></app-rightpanel>
 
-<footer class="short" id="footer">
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-2">
-				<a href="/" class="logo"> <img alt="Porto Website Template"
-					class="img-fluid" src="assets/images/logo.png">
-				</a>
-			</div>
+    <div class="layout-main">
+        <app-breadcrumb></app-breadcrumb>
 
-			<div class="col-sm-6 col-lg-4 text-sm-left ml-sm-auto mb-0">
-				<h4 class="mt-3 mb-0">Notre addresse</h4>
-				<ul class="list list-icons mt-3">
-					<li><i class="fa fa-map-marker"></i> <strong>Address:</strong>
-						1234 Casco st, Washington DC, United States</li>
-					<li><i class="fa fa-phone"></i> <strong>Phone:</strong> (123)
-						456-789</li>
-				</ul>
-			</div>
-
-		</div>
-		<div class="row">
-			<div class="col">
-				<hr class="solid">
-				<div class="row">
-					<div class="col-lg-6">
-						<p>© Copyright 2017. All Rights Reserved.</p>
-					</div>
-					<div class="col-lg-6 text-right">
-						<ul class="social-icons float-right">
-							<li class="social-icons-facebook"><a
-								href="https://www.facebook.com/Kozaɣ-Yɔɔ-Kandiyaa-536960160024721/"
-								target="_blank" title="Facebook"><i class="fa fa-facebook"></i></a></li>
-							<li class="social-icons-twitter"><a
-								href="https://twitter.com/kozahus/" target="_blank"
-								title="Twitter"><i class="fa fa-twitter"></i></a></li>
-							<li class="social-icons-linkedin"><a
-								href="https://www.linkedin.com/in/sentinelle-kozah-amerique-99692915a/"
-								target="_blank" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
-						</ul>
-						<span class="footer-email-custom float-right"><i
-							class="fa fa-envelope text-color-primary"></i> <a
-							href="mailto:kozahus@gmail.com">kozahus@gmail.com</a></span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</footer>
+        <div class="layout-main-content">
+            <router-outlet></router-outlet>
+        </div>
+		<!--  
+        <app-footer></app-footer>
+        -->
+    </div>
+</div>

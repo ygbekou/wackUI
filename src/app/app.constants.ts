@@ -1,8 +1,8 @@
 export class Constants {
   public static apiServer = 'http://localhost:8080';
-  public static lang='en';
-  //public static apiServer = 'http://www.kozah.org';  
-  public static DETAIL = (Constants.lang=='en'? 'Details':"Details");
+  //public static apiServer = 'http://www.kozah.org';
+  
+  public static DETAIL = 'Details';
   public static ABSENCES = 'Absenses';
   public static ACTIF = 'Active';
   public static ACTIVE = 'Active?';
@@ -13,7 +13,8 @@ export class Constants {
   public static DOCTOR = 'Doctor';
   public static COUNTRY = 'Country';
   public static ROLE = 'Role';
-  public static SELECT_OPTION = 'Select Option'  
+  public static SELECT_OPTION = 'Select Option'
+  
   public static FEMALE = 'Femme';
   public static MALE = 'Homme';
   public static USER_SEARCH_PARTS = 'Entrez le nom et/ou le prenom';

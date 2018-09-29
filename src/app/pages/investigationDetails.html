@@ -1,18 +1,6 @@
-<div role="main" class="main">
-	<section
-		class="parallax section section-text-light section-parallax section-center mt-0 mb-5"
-		data-plugin-parallax data-plugin-options="{'speed': 1.5}"
-		data-image-src="assets/images/slides/bg-top.jpg">
-	</section>
-
-		<div class="container" style="padding-left: 10px; max-width: 100%;">
-	
-	<div class="ui-grid-row">
-		<div class="ui-g-2 ui-sm-4">
-			<app-admin-menu></app-admin-menu>
-		</div>
+<div class="ui-grid-row"> 
 		<div class="ui-grid-row">
-			<div class="ui-g-10 ui-sm-8" style="padding: 15px;">
+			<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
 				<div class="ui-grid ui-grid-responsive" *ngIf="investigation">
 					<div class="ui-grid-row">
 						<div class="ui-grid-col-4 ui-sm-12">
@@ -143,13 +131,13 @@
 					
 					<div *ngIf="error" class="alert alert-danger">{{error}}</div>
 					<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-						<button type="button" pButton icon="fa-close" (click)="delete()"
+						<button type="button" pButton icon="fa fa-close" (click)="delete()"
 							label="Supprimer"></button>
-						<button type="button" pButton icon="fa-check" (click)="save()"
+						<button type="button" pButton icon="fa fa-check" (click)="save()"
 							label="Sauvegarder"></button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
+ 

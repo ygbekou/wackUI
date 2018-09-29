@@ -47,6 +47,7 @@ import {DoctorOrderList} from '../components/doctorOrderList';
 import {AdmissionDetails} from '../components/admissionDetails';
 import {AdmissionList} from '../components/admissionList';
 import {DoctorTransfer} from '../components/doctorTransfer';
+import {BedTransfer} from '../components/bedTransfer';
 import {FloorDetails} from '../components/floorDetails';
 import {FloorList} from '../components/floorList';
 import {RoomDetails} from '../components/roomDetails';
@@ -56,7 +57,7 @@ import {BedList} from '../components/bedList';
 import {AdminBedStatus} from '../components/adminBedStatus';
 import {AdmissionDiagnoses} from '../components/admissionDiagnoses';
 import {AdminReference} from '../components/adminReference';
-import { CategoryDropdown } from '../components/dropdowns';
+import {CategoryDropdown} from '../components/dropdowns';
 
 
 import {AdminPatient} from '../components/adminPatient';
@@ -118,6 +119,7 @@ const routes: Routes = [
   {path: 'admissionDetails', component: AdmissionDetails},
   {path: 'admissionList', component: AdmissionList},
   {path: 'doctorTransfer', component: DoctorTransfer},
+  {path: 'bedTransfer', component: BedTransfer},
   {path: 'floorDetails', component: FloorDetails},
   {path: 'floorList', component: FloorList},
   {path: 'roomDetails', component: RoomDetails},
@@ -144,14 +146,14 @@ const routes: Routes = [
   declarations: [FileUploader, AdminMenu, AdminMain, AdminAppointment, DocumentDetails,
     DocumentList, EmployeeDetails, EmployeeList, PatientDetails, PatientList, ScheduleDetails, ScheduleList,
     AppointmentScheduler, AppointmentDetails, AppointmentList, CaseStudyDetails, CaseStudyList, ReferenceDetails,
-    ReferenceList, ReferenceWithCategoryDetails, ReferenceWithCategoryList, MedicineDetails, MedicineList, 
+    ReferenceList, ReferenceWithCategoryDetails, ReferenceWithCategoryList, MedicineDetails, MedicineList,
     PrescriptionDetails, PrescriptionList, AccountDetails, AccountList,
     InvoiceDetails, InvoiceList, PaymentDetails, PaymentList, InsuranceDetails, InsuranceList, ServiceDetails,
-    ServiceList, PackageDetails, PackageList, BillDetails, BillList, VitalSignDetails, VitalSignList, AllergyDetails, 
-    MedicalHistoryDetails, SocialHistoryDetails, VaccineDetails, SymptomDetails, 
+    ServiceList, PackageDetails, PackageList, BillDetails, BillList, VitalSignDetails, VitalSignList, AllergyDetails,
+    MedicalHistoryDetails, SocialHistoryDetails, VaccineDetails, SymptomDetails, BedTransfer,
     DoctorOrderDetails, DoctorOrderList, AdmissionDetails, AdmissionList, DoctorTransfer, FloorDetails, FloorList,
     RoomDetails, RoomList, BedDetails, BedList, AdminPatient, AdminAdmission, AdminBedStatus, AdmissionDiagnoses,
-    AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails, 
+    AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails,
     InvestigationList],
 
   providers: [CategoryDropdown]
