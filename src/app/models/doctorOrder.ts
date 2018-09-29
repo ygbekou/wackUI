@@ -2,6 +2,7 @@ import { Admission } from './admission';
 import { Appointment } from './appointment';
 import { Employee } from './employee';
 import { LabTest } from './labTest';
+import { Product } from './product';
 import { Reference } from './reference';
 import { Service } from './service';
 import { Visit } from './visit';
@@ -20,6 +21,7 @@ export class DoctorOrder {
   status: number;
   
   labTests: LabTest[] = [];
+  products: Product[] = [];
   
   constructor() {
     this.doctorOrderType = new Reference();

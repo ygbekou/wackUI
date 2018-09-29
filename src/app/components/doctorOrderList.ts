@@ -53,12 +53,11 @@ export class DoctorOrderList implements OnInit, OnDestroy {
         .subscribe(params => {          
           
             let parameters: string [] = []; 
-            
             parameters.push('e.status = |status|0|Integer')
-            if (this.visit.id > 0)  {
+            if (this.visit)  {
               parameters.push('e.visit.id = |visitId|' + this.visit.id + '|Long')
             } 
-            if (this.admission.id > 0)  {
+            if (this.admission)  {
               parameters.push('e.admission.id = |admissionId|' + this.admission.id + '|Long')
             } 
             
