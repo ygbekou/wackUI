@@ -113,7 +113,7 @@ export class SaleReturnDetails implements OnInit, OnDestroy {
   
   lookUpPatientSale() {
     
-    this.genericService.getNewObject('/service/purchasing/purchaseOrder/newReceiveOrder/', this.patientSaleId)
+    this.genericService.getNewObject('/service/purchasing/patientSale/newSaleReturn/', this.patientSaleId)
       .subscribe((data: SaleReturn) => 
       { 
 

@@ -76,6 +76,15 @@ import {LabTestList} from '../components/labTestList';
 import {InvestigationDetails} from '../components/investigationDetails';
 import {InvestigationList} from '../components/investigationList';
 
+import {PurchaseOrderDetails} from '../components/stocks/purchaseOrderDetails';
+import {PurchaseOrderList} from '../components/stocks/purchaseOrderList';
+import {ReceiveOrderDetails} from '../components/stocks/receiveOrderDetails';
+import {ReceiveOrderList} from '../components/stocks/receiveOrderList';
+import {PatientSaleDetails} from '../components/stocks/patientSaleDetails';
+import {PatientSaleList} from '../components/stocks/patientSaleList';
+import {SaleReturnDetails} from '../components/stocks/saleReturnDetails';
+import {SaleReturnList} from '../components/stocks/saleReturnList';
+
 const routes: Routes = [
   {path: 'adminMain', component: AdminMain},
   {path: 'adminAppointment', component: AdminAppointment},
@@ -134,6 +143,14 @@ const routes: Routes = [
   {path: 'adminReference', component: AdminReference},
   {path: 'investigationDetails', component: InvestigationDetails},
   {path: 'investigationList', component: InvestigationList},
+  {path: 'purchaseOrderDetails', component: PurchaseOrderDetails},
+  {path: 'purchaseOrderList', component: PurchaseOrderList},
+  {path: 'receiveOrderDetails', component: ReceiveOrderDetails},
+  {path: 'receiveOrderList', component: ReceiveOrderList},
+  {path: 'patientSaleDetails', component: PatientSaleDetails},
+  {path: 'patientSaleList', component: PatientSaleList},
+  {path: 'saleReturnDetails', component: SaleReturnDetails},
+  {path: 'saleReturnList', component: SaleReturnList},
 ];
 
 @NgModule({
@@ -154,7 +171,8 @@ const routes: Routes = [
     DoctorOrderDetails, DoctorOrderList, AdmissionDetails, AdmissionList, DoctorTransfer, FloorDetails, FloorList,
     RoomDetails, RoomList, BedDetails, BedList, AdminPatient, AdminAdmission, AdminBedStatus, AdmissionDiagnoses,
     AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails,
-    InvestigationList],
+    InvestigationList, PurchaseOrderDetails, PurchaseOrderList, ReceiveOrderDetails, ReceiveOrderList, 
+    PatientSaleDetails, PatientSaleList, SaleReturnDetails, SaleReturnList],
 
   providers: [CategoryDropdown, PackageDropdown]
 })

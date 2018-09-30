@@ -78,6 +78,19 @@ export class AppMenuComponent implements OnInit {
         ]
       },
       {
+        label: 'Pharmacy', icon: 'fa fa-money',
+        items: [
+          {label: 'Commander Medecine', icon: 'fa fa-plus', routerLink: ['/admin/purchaseOrderDetails']},
+          {label: 'Liste des commandes', icon: 'fa fa-search', routerLink: ['/admin/purchaseOrderList']},
+          {label: 'Reception de commande', icon: 'fa fa-plus', routerLink: ['/admin/receiveOrderDetails']},
+          {label: 'Liste des receptions', icon: 'fa fa-search', routerLink: ['/admin/receiveOrderList']},
+          {label: 'Ajouter une vente', icon: 'fa fa-plus', routerLink: ['/admin/patientSaleDetails']},
+          {label: 'Liste des ventes', icon: 'fa fa-search', routerLink: ['/admin/patientSaleList']},
+          {label: 'Ajouter un retour achat', icon: 'fa fa-plus', routerLink: ['/admin/saleReturnDetails']},
+          {label: 'Liste des retours', icon: 'fa fa-search', routerLink: ['/admin/saleReturnList']}
+        ]
+      },
+      {
         label: 'Configuration', icon: 'fa fa-cogs',
         items: [
           {label: 'Chambres et lits', icon: 'fa fa-bed', routerLink: ['/admin/adminBedStatus']},
