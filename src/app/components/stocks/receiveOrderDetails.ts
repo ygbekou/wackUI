@@ -67,7 +67,7 @@ export class ReceiveOrderDetails implements OnInit, OnDestroy {
           receiveOrderId = params['receiveOrderId'];
           
           if (receiveOrderId != null) {
-              this.purchasingService.getReceiveOrder(receiveOrderId)
+              this.genericService.getNewObject('/service/purchasing/receiveOrder/', receiveOrderId)
                   .subscribe(result => {
                 if (result.id > 0) {
                   this.receiveOrder = result

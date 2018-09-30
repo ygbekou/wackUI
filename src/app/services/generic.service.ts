@@ -78,6 +78,21 @@ export class GenericService {
         .catch(this.handleError);
    }
   
+   public saveWithUrl = (url: string, genericObject : any): Observable<any> => {
+    
+      let toAdd = JSON.stringify(genericObject);
+      let re = /\"/gi;
+      let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
+      
+      let actionUrl = Constants.apiServer + url;
+      return this.http.post(actionUrl, toSend, { headers: this.headers })
+        .map((response: Response) => {
+            return response.json();
+        })
+        .catch(this.handleError);
+   }
+  
+  
   public saveDoctorOrder = (entity: any): Observable<any> => {
    
       let toAdd = JSON.stringify(entity);
@@ -131,6 +146,22 @@ export class GenericService {
    public getOne = (id: number, entityClass: string): Observable<any> => {
    
       let actionUrl = Constants.apiServer + '/service/' + entityClass + '/' + id;
+      return this.http.get(actionUrl, { headers: this.headers })
+        .map((response: Response) => {
+            if (response && response.json()) {
+              const error = response.json() && response.json().error;
+              if (error == null) {
+                
+              }
+            }
+            return response.json();
+        })
+        .catch(this.handleError);
+   }
+  
+   public getNewObject = (url: string, id: number): Observable<any> => {
+   
+      let actionUrl = Constants.apiServer + url + id;
       return this.http.get(actionUrl, { headers: this.headers })
         .map((response: Response) => {
             if (response && response.json()) {
