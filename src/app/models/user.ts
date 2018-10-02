@@ -13,7 +13,8 @@ export class User {
   email: string;
   picture: string;
   sex: string;
-  phone: string;
+  homePhone: string;
+  mobilePhone: string;
   address: string;
   city: string;
   country: string;

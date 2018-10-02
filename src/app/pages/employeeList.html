@@ -1,23 +1,67 @@
-<div class="ui-grid-row">
-	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-		<p-table [columns]="cols" [value]="employees"> <ng-template
-			pTemplate="header" let-columns>
-		<tr>
-			<th *ngFor="let col of columns" [pSortableColumn]="col.field">
-				{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
-			</th>
-			<th>Action</th>
-		</tr>
-		</ng-template> <ng-template pTemplate="body" let-rowData let-columns="columns">
-		<tr>
-			<td *ngFor="let col of columns">{{rowData[col.field]}}</td>
-			<td>
-				<button type="button" pButton icon="fa-edit" style="float: left"
-					(click)="edit(rowData.id)"></button>
-				<button type="button" pButton icon="fa-eraser" style="float: left"
-					(click)="delete(rowData.id)"></button>
-			</td>
-		</tr>
-		</ng-template> </p-table>
-	</div>
+<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+	<p-fieldset legend="Search Criteria">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@lastName" for="lastName">Last Name:
+					</label> <input type="text" pInputText class="form-control" id="lastName"
+						 [(ngModel)]="searchCriteria.lastName" name="lastName" >
+				</div>
+			</div>
+			<div class="ui-grid-col-3 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@firstName" for="firstName">First Name:
+					</label> <input type="text" pInputText class="form-control" id="firstName"
+						 [(ngModel)]="searchCriteria.firstName" name="firstName">
+				</div>
+			</div>
+			<div class="ui-grid-col-3 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@department" for="department">Department:</label> 
+					<p-autoComplete [(ngModel)]="searchCriteria.department"
+						(onDropdownClick)="departmentDropdown.handleDropdownClick($event)"
+						[suggestions]="departmentDropdown.filteredDepartments"
+						[dropdown]="true" id="department"
+						(completeMethod)="departmentDropdown.filter($event)"
+						name="department" field="name" [size]="30"
+						placeholder="{{DEPARTMENT}}" [minLength]="1">
+					</p-autoComplete>
+				</div>
+			</div>
+
+			<div>
+				<button pButton icon="fa fa-search" label="Search" (click)="search()"></button>
+			</div>
+		</div>
+	</p-fieldset>
+	<br/>
+	<br/>
+	<p-table [columns]="cols" [value]="employees"> <ng-template
+		pTemplate="header" let-columns>
+	<tr>
+		<th *ngFor="let col of columns" [pSortableColumn]="col.field">
+			{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
+		</th>
+		<th>Action</th>
+	</tr>
+	</ng-template> <ng-template pTemplate="body" let-rowData let-columns="columns">
+	<tr>
+		<td *ngFor="let col of columns">
+			<div *ngIf="col.type === 'Date'">{{rowData[col.field] |
+				date:'dd/MM/yyyy'}}</div>
+			<div *ngIf="col.type !== 'Date'">
+				<div *ngIf="col.field == 'status'">
+					{{getStatusDesc(rowData)}}</div>
+				<div *ngIf="col.field !== 'status'">
+					{{rowData[col.field]}}</div>
+			</div>
+		</td>
+		<td>
+			<button type="button" pButton icon="fa-edit" style="float: left"
+				(click)="edit(rowData.id)"></button>
+			<button type="button" pButton icon="fa-eraser" style="float: left"
+				(click)="delete(rowData.id)"></button>
+		</td>
+	</tr>
+	</ng-template> </p-table>
 </div>

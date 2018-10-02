@@ -7,8 +7,11 @@ export class Constants {
   public static ACTIF = 'Active';
   public static ACTIVE = 'Active?';
   public static ADD_IMAGE = 'Ajouter Image';
-  public static ADD_LABEL = 'Ajouter';
-  public static CLOSE_LABEL = 'Fermer';
+  public static ADD_LABEL = 'Add';
+  public static CLEAR_LABEL = 'Clear';
+  public static CLOSE_LABEL = 'Close';
+  public static SAVE_LABEL = 'Save';
+  public static DELETE_LABEL = 'Delete';
   public static DEPARTMENT = 'Department';
   public static DOCTOR = 'Doctor';
   public static COUNTRY = 'Country';
@@ -21,7 +24,7 @@ export class Constants {
   public static NO_USER_FOUND = 'Aucune personne trouvee';
   public static COUNTRY_ORIGIN = 'Pays d\'origine';
   public static COUNTRY_RESIDENCE = 'Pays de Residence';
-  public static SAVE_LABEL = 'Sauvegarder';
+  
   public static FILE_UPLOADED = 'Fichier charge';
   
   public static ALIVE = 'Vivant';
@@ -29,7 +32,7 @@ export class Constants {
   public static MISSING_REQUIRED_FIELD = 'Veuillez remplir tous les champs requis';
   public static ERROR_OCCURRED = 'Une erreur systeme s\'est produite';
   public static SAVE_UNSUCCESSFUL = 'La sauvegarde n\'a pas marche. Verifiez tous les champs.';
-  public static SAVE_SUCCESSFUL = 'La sauvegarde n\'a pas marche. Verifiez tous les champs.';
+  public static SAVE_SUCCESSFUL = 'La sauvegarde a marche.';
   
   public static SEND_ME_MY_PASSWORD = 'Envoyez-moi mon mot de passe';
   
@@ -46,4 +49,17 @@ export class Constants {
   public static CATEGORY_MEDICINE = 1;
   public static CATEGORY_BED = 2;
   public static CATEGORY_SERVICE_TARIF = 6;
+  
+  public static USER_GROUP_PATIENT = 20;
+  
+  
+  public static ACTIVITIES_PACKAGE = 'com_qkcare_model_activities_';
+  public static BIRTH_REPORT_CLASS = Constants.ACTIVITIES_PACKAGE + 'BirthReport';
+  public static DEATH_REPORT_CLASS = Constants.ACTIVITIES_PACKAGE + 'DeathReport';
+  
+  // Growl severities
+  public static SUCCESS = 'success';
+  public static INFO = 'info';
+  public static WARN = 'warn';
+  public static ERROR = 'error';
 }

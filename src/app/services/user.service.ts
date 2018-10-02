@@ -91,36 +91,23 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  public saveEmployee = (employee : Employee, formData: FormData): Observable<Employee> => {
+  public saveUserWithoutPicture = (entityClass: string, entity : any): Observable<any> => {
+    let toAdd = JSON.stringify(entity);
+    let re = /\"/gi;
+    let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
     
-      let head = new Headers();
-      let toAdd = JSON.stringify(employee);
-      let re = /\"/gi;
-      let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
-    
-    formData.append('dto', new Blob([toSend],
-      {
-          type: "application/json"
-      }));
-      
-      let actionUrl = Constants.apiServer + '/service/user/Employee/save';
-      return this.http.post(actionUrl, formData, { headers: head })
-        .map((response: Response) => {
-            if (response && response.json()) {
-              const error = response.json() && response.json().error;
-              if (error == null) {
-                Cookie.set('user', JSON.stringify(response.json()));
-              }
-            }
-            return response.json();
-        })
-        .catch(this.handleError);
-   }
+    let actionUrl = Constants.apiServer + '/service/user/' + entityClass + '/saveWithoutPicture';
+    return this.http.post(actionUrl, toSend, {headers: this.headers})
+      .map((response: Response) => {
+        return response.json();
+      })
+      .catch(this.handleError);
+  }
   
-   public savePatient = (patient : Patient, formData: FormData): Observable<Patient> => {
+   public saveUserWithPicture = (entityClass: string, entity : any, formData: FormData): Observable<any> => {
       
       let head = new Headers();
-      let toAdd = JSON.stringify(patient);
+      let toAdd = JSON.stringify(entity);
       let re = /\"/gi;
       let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
       
@@ -129,7 +116,7 @@ export class UserService {
           type: "application/json"
       }));
      
-      let actionUrl = Constants.apiServer + '/service/user/Patient/save';
+      let actionUrl = Constants.apiServer + '/service/user/' + entityClass + '/save';
       return this.http.post(actionUrl, formData, { headers: head })
         .map((response: Response) => {
             if (response && response.json()) {

@@ -7,7 +7,7 @@ import { FileUploader } from './fileUploader';
 import { EditorModule } from 'primeng/editor';
 import { CountryDropdown, ReligionDropdown, OccupationDropdown, PayerTypeDropdown, InsuranceDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
+import { DialogModule, InputTextareaModule, CheckboxModule} from 'primeng/primeng';
 import { User } from '../models/user';  
 import { GenericService, UserService } from '../services';
 
@@ -28,8 +28,6 @@ export class PatientDetails implements OnInit, OnDestroy {
   insuranceDropdown: InsuranceDropdown
   
   DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
   COUNTRY: string = Constants.COUNTRY;
   ROLE: string = Constants.ROLE;
   SELECT_OPTION: string = Constants.SELECT_OPTION;
@@ -73,6 +71,8 @@ export class PatientDetails implements OnInit, OnDestroy {
                   .subscribe(result => {
                 if (result.id > 0) {
                   this.patient = result
+                  if (this.patient.user.birthDate != null)
+                    this.patient.user.birthDate = new Date(this.patient.user.birthDate);
                 }
                 else {
                   this.error = Constants.SAVE_UNSUCCESSFUL;
@@ -94,28 +94,46 @@ export class PatientDetails implements OnInit, OnDestroy {
   }
 
   save() {
-    
     this.formData = new FormData();
     let inputEl = this.input.nativeElement;
-    if (inputEl.files.length == 0) return;
+    //if (inputEl.files.length == 0) return;
     
-    let files :FileList = inputEl.files;
-    for(var i = 0; i < files.length; i++){
-        this.formData.append('file', files[i], files[i].name);
+    if (inputEl && inputEl.files && (inputEl.files.length > 0)) {
+      let files :FileList = inputEl.files;
+      for(var i = 0; i < files.length; i++){
+          this.formData.append('file', files[i], files[i].name);
+      }
+    } else {
+       this.formData.append('file', null, null);
     }
-    
     try {
       this.error = '';
-      this.userService.savePatient(this.patient, this.formData)
-        .subscribe(result => {
-          if (result.id > 0) {
-            this.patient = result
-          }
-          else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-            this.displayDialog = true;
-          }
-        })
+      this.patient.user.userName = this.patient.user.email;
+      this.patient.user.userGroup.id = Constants.USER_GROUP_PATIENT;
+      if (inputEl && inputEl.files && (inputEl.files.length > 0)) {
+        this.userService.saveUserWithPicture('Patient', this.patient, this.formData)
+          .subscribe(result => {
+            if (result.id > 0) {
+              this.patient = result;
+            }
+            else {
+              this.error = Constants.SAVE_UNSUCCESSFUL;
+              this.displayDialog = true;
+            }
+          })
+      }
+      else {
+        this.userService.saveUserWithoutPicture('Patient', this.patient)
+          .subscribe(result => {
+            if (result.id > 0) {
+              this.patient = result;
+            }
+            else {
+              this.error = Constants.SAVE_UNSUCCESSFUL;
+              this.displayDialog = true;
+            }
+          })
+      }
     }
     catch (e) {
       console.log(e);

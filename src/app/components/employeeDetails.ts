@@ -29,9 +29,9 @@ export class EmployeeDetails implements OnInit, OnDestroy {
   userGroupDropdown: UserGroupDropdown;
   countryDropdown:  CountryDropdown;
   
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
+  SAVE_LABEL: string = Constants.SAVE_LABEL;
+  DELETE_LABEL: string = Constants.DELETE_LABEL;  
+  CLEAR_LABEL: string = Constants.CLEAR_LABEL;
   DEPARTMENT: string = Constants.DEPARTMENT;
   COUNTRY: string = Constants.COUNTRY;
   ROLE: string = Constants.ROLE;
@@ -91,29 +91,47 @@ export class EmployeeDetails implements OnInit, OnDestroy {
   save() {
     this.formData = new FormData();
     let inputEl = this.input.nativeElement;
-    if (inputEl.files.length == 0) return;
+    //if (inputEl.files.length == 0) return;
     
-    let files :FileList = inputEl.files;
-    for(var i = 0; i < files.length; i++){
-        this.formData.append('file', files[i], files[i].name);
+    if (inputEl && inputEl.files && (inputEl.files.length > 0)) {
+      let files :FileList = inputEl.files;
+      for(var i = 0; i < files.length; i++){
+          this.formData.append('file', files[i], files[i].name);
+      }
+    } else {
+       this.formData.append('file', null, null);
     }
-    
     try {
       this.error = '';
-      this.userService.saveEmployee(this.employee, this.formData)
-        .subscribe(result => {
-          if (result.id > 0) {
-            this.employee = result
-          }
-          else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-            this.displayDialog = true;
-          }
-        })
+      if (inputEl && inputEl.files && (inputEl.files.length > 0)) {
+        this.userService.saveUserWithPicture('Employee', this.employee, this.formData)
+          .subscribe(result => {
+            if (result.id > 0) {
+              this.employee = result;
+            }
+            else {
+              this.error = Constants.SAVE_UNSUCCESSFUL;
+              this.displayDialog = true;
+            }
+          })
+      }
+      else {
+        this.userService.saveUserWithoutPicture('Employee', this.employee)
+          .subscribe(result => {
+            if (result.id > 0) {
+              this.employee = result;
+            }
+            else {
+              this.error = Constants.SAVE_UNSUCCESSFUL;
+              this.displayDialog = true;
+            }
+          })
+      }
     }
     catch (e) {
       console.log(e);
     }
   }
+
 
  }

@@ -60,7 +60,6 @@ export class GenericService {
   public save = (entity: any, entityClass: string): Observable<any> => {
    
       let toAdd = JSON.stringify(entity);
-      alert(toAdd)
       let re = /\"/gi;
       let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
       

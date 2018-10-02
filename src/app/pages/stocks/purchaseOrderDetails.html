@@ -1,236 +1,223 @@
-<div role="main" class="main">
-	<section
-		class="parallax section section-text-light section-parallax section-center mt-0 mb-5"
-		data-plugin-parallax data-plugin-options="{'speed': 1.5}"
-		data-image-src="assets/images/slides/bg-top.jpg">
-	</section>
 
-		<div class="container" style="padding-left: 10px; max-width: 100%;">
+<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="purchaseOrder">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-3 ui-sm-12">
+						<label i18n="@@supplier" for="supplier">Supplier</label>
+					</div> 
+					<div class="ui-grid-col-8 ui-sm-12">
+						<p-autoComplete [(ngModel)]="purchaseOrder.supplier"
+							(onDropdownClick)="supplierDropdown.handleDropdownClick($event)"
+							[suggestions]="supplierDropdown.filteredSuppliers" [dropdown]="true"
+							(completeMethod)="supplierDropdown.filter($event)"
+							name="name" field="name" [size]="30" placeholder=""
+							[minLength]="1">
+						</p-autoComplete>
+					</div>
+					<div class="ui-grid-col-1 ui-sm-12">
+					</div>
+				</div>
+			</div>
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-3 ui-sm-12">
+						<label i18n="@@purchaseOrderDate" for="purchaseOrderDate">Order Date<font color="red">*</font></label> 
+					</div>
+					<div class="ui-grid-col-8 ui-sm-12">
+						<p-calendar [(ngModel)]="purchaseOrder.purchaseOrderDate"></p-calendar>
+					</div>
+					<div class="ui-grid-col-1 ui-sm-12">
+					</div>
+				</div>
+			</div>
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-3 ui-sm-12">
+						<label i18n="@@purchaseOrderId" for="purchaseOrderId">Purchase Order ID</label> 
+					</div>
+					<div class="ui-grid-col-8 ui-sm-12">
+						{{purchaseOrder.id}}
+					</div>
+					<div class="ui-grid-col-1 ui-sm-12">
+					</div>
+				</div>
+			</div>
+		</div>
+		<br/>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-3 ui-sm-12">
+						<label i18n="@@requestor" for="requestor">Requestor</label>
+					</div> 
+					<div class="ui-grid-col-8 ui-sm-12">
+						<p-autoComplete [(ngModel)]="purchaseOrder.requestor"
+							(onDropdownClick)="employeeDropdown.handleDropdownClick($event)"
+							[suggestions]="employeeDropdown.filteredEmployees" [dropdown]="true"
+							(completeMethod)="employeeDropdown.filter($event)"
+							name="name" field="name" [size]="30" placeholder=""
+							[minLength]="1">
+						</p-autoComplete>
+					</div>
+					<div class="ui-grid-col-1 ui-sm-12">
+					</div>
+				</div>
+			</div>
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-3 ui-sm-12">
+						<label i18n="@@shipTo" for="shipTo">Receiver<font color="red">*</font></label> 
+					</div>
+					<div class="ui-grid-col-8 ui-sm-12">
+						<p-autoComplete [(ngModel)]="purchaseOrder.shipTo"
+							(onDropdownClick)="employeeDropdown.handleDropdownClick($event)"
+							[suggestions]="employeeDropdown.filteredEmployees" [dropdown]="true"
+							(completeMethod)="employeeDropdown.filter($event)"
+							name="name" field="name" [size]="30" placeholder=""
+							[minLength]="1">
+						</p-autoComplete>
+					</div>
+					<div class="ui-grid-col-1 ui-sm-12">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+	<br/>
 	
 	<div class="ui-grid-row">
-		<div class="ui-g-2 ui-sm-4">
-			<app-admin-menu></app-admin-menu>
+		<div class="ui-grid-col-7 ui-sm-12">					
+			<p-table [columns]="orderProductCols" [value]="purchaseOrder.purchaseOrderProducts" (change)="calculateTotal()">
+				<ng-template pTemplate="caption">
+			        List of Products
+			    </ng-template>
+			    <ng-template pTemplate="header" let-orderProductCols>
+			        <tr>
+			            <th *ngFor="let col of orderProductCols" [pSortableColumn]="col.field">
+			                {{col.header}}
+			                <p-sortIcon [field]="col.field"></p-sortIcon>
+			            </th>
+			            <th>Action</th>
+			        </tr>
+			    </ng-template>
+			    <ng-template pTemplate="body" let-rowData let-columns="columns">
+			        <tr>			           
+			            <td *ngFor="let col of columns" [pEditableColumn]="rowData" [pEditableColumnField]="rowData[col.field]">
+			                <p-cellEditor *ngIf="col.type == 'amount'">
+			                    <ng-template pTemplate="input">
+			                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled">
+			                    </ng-template>
+			                    <ng-template pTemplate="output">
+			                        {{rowData[col.field]}}
+			                    </ng-template>
+			                </p-cellEditor>
+			                <p-cellEditor *ngIf="col.field == 'productDescription'">
+			                    <ng-template pTemplate="input">
+			                        <div *ngIf="rowData.product">{{rowData.product.description}}</div>
+			                    </ng-template>
+			                    <ng-template pTemplate="output">
+			                        <div *ngIf="rowData.product">{{rowData.product.description}}</div>
+			                    </ng-template>
+			                </p-cellEditor>
+			                <p-cellEditor *ngIf="col.field == 'product'">
+			                    <ng-template pTemplate="input">
+			                        <p-autoComplete [(ngModel)]="rowData[col.field]"
+										(onDropdownClick)="pdtDropdown.handleDropdownClick($event)"
+										[suggestions]="pdtDropdown.filteredProducts" [dropdown]="true"
+										(completeMethod)="pdtDropdown.filter($event)"
+										(ngModelChange)="populateDefaultProductValues(rowData)"
+										name="name" field="name" [size]="30" placeholder=""
+										[minLength]="1">
+									</p-autoComplete>
+			                    </ng-template>
+			                    <ng-template pTemplate="output">
+			                    	<div *ngIf="rowData[col.field]">{{rowData[col.field].name}}</div>
+			                    </ng-template>
+			                </p-cellEditor>
+			            </td>
+			            <td>
+			            	<button type="button" pButton icon="fa fa-plus" (click)="addRow()"></button>
+			            	&nbsp;&nbsp;
+							<button type="button" pButton icon="fa fa-eraser"></button>
+			            </td>
+			        </tr>
+			    </ng-template>
+			</p-table>
 		</div>
-		<div class="ui-g-10 ui-sm-8" style="padding: 15px;">
-			<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="purchaseOrder">
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@supplier" for="supplier">Supplier</label>
-							</div> 
-							<div class="ui-grid-col-8 ui-sm-12">
-								<p-autoComplete [(ngModel)]="purchaseOrder.supplier"
-									(onDropdownClick)="supplierDropdown.handleDropdownClick($event)"
-									[suggestions]="supplierDropdown.filteredSuppliers" [dropdown]="true"
-									(completeMethod)="supplierDropdown.filter($event)"
-									name="name" field="name" [size]="30" placeholder=""
-									[minLength]="1">
-								</p-autoComplete>
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@purchaseOrderDate" for="purchaseOrderDate">Order Date<font color="red">*</font></label> 
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								<p-calendar [(ngModel)]="purchaseOrder.purchaseOrderDate"></p-calendar>
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@purchaseOrderId" for="purchaseOrderId">Purchase Order ID</label> 
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								{{purchaseOrder.id}}
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
-				</div>
-				<br/>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@requestor" for="requestor">Requestor</label>
-							</div> 
-							<div class="ui-grid-col-8 ui-sm-12">
-								<p-autoComplete [(ngModel)]="purchaseOrder.requestor"
-									(onDropdownClick)="employeeDropdown.handleDropdownClick($event)"
-									[suggestions]="employeeDropdown.filteredEmployees" [dropdown]="true"
-									(completeMethod)="employeeDropdown.filter($event)"
-									name="name" field="name" [size]="30" placeholder=""
-									[minLength]="1">
-								</p-autoComplete>
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@shipTo" for="shipTo">Receiver<font color="red">*</font></label> 
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								<p-autoComplete [(ngModel)]="purchaseOrder.shipTo"
-									(onDropdownClick)="employeeDropdown.handleDropdownClick($event)"
-									[suggestions]="employeeDropdown.filteredEmployees" [dropdown]="true"
-									(completeMethod)="employeeDropdown.filter($event)"
-									name="name" field="name" [size]="30" placeholder=""
-									[minLength]="1">
-								</p-autoComplete>
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
-				</div>
-				
-			</div>
-			
-			<br/>
-			
+		<div class="ui-grid-col-1 ui-sm-12">
+			<div class="form-group"></div>
+		</div>
+		<div class="ui-grid-col-4 ui-sm-12">
 			<div class="ui-grid-row">
-				<div class="ui-grid-col-7 ui-sm-12">					
-					<p-table [columns]="orderProductCols" [value]="purchaseOrder.purchaseOrderProducts" (change)="calculateTotal()">
-						<ng-template pTemplate="caption">
-					        List of Products
-					    </ng-template>
-					    <ng-template pTemplate="header" let-orderProductCols>
-					        <tr>
-					            <th *ngFor="let col of orderProductCols" [pSortableColumn]="col.field">
-					                {{col.header}}
-					                <p-sortIcon [field]="col.field"></p-sortIcon>
-					            </th>
-					            <th>Action</th>
-					        </tr>
-					    </ng-template>
-					    <ng-template pTemplate="body" let-rowData let-columns="columns">
-					        <tr>			           
-					            <td *ngFor="let col of columns" [pEditableColumn]="rowData" [pEditableColumnField]="rowData[col.field]">
-					                <p-cellEditor *ngIf="col.type == 'amount'">
-					                    <ng-template pTemplate="input">
-					                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled">
-					                    </ng-template>
-					                    <ng-template pTemplate="output">
-					                        {{rowData[col.field]}}
-					                    </ng-template>
-					                </p-cellEditor>
-					                <p-cellEditor *ngIf="col.field == 'productDescription'">
-					                    <ng-template pTemplate="input">
-					                        <div *ngIf="rowData.product">{{rowData.product.description}}</div>
-					                    </ng-template>
-					                    <ng-template pTemplate="output">
-					                        <div *ngIf="rowData.product">{{rowData.product.description}}</div>
-					                    </ng-template>
-					                </p-cellEditor>
-					                <p-cellEditor *ngIf="col.field == 'product'">
-					                    <ng-template pTemplate="input">
-					                        <p-autoComplete [(ngModel)]="rowData[col.field]"
-												(onDropdownClick)="pdtDropdown.handleDropdownClick($event)"
-												[suggestions]="pdtDropdown.filteredProducts" [dropdown]="true"
-												(completeMethod)="pdtDropdown.filter($event)"
-												(ngModelChange)="populateDefaultProductValues(rowData)"
-												name="name" field="name" [size]="30" placeholder=""
-												[minLength]="1">
-											</p-autoComplete>
-					                    </ng-template>
-					                    <ng-template pTemplate="output">
-					                    	<div *ngIf="rowData[col.field]">{{rowData[col.field].name}}</div>
-					                    </ng-template>
-					                </p-cellEditor>
-					            </td>
-					            <td>
-					            	<button type="button" pButton icon="fa-plus" style="float:left" (click)="addRow()"></button>
-									<button type="button" pButton icon="fa-eraser" style="float:left"></button>
-					            </td>
-					        </tr>
-					    </ng-template>
-					</p-table>
-				</div>
-				<div class="ui-grid-col-1 ui-sm-12">
-					<div class="form-group"></div>
-				</div>
 				<div class="ui-grid-col-4 ui-sm-12">
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-4 ui-sm-12">
-							<label i18n="@@subTotal" for="subTotal">Sub Total </label> 
-						</div>
-						<div class="ui-grid-col-6 ui-sm-12">
-							<input type="text" pInputText id="subTotal" [disabled]="true"
-							[(ngModel)]="purchaseOrder.subTotal" name="subTotal" #subTotal="ngModel">
-						</div>
-					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-4 ui-sm-12">
-							<label i18n="@@taxes" for="taxes">Taxes </label> 
-						</div>
-						<div class="ui-grid-col-6 ui-sm-12">
-							<input type="text" pInputText id="taxes" (change)="calculateGrandTotal()"
-								[(ngModel)]="purchaseOrder.taxes" name="taxes" #taxes="ngModel">
-						</div>
-					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-4 ui-sm-12">
-							<label i18n="@@discount" for="discount">Discount </label> 
-						</div>
-						<div class="ui-grid-col-6 ui-sm-12">
-							<input type="text" pInputText id="discount" (change)="calculateGrandTotal(); calculateDue()"
-								[(ngModel)]="purchaseOrder.discount" name="discount" #discount="ngModel">
-						</div>
-					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-4 ui-sm-12">
-							<label i18n="@@grandTotal" for="grandTotal">Grand Total </label> 
-						</div>
-						<div class="ui-grid-col-6 ui-sm-12">
-							<input type="text" pInputText id="grandTotal" [disabled]="true"
-								[(ngModel)]="purchaseOrder.grandTotal" name="grandTotal" #grandTotal="ngModel">
-						</div>
-					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-4 ui-sm-12">
-							<label i18n="@@paid" for="paid">Paid </label> 
-						</div>
-						<div class="ui-grid-col-6 ui-sm-12">
-							<input type="text" pInputText id="paid" (change)="calculateDue()"
-								[(ngModel)]="purchaseOrder.paid" name="paid" #paid="ngModel">
-						</div>
-					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-4 ui-sm-12">
-							<label i18n="@@due" for="due">Due </label> 
-						</div>
-						<div class="ui-grid-col-6 ui-sm-12">
-							<input type="text" pInputText id="due" [disabled]="true"
-								[(ngModel)]="purchaseOrder.due" name="due" #due="ngModel">
-						</div>
-					</div>
+					<label i18n="@@subTotal" for="subTotal">Sub Total </label> 
+				</div>
+				<div class="ui-grid-col-6 ui-sm-12">
+					<input type="text" pInputText id="subTotal" [disabled]="true"
+					[(ngModel)]="purchaseOrder.subTotal" name="subTotal" #subTotal="ngModel">
 				</div>
 			</div>
-				
-			<br/>
-			<br />
-			<div *ngIf="error" class="alert alert-danger">{{error}}</div>
-			<div>
-				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-					<button type="button" pButton icon="fa-close" (click)="delete()"
-						label="Supprimer"></button>
-					<button type="button" pButton icon="fa-check" (click)="save()"
-						label="Sauvegarder"></button>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4 ui-sm-12">
+					<label i18n="@@taxes" for="taxes">Taxes </label> 
+				</div>
+				<div class="ui-grid-col-6 ui-sm-12">
+					<input type="text" pInputText id="taxes" (change)="calculateGrandTotal()"
+						[(ngModel)]="purchaseOrder.taxes" name="taxes" #taxes="ngModel">
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4 ui-sm-12">
+					<label i18n="@@discount" for="discount">Discount </label> 
+				</div>
+				<div class="ui-grid-col-6 ui-sm-12">
+					<input type="text" pInputText id="discount" (change)="calculateGrandTotal(); calculateDue()"
+						[(ngModel)]="purchaseOrder.discount" name="discount" #discount="ngModel">
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4 ui-sm-12">
+					<label i18n="@@grandTotal" for="grandTotal">Grand Total </label> 
+				</div>
+				<div class="ui-grid-col-6 ui-sm-12">
+					<input type="text" pInputText id="grandTotal" [disabled]="true"
+						[(ngModel)]="purchaseOrder.grandTotal" name="grandTotal" #grandTotal="ngModel">
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4 ui-sm-12">
+					<label i18n="@@paid" for="paid">Paid </label> 
+				</div>
+				<div class="ui-grid-col-6 ui-sm-12">
+					<input type="text" pInputText id="paid" (change)="calculateDue()"
+						[(ngModel)]="purchaseOrder.paid" name="paid" #paid="ngModel">
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4 ui-sm-12">
+					<label i18n="@@due" for="due">Due </label> 
+				</div>
+				<div class="ui-grid-col-6 ui-sm-12">
+					<input type="text" pInputText id="due" [disabled]="true"
+						[(ngModel)]="purchaseOrder.due" name="due" #due="ngModel">
 				</div>
 			</div>
 		</div>
 	</div>
+		
+	<br/>
+	<br />
+	<div *ngIf="error" class="alert alert-danger">{{error}}</div>
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+		<button type="button" pButton icon="fa fa-close" (click)="delete()"
+			label="Supprimer"></button>
+			&nbsp;&nbsp;
+		<button type="button" pButton icon="fa fa-check" (click)="save()"
+			label="Sauvegarder"></button>
+	</div>
+
 </div>

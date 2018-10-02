@@ -78,7 +78,7 @@ export class AppMenuComponent implements OnInit {
         ]
       },
       {
-        label: 'Pharmacy', icon: 'fa fa-money',
+        label: 'Pharmacy', icon: 'fa fa-ambulance',
         items: [
           {label: 'Commander Medecine', icon: 'fa fa-plus', routerLink: ['/admin/purchaseOrderDetails']},
           {label: 'Liste des commandes', icon: 'fa fa-search', routerLink: ['/admin/purchaseOrderList']},
@@ -88,6 +88,15 @@ export class AppMenuComponent implements OnInit {
           {label: 'Liste des ventes', icon: 'fa fa-search', routerLink: ['/admin/patientSaleList']},
           {label: 'Ajouter un retour achat', icon: 'fa fa-plus', routerLink: ['/admin/saleReturnDetails']},
           {label: 'Liste des retours', icon: 'fa fa-search', routerLink: ['/admin/saleReturnList']}
+        ]
+      },
+      {
+        label: 'Hospital Ativities', icon: 'fa fa-hospital-o',
+        items: [
+          {label: 'Nouvelle naissance', icon: 'fa fa-plus', routerLink: ['/admin/birthReportDetails']},
+          {label: 'Ancienne naissances', icon: 'fa fa-search', routerLink: ['/admin/birthReportList']},
+          {label: 'Mouveau deces', icon: 'fa fa-plus', routerLink: ['/admin/deathReportDetails']},
+          {label: 'Ancien deces', icon: 'fa fa-search', routerLink: ['/admin/deathReportList']}
         ]
       },
       {

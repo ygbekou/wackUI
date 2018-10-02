@@ -1,11 +1,8 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Output, EventEmitter } from '@angular/core';
-import { Patient } from '../models/patient';
+import { Patient, SearchCriteria, User } from '../models';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../app.constants';
-import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User } from '../models/user';  
 import { GenericService, GlobalEventsManager } from '../services';
 
 @Component({
@@ -15,14 +12,9 @@ import { GenericService, GlobalEventsManager } from '../services';
 })
 export class PatientList implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   patients: Patient[] = [];
   cols: any[];
-  
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
+  searchCriteria: SearchCriteria = new SearchCriteria();
   
   constructor
     (
@@ -40,35 +32,13 @@ export class PatientList implements OnInit, OnDestroy {
     this.cols = [
             { field: 'lastName', header: 'Last Name', type:'user' },
             { field: 'firstName', header: 'First Name', type:'user' },
+            { field: 'birthDate', header: 'Birth Date', type:'date' },
             { field: 'email', header: 'Email Address', type:'user' },
             { field: 'phone', header: 'Phone', type:'user' },
             { field: 'address', header: 'Address', type:'user' },
-            { field: 'sex', header: 'Sex', type:'user' },
-            { field: 'status', header: 'Status', type:'string' }
+            { field: 'sex', header: 'Sex', type:'user' }
         ];
     
-      let userGroupId = null;
-      this.route
-        .queryParams
-        .subscribe(params => {          
-          
-            userGroupId = params['groupId'];
-          
-            let parameters: string [] = []; 
-            
-            if (userGroupId != null) {
-              parameters.push('e.user.userGroup.id = |userGroupId|' + userGroupId + '|Long')
-            } else {
-              parameters.push('e.user.userGroup.id != |userGroupId|1|Long')
-            }
-            this.genericService.getAllByCriteria('Patient', parameters)
-              .subscribe((data: Patient[]) => 
-              { 
-                this.patients = data 
-              },
-              error => console.log(error),
-              () => console.log('Get all Patients complete'));
-          });
   }
  
   
@@ -105,5 +75,30 @@ export class PatientList implements OnInit, OnDestroy {
       console.log(e);
     }
   }
+  
+  search() {
+   
+        let parameters: string [] = []; 
+            
+        parameters.push('e.status = |status|0|Integer')
+        if (this.searchCriteria.lastName != null && this.searchCriteria.lastName.length > 0)  {
+          parameters.push('e.user.lastName like |lastName|' + '%' + this.searchCriteria.lastName + '%' + '|String')
+        }
+        if (this.searchCriteria.firstName != null && this.searchCriteria.firstName.length > 0)  {
+          parameters.push('e.user.firstName like |firstName|' + '%' + this.searchCriteria.firstName + '%' + '|String')
+        } 
+        if (this.searchCriteria.birthDate != null)  {
+          parameters.push('e.user.birthDate = |birthDate|' + this.searchCriteria.birthDate.toLocaleDateString() + '|Date')
+        }  
+        
+        
+        this.genericService.getAllByCriteria('Patient', parameters)
+          .subscribe((data: Patient[]) => 
+          { 
+            this.patients = data 
+          },
+          error => console.log(error),
+          () => console.log('Get all Patients complete'));
+      }
 
  }

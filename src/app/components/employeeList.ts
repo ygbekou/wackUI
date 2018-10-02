@@ -1,33 +1,28 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { Employee } from '../models/employee';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../app.constants';
-import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User } from '../models/user';  
+import {  } from 'primeng/primeng';
 import { GenericService } from '../services';
+import { Employee, User, SearchCriteria } from '../models';
+import { DepartmentDropdown } from './dropdowns';
 
 @Component({
   selector: 'app-employee-list',
   templateUrl: '../pages/employeeList.html',
-  providers: [GenericService]
+  providers: [GenericService, DepartmentDropdown]
 })
 export class EmployeeList implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   employees: Employee[] = [];
   cols: any[];
-  
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
+  searchCriteria: SearchCriteria = new SearchCriteria();
   
   constructor
     (
     private genericService: GenericService,
     private changeDetectorRef: ChangeDetectorRef,
+    private departmentDropdown: DepartmentDropdown,
     private route: ActivatedRoute,
     private router: Router,
     ) {
@@ -42,34 +37,9 @@ export class EmployeeList implements OnInit, OnDestroy {
             { field: 'departmentName', header: 'Department', type:'department' },
             { field: 'email', header: 'Email Address', type:'user' },
             { field: 'phone', header: 'Phone', type:'user' },
-            { field: 'address', header: 'Address', type:'user' },
             { field: 'sex', header: 'Sex', type:'user' },
             { field: 'status', header: 'Status', type:'string' }
         ];
-    
-    let userGroupId = null;
-    this.route
-        .queryParams
-        .subscribe(params => {          
-          
-            userGroupId = params['groupId'];
-          
-            let parameters: string [] = []; 
-            
-            if (userGroupId != null) {
-              parameters.push('e.user.userGroup.id = |userGroupId|' + userGroupId + '|Long')
-            } else {
-              parameters.push('e.user.userGroup.id != |userGroupId|1|Long')
-            }
-            this.genericService.getAllByCriteria('Employee', parameters)
-              .subscribe((data: Employee[]) => 
-              { 
-                this.employees = data 
-                console.info(this.employees)
-              },
-              error => console.log(error),
-              () => console.log('Get all Authors complete'));
-          });
   }
  
   
@@ -105,4 +75,38 @@ export class EmployeeList implements OnInit, OnDestroy {
     }
   }
 
+  search() {
+   
+        let parameters: string [] = []; 
+            
+        parameters.push('e.status = |status|0|Integer')
+        if (this.searchCriteria.lastName != null && this.searchCriteria.lastName.length > 0)  {
+          parameters.push('e.user.lastName like |lastName|' + '%' + this.searchCriteria.lastName + '%' + '|String')
+        }
+        if (this.searchCriteria.firstName != null && this.searchCriteria.firstName.length > 0)  {
+          parameters.push('e.user.firstName like |firstName|' + '%' + this.searchCriteria.firstName + '%' + '|String')
+        } 
+        if (this.searchCriteria.department != null && this.searchCriteria.department.id > 0)  {
+          parameters.push('e.department.id = |departmentId|' + this.searchCriteria.department.id + '|Long')
+        }  
+        
+        
+        this.genericService.getAllByCriteria('Employee', parameters)
+          .subscribe((data: Employee[]) => 
+          { 
+            this.employees = data 
+          },
+          error => console.log(error),
+          () => console.log('Get all Employees complete'));
+  }
+
+  getStatusDesc(employee: Employee): string {
+    let statusDesc = '';
+    if (employee.status === 0) {
+      statusDesc = 'Actif';
+    } else if (employee.status === 1) {
+      statusDesc = 'Inactif';
+    } 
+    return statusDesc; 
+  }
  }

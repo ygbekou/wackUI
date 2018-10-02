@@ -1,285 +1,312 @@
 
-<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="patient">
-	<p-accordion> <p-accordionTab header="Demographic Info"
-		selected="true">
-
-	<div class="ui-grid-row">
-		<div class="ui-grid-col-4 ui-sm-12">
-			<div class="form-group">
-				<label i18n="@@userName" for="userName">User Name<font
-					color="red">*</font>
-				</label> <input type="text" pInputText class="form-control" id="userName"
-					[(ngModel)]="patient.user.userName" name="userName"
-					#userName="ngModel">
-			</div>
-			<div class="form-group">
-				<label i18n="@@lastName" for="lastName">Last Name<font
-					color="red">*</font>:
-				</label> <input type="text" pInputText class="form-control" id="lastName"
-					required [(ngModel)]="patient.user.lastName" name="lastName"
-					#lastName="ngModel">
-				<div [hidden]="lastName.valid || lastName.pristine"
-					class="alert alert-danger" i18n="@@lastNameRequired">Nom
-					Requis</div>
-			</div>
-			<div class="form-group">
-				<label i18n="@@middleName" for="middleName">Middle Name</label> <input
-					type="text" pInputText class="form-control" id="middleName"
-					[(ngModel)]="patient.user.middleName" name="middleName"
-					#middleName="ngModel">
-			</div>
-			<div class="form-group">
-				<label i18n="@@occupation" for="occupation">Occupation</label>
-				<p-autoComplete [(ngModel)]="patient.occupation"
-					(onDropdownClick)="occupationDropdown.handleDropdownClick($event)"
-					[suggestions]="occupationDropdown.filteredOccupations"
-					[dropdown]="true" id="occupation"
-					(completeMethod)="occupationDropdown.filter($event)"
-					name="occupation" field="name" [size]="30"
-					placeholder="{{SELECT_OPTION}}" [minLength]="1"></p-autoComplete>
-			</div>
-			<div class="form-group">
-				<label i18n="@@birthDate" for="birthDate">Birth Date:</label>
-				<p-calendar [(ngModel)]="patient.user.birthDate"></p-calendar>
-			</div>
-			<div class="form-group">
-				<label i18n="@@bloodGroup" for="bloodGroup">Blood Group:</label>
-				<p-dropdown [options]="genericService.bloodGroups"
-					[(ngModel)]="patient.bloodGroup" [style]="{'width':'190px'}"></p-dropdown>
-			</div>
-		</div>
-		<div class="ui-grid-col-4 ui-sm-12">
-			<div class="form-group">
-				<label i18n="@@password" for="password1">Mot de Passe<font
-					color="red">*</font></label> <input type="password" pPassword
-					class="form-control" id="password1"
-					[(ngModel)]="patient.user.password" name="password1"
-					#password1="ngModel">
-			</div>
-			<div class="form-group">
-				<label i18n="@@firstName" for="firstName">First Name<font
-					color="red">*</font>:
-				</label> <input type="text" pInputText class="form-control" id="firstName"
-					required [(ngModel)]="patient.user.firstName" name="firstName"
-					#firstName="ngModel">
-				<div [hidden]="firstName.valid || firstName.pristine"
-					class="alert alert-danger" i18n="@@firstNameRequired">Prenom
-					Requis</div>
-			</div>
-			<div class="form-group">
-				<div class="ui-grid-row">
-					<label i18n="@@sex" for="sex">Gender</label>
+	<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+		<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="patient">
+			<p-accordion> <p-accordionTab header="Demographic Info"
+				selected="true">
+		
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-8 ui-sm-12">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-6 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@lastName" for="lastName">Last Name<font
+									color="red">*</font>:
+								</label> <input type="text" pInputText class="form-control" id="lastName"
+									required [(ngModel)]="patient.user.lastName" name="lastName" #lastName="ngModel" >
+								<p-message *ngIf="f.submitted && lastName.invalid" severity="error" text="Field is required"></p-message>
+							</div>
+						</div>
+						<div class="ui-grid-col-6 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@firstName" for="firstName">First Name<font
+									color="red">*</font>:
+								</label> <input type="text" pInputText class="form-control" id="firstName"
+									required [(ngModel)]="patient.user.firstName" name="firstName"
+									#firstName="ngModel">
+								<p-message *ngIf="f.submitted && firstName.invalid" severity="error" 
+									text="Field is required"></p-message>
+							</div>
+						</div>
+					</div>
+					
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-6 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@middleName" for="middleName">Middle Name</label> <input
+									type="text" pInputText class="form-control" id="middleName"
+									[(ngModel)]="patient.user.middleName" name="middleName" #middleName="ngModel">
+							</div>
+						</div>
+						<div class="ui-grid-col-6 ui-sm-12">
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-6 ui-sm-12">
+									<div class="form-group">
+										<div class="ui-grid-row">
+											<label i18n="@@sex" for="sex">Gender</label>
+										</div>
+										<div class="ui-grid-row">
+											<p-radioButton name="sex" value="M" label="Male"
+												[(ngModel)]="patient.user.sex"></p-radioButton>
+											<p-radioButton name="sex" value="F" label="Female"
+												[(ngModel)]="patient.user.sex"></p-radioButton>
+										</div>
+									</div>
+								</div>
+								<div class="ui-grid-col-4 ui-sm-12">
+									<div class="form-group">
+										<label i18n="@@bloodGroup" for="bloodGroup">Blood Group:</label>
+										<p-dropdown [options]="genericService.bloodGroups"
+											[(ngModel)]="patient.bloodGroup" [style]="{'width':'190px'}"></p-dropdown>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-4 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@email" for="email">E-mail<font color="red">*</font>
+								</label> <input type="text" pInputText class="form-control" id="email"
+									[(ngModel)]="patient.user.email" name="email" #email="ngModel" email>
+								<p-message *ngIf="f.submitted && email.errors && email.errors.email" severity="error" 
+									text="Invalid email"></p-message>
+							</div>
+						</div>
+						<div class="ui-grid-col-4 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@birthDate" for="birthDate">Birth Date<font color="red">*</font>:</label>
+								<p-calendar [(ngModel)]="patient.user.birthDate" id="birthDate"
+								name="birthDate" #birthDate="ngModel" required date></p-calendar>
+								<p-message *ngIf="f.submitted && birthDate.errors && birthDate.errors.required" severity="error" 
+									text="Birth Date is required"></p-message>
+							</div>
+						</div>
+						<div class="ui-grid-col-4 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@nationality" for="nationality">Nationality</label>
+								<p-autoComplete [(ngModel)]="patient.nationality"
+									(onDropdownClick)="countryDropdown.handleDropdownClick($event)"
+									[suggestions]="countryDropdown.filteredCountries" [dropdown]="true"
+									id="nationality" (completeMethod)="countryDropdown.filter($event)"
+									name="nationality" field="name" [size]="30"
+									placeholder="{{SELECT_OPTION}}" [minLength]="1"></p-autoComplete>
+							</div>
+						</div>
+					</div>
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-6 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@occupation" for="occupation">Occupation</label>
+								<p-autoComplete [(ngModel)]="patient.occupation"
+									(onDropdownClick)="occupationDropdown.handleDropdownClick($event)"
+									[suggestions]="occupationDropdown.filteredOccupations"
+									[dropdown]="true" id="occupation"
+									(completeMethod)="occupationDropdown.filter($event)"
+									name="occupation" field="name" [size]="30"
+									placeholder="{{SELECT_OPTION}}" [minLength]="1"></p-autoComplete>
+							</div>
+						</div>
+						<div class="ui-grid-col-6 ui-sm-12">
+							<div class="form-group">
+								<label i18n="@@religion" for="religion">Religion</label>
+								<p-autoComplete [(ngModel)]="patient.religion"
+									(onDropdownClick)="religionDropdown.handleDropdownClick($event)"
+									[suggestions]="religionDropdown.filteredReligions"
+									[dropdown]="true" id="religion"
+									(completeMethod)="religionDropdown.filter($event)" name="religion"
+									field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
+									[minLength]="1"></p-autoComplete>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="ui-grid-row">
-					<p-radioButton name="sex" value="M" label="Male"
-						[(ngModel)]="patient.user.sex"></p-radioButton>
-					<p-radioButton name="sex" value="F" label="Female"
-						[(ngModel)]="patient.user.sex"></p-radioButton>
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="ui-grid-col-2">
+						<img class="thumb" src="assets/images/User/{{patient.user.picture}}"
+							alt="" />
+					</div>
+					<div class="ui-grid-col-12 ui-sm-12">
+						<div class="form-group">
+							<input type="file" #uploadFile
+								[attr.multiple]="multiple ? true : null">
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="form-group">
-				<label i18n="@@religion" for="religion">Religion</label>
-				<p-autoComplete [(ngModel)]="patient.religion"
-					(onDropdownClick)="religionDropdown.handleDropdownClick($event)"
-					[suggestions]="religionDropdown.filteredReligions"
-					[dropdown]="true" id="religion"
-					(completeMethod)="religionDropdown.filter($event)" name="religion"
-					field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
-					[minLength]="1"></p-autoComplete>
+		
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-12 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@medicalHistory" for="medicalHistory">Medical
+							History</label>
+						<p-editor [(ngModel)]="patient.medicalHistory"
+							[style]="{'height':'100px'}"></p-editor>
+					</div>
+				</div>
 			</div>
-			<div class="form-group">
-				<label i18n="@@nationality" for="nationality">Nationality</label>
-				<p-autoComplete [(ngModel)]="patient.nationality"
-					(onDropdownClick)="countryDropdown.handleDropdownClick($event)"
-					[suggestions]="countryDropdown.filteredCountries" [dropdown]="true"
-					id="nationality" (completeMethod)="countryDropdown.filter($event)"
-					name="nationality" field="name" [size]="30"
-					placeholder="{{SELECT_OPTION}}" [minLength]="1"></p-autoComplete>
+			</p-accordionTab> <p-accordionTab header="Contact Info">
+			<div class="ui-grid-row">
+				
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@homePhone" for="homePhone">Phone 1<font color="red">*</font>
+						</label> <input type="text" pInputText class="form-control" id="homePhone"
+							[(ngModel)]="patient.user.homePhone" name="homePhone" #homePhone="ngModel" required>
+						<p-message *ngIf="f.submitted && homePhone.errors && homePhone.errors.required" severity="error" 
+								text="Phone 1 is required"></p-message>
+					</div>
+				</div>
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@mobilePhone" for="mobilePhone">Phone 2</label> 
+						<input type="text" pInputText class="form-control" id="mobilePhone"
+							[(ngModel)]="patient.user.mobilePhone" name="mobilePhone" #mobilePhone="ngModel">
+					</div>
+				</div>
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@address" for="address">Address</label> <input
+							type="text" pInputText class="form-control" id="address"
+							[(ngModel)]="patient.user.address" name="address"
+							#address="ngModel">
+					</div>
+				</div>
 			</div>
-		</div>
-		<div class="ui-grid-col-4 ui-sm-12">
-			<div class="ui-grid-col-2">
-				<img class="thumb" src="assets/images/User/{{patient.user.picture}}"
-					alt="" />
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@city" for="city">City</label> <input type="text"
+							pInputText class="form-control" id="city"
+							[(ngModel)]="patient.user.city" name="city" #city="ngModel">
+					</div>
+				</div>
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@country" for="country">Country</label>
+						<p-autoComplete [(ngModel)]="patient.user.country"
+							(onDropdownClick)="countryDropdown.handleDropdownClick($event)"
+							[suggestions]="countryDropdown.filteredCountries" [dropdown]="true"
+							id="country" (completeMethod)="countryDropdown.filter($event)"
+							name="country" field="name" [size]="30" placeholder="{{COUNTRY}}"
+							[minLength]="1"></p-autoComplete>
+					</div>
+				</div>
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@zipCode" for="zipCode">Zip Code</label> <input
+							type="text" pInputText class="form-control" id="zipCode"
+							[(ngModel)]="patient.user.zipCode" name="zipCode"
+							#zipCode="ngModel">
+					</div>
+				</div>
 			</div>
-			<div class="ui-grid-col-12 ui-sm-12">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-6 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@contact" for="contact">Contact</label> <input
+							type="text" pInputText class="form-control" id="contact"
+							[(ngModel)]="patient.contact" name="contact" #contact="ngModel">
+					</div>
+				</div>
+				<div class="ui-grid-col-6 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@contactPhone" for="contactPhone">Contact
+							Phone</label> <input type="text" pInputText class="form-control"
+							id="contactPhone" [(ngModel)]="patient.contactPhone"
+							name="contactPhone" #contactPhone="ngModel">
+					</div>
+				</div>
+		
+			</div>
+			</p-accordionTab> <p-accordionTab header="Payer Info">
+			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="form-group">
-					<input type="file" #uploadFile
-						[attr.multiple]="multiple ? true : null">
+					<label i18n="@@payerType" for="payerType">Payer Type</label>
+					<p-autoComplete [(ngModel)]="patient.payerType"
+						(onDropdownClick)="payerTypeDropdown.handleDropdownClick($event)"
+						[suggestions]="payerTypeDropdown.filteredPayerTypes"
+						[dropdown]="true" id="payerType"
+						(completeMethod)="payerTypeDropdown.filter($event)" name="payerType"
+						field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
+						[minLength]="1"></p-autoComplete>
 				</div>
 			</div>
-		</div>
-	</div>
-
-	<div class="ui-grid-row">
-		<div class="ui-grid-col-12 ui-sm-12">
-			<div class="form-group">
-				<label i18n="@@medicalHistory" for="medicalHistory">Medical
-					History</label>
-				<p-editor [(ngModel)]="patient.medicalHistory"
-					[style]="{'height':'100px'}"></p-editor>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@employer" for="employer">Employer</label> <input
+							type="text" pInputText class="form-control" id="employer"
+							[(ngModel)]="patient.employer" name="employer" #employer="ngModel">
+					</div>
+				</div>
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@authorizationLetterNumber"
+							for="authorizationLetterNumber">Authorization Letter Number</label>
+						<input type="text" pInputText class="form-control"
+							id="authorizationLetterNumber"
+							[(ngModel)]="patient.authorizationLetterNumber"
+							name="authorizationLetterNumber"
+							#authorizationLetterNumber="ngModel">
+					</div>
+				</div>
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@expiryDate" for="expiryDate">Expiry Date:</label>
+						<p-calendar [(ngModel)]="patient.expiryDate"></p-calendar>
+					</div>
+				</div>
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@employeeId" for="employeeId">Employee Id</label> <input
+							type="text" pInputText class="form-control" id="employeeId"
+							[(ngModel)]="patient.employeeId" name="employeeId"
+							#employeeId="ngModel">
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
-	</p-accordionTab> <p-accordionTab header="Contact Info">
-	<div class="ui-grid-row">
-		<div class="ui-grid-col-4 ui-sm-12">
-			<div class="form-group">
-				<label i18n="@@email" for="email">E-mail<font color="red">*</font>
-				</label> <input type="text" pInputText class="form-control" id="email"
-					[(ngModel)]="patient.user.email" name="email" #email="ngModel">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@insurance" for="insurance">Insurance</label>
+						<p-autoComplete [(ngModel)]="patient.insurance"
+							(onDropdownClick)="insuranceDropdown.handleDropdownClick($event)"
+							[suggestions]="insuranceDropdown.filteredInsurances"
+							[dropdown]="true" id="insurance"
+							(completeMethod)="insuranceDropdown.filter($event)"
+							name="insurance" field="name" [size]="30"
+							placeholder="{{SELECT_OPTION}}" [minLength]="1"></p-autoComplete>
+					</div>
+				</div>
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@policyNumber" for="policyNumber">Policy
+							Number</label> <input type="text" pInputText class="form-control"
+							id="policyNumber" [(ngModel)]="patient.policyNumber"
+							name="policyNumber" #policyNumber="ngModel">
+					</div>
+				</div>
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@insuranceExpiryDate" for="insuranceExpiryDate">Insurance
+							Expiry Date:</label>
+						<p-calendar [(ngModel)]="patient.insuranceExpiryDate" name="insuranceExpiryDate"></p-calendar>
+					</div>
+				</div>
 			</div>
+			</p-accordionTab> </p-accordion>
+			<br />
+		
 		</div>
-		<div class="ui-grid-col-4 ui-sm-12">
-			<div class="form-group">
-				<label i18n="@@phone" for="phone">Phone<font color="red">*</font>
-				</label> <input type="text" pInputText class="form-control" id="phone"
-					[(ngModel)]="patient.user.phone" name="phone" #phone="ngModel">
-			</div>
-		</div>
-		<div class="ui-grid-col-4 ui-sm-12">
-			<div class="form-group">
-				<label i18n="@@address" for="address">Address</label> <input
-					type="text" pInputText class="form-control" id="address"
-					[(ngModel)]="patient.user.address" name="address"
-					#address="ngModel">
-			</div>
-		</div>
-	</div>
-	<div class="ui-grid-row">
-		<div class="ui-grid-col-4 ui-sm-12">
-			<div class="form-group">
-				<label i18n="@@city" for="city">City</label> <input type="text"
-					pInputText class="form-control" id="city"
-					[(ngModel)]="patient.user.city" name="city" #city="ngModel">
-			</div>
-		</div>
-		<div class="ui-grid-col-4 ui-sm-12">
-			<div class="form-group">
-				<label i18n="@@country" for="country">Country</label>
-				<p-autoComplete [(ngModel)]="patient.user.country"
-					(onDropdownClick)="countryDropdown.handleDropdownClick($event)"
-					[suggestions]="countryDropdown.filteredCountries" [dropdown]="true"
-					id="country" (completeMethod)="countryDropdown.filter($event)"
-					name="country" field="name" [size]="30" placeholder="{{COUNTRY}}"
-					[minLength]="1"></p-autoComplete>
-			</div>
-		</div>
-		<div class="ui-grid-col-4 ui-sm-12">
-			<div class="form-group">
-				<label i18n="@@zipCode" for="zipCode">Zip Code</label> <input
-					type="text" pInputText class="form-control" id="zipCode"
-					[(ngModel)]="patient.user.zipCode" name="zipCode"
-					#zipCode="ngModel">
-			</div>
-		</div>
-	</div>
-	<div class="ui-grid-row">
-		<div class="ui-grid-col-6 ui-sm-12">
-			<div class="form-group">
-				<label i18n="@@contact" for="contact">Contact</label> <input
-					type="text" pInputText class="form-control" id="contact"
-					[(ngModel)]="patient.contact" name="contact" #contact="ngModel">
-			</div>
-		</div>
-		<div class="ui-grid-col-6 ui-sm-12">
-			<div class="form-group">
-				<label i18n="@@contactPhone" for="contactPhone">Contact
-					Phone</label> <input type="text" pInputText class="form-control"
-					id="contactPhone" [(ngModel)]="patient.contactPhone"
-					name="contactPhone" #contactPhone="ngModel">
-			</div>
-		</div>
-
-	</div>
-	</p-accordionTab> <p-accordionTab header="Payer Info">
-	<div class="ui-grid-col-4 ui-sm-12">
+		<br />
+		<div *ngIf="error" class="alert alert-danger">{{error}}</div>
+		
 		<div class="form-group">
-			<label i18n="@@payerType" for="payerType">Payer Type</label>
-			<p-autoComplete [(ngModel)]="patient.payerType"
-				(onDropdownClick)="payerTypeDropdown.handleDropdownClick($event)"
-				[suggestions]="payerTypeDropdown.filteredPayerTypes"
-				[dropdown]="true" id="payerType"
-				(completeMethod)="payerTypeDropdown.filter($event)" name="payerType"
-				field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
-				[minLength]="1"></p-autoComplete>
-		</div>
-	</div>
-	<div class="ui-grid-row">
-		<div class="ui-grid-col-3 ui-sm-12">
-			<div class="form-group">
-				<label i18n="@@employer" for="employer">Employer</label> <input
-					type="text" pInputText class="form-control" id="employer"
-					[(ngModel)]="patient.employer" name="employer" #employer="ngModel">
+			<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+				<button type="button" pButton icon="fa fa-close" (click)="delete()"
+					label="Supprimer"></button> &nbsp;
+				<button pButton icon="fa fa-save" label="Save"></button>
 			</div>
 		</div>
-		<div class="ui-grid-col-3 ui-sm-12">
-			<div class="form-group">
-				<label i18n="@@authorizationLetterNumber"
-					for="authorizationLetterNumber">Authorization Letter Number</label>
-				<input type="text" pInputText class="form-control"
-					id="authorizationLetterNumber"
-					[(ngModel)]="patient.authorizationLetterNumber"
-					name="authorizationLetterNumber"
-					#authorizationLetterNumber="ngModel">
-			</div>
-		</div>
-		<div class="ui-grid-col-3 ui-sm-12">
-			<div class="form-group">
-				<label i18n="@@expiryDate" for="expiryDate">Expiry Date:</label>
-				<p-calendar [(ngModel)]="patient.expiryDate"></p-calendar>
-			</div>
-		</div>
-		<div class="ui-grid-col-3 ui-sm-12">
-			<div class="form-group">
-				<label i18n="@@employeeId" for="employeeId">Employee Id</label> <input
-					type="text" pInputText class="form-control" id="employeeId"
-					[(ngModel)]="patient.employeeId" name="employeeId"
-					#employeeId="ngModel">
-			</div>
-		</div>
-	</div>
-	<div class="ui-grid-row">
-		<div class="ui-grid-col-3 ui-sm-12">
-			<div class="form-group">
-				<label i18n="@@insurance" for="insurance">Insurance</label>
-				<p-autoComplete [(ngModel)]="patient.insurance"
-					(onDropdownClick)="insuranceDropdown.handleDropdownClick($event)"
-					[suggestions]="insuranceDropdown.filteredInsurances"
-					[dropdown]="true" id="insurance"
-					(completeMethod)="insuranceDropdown.filter($event)"
-					name="insurance" field="name" [size]="30"
-					placeholder="{{SELECT_OPTION}}" [minLength]="1"></p-autoComplete>
-			</div>
-		</div>
-		<div class="ui-grid-col-3 ui-sm-12">
-			<div class="form-group">
-				<label i18n="@@policyNumber" for="policyNumber">Policy
-					Number</label> <input type="text" pInputText class="form-control"
-					id="policyNumber" [(ngModel)]="patient.policyNumber"
-					name="policyNumber" #policyNumber="ngModel">
-			</div>
-		</div>
-		<div class="ui-grid-col-3 ui-sm-12">
-			<div class="form-group">
-				<label i18n="@@insuranceExpiryDate" for="insuranceExpiryDate">Insurance
-					Expiry Date:</label>
-				<p-calendar [(ngModel)]="patient.insuranceExpiryDate"></p-calendar>
-			</div>
-		</div>
-	</div>
-	</p-accordionTab> </p-accordion>
-	<br />
-
-</div>
-<br />
-<div *ngIf="error" class="alert alert-danger">{{error}}</div>
-
-<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-	<button type="button" pButton icon="fa fa-close" (click)="delete()"
-		label="Supprimer"></button> &nbsp;
-	<button type="button" pButton icon="fa fa-check" (click)="save()"
-		label="Sauvegarder"></button>
-</div>
-
+	</form>
 

@@ -85,6 +85,11 @@ import {PatientSaleList} from '../components/stocks/patientSaleList';
 import {SaleReturnDetails} from '../components/stocks/saleReturnDetails';
 import {SaleReturnList} from '../components/stocks/saleReturnList';
 
+import {BirthReportDetails} from '../components/activities/birthReportDetails';
+import {BirthReportList} from '../components/activities/birthReportList';
+import {DeathReportDetails} from '../components/activities/deathReportDetails';
+import {DeathReportList} from '../components/activities/deathReportList';
+
 const routes: Routes = [
   {path: 'adminMain', component: AdminMain},
   {path: 'adminAppointment', component: AdminAppointment},
@@ -151,6 +156,10 @@ const routes: Routes = [
   {path: 'patientSaleList', component: PatientSaleList},
   {path: 'saleReturnDetails', component: SaleReturnDetails},
   {path: 'saleReturnList', component: SaleReturnList},
+  {path: 'birthReportDetails', component: BirthReportDetails},
+  {path: 'birthReportList', component: BirthReportList},
+  {path: 'deathReportDetails', component: DeathReportDetails},
+  {path: 'deathReportList', component: DeathReportList},
 ];
 
 @NgModule({
@@ -171,8 +180,9 @@ const routes: Routes = [
     DoctorOrderDetails, DoctorOrderList, AdmissionDetails, AdmissionList, DoctorTransfer, FloorDetails, FloorList,
     RoomDetails, RoomList, BedDetails, BedList, AdminPatient, AdminAdmission, AdminBedStatus, AdmissionDiagnoses,
     AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails,
-    InvestigationList, PurchaseOrderDetails, PurchaseOrderList, ReceiveOrderDetails, ReceiveOrderList, 
-    PatientSaleDetails, PatientSaleList, SaleReturnDetails, SaleReturnList],
+    InvestigationList, PurchaseOrderDetails, PurchaseOrderList, ReceiveOrderDetails, ReceiveOrderList,
+    PatientSaleDetails, PatientSaleList, SaleReturnDetails, SaleReturnList, BirthReportDetails, BirthReportList,
+    DeathReportDetails, DeathReportList],
 
   providers: [CategoryDropdown, PackageDropdown]
 })

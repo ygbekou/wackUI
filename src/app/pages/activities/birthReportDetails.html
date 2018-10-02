@@ -1,0 +1,160 @@
+
+<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="birthReport">
+		<p-messages [(value)]="messages"></p-messages>
+		<p-fieldset legend="Admission Info">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-3 ui-sm-12">
+							<label i18n="@@itemNumber" for="itemNumber">{{itemNumberLabel}}<font color="red">*</font></label>
+						</div>
+						<div class="ui-grid-col-8 ui-sm-12">
+							<input type="text" pInputText class="form-control" id="itemNumber" (change)="lookUpPatientItem()"
+							[(ngModel)]="itemNumber" name="itemNumber" #itemNumberModel="ngModel">
+						</div>
+						<div class="ui-grid-col-1 ui-sm-12">
+						</div>
+					</div>
+				</div>
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-3 ui-sm-12">
+							<label i18n="@@patientName" for="patientName">Patient Name:</label>
+						</div>
+						<div class="ui-grid-col-8 ui-sm-12">
+							{{patient.name}}
+						</div>
+						<div class="ui-grid-col-1 ui-sm-12">
+						</div>
+					</div>
+				</div>
+				<div class="ui-grid-col-2 ui-sm-12">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-3 ui-sm-12">
+							<label i18n="@@patientBirthDate" for="patientSex">Sex:</label>
+						</div>
+						<div class="ui-grid-col-8 ui-sm-12">
+							{{patient.user.sex}}
+						</div>
+						<div class="ui-grid-col-1 ui-sm-12">
+						</div>
+					</div>
+				</div>
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-3 ui-sm-12">
+							<label i18n="@@patientSex" for="patientBirthDate">Birth Date: </label>
+						</div>
+						<div class="ui-grid-col-8 ui-sm-12">
+							{{patient.user.birthDate | date:'dd/MM/yyyy'}}
+						</div>
+						<div class="ui-grid-col-1 ui-sm-12">
+						</div>
+					</div>				
+				</div>
+			</div>
+		</p-fieldset>
+		<br/>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@firstName" for="firstName">First Name<font color="red">*</font></label>
+					<input type="text" pInputText class="form-control" id="firstName"
+						[(ngModel)]="birthReport.firstName" name="firstName" #firstNameModel="ngModel">
+				</div>
+			</div>
+			<div class="ui-grid-col-2 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@middleName" for="middleName">Middle Name</label>
+					<input type="text" pInputText class="form-control" id="middleName"
+						[(ngModel)]="birthReport.middleName" name="middleName" #middleNameModel="ngModel">
+				</div>
+			</div>
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@lastName" for="lastName">Last Name<font color="red">*</font></label>
+					<input type="text" pInputText class="form-control" id="lastName"
+						[(ngModel)]="birthReport.lastName" name="lastName" #lastNameModel="ngModel">
+				</div>
+			</div>
+		</div>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-2 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@birthDatetime" for="birthDatetime">Birth Date Time<font color="red">*</font></label>
+					<p-calendar [(ngModel)]="birthReport.birthDatetime" [showTime]="true"></p-calendar>
+				</div>
+			</div>
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@comments" for="comments">Comments</label> 
+					<textarea pInputTextarea id="comments" rows="4" cols="40" pInputTextarea maxlength="1000" 
+								[(ngModel)]="birthReport.comments" #comments="ngModel"> </textarea>						
+				</div>
+			</div>
+		</div>
+		<p-fieldset legend="Father">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@fatherFirstName" for="fatherFirstName">First Name</label>
+						<input type="text" pInputText class="form-control" id="fatherFirstName"
+							[(ngModel)]="birthReport.fatherFirstName" name="fatherFirstName" #fatherFirstNameModel="ngModel">
+					</div>
+				</div>
+				<div class="ui-grid-col-2 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@fatherMiddleName" for="fatherMiddleName">Middle Name</label>
+						<input type="text" pInputText class="form-control" id="fatherMiddleName"
+							[(ngModel)]="birthReport.fatherMiddleName" name="fatherMiddleName" #fatherMiddleNameModel="ngModel">
+					</div>
+				</div>
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@fatherLastName" for="fatherLastName">Last Name</label>
+						<input type="text" pInputText class="form-control" id="fatherLastName"
+							[(ngModel)]="birthReport.fatherLastName" name="fatherLastName" #fatherLastNameModel="ngModel">
+					</div>
+				</div>
+			</div>
+		</p-fieldset>
+		
+		<p-fieldset legend="Mother">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@motherFirstName" for="motherFirstName">First Name</label>
+						<input type="text" pInputText class="form-control" id="motherFirstName"
+							[(ngModel)]="birthReport.motherFirstName" name="motherFirstName" #motherFirstNameModel="ngModel">
+					</div>
+				</div>
+				<div class="ui-grid-col-2 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@motherMiddleName" for="motherMiddleName">Middle Name</label>
+						<input type="text" pInputText class="form-control" id="motherMiddleName"
+							[(ngModel)]="birthReport.motherMiddleName" name="motherMiddleName" #motherMiddleNameModel="ngModel">
+					</div>
+				</div>
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@motherLastName" for="motherLastName">Last Name</label>
+						<input type="text" pInputText class="form-control" id="motherLastName"
+							[(ngModel)]="birthReport.motherLastName" name="motherLastName" #motherLastNameModel="ngModel">
+					</div>
+				</div>
+			</div>
+		</p-fieldset>
+
+		<br/>
+	</div>	
+	
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+			<button type="button" pButton icon="fa fa-refresh" (click)="clear()"
+				label="Effacer"></button>&nbsp;&nbsp;
+			<button type="button" pButton icon="fa fa-save" (click)="save()"
+				label="Sauvegarder"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button type="button" pButton icon="fa fa-remove" (click)="delete()"
+				label="Supprimer"></button>
+	</div>
+</div>

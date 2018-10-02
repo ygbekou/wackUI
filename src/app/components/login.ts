@@ -152,7 +152,7 @@ export class Login implements OnInit {
         
         patient.user = user;
         
-        this.userService.savePatient(patient, null)
+        this.userService.saveUserWithoutPicture('Patient', patient)
           .subscribe(result => {
             
             if (result == null) {

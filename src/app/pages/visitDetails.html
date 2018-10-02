@@ -192,7 +192,7 @@
 		<br />
 		<app-investigation-list [visit]="visit"></app-investigation-list> </p-tabPanel> <p-tabPanel
 			header="DISCHARGE FORM" *ngIf="visit.id > 0">
-		<div *ngIf="activeTab == 4">
+		<div>
 			<app-discharge-details [visit]="visit"></app-discharge-details>
 		</div>
 		</p-tabPanel> </p-tabView>
