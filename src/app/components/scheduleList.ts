@@ -38,8 +38,8 @@ export class ScheduleList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'doctorName', header: 'Doctor' },
-            { field: 'doctorDepartmentName', header: 'Department' },
+            { field: 'departmentName', header: 'Department' },
+            { field: 'locationName', header: 'Location' },
             { field: 'day', header: 'Day' },
             { field: 'beginTime', header: 'Start Time' },
             { field: 'endTime', header: 'End Time' },
@@ -59,13 +59,16 @@ export class ScheduleList implements OnInit, OnDestroy {
               .subscribe((data: Schedule[]) => 
               { 
                 this.schedules = data 
-                console.info(this.schedules)
+                this.updateRowGroupMetaData();
               },
               error => console.log(error),
               () => console.log('Get all Schedule complete'));
           });
   }
  
+  onSort() {
+        this.updateRowGroupMetaData();
+  }
   
   ngOnDestroy() {
     this.schedules = null;
@@ -98,5 +101,30 @@ export class ScheduleList implements OnInit, OnDestroy {
       console.log(e);
     }
   }
+  
+  
+  rowGroupMetadata: any;
+  
+  updateRowGroupMetaData() {
+      
+        this.rowGroupMetadata = {};
+        if (this.schedules) {
+            for (let i = 0; i < this.schedules.length; i++) {
+                let rowData = this.schedules[i];
+                let doctorName = rowData.doctorName;
+                if (i == 0) {
+                    this.rowGroupMetadata[doctorName] = { index: 0, size: 1 };
+                }
+                else {
+                    let previousRowData = this.schedules[i - 1];
+                    let previousRowGroup = previousRowData.doctorName;
+                    if (doctorName === previousRowGroup)
+                        this.rowGroupMetadata[doctorName].size++;
+                    else
+                        this.rowGroupMetadata[doctorName] = { index: i, size: 1 };
+                }
+            }
+        }
+    }
 
  }

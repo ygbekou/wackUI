@@ -154,6 +154,14 @@
 				        <app-labTest-list (labTestIdEvent)="onLabTestSelected($event)"></app-labTest-list>
 				    </div>
 			    </p-tabPanel>
+			    <p-tabPanel id="hospitalLocation" header="Location">
+			    	<div *ngIf="activeTab == 19" class="ui-grid-row">
+				        <app-hospitalLocation-details></app-hospitalLocation-details>
+				        <br/> 
+				        <br/>
+				        <app-hospitalLocation-list (hospitalLocationIdEvent)="onHospitalLocationSelected($event)"></app-hospitalLocation-list>
+				    </div>
+			    </p-tabPanel>
 			</p-tabView>
 		</div>
 

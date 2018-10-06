@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { DropdownUtil } from './dropdown.util';
 import { GenericService } from '../../services/generic.service';
-import { Country } from '../../models/country';
+import { Country } from '../../models';
  
 @Injectable()
 export class CountryDropdown {

@@ -146,7 +146,7 @@ export class InvoiceDetails implements OnInit, OnDestroy {
     
     let parameters: string [] = []; 
             
-    parameters.push('e.matricule = |matricule|' + this.invoice.patient.matricule + '|String')
+    parameters.push('e.matricule = |matricule|' + this.invoice.patient.medicalRecordNumber + '|String')
     
     this.genericService.getAllByCriteria('Patient', parameters)
       .subscribe((data: Patient[]) => 

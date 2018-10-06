@@ -1,63 +1,75 @@
-<div class="ui-grid-row"> 
-		<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-			<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="schedule">
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-6 ui-sm-12">
-						<div class="form-group">
-							<label i18n="@@doctor" for="doctor">Doctor<font color="red">*</font></label> 
-							<p-autoComplete [(ngModel)]="schedule.doctor"
-								(onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
-								[suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
-								id="doctor" (completeMethod)="doctorDropdown.filter($event)"
-								name="doctor" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
-								[minLength]="1"></p-autoComplete>
-						</div>
-					</div>
-					<div class="ui-grid-col-6 ui-sm-12">
-						<div class="form-group">
-							<label i18n="@@availableDays" for="availableDays">Available Days<font color="red">*</font></label> 
-							<p-autoComplete [(ngModel)]="schedule.weekday"
-								(onDropdownClick)="weekdayDropdown.handleDropdownClick($event)"
-								[suggestions]="weekdayDropdown.filteredWeekdays" [dropdown]="true"
-								id="weekday" (completeMethod)="weekdayDropdown.filter($event)"
-								name="weekday" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
-								[minLength]="1"></p-autoComplete>
-						</div>
-					</div>
-				</div> 
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-6 ui-sm-12">
-						<div class="form-group">
-							<label i18n="@@beginTime" for="beginTime">Start Time<font color="red">*</font></label> 
-							<p-calendar [(ngModel)]="schedule.beginTime" [stepMinute]="5" dataType="string" timeOnly="true" showTime="false" hourFormat="24"></p-calendar>
-						</div>
-					</div>
-					<div class="ui-grid-col-6 ui-sm-12">
-						<div class="form-group">
-							<label i18n="@@endTime" for="endTime">End Time<font color="red">*</font></label> 
-							<p-calendar [(ngModel)]="schedule.endTime" [stepMinute]="5" dataType="string" timeOnly="true" showTime="false" hourFormat="24"></p-calendar>
-						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-12 ui-sm-12">
-						<div class="form-group">
-							<label i18n="@@perPatientTime" for="perPatientTime">Per Patient Time<font color="red">*</font></label>
-							<p-calendar [(ngModel)]="schedule.perPatientTime" [stepMinute]="5" dataType="string" timeOnly="true" showTime="false" hourFormat="24"></p-calendar>
-						</div>
-					</div>
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="schedule">
+		<p-messages [(value)]="messages"></p-messages>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@doctor" for="doctor">Doctor<font color="red">*</font></label> 
+					<p-autoComplete [(ngModel)]="schedule.doctor" required
+						(onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
+						[suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
+						id="doctor" (completeMethod)="doctorDropdown.filter($event)"
+						name="doctor" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
+						[minLength]="1" #doctor="ngModel"></p-autoComplete>
+						<p-message *ngIf="f.submitted && doctor.invalid" severity="error" text="Field is required"></p-message>
 				</div>
 			</div>
-			<br />
-			<div *ngIf="error" class="alert alert-danger">{{error}}</div>
-			<div>
-				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-					<button type="button" pButton icon="fa fa-close" (click)="delete()"
-						label="Supprimer"></button> &nbsp;
-					<button type="button" pButton icon="fa fa-check" (click)="save()"
-						label="Sauvegarder"></button>
+			<div class="ui-grid-col-3 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@location" for="location">Hospital Location<font color="red">*</font></label> 
+					<p-autoComplete [(ngModel)]="schedule.hospitalLocation" required
+						(onDropdownClick)="hospitalLocationDropdown.handleDropdownClick($event)"
+						[suggestions]="hospitalLocationDropdown.filteredLocations" [dropdown]="true"
+						id="hospitalLocation" (completeMethod)="hospitalLocationDropdown.filter($event)"
+						name="hospitalLocation" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
+						[minLength]="1" #location="ngModel"></p-autoComplete>
+						<p-message *ngIf="f.submitted && location.invalid" severity="error" text="Field is required"></p-message>
+				</div>
+			</div>
+			<div class="ui-grid-col-3 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@availableDays" for="availableDays">Available Days<font color="red">*</font></label> 
+					<p-autoComplete [(ngModel)]="schedule.weekday" required
+						(onDropdownClick)="weekdayDropdown.handleDropdownClick($event)"
+						[suggestions]="weekdayDropdown.filteredWeekdays" [dropdown]="true"
+						id="weekday" (completeMethod)="weekdayDropdown.filter($event)"
+						name="weekday" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
+						[minLength]="1" #availableDays="ngModel"></p-autoComplete>
+						<p-message *ngIf="f.submitted && availableDays.invalid" severity="error" text="Field is required"></p-message>
+				</div>
+			</div>
+		</div> 
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@beginTime" for="beginTime">Start Time<font color="red">*</font></label> 
+					<p-calendar [(ngModel)]="schedule.beginTime" [stepMinute]="5" dataType="string" timeOnly="true" 
+					showTime="false" hourFormat="24" name="beginTime" #beginTime="ngModel" required></p-calendar>
+					<p-message *ngIf="f.submitted && availableDays.invalid" severity="error" text="Field is required"></p-message>
+				</div>
+			</div>
+			<div class="ui-grid-col-3 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@endTime" for="endTime">End Time<font color="red">*</font></label> 
+					<p-calendar [(ngModel)]="schedule.endTime" [stepMinute]="5" dataType="string" timeOnly="true" 
+					showTime="false" hourFormat="24" name="endTime" #endTime="ngModel" required></p-calendar>
+					<p-message *ngIf="f.submitted && availableDays.invalid" severity="error" text="Field is required"></p-message>
+				</div>
+			</div>
+			<div class="ui-grid-col-3 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@perPatientTime" for="perPatientTime">Per Patient Time<font color="red">*</font></label>
+					<p-calendar [(ngModel)]="schedule.perPatientTime" [stepMinute]="5" dataType="string" timeOnly="true"
+					 showTime="false" hourFormat="24" name="perPatientTime" #perPatientTime="ngModel" required></p-calendar>
+					 <p-message *ngIf="f.submitted && availableDays.invalid" severity="error" text="Field is required"></p-message>
 				</div>
 			</div>
 		</div>
 	</div>
- 
+	<br />
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+		<button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="Clear"></button>&nbsp;&nbsp;
+		<button pButton icon="fa fa-save" label="Save"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<button type="button" pButton icon="fa fa-remove" (click)="delete()" label="Delete"></button>
+	</div>
+</form>

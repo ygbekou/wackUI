@@ -30,4 +30,4 @@ export * from './dropdown.labTestUnit';
 export * from './dropdown.labTest';
 export * from './dropdown.supplier';
 export * from './dropdown.medicine';
-
+export * from './dropdown.hospitalLocation';

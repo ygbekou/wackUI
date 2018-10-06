@@ -6,7 +6,7 @@ import { VitalSign } from './vitalSign';
 
 export class Patient {
   id: number;
-  matricule: string;
+  medicalRecordNumber: string;
   user: User;
   religion: Reference;
   occupation: Reference;

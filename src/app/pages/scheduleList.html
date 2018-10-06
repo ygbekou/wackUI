@@ -1,6 +1,6 @@
 <div class="ui-grid-row"> 
 		<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-			<p-table [columns]="cols" [value]="schedules">
+			<p-table [columns]="cols" [value]="schedules" dataKey="doctorName">
 			    <ng-template pTemplate="header" let-columns>
 			        <tr>
 			            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
@@ -10,15 +10,25 @@
 			            <th>Action</th>
 			        </tr>
 			    </ng-template>
-			    <ng-template pTemplate="body" let-rowData let-columns="columns">
-			        <tr>			           
+			    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-expanded="expanded" let-columns="columns">
+			        <tr class="ui-widget-header" *ngIf="rowGroupMetadata[rowData.doctorName].index === rowIndex">
+			            <td colspan="8">
+			                <a href="#" [pRowToggler]="rowData">
+			                    <i [ngClass]="expanded ? 'fa fa-fw fa-chevron-circle-down' : 'fa fa-fw fa-chevron-circle-right'"></i>
+			                    <span>{{rowData.doctorName}}</span>
+			                </a>
+			            </td>
+			        </tr>
+			    </ng-template>
+			    <ng-template pTemplate="rowexpansion" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+			        <tr>		           
 			            <td *ngFor="let col of columns">
-			                {{rowData[col.field]}}
+		                	{{rowData[col.field]}}
 			            </td>
 			            <td>
-			            	<button type="button" pButton icon="fa-edit" style="float: left"
-								(click)="edit(rowData.id)"></button>
-							<button type="button" pButton icon="fa-eraser" style="float: left"
+			            	<button type="button" pButton icon="fa fa-edit" style="float: left"
+								(click)="edit(rowData.id)"></button>&nbsp;&nbsp;&nbsp;&nbsp;
+							<button type="button" pButton icon="fa fa-eraser" style="float: left"
 								(click)="delete(rowData.id)"></button>
 			            </td>
 			        </tr>

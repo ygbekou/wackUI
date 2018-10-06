@@ -184,10 +184,10 @@ export class AdmissionDetails implements OnInit, OnDestroy {
   lookUpPatient() {
     let parameters: string [] = []; 
             
-    parameters.push('e.matricule = |matricule|' + this.patient.matricule + '|String')
-    let patientMatricule = this.patient.matricule;
+    parameters.push('e.matricule = |matricule|' + this.patient.medicalRecordNumber + '|String')
+    let patientMatricule = this.patient.medicalRecordNumber;
     this.patient = new Patient()
-    this.patient.matricule = patientMatricule;
+    this.patient.medicalRecordNumber = patientMatricule;
     
     this.genericService.getAllByCriteria('Patient', parameters)
       .subscribe((data: Patient[]) => 

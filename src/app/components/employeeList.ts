@@ -86,8 +86,8 @@ export class EmployeeList implements OnInit, OnDestroy {
         if (this.searchCriteria.firstName != null && this.searchCriteria.firstName.length > 0)  {
           parameters.push('e.user.firstName like |firstName|' + '%' + this.searchCriteria.firstName + '%' + '|String')
         } 
-        if (this.searchCriteria.department != null && this.searchCriteria.department.id > 0)  {
-          parameters.push('e.department.id = |departmentId|' + this.searchCriteria.department.id + '|Long')
+        if (this.searchCriteria.departmentId != null && this.searchCriteria.departmentId > 0)  {
+          parameters.push('e.department.id = |departmentId|' + this.searchCriteria.departmentId + '|Long')
         }  
         
         

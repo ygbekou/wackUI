@@ -1,8 +1,13 @@
-import { Department } from './department';
+import { HospitalLocation } from './';
+import { Department, Employee } from './';
+
 export class SearchCriteria {
   id: number;
   lastName: string;
   firstName: string;
   birthDate: Date;
-  department: Department;
+  departmentId: number;
+  hospitalLocationId: number;
+  doctorId: number;
+  
 }

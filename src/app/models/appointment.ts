@@ -1,13 +1,15 @@
-import { Department } from './department';
-import { Employee } from './employee';
-import { Patient } from './patient';
-import { Weekday } from './weekday';
+import { HospitalLocation } from './';
+import { Department } from './';
+import { Employee } from './';
+import { Patient } from './';
+import { Weekday } from './';
 
 export class Appointment {
   id: number;
   doctor: Employee = new Employee();
   department: Department = new Department();
   patient: Patient = new Patient();
+  hospitalLocation: HospitalLocation = new HospitalLocation();
   appointmentDate: Date;
   beginTime: string;
   endTime: string;

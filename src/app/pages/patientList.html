@@ -48,9 +48,11 @@
 	               </div>
 			</td>
 			<td>
-				<button type="button" pButton icon="fa-edit" style="float: left"
+				<button type="button" pButton icon="fa fa-edit" style="float: left"
 					(click)="edit(rowData.id)"></button>
-				<button type="button" pButton icon="fa-eraser" style="float: left"
+				<button type="button" pButton icon="fa fa-edit" style="float: left"
+					(click)="redirectToOrigialPage(rowData)"></button>
+				<button type="button" pButton icon="fa fa-eraser" style="float: left"
 					(click)="delete(rowData.id)"></button>
 			</td>
 		</tr>

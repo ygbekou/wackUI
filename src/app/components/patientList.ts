@@ -15,6 +15,7 @@ export class PatientList implements OnInit, OnDestroy {
   patients: Patient[] = [];
   cols: any[];
   searchCriteria: SearchCriteria = new SearchCriteria();
+  originalPage: string;
   
   constructor
     (
@@ -39,6 +40,12 @@ export class PatientList implements OnInit, OnDestroy {
             { field: 'sex', header: 'Sex', type:'user' }
         ];
     
+     this.route
+        .queryParams
+        .subscribe(params => {
+     
+        this.originalPage = params['originalPage'];
+     });
   }
  
   
@@ -62,6 +69,24 @@ export class PatientList implements OnInit, OnDestroy {
     }
   }
 
+  redirectToOrigialPage(patient: Patient) {
+    try {
+      let navigationExtras: NavigationExtras = {
+        queryParams: {
+          "patientId": patient.id,
+          "patientName": patient.name,
+          "mrn": patient.medicalRecordNumber,
+          "birthDate": patient.user.birthDate,
+          "gender": patient.user.sex,
+        }
+      }
+      this.router.navigate([this.originalPage], navigationExtras);
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
+  
   delete(patientId : number) {
     try {
       let navigationExtras: NavigationExtras = {

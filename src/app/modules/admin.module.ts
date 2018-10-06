@@ -89,6 +89,10 @@ import {BirthReportDetails} from '../components/activities/birthReportDetails';
 import {BirthReportList} from '../components/activities/birthReportList';
 import {DeathReportDetails} from '../components/activities/deathReportDetails';
 import {DeathReportList} from '../components/activities/deathReportList';
+import {HospitalLocationDetails} from '../components/hospitalLocationDetails';
+import {HospitalLocationList} from '../components/hospitalLocationList';
+
+import {PatientLookup} from '../components/includes/patientLookup';
 
 const routes: Routes = [
   {path: 'adminMain', component: AdminMain},
@@ -160,6 +164,8 @@ const routes: Routes = [
   {path: 'birthReportList', component: BirthReportList},
   {path: 'deathReportDetails', component: DeathReportDetails},
   {path: 'deathReportList', component: DeathReportList},
+  {path: 'hospitalLocationDetails', component: HospitalLocationDetails},
+  {path: 'hospitalLocationList', component: HospitalLocationList},
 ];
 
 @NgModule({
@@ -182,7 +188,7 @@ const routes: Routes = [
     AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails,
     InvestigationList, PurchaseOrderDetails, PurchaseOrderList, ReceiveOrderDetails, ReceiveOrderList,
     PatientSaleDetails, PatientSaleList, SaleReturnDetails, SaleReturnList, BirthReportDetails, BirthReportList,
-    DeathReportDetails, DeathReportList],
+    DeathReportDetails, DeathReportList, HospitalLocationDetails, HospitalLocationList, PatientLookup],
 
   providers: [CategoryDropdown, PackageDropdown]
 })

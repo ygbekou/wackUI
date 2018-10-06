@@ -7,6 +7,8 @@ import { Patient } from '../models/patient';
 import { UserGroup } from '../models/userGroup';
 import { GenericService, UserService, GlobalEventsManager } from '../services';
 import { CategoryDropdown } from './dropdowns';
+import { HospitalLocationDetails } from './hospitalLocationDetails';
+import { HospitalLocationList } from './hospitalLocationList';
 import { LabTestDetails } from './labTestDetails';
 import { LabTestList } from './labTestList';
 import { MedicineDetails } from './medicineDetails';
@@ -27,6 +29,8 @@ export class AdminReference implements OnInit {
   @ViewChild(MedicineDetails) medicineDetails: MedicineDetails;
   @ViewChild(LabTestDetails) labTestDetails: LabTestDetails;
   @ViewChild(LabTestList) labTestList: LabTestList;
+  @ViewChild(HospitalLocationDetails) hospitalLocationDetails: HospitalLocationDetails;
+  @ViewChild(HospitalLocationList) hospitalLocationtList: HospitalLocationList;
   
   public user: User;
   public patient: Patient;
@@ -75,6 +79,11 @@ export class AdminReference implements OnInit {
   onLabTestSelected($event) {
     let labTestId = $event;
     this.labTestDetails.getLabTest(labTestId);
+  }
+  
+  onHospitalLocationSelected($event) {
+    let hospitalLocationId = $event;
+    this.hospitalLocationDetails.getHospitalLocation(hospitalLocationId);
   }
   
   onTabChange(evt) {
@@ -127,6 +136,8 @@ export class AdminReference implements OnInit {
       this.globalEventsManager.selectedReferenceType = "LabTestUnit";
     } else if (evt.index == 18) {
       this.labTestList.getAllLabTests();
+    } else if (evt.index == 19) {
+      this.hospitalLocationtList.getAllHospitalLocations();
     } 
   }
 }

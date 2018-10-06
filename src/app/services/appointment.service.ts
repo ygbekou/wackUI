@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import {Constants} from '../app.constants';
+import { SearchCriteria } from '../models';
 import { Prescription } from '../models/prescription';
 import { ScheduleEvent } from '../models/scheduleEvent';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
@@ -18,13 +19,17 @@ export class AppointmentService {
     this.headers.append('Accept', 'application/json');
   }
 
-  public getAppointments = (departmentId: number, doctorId: number): Observable<ScheduleEvent[]> => {
-    this.actionUrl = Constants.apiServer + '/service/appointment/department/' + departmentId + '/doctor/' + doctorId;
-
-    return this.http.get(this.actionUrl)
-      .map((response: Response) => <ScheduleEvent[]>response.json())
-      .catch(this.handleError);
-  }
+   public getScheduleAndAppointments = (searchCriteria : SearchCriteria): Observable<ScheduleEvent[]> => {
+    
+      let toSend = JSON.stringify(searchCriteria);
+      
+      let actionUrl = Constants.apiServer + '/service/appointment/scheduleAndAppointments';
+      return this.http.post(actionUrl, toSend, { headers: this.headers })
+        .map((response: Response) => {
+            return response.json();
+        })
+        .catch(this.handleError);
+   }
 
   private handleError(error: Response) {
     console.error(error);
