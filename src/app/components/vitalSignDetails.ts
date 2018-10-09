@@ -106,27 +106,5 @@ export class VitalSignDetails implements OnInit, OnDestroy {
     let bmi = weightInKg / heightInMeterSquare;
     this.vitalSign.bmi = Math.round(bmi);
   }
-  
-  
-  lookUpPatient() {
-    let parameters: string [] = []; 
-            
-    parameters.push('e.matricule = |matricule|' + this.patient.matricule + '|String')
-    let patientMatricule = this.patient.matricule;
-    this.patient = new Patient()
-    this.patient.matricule = patientMatricule;
-    
-    this.genericService.getAllByCriteria('Patient', parameters)
-      .subscribe((data: Patient[]) => 
-      { 
-        if (data.length > 0) {
-          this.patient = data[0];
-          this.appointmentDropdown.patientId = this.patient.id;
-          this.appointmentDropdown.getAllAppointments();
-        }
-      },
-      error => console.log(error),
-      () => console.log('Get Patient complete'));
-  }
-
+ 
  }

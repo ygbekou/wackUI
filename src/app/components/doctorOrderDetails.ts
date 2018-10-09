@@ -1,20 +1,14 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../app.constants';
-import { Admission } from '../models/admission';
-import { Appointment } from '../models/appointment';
-import { DoctorOrder } from '../models/doctorOrder';
-import { VitalSign } from '../models/vitalSign';
-import { Patient } from '../models/patient';
+import { Admission, Appointment, DoctorOrder, VitalSign, Patient, User, Visit } from '../models';
 import { EditorModule } from 'primeng/editor';
 import { DoctorOrderTypeDropdown, DoctorOrderPriorityDropdown, DoctorOrderKindDropdown, DoctorDropdown, 
   ServiceDropdown, LabTestDropdown, ProductDropdown} from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule, PickListModule } from 'primeng/primeng';
-import { User } from '../models/user';  
-import { Visit } from '../models/visit';
-import { Service } from '../models/service';
+import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule, PickListModule } from 'primeng/primeng';
 import { GenericService, VisitService } from '../services';
+import { Message } from 'primeng/api';
 
 @Component({ 
   selector: 'app-doctorOrder-details',
@@ -24,78 +18,39 @@ import { GenericService, VisitService } from '../services';
 })
 export class DoctorOrderDetails implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   doctorOrder: DoctorOrder = new DoctorOrder();
- 
-  doctorOrderTypeDropdown: DoctorOrderTypeDropdown;
-  doctorOrderPriorityDropdown: DoctorOrderPriorityDropdown;
-  doctorOrderKindDropdown: DoctorOrderKindDropdown;
-  doctorDropdown: DoctorDropdown;
-  labTestDropdown: LabTestDropdown;
-  
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
-  SELECT_OPTION: string = Constants.SELECT_OPTION;
-  
   user: User;
+  
   @Input() admission: Admission;
   @Input() visit: Visit;
+  
+  messages: Message[] = [];
+  
+  STATUS_CLOSED_ID = Constants.DOCTOR_ORDER_STATUS_CLOSED;
+  STATUS_CLOSED_NAME = Constants.DOCTOR_ORDER_STATUS_CLOSED_NAME;
+  STATUS_INPROGRESS_ID = Constants.DOCTOR_ORDER_STATUS_INPROGRESS;
+  STATUS_INPROGRESS_NAME = Constants.DOCTOR_ORDER_STATUS_INPROGRESS_NAME;
   
   constructor
     (
       private genericService: GenericService,
       private visitService: VisitService,
-      private dotDropdown: DoctorOrderTypeDropdown,
-      private dopDropdown: DoctorOrderPriorityDropdown,
-      private dokDropdown: DoctorOrderKindDropdown,
-      private docDropdown: DoctorDropdown,
-      private lbtDropdown: LabTestDropdown,
+      private doctorOrderTypeDropdown: DoctorOrderTypeDropdown,
+      private doctorOrderPriorityDropdown: DoctorOrderPriorityDropdown,
+      private doctorOrderKindDropdown: DoctorOrderKindDropdown,
+      private doctorDropdown: DoctorDropdown,
+      private labTestDropdown: LabTestDropdown,
       private productDropdown: ProductDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
     ) {
-    this.doctorOrderTypeDropdown = dotDropdown;
-    this.doctorOrderPriorityDropdown = dopDropdown;
-    this.doctorOrderKindDropdown = dokDropdown;
-    this.doctorDropdown = docDropdown;
-    this.labTestDropdown = lbtDropdown;
     this.user = new User();
   }
 
   ngOnInit(): void {
     
     this.user = JSON.parse(Cookie.get('user'));
-    
-    let doctorOrderId = null;
-    this.route
-        .queryParams
-        .subscribe(params => {          
-                 
-          doctorOrderId = params['doctorOrderId'];
-          
-          if (doctorOrderId != null) {
-              this.genericService.getOne(doctorOrderId, "DoctorOrder")
-                  .subscribe(result => {
-                if (result.id > 0) {
-                  
-                  this.doctorOrder = result
-                  this.doctorOrder.doctorOrderDatetime = new Date(this.doctorOrder.doctorOrderDatetime);
-                  if (this.doctorOrder.receivedDatetime != null)
-                    this.doctorOrder.receivedDatetime = new Date(this.doctorOrder.receivedDatetime);
-                }
-                else {
-                  this.error = Constants.SAVE_UNSUCCESSFUL;
-                  this.displayDialog = true;
-                }
-              })
-          } else {
-              
-          }
-     });
-    
   }
   
   ngOnDestroy() {
@@ -104,15 +59,26 @@ export class DoctorOrderDetails implements OnInit, OnDestroy {
   
   save() {
     
+    this.messages = [];
     this.doctorOrder.visit = this.visit;
     
     try {
-      this.error = '';
       
-      if (this.user.userGroup.id != 1 && 
-        (this.doctorOrder.doctor == null || this.doctorOrder.doctorOrderPriority == null 
-            || this.doctorOrder.receivedDatetime == null)) {
-        alert('The Ordering Doctor and the Priority and Received Date is required.')
+//      if (this.user.userGroup.id != 1 && 
+//        (this.doctorOrder.doctor == null || this.doctorOrder.doctorOrderPriority == null 
+//            || this.doctorOrder.receivedDatetime == null)) {
+//        this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.ORDERING_DOCTOR_REQUIRED});
+//        return;
+//      }
+      
+      if (this.doctorOrder.doctorOrderType.id == Constants.DOCTOR_ORDER_TYPE_PHARM
+        && this.doctorOrder.products.length == 0) {
+        this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.DOCTOR_ORDER_MEDICINE_REQUIRED});
+        return;
+      }
+      if (this.doctorOrder.doctorOrderType.id == Constants.DOCTOR_ORDER_TYPE_LAB
+        && this.doctorOrder.products.length == 0) {
+        this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.DOCTOR_ORDER_LABORATORY_REQUIRED});
         return;
       }
       
@@ -120,10 +86,33 @@ export class DoctorOrderDetails implements OnInit, OnDestroy {
         .subscribe(result => {
           if (result.id > 0) {
             this.doctorOrder = result;
+            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
           }
           else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-            this.displayDialog = true;
+            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
+          }
+        })
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
+  
+  changeStatus(statusId, statusName) {
+    
+    this.doctorOrder.status.id = statusId;
+    this.doctorOrder.status.name = statusName;
+    
+    try {
+      
+      this.visitService.changeDoctorOrderStatus(this.doctorOrder)
+        .subscribe(result => {
+          if (result.id > 0) {
+            this.doctorOrder = result;
+            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
+          }
+          else {
+            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
           }
         })
     }
@@ -140,10 +129,6 @@ export class DoctorOrderDetails implements OnInit, OnDestroy {
         this.doctorOrder.doctorOrderDatetime = new Date(this.doctorOrder.doctorOrderDatetime);
         this.doctorOrder.receivedDatetime = new Date(this.doctorOrder.receivedDatetime);
       }
-      else {
-        this.error = Constants.SAVE_UNSUCCESSFUL;
-        this.displayDialog = true;
-      }
     })
   }
   
@@ -152,7 +137,7 @@ export class DoctorOrderDetails implements OnInit, OnDestroy {
 //    this.serviceDropdown.getServices(this.doctorOrder.service.serviceType.id);
 //  }
   
-  toggleTypeDropdown(event) {
-    
+  clear() {
+    this.doctorOrder = new DoctorOrder();
   }
  }

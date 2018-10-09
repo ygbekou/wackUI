@@ -65,6 +65,20 @@ export class VisitService {
         .catch(this.handleError);
    }
   
+  public changeDoctorOrderStatus = (doctorOrder : DoctorOrder): Observable<DoctorOrder> => {
+    
+      let toAdd = JSON.stringify(doctorOrder);
+      let re = /\"/gi;
+      let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
+      
+      let actionUrl = Constants.apiServer + '/service/visit/doctororder/changeStatus';
+      return this.http.post(actionUrl, toSend, { headers: this.headers })
+        .map((response: Response) => {
+            return response.json();
+        })
+        .catch(this.handleError);
+   }
+  
   private handleError(error: Response) {
     console.error(error);
     return Observable.throw(error.json().error || 'Server error');

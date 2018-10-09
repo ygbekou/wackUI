@@ -1,5 +1,5 @@
 
-		<div class="ui-grid-row">
+		<div class="ui-grid-row" *ngIf="admission">
 			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-3 ui-sm-12">
@@ -15,127 +15,70 @@
 		</div>
 		<br/>
 		<div class="ui-grid-row">
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-3 ui-sm-12">
-						<label i18n="@@temperature" for="temperature">Temperature</label>
-					</div>
-					<div class="ui-grid-col-8 ui-sm-12">
-						<input type="text" pInputText class="form-control" id="temperature" [(ngModel)]="vitalSign.temperature" 
+			<div class="ui-grid-col-2 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@temperature" for="temperature">Temperature</label>
+					<input type="text" pInputText class="form-control" id="temperature" [(ngModel)]="vitalSign.temperature" 
 							name="temperature" #temperature="ngModel">
-					</div>
-					<div class="ui-grid-col-1 ui-sm-12">
-					</div>
 				</div>
 			</div>
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-3 ui-sm-12">
-						<label i18n="@@pulse" for="pulse">Pulse</label>
-					</div>
-					<div class="ui-grid-col-8 ui-sm-12">
-						<input type="text" pInputText class="form-control" id="pulse" [(ngModel)]="vitalSign.pulse"  
+			<div class="ui-grid-col-2 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@pulse" for="pulse">Pulse</label>
+					<input type="text" pInputText class="form-control" id="pulse" [(ngModel)]="vitalSign.pulse"  
 							name="pulse" #pulse="ngModel">
-					</div>
-					<div class="ui-grid-col-1 ui-sm-12">
-					</div>
 				</div>
 			</div>
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-3 ui-sm-12">
-						<label i18n="@@respiration" for="respiration">Respiration</label>
-					</div>
-					<div class="ui-grid-col-8 ui-sm-12">
-						<input type="text" pInputText class="form-control" id="respiration" [(ngModel)]="vitalSign.respiration"  
+			<div class="ui-grid-col-2 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@respiration" for="respiration">Respiration</label>
+					<input type="text" pInputText class="form-control" id="respiration" [(ngModel)]="vitalSign.respiration"  
 							name="respiration" #respiration="ngModel">
-					</div>
-					<div class="ui-grid-col-1 ui-sm-12">
-					</div>
 				</div>
 			</div>
-		</div>
-		<br/>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-3 ui-sm-12">
-						<label i18n="@@bloodPressure" for="bloodPressure">Blood Pressure</label>
-					</div>
-					<div class="ui-grid-col-8 ui-sm-12">
-						<input type="text" pInputText class="form-control" id="bloodPressure" [(ngModel)]="vitalSign.bloodPressure" 
+			<div class="ui-grid-col-2 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@bloodPressure" for="bloodPressure">Blood Pressure</label>
+					<input type="text" pInputText class="form-control" id="bloodPressure" [(ngModel)]="vitalSign.bloodPressure" 
 							name="bloodPressure" #bloodPressure="ngModel">
-					</div>
-					<div class="ui-grid-col-1 ui-sm-12">
-					</div>
-				</div>
-			</div>
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-3 ui-sm-12">
-						<label i18n="@@bloodSugar" for="bloodSugar">Blood Sugar</label>
-					</div>
-					<div class="ui-grid-col-8 ui-sm-12">
-						<input type="text" pInputText class="form-control" id="bloodSugar" [(ngModel)]="vitalSign.bloodSugar"  
-							name="bloodSugar" #bloodSugar="ngModel">
-					</div>
-					<div class="ui-grid-col-1 ui-sm-12">
-					</div>
-				</div>
-			</div>
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-3 ui-sm-12">
-						<label i18n="@@pain" for="pain">Pain</label>
-					</div>
-					<div class="ui-grid-col-8 ui-sm-12">
-						<input type="text" pInputText class="form-control" id="pain" [(ngModel)]="vitalSign.pain"  
-							name="pain" #pain="ngModel">
-					</div>
-					<div class="ui-grid-col-1 ui-sm-12">
-					</div>
 				</div>
 			</div>
 		</div>
-		<br/>
 		<div class="ui-grid-row">
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-3 ui-sm-12">
-						<label i18n="@@weight" for="weight">Weight (pound)</label>
-					</div>
-					<div class="ui-grid-col-8 ui-sm-12">
-						<input type="text" pInputText class="form-control" id="weight" [(ngModel)]="vitalSign.weight" 
+			<div class="ui-grid-col-2 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@bloodSugar" for="bloodSugar">Blood Sugar</label>
+					<input type="text" pInputText class="form-control" id="bloodSugar" [(ngModel)]="vitalSign.bloodSugar"  
+							name="bloodSugar" #bloodSugar="ngModel">
+				</div>
+			</div>
+			<div class="ui-grid-col-2 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@pain" for="pain">Pain</label>
+					<input type="text" pInputText class="form-control" id="pain" [(ngModel)]="vitalSign.pain"  
+							name="pain" #pain="ngModel">
+				</div>
+			</div>
+			<div class="ui-grid-col-2 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@weight" for="weight">Weight (pound)</label>
+					<input type="text" pInputText class="form-control" id="weight" [(ngModel)]="vitalSign.weight" 
 							name="weight" #weight="ngModel" (change)="calculateBMI()">
-						
-					</div>
-					<div class="ui-grid-col-1 ui-sm-12">
-					</div>
 				</div>
 			</div>
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-3 ui-sm-12">
-						<label i18n="@@height" for="height">Height (inches)</label>
-					</div>
-					<div class="ui-grid-col-8 ui-sm-12">
-						<input type="text" pInputText class="form-control" id="height" [(ngModel)]="vitalSign.height"  
+			<div class="ui-grid-col-2 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@height" for="height">Height (inches)</label>
+					<input type="text" pInputText class="form-control" id="height" [(ngModel)]="vitalSign.height"  
 							name="height" #height="ngModel" (change)="calculateBMI()">
-					</div>
-					<div class="ui-grid-col-1 ui-sm-12">
-					</div>
 				</div>
 			</div>
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-3 ui-sm-12">
-						<label i18n="@@bmi" for="bmi">BMI</label>
-					</div>
-					<div class="ui-grid-col-8 ui-sm-12">
-						{{vitalSign.bmi}}
-					</div>
-					<div class="ui-grid-col-1 ui-sm-12">
-					</div>
+			<div class="ui-grid-col-2 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@bmi" for="bmi">BMI</label>
+					<br/>
+					{{vitalSign.bmi}}
 				</div>
 			</div>
 		</div>
+		

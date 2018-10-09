@@ -11,9 +11,9 @@
 	<tr>
 		<td *ngFor="let col of cols">{{reference[col.field]}}</td>
 		<td>
-			<button type="button" pButton icon="fa-edit" 
+			<button type="button" pButton icon="fa fa-edit" 
 				(click)="edit(reference.id, referenceType)"></button>&nbsp;&nbsp;
-			<button type="button" pButton icon="fa-eraser" 
+			<button type="button" pButton icon="fa fa-eraser" 
 				(click)="delete(reference.id, referenceType)"></button>
 		</td>
 	</tr>

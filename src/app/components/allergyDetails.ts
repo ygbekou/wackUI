@@ -10,7 +10,7 @@ import { GenericService, GlobalEventsManager, VisitService } from '../services';
  
 @Component({
   selector: 'app-allergy-details',
-  template: `ALLERGIES
+  template: `<p-fieldset legend="ALLERGIES" >
             <div class="ui-grid-row" *ngFor="let allergyGroup of allergyGroups">
               <div class="ui-grid-col-1 ui-sm-12" >
                 {{allergyGroup.name}}:
@@ -21,7 +21,8 @@ import { GenericService, GlobalEventsManager, VisitService } from '../services';
                   label="{{allergy.name}}"
                   *ngFor="let allergy of allergyGroup.childs; let i = index"></p-checkbox>
               </div>
-            </div>`,
+            </div>
+            </p-fieldset>`,
   providers: [GenericService, VisitService]
 })
 export class AllergyDetails implements OnInit, OnDestroy {

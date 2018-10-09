@@ -5,7 +5,7 @@ import { Constants } from '../app.constants';
 import { EditorModule } from 'primeng/editor';
 import { DoctorDropdown, WeekdayDropdown, HospitalLocationDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import {Message} from 'primeng/api';
+import { Message } from 'primeng/api';
 import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { GenericService, UserService } from '../services';
 

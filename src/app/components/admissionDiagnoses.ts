@@ -1,17 +1,13 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Reference } from '../models/reference';
 import { Constants } from '../app.constants';
-import { Admission } from '../models/admission';
-import { Visit } from '../models/visit';
-import { AdmissionDiagnosis } from '../models/admissionDiagnosis';
-import { Diagnosis } from '../models/diagnosis';
+import { Admission, AdmissionDiagnosis, Diagnosis, Reference, Visit, User } from '../models';
 import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DiagnosisDropdown } from './dropdowns';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User } from '../models/user';  
 import { GenericService, GlobalEventsManager, AdmissionService } from '../services';
+import { Message } from 'primeng/api';
 
 @Component({ 
   selector: 'app-admissionDiagnoses',
@@ -21,8 +17,6 @@ import { GenericService, GlobalEventsManager, AdmissionService } from '../servic
 }) 
 export class AdmissionDiagnoses implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   admissionDiagnosis: AdmissionDiagnosis = new AdmissionDiagnosis();
    
   diagnosisCols: any[];
@@ -30,29 +24,22 @@ export class AdmissionDiagnoses implements OnInit, OnDestroy {
   parentId: number;
   parentEntity: string;
   entity: string;
-  
-  hiddenMenu: boolean = true;
-  
-  diagnosisDropdown: DiagnosisDropdown;
-  
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
    
   @Input() admission: Admission;
   @Input() visit: Visit;
+  
+  messages: Message[] = [];
   
   constructor
     (
       private admissionService: AdmissionService,
       private genericService: GenericService,
       private globalEventsManager: GlobalEventsManager,
-      private dgnDropdown: DiagnosisDropdown,
+      private diagnosisDropdown: DiagnosisDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
     ) {
-      this.diagnosisDropdown = dgnDropdown;
       this.clear();
   }
 
@@ -67,12 +54,12 @@ export class AdmissionDiagnoses implements OnInit, OnDestroy {
     
     this.admissionDiagnoses.push(new AdmissionDiagnosis());
     
-    if (this.visit.id > 0){
+    if (this.visit && this.visit.id > 0){
       this.parentId = this.visit.id;
       this.parentEntity = 'visit';
       this.entity = 'VisitDiagnosis';
     }
-    if (this.admission.id > 0){
+    if (this.admission && this.admission.id > 0){
       this.parentId = this.admission.id;
       this.parentEntity = 'admission';
       this.entity = 'AdmissionDiagnosis';
@@ -83,21 +70,32 @@ export class AdmissionDiagnoses implements OnInit, OnDestroy {
     this.admissionDiagnosis = null;
   }
   
-  saveDiagnosis(rowData) {
+  addNew() {
+    this.admissionDiagnoses.push(new AdmissionDiagnosis());
+  }
+  
+  remove(index: number) {
+      this.admissionDiagnoses.splice(index - 1, 1);
+  }
+  
+  saveDiagnosis(rowData: AdmissionDiagnosis) {
+    if (!rowData.diagnosis || !(rowData.diagnosis.id > 0)) {
+      this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.DIAGNOSIS_REQUIRED});
+      return;
+    }
     rowData.admission = this.admission;
     rowData.visit = this.visit;
     
     try {
-      this.error = '';
       
       this.genericService.save(rowData, this.entity)
         .subscribe(result => {
           if (result.id > 0) {
-            rowData = result
+            rowData = result;
+            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
           }
           else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-            this.displayDialog = true;
+            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
           }
         })
     }

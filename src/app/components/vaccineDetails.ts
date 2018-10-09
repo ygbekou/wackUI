@@ -12,7 +12,7 @@ import { VaccineDropdown } from './dropdowns';
  
 @Component({
   selector: 'app-vaccine-details',
-  template: `IMMUNIZATIONS
+  template: `<p-fieldset legend="IMMUNIZATIONS" >
              <p-table [columns]="vaccineCols" [value]="givenVaccines">
                 <ng-template pTemplate="header" let-vaccineCols>
                     <tr>
@@ -24,14 +24,14 @@ import { VaccineDropdown } from './dropdowns';
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-rowData let-columns="columns">
-                    <tr>                 
+                    <tr>
                         <td *ngFor="let col of columns" pEditableColumn>
                           <p-cellEditor *ngIf="col.field == 'givenDate'">
                                 <ng-template pTemplate="input">
                                     <p-calendar [(ngModel)]="rowData[col.field]"></p-calendar>
                                 </ng-template>
                                 <ng-template pTemplate="output">
-                                    {{rowData[col.field]}}
+                                    {{rowData[col.field] | date:'dd/MM/yyyy'}}
                                 </ng-template>
                             </p-cellEditor>
                             <p-cellEditor *ngIf="col.field == 'vaccine'">
@@ -50,12 +50,13 @@ import { VaccineDropdown } from './dropdowns';
                             </p-cellEditor>
                         </td>
                         <td>
-                          <button type="button" pButton icon="fa fa-plus" ></button>&nbsp;&nbsp;
-                          <button type="button" pButton icon="fa fa-eraser" ></button>
+                          <button type="button" pButton icon="fa fa-plus" (click)="addNew()"></button>&nbsp;&nbsp;
+                          <button type="button" pButton icon="fa fa-eraser" (click)="remove(givenVaccines.length)"></button>
                         </td>
                     </tr>
                 </ng-template>
-            </p-table>`,
+            </p-table>
+            </p-fieldset>`,
   providers: [GenericService, VisitService, VaccineDropdown]
 })
 export class VaccineDetails implements OnInit, OnDestroy {
@@ -65,18 +66,16 @@ export class VaccineDetails implements OnInit, OnDestroy {
     @Input() givenVaccines: GivenVaccine[] = [];
     
     vaccineCols: any[];
-    vaccineDropdown: VaccineDropdown;
    
     constructor
       (
         private genericService: GenericService,
         private visitService: VisitService,
-        private vacDropdown: VaccineDropdown,
+        private vaccineDropdown: VaccineDropdown,
         private changeDetectorRef: ChangeDetectorRef,
         private route: ActivatedRoute,
         private router: Router
       ) {
-      this.vaccineDropdown = vacDropdown;
     }
 
     ngOnInit(): void {
@@ -85,9 +84,16 @@ export class VaccineDetails implements OnInit, OnDestroy {
               { field: 'vaccine', header: 'Name' },
               { field: 'givenDate', header: 'Given Date', type: 'Date' }
           ];
-  
     }
     
+    addNew() {
+      this.givenVaccines.push(new GivenVaccine());
+    }
+    
+    remove(index: number) {
+      this.givenVaccines.splice(index - 1, 1);
+    }
+  
     ngOnDestroy() {
       
     }

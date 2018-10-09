@@ -104,7 +104,8 @@
 					<div class="ui-grid-col-4 ui-sm-12">
 						<div class="form-group">
 							<label i18n="@@doctor" for="doctor">Doctor<font color="red">*</font></label> 
-							<p-autoComplete [(ngModel)]="appointment.doctor" (onSelect)="appointment.department = appointment.doctor.department"
+							<p-autoComplete [(ngModel)]="appointment.doctor" 
+								(onSelect)="appointment.department = appointment.doctor.department"
 								(onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
 								[suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
 								id="doctor" (completeMethod)="doctorDropdown.filter($event)"

@@ -1,165 +1,131 @@
-	<div class="ui-grid-row">
-		<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-			<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="doctorOrder">
-				
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@doctorOrderDatetime" for="doctorOrderDatetime">Date Time<font color="red">*</font></label> 
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								<p-calendar [(ngModel)]="doctorOrder.doctorOrderDatetime" [showTime]="true"></p-calendar>
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
-					<br/>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@doctorOrderPriority" for="doctorOrderPriority">Doctor Order Priority</label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12"> 
-								<p-autoComplete [(ngModel)]="doctorOrder.doctorOrderPriority"
-									(onDropdownClick)="doctorOrderPriorityDropdown.handleDropdownClick($event)"
-									[suggestions]="doctorOrderPriorityDropdown.filteredDoctorOrderPriorities" [dropdown]="true"
-									id="doctorOrderPriority" (completeMethod)="doctorOrderPriorityDropdown.filter($event)"
-									name="doctorOrderPriority" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
-									[minLength]="1"></p-autoComplete>
-							</div>									
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="doctorOrder">
+		<p-messages [(value)]="messages"></p-messages>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-6 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@doctorOrderDatetime" for="doctorOrderDatetime">Date Time<font color="red">*</font></label> 
+					<p-calendar [(ngModel)]="doctorOrder.doctorOrderDatetime" [showTime]="true" required
+						name="doctorOrderDatetime"  #doctorOrderDatetime="ngModel"></p-calendar>
+					<p-message *ngIf="f.submitted && doctorOrderDatetime.invalid" severity="error" text="Field is required"></p-message>
 				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@doctorOrderType" for="doctorOrderType">Type</label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12"> 
-								<p-autoComplete [(ngModel)]="doctorOrder.doctorOrderType" 
-									(ngModelChange)="toggleTypeDropdown($event)"
-									(onDropdownClick)="doctorOrderTypeDropdown.handleDropdownClick($event)"
-									[suggestions]="doctorOrderTypeDropdown.filteredDoctorOrderTypes" [dropdown]="true"
-									id="doctorOrderType" (completeMethod)="doctorOrderTypeDropdown.filter($event)"
-									name="doctorOrderType" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
-									[minLength]="1"></p-autoComplete>
-							</div>									
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
-					<div class="ui-grid-col-8 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-2 ui-sm-18">
-								<label i18n="@@description" for="description">Description</label> 
-							</div>
-							<div class="ui-grid-col-16 ui-sm-18">
-								<p-editor [(ngModel)]="doctorOrder.description" [style]="{'height':'100px'}"></p-editor>
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
+				<div class="form-group">
+					<label i18n="@@doctorOrderPriority" for="doctorOrderPriority">Doctor Order Priority</label>
+					<p-autoComplete [(ngModel)]="doctorOrder.doctorOrderPriority" required
+						(onDropdownClick)="doctorOrderPriorityDropdown.handleDropdownClick($event)"
+						[suggestions]="doctorOrderPriorityDropdown.filteredDoctorOrderPriorities" [dropdown]="true"
+						id="doctorOrderPriority" (completeMethod)="doctorOrderPriorityDropdown.filter($event)"
+						name="doctorOrderPriority" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
+						[minLength]="1" name="doctorOrderPriority"  #doctorOrderPriority="ngModel"></p-autoComplete>
+					<p-message *ngIf="f.submitted && doctorOrderPriority.invalid" severity="error" text="Field is required"></p-message>
 				</div>
-				<br/>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-6 ui-sm-12">
-						<div class="ui-grid-row">
-							<label i18n="@@labTest" for="labTest">Lab Test/Group<font color="red">*</font></label>
-						</div>
-						<div class="ui-grid-row">
-							<p-pickList [source]="labTestDropdown.labTests" [target]="doctorOrder.labTests"
-								sourceHeader="Available" targetHeader="Selected" [responsive]="true" filterBy="name" >
-							    <ng-template let-labTest pTemplate="item">
-							        <div class="ui-helper-clearfix">
-							            <div style="font-size:14px;float:left;margin:15px 5px 0 0">{{labTest.name}}</div>
-							        </div>
-							    </ng-template>
-							</p-pickList>
-						</div>
-					</div>
-					<div class="ui-grid-col-8 ui-sm-12">
-						<div class="ui-grid-row">
-							<label i18n="@@medicine" for="medicine">Medicines<font color="red">*</font></label>
-						</div>
-						<div class="ui-grid-row">
-							<p-pickList [source]="productDropdown.products" [target]="doctorOrder.products"
-								sourceHeader="Available" targetHeader="Selected" [responsive]="true" filterBy="name" >
-							    <ng-template let-product pTemplate="item">
-							        <div class="ui-helper-clearfix">
-							            <div style="font-size:14px;float:left;margin:15px 5px 0 0">{{product.name}}</div>
-							        </div>
-							    </ng-template>
-							</p-pickList>
-						</div>
-					</div>
-				</div>
-				<br/>
-				<div class="ui-grid-row" *ngIf="user.userGroup.id != 2">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@orderingDoctor" for="orderingDoctor">Ordering Doctor</label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12"> 
-								<p-autoComplete [(ngModel)]="doctorOrder.doctor"
-									(onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
-									[suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
-									id="orderingDoctor" (completeMethod)="doctorDropdown.filter($event)"
-									name="orderingDoctor" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
-									[minLength]="1"></p-autoComplete>
-							</div>									
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
-					
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@doctorOrderKind" for="doctorOrderKind">Doctor Order Method</label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12"> 
-								<p-autoComplete [(ngModel)]="doctorOrder.doctorOrderKind"
-									(onDropdownClick)="doctorOrderKindDropdown.handleDropdownClick($event)"
-									[suggestions]="doctorOrderKindDropdown.filteredDoctorOrderKinds" [dropdown]="true"
-									id="doctorOrderKind" (completeMethod)="doctorOrderKindDropdown.filter($event)"
-									name="doctorOrderKind" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
-									[minLength]="1"></p-autoComplete>
-							</div>									
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@receivedDatetime" for="receivedDatetime">Order Received Date Time<font color="red">*</font></label> 
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								<p-calendar [(ngModel)]="doctorOrder.receivedDatetime" [showTime]="true"></p-calendar>
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
+				<div class="form-group">
+					<label i18n="@@doctorOrderType" for="doctorOrderType">Doctor Order Type</label>
+					<p-autoComplete [(ngModel)]="doctorOrder.doctorOrderType" 
+						(ngModelChange)="toggleTypeDropdown($event)" required
+						(onDropdownClick)="doctorOrderTypeDropdown.handleDropdownClick($event)"
+						[suggestions]="doctorOrderTypeDropdown.filteredDoctorOrderTypes" [dropdown]="true"
+						id="doctorOrderType" (completeMethod)="doctorOrderTypeDropdown.filter($event)"
+						name="doctorOrderType" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
+						[minLength]="1" name="doctorOrderType"  #doctorOrderType="ngModel"></p-autoComplete>
+					<p-message *ngIf="f.submitted && doctorOrderType.invalid" severity="error" text="Field is required"></p-message>
 				</div>
 			</div>
-			<br/>
-			<br/>
-			<div *ngIf="error" class="alert alert-danger">{{error}}</div>
-			<div>
-				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-					<button type="button" pButton icon="fa fa-close" (click)="delete()"
-						label="Supprimer"></button>
-					<button type="button" pButton icon="fa fa-check" (click)="save()"
-						label="Sauvegarder"></button>
+			<div class="ui-grid-col-6 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@description" for="description">Description</label> 
+					<p-editor [(ngModel)]="doctorOrder.description" [style]="{'height':'100px'}"
+						name="description"  #description="ngModel"></p-editor>
 				</div>
 			</div>
 		</div>
+		<br/>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-6 ui-sm-12" *ngIf="doctorOrder.doctorOrderType.id == 2">
+				<div class="form-group">
+					<label i18n="@@labTest" for="labTest">Lab Test/Group<font color="red">*</font></label>
+					<p-pickList [source]="labTestDropdown.labTests" [target]="doctorOrder.labTests"
+						sourceHeader="Available" targetHeader="Selected" [responsive]="true" filterBy="name"
+						name="labTests" >
+					    <ng-template let-labTest pTemplate="item">
+					        <div class="ui-helper-clearfix">
+					            <div style="font-size:14px;float:left;margin:15px 5px 0 0">{{labTest.name}}</div>
+					        </div>
+					    </ng-template>
+					</p-pickList>
+				</div>
+			</div>
+			<div class="ui-grid-col-6 ui-sm-12" *ngIf="doctorOrder.doctorOrderType.id == 1">
+				<div class="form-group">
+					<label i18n="@@medicine" for="medicine">Medicines<font color="red">*</font></label>
+					<p-pickList [source]="productDropdown.products" [target]="doctorOrder.products"
+						sourceHeader="Available" targetHeader="Selected" [responsive]="true" filterBy="name" 
+						name="medicines">
+					    <ng-template let-product pTemplate="item">
+					        <div class="ui-helper-clearfix">
+					            <div style="font-size:14px;float:left;margin:15px 5px 0 0">{{product.name}}</div>
+					        </div>
+					    </ng-template>
+					</p-pickList>
+				</div>
+			</div>
+			<div class="ui-grid-col-6 ui-sm-12" *ngIf="doctorOrder.doctorOrderType.id != 1 && doctorOrder.doctorOrderType.id != 2">
+			</div>
+			<div class="ui-grid-col-6 ui-sm-12">
+				<p-fieldset legend="FOR NURSES USE ONLY">
+					<div class="form-group">
+						<label i18n="@@orderingDoctor" for="orderingDoctor">Ordering Doctor</label>
+						<p-autoComplete [(ngModel)]="doctorOrder.doctor"
+							(onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
+							[suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
+							id="orderingDoctor" (completeMethod)="doctorDropdown.filter($event)"
+							name="orderingDoctor" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
+							[minLength]="1" name="doctor"></p-autoComplete>
+					</div>
+					<div class="form-group">
+						<label i18n="@@doctorOrderKind" for="doctorOrderKind">Doctor Order Method</label>
+						<p-autoComplete [(ngModel)]="doctorOrder.doctorOrderKind"
+							(onDropdownClick)="doctorOrderKindDropdown.handleDropdownClick($event)"
+							[suggestions]="doctorOrderKindDropdown.filteredDoctorOrderKinds" [dropdown]="true"
+							id="doctorOrderKind" (completeMethod)="doctorOrderKindDropdown.filter($event)"
+							name="doctorOrderKind" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
+							[minLength]="1" name="doctorOrderKind"></p-autoComplete>
+					</div>
+					<div class="form-group">
+						<label i18n="@@receivedDatetime" for="receivedDatetime">Order Received Date Time<font color="red">*</font></label> 
+						<p-calendar [(ngModel)]="doctorOrder.receivedDatetime" [showTime]="true" name="receiveDatetime"></p-calendar>
+					</div>
+				</p-fieldset>
+			</div>
+		</div>
+		<br/>
 	</div>
+
+	<br/>
+	<br/>
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-1 ui-sm-12">
+				<button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="Effacer"></button>
+			</div>
+			<div class="ui-grid-col-1 ui-sm-12">
+				<button pButton icon="fa fa-save" label="Save"></button>
+			</div>
+			<div class="ui-grid-col-6 ui-sm-12">
+			</div>
+			<div class="ui-grid-col-1 ui-sm-12">
+				<button type="button" pButton icon="" (click)="changeStatus(STATUS_INPRORESS_ID, STATUS_INPROGRESS_NAME)" 
+				label="ReOpen" *ngIf="doctorOrder.status.id == 4"></button>
+			</div>
+			<div class="ui-grid-col-1 ui-sm-12">
+				<button type="button" pButton icon="" (click)="changeStatus(STATUS_CLOSED_ID, STATUS_CLOSED_NAME)" 
+				label="Close" *ngIf="doctorOrder.status.id != 4"></button>
+			</div>
+			<div class="ui-grid-col-1 ui-sm-12">
+				<button type="button" pButton icon="fa fa-remove" (click)="delete()" label="Delete"></button>
+			</div>
+		</div>
+	</div>
+</form>
+		
+

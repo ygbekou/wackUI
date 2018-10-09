@@ -68,7 +68,7 @@
 			    </p-tabPanel>
 			    <p-tabPanel header="Doctor Order Type">
 			    	<div *ngIf="activeTab == 8" class="ui-grid-row">
-				        <app-reference-details></app-reference-details>
+				        <app-reference-details [viewOnly]="true" ></app-reference-details>
 				        <br/> 
 				        <br/>
 				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'DoctorOrderType')"></app-reference-list>

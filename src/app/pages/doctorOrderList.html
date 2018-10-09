@@ -1,5 +1,8 @@
 	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
 		<p-table [columns]="cols" [value]="doctorOrders">
+			 <ng-template pTemplate="caption">
+		        DOCTOR ORDERS
+		    </ng-template>
 		    <ng-template pTemplate="header" let-columns>
 		        <tr>
 		            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
@@ -20,10 +23,8 @@
 		                </div>
 		            </td>
 		            <td>
-		            	<button type="button" pButton icon="fa-edit" style="float: left"
-							(click)="edit(rowData.id)"></button>
-						<button type="button" pButton icon="fa-eraser" style="float: left"
-							(click)="delete(rowData.id)"></button>
+		            	<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
+						<button type="button" pButton icon="fa fa-eraser" (click)="delete(rowData.id)"></button>
 		            </td>
 		        </tr>
 		    </ng-template>

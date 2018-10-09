@@ -7,6 +7,8 @@ import { Reference } from './reference';
 import { Service } from './service';
 import { Visit } from './visit';
 
+import { Constants } from '../app.constants';
+
 export class DoctorOrder {
   id: number;
   admission: Admission;
@@ -18,13 +20,16 @@ export class DoctorOrder {
   doctorOrderDatetime: Date;
   receivedDatetime: Date;
   description: string;
-  status: number;
+  status: Reference = new Reference();
   
   labTests: LabTest[] = [];
   products: Product[] = [];
   
   constructor() {
     this.doctorOrderType = new Reference();
+    this.status = new Reference();
+    this.status.id = Constants.DOCTOR_ORDER_STATUS_PENDING;
+    this.status.name = 'PENDING';
   }
   
 }

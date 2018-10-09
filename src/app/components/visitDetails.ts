@@ -1,21 +1,17 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../app.constants';
-import { Country } from '../models/country';
-import { GivenVaccine } from '../models/givenVaccine';
-import { Patient } from '../models/patient';
-import { Visit } from '../models/visit';
-import { Reference } from '../models/reference';
+import { Country, GivenVaccine, Patient, Visit, Reference, User } from '../models';
 import { EditorModule } from 'primeng/editor';
 import { PackageDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
-import { User } from '../models/user';  
 import { GenericService, GlobalEventsManager, VisitService } from '../services';
 import { AdmissionDiagnoses } from './admissionDiagnoses';
 import { DoctorOrderDetails } from './doctorOrderDetails';
 import { PrescriptionDetails } from './prescriptionDetails';
 import { PrescriptionList } from './prescriptionList';
+import { Message } from 'primeng/api';
  
 @Component({
   selector: 'app-visit-details',
@@ -24,8 +20,6 @@ import { PrescriptionList } from './prescriptionList';
 })
 export class VisitDetails implements OnInit, OnDestroy {
   
-  
-  public error: String = '';
   displayDialog: boolean;
   visit: Visit = new Visit();
   medicineCols: any[];
@@ -49,6 +43,8 @@ export class VisitDetails implements OnInit, OnDestroy {
   @ViewChild(PrescriptionDetails) prescriptionDetails: PrescriptionDetails;
   @ViewChild(PrescriptionList) prescriptionList: PrescriptionList;
   
+  messages: Message[] = [];
+  
   constructor
     (
       private genericService: GenericService,
@@ -68,6 +64,14 @@ export class VisitDetails implements OnInit, OnDestroy {
     this.route
         .queryParams
         .subscribe(params => {          
+          
+          if (params['patientId'] != null) {
+          this.patient.id = params['patientId'];
+          this.patient.medicalRecordNumber = params['mrn'];
+          this.patient.name = params['patientName'];
+          this.patient.user.birthDate = params['birthDate'];
+          this.patient.user.sex = params['gender'];
+        }
           
           this.visit.patient = new Patient();
           this.visit.patient.user = new User();
@@ -113,17 +117,16 @@ export class VisitDetails implements OnInit, OnDestroy {
     
     this.visit.patient = this.patient;
     try {
-      this.error = '';
       this.visit.patient = this.patient;
       this.visitService.saveVisit(this.visit)
         .subscribe(result => {
           alert(result.id)
           if (result.id > 0) {
             this.visit = result
-            console.info(this.visit);
+            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
           }
           else { 
-            this.error = Constants.SAVE_UNSUCCESSFUL;
+            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
             this.displayDialog = true;
           }
         })
@@ -131,26 +134,6 @@ export class VisitDetails implements OnInit, OnDestroy {
     catch (e) {
       console.log(e);
     }
-  }
-  
-  lookUpPatient() {
-    let parameters: string [] = []; 
-            
-    parameters.push('e.matricule = |matricule|' + this.patient.matricule + '|String')
-    let patientMatricule = this.patient.matricule;
-    this.patient = new Patient()
-    this.patient.matricule = patientMatricule;
-    
-    this.genericService.getAllByCriteria('Patient', parameters)
-      .subscribe((data: Patient[]) => 
-      { 
-        if (data.length > 0) {
-          console.info(this.patient)
-          this.patient = data[0];
-        }
-      },
-      error => console.log(error),
-      () => console.log('Get Patient complete'));
   }
   
   onTabChange(evt) {
@@ -178,5 +161,7 @@ export class VisitDetails implements OnInit, OnDestroy {
     this.prescriptionDetails.getPrescription(prescriptionId);
   }
   
-  
+  lookUpPatient(event) {
+    this.patient = event;
+  }
  }

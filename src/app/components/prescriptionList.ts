@@ -1,14 +1,10 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, EventEmitter, Output } from '@angular/core';
-import { Employee } from '../models/employee';
+import { Employee, Visit, User, Admission, Prescription } from '../models';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../app.constants';
-import { Admission } from '../models/admission';
-import { Prescription } from '../models/prescription';
 import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User } from '../models/user';  
-import { Visit } from '../models/visit';
 import { GenericService, AdmissionService, GlobalEventsManager } from '../services';
 
 @Component({
@@ -41,18 +37,15 @@ export class PrescriptionList implements OnInit, OnDestroy {
     private router: Router,
     ) {
 
-    
   }
 
   ngOnInit(): void {
     this.cols = [
             { field: 'prescriptionDatetime', header: 'Date', type: 'Date' },
-            { field: 'prescriptionType', header: 'Type' },
+            { field: 'prescriptionTypeName', header: 'Type' },
             { field: 'notes', header: 'Notes' },
-            { field: 'status', header: 'Status', type:'string' }
+            { field: 'isDischargeDesc', header: 'Is Discharge'}
         ];
-    
-    
     this.getPrescriptions();
   }
  

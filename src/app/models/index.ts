@@ -11,4 +11,14 @@ export * from './employee';
 export * from './userGroup';
 export * from './department';
 export * from './appointment';
+export * from './givenVaccine';
+export * from './visit';
+export * from './reference';
+export * from './admission';
+export * from './doctorOrder';
+export * from './vitalSign';
+export * from './admissionDiagnosis';
+export * from './diagnosis';
+export * from './prescription';
+export * from './product';
 

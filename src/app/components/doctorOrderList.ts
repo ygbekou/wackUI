@@ -45,7 +45,8 @@ export class DoctorOrderList implements OnInit, OnDestroy {
     this.cols = [
             { field: 'doctorOrderDatetime', header: 'Date Time', type:'date' },
             { field: 'doctorOrderTypeName', header: 'Type' },
-            { field: 'description', header: 'Description' }
+            { field: 'description', header: 'Description' },
+            { field: 'doctorOrderStatusName', header: 'Status' }
         ];
     
     this.route
@@ -53,7 +54,6 @@ export class DoctorOrderList implements OnInit, OnDestroy {
         .subscribe(params => {          
           
             let parameters: string [] = []; 
-            parameters.push('e.status = |status|0|Integer')
             if (this.visit)  {
               parameters.push('e.visit.id = |visitId|' + this.visit.id + '|Long')
             } 

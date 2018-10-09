@@ -24,6 +24,9 @@ export class PatientSaleList implements OnInit, OnDestroy {
   patientSales: PatientSale[] = [];
   cols: any[];
   
+  @Input() admission: Admission;
+  @Input() visit: Visit;
+  
   DETAIL: string = Constants.DETAIL;
   ADD_IMAGE: string = Constants.ADD_IMAGE;
   ADD_LABEL: string = Constants.ADD_LABEL;  

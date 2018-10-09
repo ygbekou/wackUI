@@ -4,7 +4,7 @@ import { Constants } from '../app.constants';
 import { Admission } from '../models/admission';
 import { AdmissionDiagnosis } from '../models/admissionDiagnosis';
 import { Discharge } from '../models/discharge';
-import { PrescriptionMedicine } from '../models/prescriptionMedicine';
+import { PrescriptionMedicine } from '../models/prescription';
 import { Reference } from '../models/reference';
 import { EditorModule } from 'primeng/editor';
 import { DoctorDropdown } from './dropdowns';

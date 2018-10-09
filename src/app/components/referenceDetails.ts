@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Reference } from '../models/reference';
 import { CategoryDropdown } from './dropdowns';
@@ -30,6 +30,8 @@ export class ReferenceDetails implements OnInit, OnDestroy {
   DETAIL: string = Constants.DETAIL;
   ADD_IMAGE: string = Constants.ADD_IMAGE;
   ADD_LABEL: string = Constants.ADD_LABEL;  
+  
+  @Input() viewOnly: boolean;
   
   constructor
     (
