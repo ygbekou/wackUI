@@ -20,6 +20,9 @@ export class PurchaseOrder {
   purchaseOrderProducts: PurchaseOrderProduct[] = [];
   
   constructor() {
+    this.requestor = new Employee();
+    this.shipTo = new Employee();
+    this.supplier = new Supplier();
     this.purchaseOrderProducts.push(new PurchaseOrderProduct())
   }
   

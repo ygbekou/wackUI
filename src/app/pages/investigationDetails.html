@@ -1,137 +1,75 @@
-<div class="ui-grid-row"> 
-		<div class="ui-grid-row">
-			<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-				<div class="ui-grid ui-grid-responsive" *ngIf="investigation">
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-4 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@itemNumber" for="itemNumber">{{itemNumberLabel}}<font color="red">*</font></label>
-								</div>
-								<div class="ui-grid-col-8 ui-sm-12">
-									<input type="text" pInputText class="form-control" id="itemNumber" (change)="lookUpVisit()"
-									[(ngModel)]="itemNumber" name="itemNumber" #itemNumberModel="ngModel">
-								</div>
-								<div class="ui-grid-col-1 ui-sm-12">
-								</div>
-							</div>
-						</div>
-						<div class="ui-grid-col-4 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@patientName" for="patientName">Patient Name</label>
-								</div>
-								<div class="ui-grid-col-8 ui-sm-12">
-									{{patient.name}}
-								</div>
-								<div class="ui-grid-col-1 ui-sm-12">
-								</div>
-							</div>
-						</div>
-						<div class="ui-grid-col-4 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@patientBirthDate" for="patientSex">Sex</label>
-								</div>
-								<div class="ui-grid-col-8 ui-sm-12">
-									{{patient.user.sex}}
-								</div>
-								<div class="ui-grid-col-1 ui-sm-12">
-								</div>
-							</div>
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+		<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="investigation">
+			<p-messages [(value)]="messages"></p-messages>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-5 ui-sm-12">
+					<app-visitAdm-lookup (visitEmit)="lookUpVisitAdm($event)" [originalPage]="'admin/patientSaleDetails'"
+						[visit]="visit"></app-visitAdm-lookup>
+				</div>
+				<div class="ui-grid-col-7 ui-sm-12">
+					<div class="ui-grid-col-2 ui-sm-12">
+						<div class="form-group">
+							<label i18n="@@investigationDatetime" for="investigationDatetime">Invest. Date Time<font color="red">*</font></label> 
+							<p-calendar [(ngModel)]="investigation.investigationDatetime" [showTime]="true"
+								name="investigationDatetime"  #investigationDatetime="ngModel" required></p-calendar>
+							<p-message *ngIf="f.submitted && investigationDatetime.invalid" severity="error" text="Field is required"></p-message>
 						</div>
 					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-4 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@patientSex" for="patientBirthDate">Birth Date: </label>
-								</div>
-								<div class="ui-grid-col-8 ui-sm-12">
-									{{patient.user.birthDate | date:'dd/MM/yyyy'}}
-								</div>
-								<div class="ui-grid-col-1 ui-sm-12">
-								</div>
-							</div>				
-						</div>
-						
-					</div>
-
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-4 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@investigationDatetime" for="investigationDatetime">Invest. Date Time<font color="red">*</font></label> 
-								</div>
-								<div class="ui-grid-col-8 ui-sm-12">
-									<p-calendar [(ngModel)]="investigation.investigationDatetime" [showTime]="true"></p-calendar>
-								</div>
-								<div class="ui-grid-col-1 ui-sm-12">
-								</div>
-							</div>
-						</div>
-						<div class="ui-grid-col-4 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@name" for="name">Name</label> 
-								</div>
-								<div class="ui-grid-col-8 ui-sm-12">
-									<input pInputText id="name" [(ngModel)]="investigation.name" required />							
-								</div>
-								<div class="ui-grid-col-1 ui-sm-12">
-								</div>
-							</div>
-						</div>
-						<div class="ui-grid-col-4 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@description" for="description">Description</label> 
-								</div>
-								<div class="ui-grid-col-8 ui-sm-12">
-									<textarea pInputTextarea id="description" rows="4" cols="40" pInputTextarea maxlength="1000" 
-										[(ngModel)]="investigation.description" #notes="ngModel"> </textarea>							
-								</div>
-								<div class="ui-grid-col-1 ui-sm-12">
-								</div>
-							</div>
+					<div class="ui-grid-col-3 ui-sm-12">
+						<div class="form-group">
+							<label i18n="@@name" for="name">Name</label> 
+							<input pInputText id="name" [(ngModel)]="investigation.name" name="name"  #name="ngModel" required />	
+							<p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>						
 						</div>
 					</div>
-					
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-4 ui-sm-12">
-								<div class="form-group">
-									<label i18n="@@labTest" for="labTest">Lab Test/Group<font color="red">*</font></label>  
-									<p-autoComplete [(ngModel)]="investigation.labTest" (ngModelChange)="populateLabTests($event)"
-									(onDropdownClick)="labTestDropdown.handleDropdownClick($event)"
-									[suggestions]="labTestDropdown.filteredLabTests" [dropdown]="true"
-									id="labTest" (completeMethod)="labTestDropdown.filter($event)"
-									name="labTest" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
-									[minLength]="1"></p-autoComplete> 
-							</div>
-						</div>
-						<div class="ui-grid-col-4 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@labTest" for="labTest">Lab Test from Selected Group</label> 
-								</div>
-								<div class="ui-grid-col-8 ui-sm-12">
-									<p-listbox [options]="labTests" optionLabel="name"></p-listbox>
-								</div>
-								<div class="ui-grid-col-1 ui-sm-12">
-								</div>
-							</div>
+					<div class="ui-grid-col-7 ui-sm-12">
+						<div class="form-group">
+							<label i18n="@@description" for="description">Description</label> 
+							<textarea pInputTextarea id="description" rows="4" cols="40" pInputTextarea maxlength="1000" 
+								[(ngModel)]="investigation.description" name="notes" #notes="ngModel"> </textarea>					
 						</div>
 					</div>
-					
-					<div *ngIf="error" class="alert alert-danger">{{error}}</div>
-					<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-						<button type="button" pButton icon="fa fa-close" (click)="delete()"
-							label="Supprimer"></button> &nbsp;
-						<button type="button" pButton icon="fa fa-check" (click)="save()"
-							label="Sauvegarder"></button>
+				</div>
+			</div>
+			
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4 ui-sm-12">
+						<div class="form-group">
+							<label i18n="@@labTest" for="labTest">Lab Test/Group<font color="red">*</font></label>  
+							<p-autoComplete [(ngModel)]="investigation.labTest" (ngModelChange)="populateLabTests($event)"
+							(onDropdownClick)="labTestDropdown.handleDropdownClick($event)"
+							[suggestions]="labTestDropdown.filteredLabTests" [dropdown]="true"
+							id="labTest" (completeMethod)="labTestDropdown.filter($event)"
+							name="labTest" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
+							[minLength]="1" name="labTest" #labTest="ngModel" required></p-autoComplete> 
+							<p-message *ngIf="f.submitted && labTest.invalid" severity="error" text="Field is required"></p-message>
+					</div>
+				</div>
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@labTest" for="labTest">Lab Test from Selected Group</label> 
+						<p-listbox [options]="labTests" optionLabel="name"></p-listbox>
+					</div>
+				</div>
+			</div>
+			<br/>
+			<br/>
+			<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-1 ui-sm-12">
+						<button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="Effacer"></button>
+					</div>
+					<div class="ui-grid-col-1 ui-sm-12">
+						<button pButton icon="fa fa-save" label="Save"></button>
+					</div>
+					<div class="ui-grid-col-6 ui-sm-12">
+					</div>
+					<div class="ui-grid-col-1 ui-sm-12">
+						<button type="button" pButton icon="fa fa-remove" (click)="delete()" label="Delete"></button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
- 
+</form>

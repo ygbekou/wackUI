@@ -1,17 +1,17 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
-import { Product } from '../../models/product';
+import { Product, Supplier, User } from '../../models';
+import { PatientSale } from '../../models/stocks/patientSale';
 import { PurchaseOrder, PurchaseOrderProduct } from '../../models/stocks/purchaseOrder';
 import { ReceiveOrder } from '../../models/stocks/receiveOrder';
 import { SaleReturn } from '../../models/stocks/saleReturn';
-import { Supplier } from '../../models/supplier';
 import { EditorModule } from 'primeng/editor';
 import { EmployeeDropdown, SupplierDropdown, ProductDropdown } from '../dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
-import { User } from '../../models/user';  
+import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { GenericService, PurchasingService } from '../../services';
+import { Message } from 'primeng/api';
  
 @Component({  
   selector: 'app-saleReturn-details',
@@ -25,12 +25,7 @@ export class SaleReturnDetails implements OnInit, OnDestroy {
   saleReturn: SaleReturn = new SaleReturn();
   returnProductCols: any[];
   
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
-  SELECT_OPTION: string = Constants.SELECT_OPTION;
-  
-  patientSaleId: number;
+  patientSale: PatientSale = new PatientSale();
   
   constructor
     (
@@ -49,9 +44,9 @@ export class SaleReturnDetails implements OnInit, OnDestroy {
      this.returnProductCols = [
             { field: 'productName', header: 'Name' },
             { field: 'productDescription', header: 'Description' },
-            { field: 'originalQuantity', header: 'Quantity Ordered', type: 'amount'},
-            { field: 'quantity', header: 'Quantity Received', type: 'amount'},
-            { field: 'notes', header: 'Notes'}
+            { field: 'originalQuantity', header: 'Sale Quantity', type: 'amount'},
+            { field: 'quantity', header: 'Returned Quantity', type: 'number'},
+            { field: 'notes', header: 'Notes', type: "text"}
         ]; 
     
     let saleReturnId = null;
@@ -111,14 +106,14 @@ export class SaleReturnDetails implements OnInit, OnDestroy {
     }
   }
   
-  lookUpPatientSale() {
+  lookUpPatientSale(event) {
+    this.patientSale = event;
     
-    this.genericService.getNewObject('/service/purchasing/patientSale/newSaleReturn/', this.patientSaleId)
+    this.genericService.getNewObject('/service/purchasing/patientSale/newSaleReturn/', this.patientSale.id)
       .subscribe((data: SaleReturn) => 
       { 
 
         this.saleReturn = data;
-        console.info(this.saleReturn)
         
       },
       error => console.log(error),

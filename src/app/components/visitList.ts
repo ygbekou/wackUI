@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { Employee, Visit, User } from '../models';
+import { Employee, Visit, User, SearchCriteria } from '../models';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../app.constants';
 import { FileUploader } from './fileUploader';
@@ -14,14 +14,9 @@ import { GenericService } from '../services';
 })
 export class VisitList implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   visits: Visit[] = [];
   cols: any[];
-  
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
+  searchCriteria: SearchCriteria = new SearchCriteria();
   
   constructor
     (
@@ -94,4 +89,31 @@ export class VisitList implements OnInit, OnDestroy {
     }
   }
 
+  search() {
+   
+    let parameters: string [] = []; 
+        
+    parameters.push('e.status = |status|0|Integer')
+     if (this.searchCriteria.medicalRecordNumber != null && this.searchCriteria.medicalRecordNumber.length > 0)  {
+      parameters.push('e.patient.medicalRecordNumber = |medicalRecordNumber|' + this.searchCriteria.medicalRecordNumber + '|String')
+    }
+    if (this.searchCriteria.lastName != null && this.searchCriteria.lastName.length > 0)  {
+      parameters.push('e.patient.user.lastName like |lastName|' + '%' + this.searchCriteria.lastName + '%' + '|String')
+    }
+    if (this.searchCriteria.firstName != null && this.searchCriteria.firstName.length > 0)  {
+      parameters.push('e.patient.user.firstName like |firstName|' + '%' + this.searchCriteria.firstName + '%' + '|String')
+    } 
+    if (this.searchCriteria.birthDate != null)  {
+      parameters.push('e.patient.user.birthDate = |birthDate|' + this.searchCriteria.birthDate.toLocaleDateString() + '|Date')
+    }  
+    
+    
+    this.genericService.getAllByCriteria('Visit', parameters)
+      .subscribe((data: Visit[]) => 
+      { 
+        this.visits = data 
+      },
+      error => console.log(error),
+      () => console.log('Get all Visits complete'));
+  }
  }

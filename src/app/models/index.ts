@@ -21,4 +21,7 @@ export * from './admissionDiagnosis';
 export * from './diagnosis';
 export * from './prescription';
 export * from './product';
+export * from './investigation';
+export * from './labTest';
+export * from './supplier';
 

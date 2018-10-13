@@ -1,16 +1,15 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
-import { Product } from '../../models/product';
+import { Product, Supplier, User } from '../../models';
 import { PurchaseOrder, PurchaseOrderProduct } from '../../models/stocks/purchaseOrder';
 import { ReceiveOrder } from '../../models/stocks/receiveOrder';
-import { Supplier } from '../../models/supplier';
 import { EditorModule } from 'primeng/editor';
 import { EmployeeDropdown, SupplierDropdown, ProductDropdown } from '../dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
-import { User } from '../../models/user';  
+import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { GenericService, PurchasingService } from '../../services';
+import { Message } from 'primeng/api';
  
 @Component({  
   selector: 'app-receiveOrder-details',
@@ -19,20 +18,13 @@ import { GenericService, PurchasingService } from '../../services';
 })
 export class ReceiveOrderDetails implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   receiveOrder: ReceiveOrder = new ReceiveOrder();
   orderProductCols: any[];
-  
+  messages: Message[] = [];
   supplierDropdown: SupplierDropdown;
   productDropdown: ProductDropdown;
   
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
-  SELECT_OPTION: string = Constants.SELECT_OPTION;
-  
-  purchaseOrderId: number;
+  purchaseOrder: PurchaseOrder = new PurchaseOrder();
   
   constructor
     (
@@ -72,10 +64,6 @@ export class ReceiveOrderDetails implements OnInit, OnDestroy {
                 if (result.id > 0) {
                   this.receiveOrder = result
                 }
-                else {
-                  this.error = Constants.SAVE_UNSUCCESSFUL;
-                  this.displayDialog = true;
-                }
               })
           } else {
               
@@ -98,36 +86,38 @@ export class ReceiveOrderDetails implements OnInit, OnDestroy {
     this.receiveOrder.status = status;
     
     try {
-      this.error = '';
+      this.messages = [];
       this.purchasingService.saveReceiveOrder(this.receiveOrder)
         .subscribe(result => {
           if (result.id > 0) {
             this.receiveOrder = result
-            console.info(this.receiveOrder);
+            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
           }
           else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-            this.displayDialog = true;
+             this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
           }
-        })
+        }) 
     }
     catch (e) {
       console.log(e);
     }
   }
   
-  lookUpPurchaseOrder() {
+  lookUpPurchaseOrder(event) {
+    this.purchaseOrder = event;
     
-    this.purchasingService.getNewReceiveOrder(this.purchaseOrderId)
+    if (this.purchaseOrder && this.purchaseOrder.id > 0) {
+      this.purchasingService.getNewReceiveOrder(this.purchaseOrder.id)
       .subscribe((data: ReceiveOrder) => 
       { 
-
+  
         this.receiveOrder = data;
         console.info(this.receiveOrder)
         
       },
       error => console.log(error),
       () => console.log('Get PurchaseOrder complete'));
+    }
   }
 
  }

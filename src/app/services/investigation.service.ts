@@ -2,8 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import {Constants} from '../app.constants';
-import { Investigation } from '../models/investigation';
-import { InvestigationTest } from '../models/investigationTest';
+import { Investigation, InvestigationTest } from '../models/investigation';
 import { Package } from '../models/package';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 

@@ -93,6 +93,9 @@ import {HospitalLocationDetails} from '../components/hospitalLocationDetails';
 import {HospitalLocationList} from '../components/hospitalLocationList';
 
 import {PatientLookup} from '../components/includes/patientLookup';
+import {PatientSaleLookup} from '../components/includes/patientSaleLookup';
+import {VisitAdmLookup} from '../components/includes/visitAdmLookup';
+import {PurchaseOrderLookup} from '../components/includes/purchaseOrderLookup';
 
 const routes: Routes = [
   {path: 'adminMain', component: AdminMain},
@@ -188,7 +191,8 @@ const routes: Routes = [
     AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails,
     InvestigationList, PurchaseOrderDetails, PurchaseOrderList, ReceiveOrderDetails, ReceiveOrderList,
     PatientSaleDetails, PatientSaleList, SaleReturnDetails, SaleReturnList, BirthReportDetails, BirthReportList,
-    DeathReportDetails, DeathReportList, HospitalLocationDetails, HospitalLocationList, PatientLookup],
+    DeathReportDetails, DeathReportList, HospitalLocationDetails, HospitalLocationList, PatientLookup, VisitAdmLookup, 
+    PurchaseOrderLookup, PatientSaleLookup],
 
   providers: [CategoryDropdown, PackageDropdown]
 })

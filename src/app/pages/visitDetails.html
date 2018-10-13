@@ -73,14 +73,12 @@
 			(prescriptionIdEvent)="onPrescriptionSelected($event)"></app-prescription-list>
 		</p-tabPanel> 
 		<p-tabPanel header="INVESTIGATIONS" *ngIf="visit.id > 0">
-			<app-investigation-details></app-investigation-details> <br />
-			<br />
-			<app-investigation-list [visit]="visit"></app-investigation-list> 
+			<app-investigation-list [showActions]="false" [visit]="visit"></app-investigation-list> 
 		</p-tabPanel> 
 		<p-tabPanel header="PHARMACY" *ngIf="visit.id > 0">
 			<app-patientSale-details [visit]="visit"></app-patientSale-details> <br />
 			<br />
-			<app-patientSale-list [visit]="visit"></app-patientSale-list> 
+			<app-patientSale-list (patientSaleIdEvent)="onPatientSaleSelected($event)" [visit]="visit"></app-patientSale-list> 
 		</p-tabPanel> 
 		<p-tabPanel header="DISCHARGE FORM" *ngIf="visit.id > 0">
 			<div>

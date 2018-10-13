@@ -1,215 +1,148 @@
-<div role="main" class="main">
-	<section
-		class="parallax section section-text-light section-parallax section-center mt-0 mb-5"
-		data-plugin-parallax data-plugin-options="{'speed': 1.5}"
-		data-image-src="assets/images/slides/bg-top.jpg">
-	</section>
-
-		<div class="container" style="padding-left: 10px; max-width: 100%;">
-	
-	<div class="ui-grid-row">
-		<div class="ui-g-2 ui-sm-4">
-			<app-admin-menu></app-admin-menu>
-		</div>
-		<div class="ui-grid-row">
-			<div class="ui-g-10 ui-sm-8" style="padding: 15px;">
-				<div class="ui-grid ui-grid-responsive" *ngIf="patientSale">
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-4 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@itemNumber" for="itemNumber">{{itemNumberLabel}}<font color="red">*</font></label>
-								</div>
-								<div class="ui-grid-col-8 ui-sm-12">
-									<input type="text" pInputText class="form-control" id="itemNumber" (change)="lookUpVisit()"
-									[(ngModel)]="itemNumber" name="itemNumber" #itemNumberModel="ngModel">
-								</div>
-								<div class="ui-grid-col-1 ui-sm-12">
-								</div>
-							</div>
-						</div>
-						<div class="ui-grid-col-4 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@patientName" for="patientName">Patient Name</label>
-								</div>
-								<div class="ui-grid-col-8 ui-sm-12">
-									{{patient.name}}
-								</div>
-								<div class="ui-grid-col-1 ui-sm-12">
-								</div>
-							</div>
-						</div>
-						<div class="ui-grid-col-4 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@patientBirthDate" for="patientSex">Sex</label>
-								</div>
-								<div class="ui-grid-col-8 ui-sm-12">
-									{{patient.user.sex}}
-								</div>
-								<div class="ui-grid-col-1 ui-sm-12">
-								</div>
-							</div>
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+		<p-messages [(value)]="messages"></p-messages>
+		<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="patientSale">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-5 ui-sm-12" *ngIf="!isVisitOrAdmissionPage()">
+					<app-visitAdm-lookup (visitEmit)="lookUpVisitAdm($event)" [originalPage]="'admin/patientSaleDetails'"
+						[visit]="visit"></app-visitAdm-lookup>
+				</div>
+				<div class="ui-grid-col-7 ui-sm-12">
+					<div class="ui-grid-col-3 ui-sm-12">
+						<div class="form-group">
+							<label i18n="@@saleDatetime" for="saleDatetime">Sale. Date Time<font color="red">*</font></label> 
+							<p-calendar [(ngModel)]="patientSale.saleDatetime" [showTime]="true"
+								name="saleDatetime"  #saleDatetime="ngModel" required></p-calendar>
+							<p-message *ngIf="f.submitted && saleDatetime.invalid" severity="error" text="Field is required"></p-message>
 						</div>
 					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-4 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@patientSex" for="patientBirthDate">Birth Date: </label>
-								</div>
-								<div class="ui-grid-col-8 ui-sm-12">
-									{{patient.user.birthDate | date:'dd/MM/yyyy'}}
-								</div>
-								<div class="ui-grid-col-1 ui-sm-12">
-								</div>
-							</div>				
+					<div class="ui-grid-col-9 ui-sm-12">
+						<div class="form-group">
+							<label i18n="@@notes" for="notes">Notes</label>  
+							<textarea pInputTextarea id="notes" rows="4" cols="40" pInputTextarea maxlength="1000" 
+									[(ngModel)]="patientSale.notes" name="notes" #notes="ngModel"> </textarea>		
 						</div>
-						
-					</div>
-
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-4 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@saleDatetime" for="saleDatetime">Sale. Date Time<font color="red">*</font></label> 
-								</div>
-								<div class="ui-grid-col-8 ui-sm-12">
-									<p-calendar [(ngModel)]="patientSale.saleDatetime" [showTime]="true"></p-calendar>
-								</div>
-								<div class="ui-grid-col-1 ui-sm-12">
-								</div>
-							</div>
-						</div>
-						<div class="ui-grid-col-4 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@notes" for="notes">Notes</label> 
-								</div>
-								<div class="ui-grid-col-8 ui-sm-12">
-									<textarea pInputTextarea id="notes" rows="4" cols="40" pInputTextarea maxlength="1000" 
-										[(ngModel)]="patientSale.notes" #notes="ngModel"> </textarea>							
-								</div>
-								<div class="ui-grid-col-1 ui-sm-12">
-								</div>
-							</div>
-						</div>
-					</div>
-					
-					<br/>
-			
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-7 ui-sm-12">					
-							<p-table [columns]="saleProductCols" [value]="patientSale.patientSaleProducts" (change)="calculateTotal()">
-								<ng-template pTemplate="caption">
-							        List of Products
-							    </ng-template>
-							    <ng-template pTemplate="header" let-orderProductCols>
-							        <tr>
-							            <th *ngFor="let col of saleProductCols" [pSortableColumn]="col.field">
-							                {{col.header}}
-							                <p-sortIcon [field]="col.field"></p-sortIcon>
-							            </th>
-							            <th>Action</th>
-							        </tr>
-							    </ng-template>
-							    <ng-template pTemplate="body" let-rowData let-columns="columns">
-							        <tr>			           
-							            <td *ngFor="let col of columns" [pEditableColumn]="rowData" [pEditableColumnField]="rowData[col.field]">
-							                <p-cellEditor *ngIf="col.type == 'amount'">
-							                    <ng-template pTemplate="input">
-							                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled">
-							                    </ng-template>
-							                    <ng-template pTemplate="output">
-							                        {{rowData[col.field]}}
-							                    </ng-template>
-							                </p-cellEditor>
-							                <p-cellEditor *ngIf="col.field == 'productDescription'">
-							                    <ng-template pTemplate="input">
-							                        <div *ngIf="rowData.product">{{rowData.product.description}}</div>
-							                    </ng-template>
-							                    <ng-template pTemplate="output">
-							                        <div *ngIf="rowData.product">{{rowData.product.description}}</div>
-							                    </ng-template>
-							                </p-cellEditor>
-							                <p-cellEditor *ngIf="col.field == 'product'">
-							                    <ng-template pTemplate="input">
-							                        <p-autoComplete [(ngModel)]="rowData[col.field]"
-														(onDropdownClick)="productDropdown.handleDropdownClick($event)"
-														[suggestions]="productDropdown.filteredProducts" [dropdown]="true"
-														(completeMethod)="productDropdown.filter($event)"
-														(ngModelChange)="populateDefaultProductValues(rowData)"
-														name="name" field="name" [size]="30" placeholder=""
-														[minLength]="1">
-													</p-autoComplete>
-							                    </ng-template>
-							                    <ng-template pTemplate="output">
-							                    	<div *ngIf="rowData[col.field]">{{rowData[col.field].name}}</div>
-							                    </ng-template>
-							                </p-cellEditor>
-							            </td>
-							            <td>
-							            	<button type="button" pButton icon="fa-plus" style="float:left" (click)="addRow()"></button>
-											<button type="button" pButton icon="fa-eraser" style="float:left"></button>
-							            </td>
-							        </tr>
-							    </ng-template>
-							</p-table>
-						</div>
-						<div class="ui-grid-col-1 ui-sm-12">
-							<div class="form-group"></div>
-						</div>
-						<div class="ui-grid-col-4 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-4 ui-sm-12">
-									<label i18n="@@subTotal" for="subTotal">Sub Total </label> 
-								</div>
-								<div class="ui-grid-col-6 ui-sm-12">
-									<input type="text" pInputText id="subTotal" [disabled]="true"
-									[(ngModel)]="patientSale.subTotal" name="subTotal" #subTotal="ngModel">
-								</div>
-							</div>
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-4 ui-sm-12">
-									<label i18n="@@taxes" for="taxes">Taxes </label> 
-								</div>
-								<div class="ui-grid-col-6 ui-sm-12">
-									<input type="text" pInputText id="taxes" (change)="calculateGrandTotal()"
-										[(ngModel)]="patientSale.taxes" name="taxes" #taxes="ngModel">
-								</div>
-							</div>
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-4 ui-sm-12">
-									<label i18n="@@discount" for="discount">Discount </label> 
-								</div>
-								<div class="ui-grid-col-6 ui-sm-12">
-									<input type="text" pInputText id="discount" (change)="calculateGrandTotal();"
-										[(ngModel)]="patientSale.discount" name="discount" #discount="ngModel">
-								</div>
-							</div>
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-4 ui-sm-12">
-									<label i18n="@@grandTotal" for="grandTotal">Grand Total </label> 
-								</div>
-								<div class="ui-grid-col-6 ui-sm-12">
-									<input type="text" pInputText id="grandTotal" [disabled]="true"
-										[(ngModel)]="patientSale.grandTotal" name="grandTotal" #grandTotal="ngModel">
-								</div>
-							</div>
-						</div>
-					</div>
-				
-					<br/>
-					
-					<div *ngIf="error" class="alert alert-danger">{{error}}</div>
-					<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-							<button type="button" pButton icon="fa-close" (click)="delete()"
-								label="Supprimer"></button>
-							<button type="button" pButton icon="fa-check" (click)="save()"
-								label="Sauvegarder"></button>
 					</div>
 				</div>
 			</div>
+			
+			<br/>
+	
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-9 ui-sm-12">					
+					<p-table [columns]="saleProductCols" [value]="patientSale.patientSaleProducts" (change)="calculateTotal()">
+						<ng-template pTemplate="caption">
+					        List of Products
+					    </ng-template>
+					    <ng-template pTemplate="header" let-orderProductCols>
+					        <tr>
+					            <th *ngFor="let col of saleProductCols" [pSortableColumn]="col.field">
+					                {{col.header}}
+					                <p-sortIcon [field]="col.field"></p-sortIcon>
+					            </th>
+					            <th *ngIf="!isVisitOrAdmissionPage()">Action</th>
+					        </tr>
+					    </ng-template>
+					    <ng-template pTemplate="body" let-rowData let-columns="columns">
+					        <tr>			           
+					            <td *ngFor="let col of columns" [pEditableColumn]="rowData" [pEditableColumnField]="rowData[col.field]">
+					                <p-cellEditor *ngIf="col.type == 'amount'">
+					                    <ng-template pTemplate="input">
+					                        <input type="{{col.inputType}}" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled" 
+					                        	name="{{col.field}}">				            
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+					                        {{rowData[col.field]}}
+					                    </ng-template>
+					                </p-cellEditor>
+					                <p-cellEditor *ngIf="col.field == 'productDescription'">
+					                    <ng-template pTemplate="input">
+					                        <div *ngIf="rowData.product">{{rowData.product.description}}</div>
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+					                        <div *ngIf="rowData.product">{{rowData.product.description}}</div>
+					                    </ng-template>
+					                </p-cellEditor>
+					                <p-cellEditor *ngIf="col.field == 'product'">
+					                    <ng-template pTemplate="input">
+					                        <p-autoComplete [(ngModel)]="rowData[col.field]"
+												(onDropdownClick)="productDropdown.handleDropdownClick($event)"
+												[suggestions]="productDropdown.filteredProducts" [dropdown]="true"
+												(completeMethod)="productDropdown.filter($event)"
+												(ngModelChange)="populateDefaultProductValues(rowData)"
+												name="name" field="name" [size]="30" placeholder=""
+												[minLength]="1">
+											</p-autoComplete>
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+					                    	<div *ngIf="rowData[col.field]">{{rowData[col.field].name}}</div>
+					                    </ng-template>
+					                </p-cellEditor>
+					            </td>
+					            <td *ngIf="!isVisitOrAdmissionPage()">
+					            	<button type="button" pButton icon="fa fa-plus" (click)="addRow()"></button> &nbsp;
+									<button type="button" pButton icon="fa fa-eraser" ></button>
+					            </td>
+					        </tr>
+					    </ng-template>
+					</p-table>
+				</div>
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-4 ui-sm-12">
+							<label i18n="@@subTotal" for="subTotal">Sub Total </label> 
+						</div>
+						<div class="ui-grid-col-6 ui-sm-12">
+							<input type="text" pInputText id="subTotal" [disabled]="true"
+							[(ngModel)]="patientSale.subTotal" name="subTotal" #subTotal="ngModel">
+						</div>
+					</div>
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-4 ui-sm-12">
+							<label i18n="@@taxes" for="taxes">Taxes </label> 
+						</div>
+						<div class="ui-grid-col-6 ui-sm-12">
+							<input type="text" pInputText id="taxes" (change)="calculateGrandTotal()"
+								[(ngModel)]="patientSale.taxes" name="taxes" #taxes="ngModel">
+						</div>
+					</div>
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-4 ui-sm-12">
+							<label i18n="@@discount" for="discount">Discount </label> 
+						</div>
+						<div class="ui-grid-col-6 ui-sm-12">
+							<input type="text" pInputText id="discount" (change)="calculateGrandTotal();"
+								[(ngModel)]="patientSale.discount" name="discount" #discount="ngModel">
+						</div>
+					</div>
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-4 ui-sm-12">
+							<label i18n="@@grandTotal" for="grandTotal">Grand Total </label> 
+						</div>
+						<div class="ui-grid-col-6 ui-sm-12">
+							<input type="text" pInputText id="grandTotal" [disabled]="true"
+								[(ngModel)]="patientSale.grandTotal" name="grandTotal" #grandTotal="ngModel">
+						</div>
+					</div>
+				</div>
+			</div>				
+			<br/>
+			<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix" *ngIf="!isVisitOrAdmissionPage()">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-1 ui-sm-12">
+						<button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="Effacer"></button>
+					</div>
+					<div class="ui-grid-col-1 ui-sm-12">
+						<button pButton icon="fa fa-save" label="Save"></button>
+					</div>
+					<div class="ui-grid-col-6 ui-sm-12">
+					</div>
+					<div class="ui-grid-col-1 ui-sm-12">
+						<button type="button" pButton icon="fa fa-remove" (click)="delete()" label="Delete"></button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-</div>
+</form>
+	

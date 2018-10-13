@@ -11,6 +11,7 @@ import { AdmissionDiagnoses } from './admissionDiagnoses';
 import { DoctorOrderDetails } from './doctorOrderDetails';
 import { PrescriptionDetails } from './prescriptionDetails';
 import { PrescriptionList } from './prescriptionList';
+import { PatientSaleDetails } from './stocks/patientSaleDetails';
 import { Message } from 'primeng/api';
  
 @Component({
@@ -41,6 +42,7 @@ export class VisitDetails implements OnInit, OnDestroy {
   @ViewChild(DoctorOrderDetails) doctorOrderDetails: DoctorOrderDetails;
   @ViewChild(AdmissionDiagnoses) admissionDiagnoses: AdmissionDiagnoses;
   @ViewChild(PrescriptionDetails) prescriptionDetails: PrescriptionDetails;
+  @ViewChild(PatientSaleDetails) patientSaleDetails: PatientSaleDetails;
   @ViewChild(PrescriptionList) prescriptionList: PrescriptionList;
   
   messages: Message[] = [];
@@ -159,6 +161,11 @@ export class VisitDetails implements OnInit, OnDestroy {
    onPrescriptionSelected($event) {
     let prescriptionId = $event;
     this.prescriptionDetails.getPrescription(prescriptionId);
+  }
+  
+  onPatientSaleSelected($event) {
+    let patientSaleId = $event;
+    this.patientSaleDetails.getPatientSale(patientSaleId);
   }
   
   lookUpPatient(event) {

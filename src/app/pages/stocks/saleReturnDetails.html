@@ -1,134 +1,78 @@
-<div role="main" class="main">
-	<section
-		class="parallax section section-text-light section-parallax section-center mt-0 mb-5"
-		data-plugin-parallax data-plugin-options="{'speed': 1.5}"
-		data-image-src="assets/images/slides/bg-top.jpg">
-	</section>
 
-		<div class="container" style="padding-left: 10px; max-width: 100%;">
-	
-	<div class="ui-grid-row">
-		<div class="ui-g-2 ui-sm-4">
-			<app-admin-menu></app-admin-menu>
+<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="saleReturn">
+		<p-messages [(value)]="messages"></p-messages>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-5 ui-sm-12">
+				<app-patient_sale-lookup (patientSaleEmit)="lookUpPatientSale($event)" 
+					[originalPage]="'admin/saleReturnDetails'" [patientSale]="patientSale"></app-patient_sale-lookup>
+			</div>
+			<div class="ui-grid-col-7 ui-sm-12">
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@returnDatetime" for="returnDatetime">Return Date<font color="red">*</font></label> 
+						<p-calendar [(ngModel)]="saleReturn.returnDatetime" name="returnDatetime"  
+							#returnDatetime="ngModel" required></p-calendar>
+					</div>
+				</div>
+				<div class="ui-grid-col-9 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@comments" for="comments">Comments</label> 
+						<textarea pInputTextarea id="comments" rows="4" cols="40" pInputTextarea maxlength="1000" 
+							[(ngModel)]="saleReturn.comments" #notes="ngModel"> </textarea>							
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="ui-g-10 ui-sm-8" style="padding: 15px;">
-			<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="saleReturn">
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@patientSaleId" for="patientSaleId">Patient Sale Id</label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								<input type="text" pInputText class="form-control" id="patientSaleId" (change)="lookUpPatientSale()"
-								[(ngModel)]="patientSaleId" name="patientSaleId" #patientSaleID="ngModel">
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
-				</div>
-				<br/>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@saleDate" for="saleDate">Sale Date</label>
-							</div> 
-							<div class="ui-grid-col-8 ui-sm-12">
-								<span *ngIf="saleReturn.patientSale">
-									{{saleReturn.patientSale.saleDatetime}}
-								</span>
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@returnDatetime" for="returnDatetime">Return Date<font color="red">*</font></label> 
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								<p-calendar [(ngModel)]="saleReturn.returnDatetime"></p-calendar>
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@comments" for="comments">Comments</label> 
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								<textarea pInputTextarea id="comments" rows="4" cols="40" pInputTextarea maxlength="1000" 
-									[(ngModel)]="saleReturn.comments" #notes="ngModel"> </textarea>							
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
-				</div>	
-			</div>
-				
-			<div class="ui-grid-row">
-				<div class="ui-grid-col-7 ui-sm-12">					
-					<p-table [columns]="returnProductCols" [value]="saleReturn.saleReturnProducts">
-						<ng-template pTemplate="caption">
-					        List of Products
-					    </ng-template>
-					    <ng-template pTemplate="header" let-returnProductCols>
-					        <tr>
-					            <th *ngFor="let col of returnProductCols" [pSortableColumn]="col.field">
-					                {{col.header}}
-					                <p-sortIcon [field]="col.field"></p-sortIcon>
-					            </th>
-					        </tr>
-					    </ng-template>
-					    <ng-template pTemplate="body" let-rowData let-columns="columns">
-					        <tr>			           
-					            <td *ngFor="let col of columns" [pEditableColumn]="rowData" [pEditableColumnField]="rowData[col.field]">
-					                <p-cellEditor *ngIf="col.field != 'quantity'">
-					                    <ng-template pTemplate="input">
-					                        {{rowData[col.field]}}
-					                    </ng-template>
-					                    <ng-template pTemplate="output">
-					                        {{rowData[col.field]}}
-					                    </ng-template>
-					                </p-cellEditor>
-					      			<p-cellEditor *ngIf="col.field == 'quantity'">
-					                    <ng-template pTemplate="input">
-					                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled">
-					                    </ng-template>
-					                    <ng-template pTemplate="output">
-					                        {{rowData[col.field]}}
-					                    </ng-template>
-					                </p-cellEditor>
-					            </td>
-					        </tr>
-					    </ng-template>
-					</p-table>
-				</div>
-				
-				<br/>
-			</div>
-			
-			<br/>
-			
-			<br/>
-			<br />
-			<div *ngIf="error" class="alert alert-danger">{{error}}</div>
-			<div>
-				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-					<button type="button" pButton icon="fa-close" (click)="delete()"
-						label="Supprimer"></button>
-					<button type="button" pButton icon="fa-check" (click)="save(1)"
-						label="Sauvegarder"></button>
-					<button type="button" pButton icon="fa-check" (click)="save(2)"
-						label="Done"></button>
-				</div>
-			</div>
+	</div>
+		
+	<div class="ui-grid-row">
+		<div class="ui-grid-col-9 ui-sm-12">					
+			<p-table [columns]="returnProductCols" [value]="saleReturn.saleReturnProducts">
+				<ng-template pTemplate="caption">
+			        List of Products
+			    </ng-template>
+			    <ng-template pTemplate="header" let-returnProductCols>
+			        <tr>
+			            <th *ngFor="let col of returnProductCols" [pSortableColumn]="col.field">
+			                {{col.header}}
+			                <p-sortIcon [field]="col.field"></p-sortIcon>
+			            </th>
+			        </tr>
+			    </ng-template>
+			    <ng-template pTemplate="body" let-rowData let-columns="columns">
+			        <tr>			           
+			            <td *ngFor="let col of columns" [pEditableColumn]="rowData" [pEditableColumnField]="rowData[col.field]">
+			                <p-cellEditor *ngIf="col.field == 'orginalQuantity' || col.field == 'description' || col.field == 'productName'">
+			                    <ng-template pTemplate="input">
+			                        {{rowData[col.field]}}
+			                    </ng-template>
+			                    <ng-template pTemplate="output">
+			                        {{rowData[col.field]}}
+			                    </ng-template>
+			                </p-cellEditor>
+			      			<p-cellEditor *ngIf="col.field == 'quantity' || col.field == 'notes'">
+			                    <ng-template pTemplate="input">
+			                        <input type="{{col.type}}" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled" name="returnDatetime">
+			                    </ng-template>
+			                    <ng-template pTemplate="output">
+			                        {{rowData[col.field]}}
+			                    </ng-template>
+			                </p-cellEditor>
+			            </td>
+			        </tr>
+			    </ng-template>
+			</p-table>
+		</div>
+	</div>
+	
+	<br/>
+	<br/>
+	<div>
+		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+			<button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button> &nbsp;&nbsp;
+			<button type="button" pButton icon="fa fa-check" (click)="save(1)" label="Save"></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button type="button" pButton icon="fa fa-check" (click)="save(2)" label="Done"></button>
 		</div>
 	</div>
 </div>

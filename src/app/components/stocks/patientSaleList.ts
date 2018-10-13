@@ -1,14 +1,11 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, EventEmitter, Output } from '@angular/core';
-import { Employee } from '../../models/employee';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../../app.constants';
-import { Admission } from '../../models/admission';
+import { Admission, Employee, User, Visit, SearchCriteria } from '../../models';
 import { PatientSale, PatientSaleProduct } from '../../models/stocks/patientSale';
 import { FileUploader } from './../fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { ToolbarModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User } from '../../models/user';  
-import { Visit } from '../../models/visit';
 import { GenericService, PurchasingService, GlobalEventsManager } from '../../services';
 
 @Component({ 
@@ -19,17 +16,14 @@ import { GenericService, PurchasingService, GlobalEventsManager } from '../../se
   
 export class PatientSaleList implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   patientSales: PatientSale[] = [];
   cols: any[];
   
   @Input() admission: Admission;
   @Input() visit: Visit;
+  @Output() patientSaleIdEvent = new EventEmitter<string>();
   
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
+  searchCriteria: SearchCriteria = new SearchCriteria();
   
   constructor
     (
@@ -46,7 +40,8 @@ export class PatientSaleList implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.cols = [
             { field: 'saleDatetime', header: 'Date time', type:'date' },
-            { field: 'notes', header: 'Notes' },
+            { field: 'patientId', header: 'MRN' },
+            { field: 'patientName', header: 'Patient' },
             { field: 'subTotal', header: 'Sub Total' },
             { field: 'taxes', header: 'Taxes' },
             { field: 'discount', header: 'Discount' },
@@ -59,14 +54,12 @@ export class PatientSaleList implements OnInit, OnDestroy {
         .subscribe(params => {          
           
             let parameters: string [] = []; 
-            
-            let itemNumberLabel = params['itemNumberLabel'];
           
             parameters.push('e.status = |status|0|Integer')
-            if (itemNumberLabel == 'Visit') 
-              parameters.push('e.visit.id > |visitId|0|Long')
-            if (itemNumberLabel == 'Admission') 
-              parameters.push('e.admission.id > |admissionId|0|Long')
+            if (this.visit && this.visit.id > 0) 
+              parameters.push('e.visit.id = |visitId|' + this.visit.id + '|Long')
+            if (this.admission && this.admission.id > 0) 
+              parameters.push('e.admission.id = |admissionId|' + this.admission.id + '|Long')
           
             this.genericService.getAllByCriteria('com.qkcare.model.stocks.PatientSale', parameters)
               .subscribe((data: PatientSale[]) => 
@@ -83,14 +76,18 @@ export class PatientSaleList implements OnInit, OnDestroy {
     this.patientSales = null;
   }
   
-  edit(patientSaleId : number) {
+  edit(patientSaleId : string) {
     try {
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          "patientSaleId": patientSaleId,
+      if (this.visit || this.admission) {
+        this.patientSaleIdEvent.emit(patientSaleId);
+      } else {
+        let navigationExtras: NavigationExtras = {
+          queryParams: {
+            "patientSaleId": patientSaleId,
+          }
         }
+        this.router.navigate(["/admin/patientSaleDetails"], navigationExtras);
       }
-      this.router.navigate(["/admin/patientSaleDetails"], navigationExtras);
     }
     catch (e) {
       console.log(e);
@@ -111,4 +108,34 @@ export class PatientSaleList implements OnInit, OnDestroy {
     }
   }
 
+    search() {
+   
+    let parameters: string [] = []; 
+        
+    parameters.push('e.status = |status|0|Integer')
+    if (this.searchCriteria.visitId != null)  {
+      parameters.push('e.visit.id = |visitId|' + this.searchCriteria.visitId + '|Long')
+    }
+    if (this.searchCriteria.medicalRecordNumber != null && this.searchCriteria.medicalRecordNumber.length > 0)  {
+      parameters.push('e.visit.patient.medicalRecordNumber = |medicalRecordNumber|' + this.searchCriteria.medicalRecordNumber + '|String')
+    }
+    if (this.searchCriteria.lastName != null && this.searchCriteria.lastName.length > 0)  {
+      parameters.push('e.visit.patient.user.lastName like |lastName|' + '%' + this.searchCriteria.lastName + '%' + '|String')
+    }
+    if (this.searchCriteria.firstName != null && this.searchCriteria.firstName.length > 0)  {
+      parameters.push('e.visit.patient.user.firstName like |firstName|' + '%' + this.searchCriteria.firstName + '%' + '|String')
+    } 
+    
+    this.genericService.getAllByCriteria('PatientSale', parameters)
+      .subscribe((data: PatientSale[]) => 
+      { 
+        this.patientSales = data 
+      },
+      error => console.log(error),
+      () => console.log('Get all Patient Sales complete'));
+  }
+  
+  isVisitOrAdmissionPage() {
+    return ((this.visit && this.visit.id > 0) || (this.admission && this.admission.id > 0))
+  }
  }

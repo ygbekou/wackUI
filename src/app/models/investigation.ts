@@ -1,5 +1,4 @@
 import { Admission } from './admission';
-import { InvestigationTest } from './investigationTest';
 import { Patient } from './patient';
 import { LabTest } from './labTest';
 import { Visit } from './visit';
@@ -23,4 +22,19 @@ export class Investigation {
   
   investigationTests: InvestigationTest[] = [];
   
+}
+
+export class InvestigationTest {
+  id: number;
+  labTest: LabTest;
+  resultDatetime: Date;
+  resultComments: string;
+  dispatchDatetime: Date;
+  dispatchComments: string;
+  result: string;
+  interpretation: string;
+  impression: string;
+  
+  name: string;
+  labTestName: string
 }

@@ -137,9 +137,9 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
     if (this.appointment.doctor.id != null 
       || this.appointment.department.id != null 
       || this.appointment.hospitalLocation.id != null) {
-      this.searchCriteria.departmentId = this.appointment.department.id;
-      this.searchCriteria.hospitalLocationId = this.appointment.hospitalLocation.id;
-      this.searchCriteria.doctorId = this.appointment.doctor.id;
+      this.searchCriteria.department = this.appointment.department;
+      this.searchCriteria.hospitalLocation = this.appointment.hospitalLocation;
+      this.searchCriteria.doctor = this.appointment.doctor;
       this.appointmentService.getScheduleAndAppointments(this.searchCriteria)
           .subscribe(result => {
         if (result.length > 0) {

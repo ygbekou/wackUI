@@ -1,32 +1,67 @@
-<div class="ui-grid-row"> 
-		<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-			<p-table [columns]="cols" [value]="visits">
-			    <ng-template pTemplate="header" let-columns>
-			        <tr>
-			            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-			                {{col.header}}
-			                <p-sortIcon [field]="col.field"></p-sortIcon>
-			            </th>
-			            <th>Action</th>
-			        </tr>
-			    </ng-template>
-			    <ng-template pTemplate="body" let-rowData let-columns="columns">
-			        <tr>			           
-			            <td *ngFor="let col of columns">
-			                <div *ngIf="col.type != 'date'">
-			                	{{rowData[col.field]}}
-			                </div>
-			                <div *ngIf="col.type == 'date'">
-			                	{{rowData[col.field]  | date:'dd/MM/yyyy hh:mm'}}
-			                </div>
-			            </td>
-			            <td>
-			            	<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
-							<button type="button" pButton icon="fa fa-eraser" (click)="delete(rowData.id)"></button>
-			            </td>
-			        </tr>
-			    </ng-template>
-			</p-table>
+<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+	<p-fieldset legend="Search Criteria" *ngIf="!((visit && visit.id > 0) || (admission && admission.id > 0))">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@patientId" for="patientId">Patient ID:
+					</label> <input type="text" pInputText class="form-control" id="medicalRecordNumber"
+						 [(ngModel)]="searchCriteria.medicalRecordNumber" name="medicalRecordNumber" >
+				</div>
+			</div>
+			<div class="ui-grid-col-3 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@lastName" for="lastName">Last Name:
+					</label> <input type="text" pInputText class="form-control" id="lastName"
+						 [(ngModel)]="searchCriteria.lastName" name="lastName" >
+				</div>
+			</div>
+			<div class="ui-grid-col-3 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@firstName" for="firstName">First Name:
+					</label> <input type="text" pInputText class="form-control" id="firstName"
+						 [(ngModel)]="searchCriteria.firstName" name="firstName">
+				</div>
+			</div>
+			<div class="ui-grid-col-3 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@birthDate" for="birthDate">Birth Date:
+					</label> <p-calendar [(ngModel)]="searchCriteria.birthDate" id="birthDate"
+								name="birthDate" #birthDate="ngModel"></p-calendar>
+				</div>
+			</div>
+			<div>
+				<button pButton icon="fa fa-search" label="Search" (click)="search()"></button>
+			</div>
 		</div>
-	</div>
+	</p-fieldset>
+	<br/>
+	<br/>
+	<p-table [columns]="cols" [value]="visits">
+	    <ng-template pTemplate="header" let-columns>
+	        <tr>
+	            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+	                {{col.header}}
+	                <p-sortIcon [field]="col.field"></p-sortIcon>
+	            </th>
+	            <th>Action</th>
+	        </tr>
+	    </ng-template>
+	    <ng-template pTemplate="body" let-rowData let-columns="columns">
+	        <tr>			           
+	            <td *ngFor="let col of columns">
+	                <div *ngIf="col.type != 'date'">
+	                	{{rowData[col.field]}}
+	                </div>
+	                <div *ngIf="col.type == 'date'">
+	                	{{rowData[col.field]  | date:'dd/MM/yyyy hh:mm'}}
+	                </div>
+	            </td>
+	            <td>
+	            	<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
+					<button type="button" pButton icon="fa fa-eraser" (click)="delete(rowData.id)"></button>
+	            </td>
+	        </tr>
+	    </ng-template>
+	</p-table>
+</div>
  

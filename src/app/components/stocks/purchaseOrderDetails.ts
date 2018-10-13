@@ -1,16 +1,15 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
-import { Product } from '../../models/product';
+import { Product, Supplier, User } from '../../models';
 import { PurchaseOrder, PurchaseOrderProduct } from '../../models/stocks/purchaseOrder';
-import { Supplier } from '../../models/supplier';
 import { EditorModule } from 'primeng/editor';
 import { EmployeeDropdown, SupplierDropdown, ProductDropdown } from '../dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
-import { User } from '../../models/user';  
+import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { GenericService, PurchasingService } from '../../services';
- 
+import { Message } from 'primeng/api';
+
 @Component({  
   selector: 'app-purchaseOrder-details',
   templateUrl: '../../pages/stocks/purchaseOrderDetails.html',
@@ -18,32 +17,22 @@ import { GenericService, PurchasingService } from '../../services';
 })
 export class PurchaseOrderDetails implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
+  messages: Message[] = [];
   purchaseOrder: PurchaseOrder = new PurchaseOrder();
   orderProductCols: any[];
-  
-  supplierDropdown: SupplierDropdown;
-  productDropdown: ProductDropdown;
-  
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
-  SELECT_OPTION: string = Constants.SELECT_OPTION;
   
   constructor
     (
       private genericService: GenericService,
       private purchaseOrderService: PurchasingService,
-      private splDropdown: SupplierDropdown,
-      private pdtDropdown: ProductDropdown,
+      private supplierDropdown: SupplierDropdown,
+      private productDropdown: ProductDropdown,
       private employeeDropdown: EmployeeDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
     ) {
-    this.supplierDropdown = splDropdown;
-    this.productDropdown = pdtDropdown;
+
   }
 
   ngOnInit(): void {
@@ -70,10 +59,6 @@ export class PurchaseOrderDetails implements OnInit, OnDestroy {
                   this.purchaseOrder = result
                   if (this.purchaseOrder.purchaseOrderProducts.length == 0) 
                     this.addRow();
-                }
-                else {
-                  this.error = Constants.SAVE_UNSUCCESSFUL;
-                  this.displayDialog = true;
                 }
               })
           } else {
@@ -119,19 +104,46 @@ export class PurchaseOrderDetails implements OnInit, OnDestroy {
     return value != undefined ? value : 0;
   } 
   
+  validate() {
+    let noProductFound: boolean = true;
+    
+    for (let i in this.purchaseOrder.purchaseOrderProducts) {
+      let pop = this.purchaseOrder.purchaseOrderProducts[i];
+      if (pop.product && pop.product.id > 0) {
+        noProductFound = false;
+        if (pop.quantity == null)
+          this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'Quantity is required.'});
+        if (pop.unitPrice == null)
+          this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'Price is required.'});
+        
+      }
+    }
+    
+    if (noProductFound) {
+      this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'At least 1 product is required.'});
+    }
+    
+    return this.messages.length == 0;
+  }
+  
   save() {
     
     try {
-      this.error = '';
+      this.messages = [];
+      
+      this.messages = [];
+       if (!this.validate()) {
+        return;
+      }
+      
       this.purchaseOrderService.savePurchaseOrder(this.purchaseOrder)
         .subscribe(result => {
           if (result.id > 0) {
             this.purchaseOrder = result
-            console.info(this.purchaseOrder);
+            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
           }
           else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-            this.displayDialog = true;
+            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
           }
         })
     }

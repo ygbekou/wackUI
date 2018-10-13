@@ -1,19 +1,13 @@
 import {Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Constants} from '../app.constants';
-import {Admission} from '../models/admission';
-import {Visit} from '../models/visit';
-import {Patient} from '../models/patient';
-import {Prescription} from '../models/prescription';
-import {Diagnosis} from '../models/diagnosis';
-import {Investigation} from '../models/investigation';
-import {LabTest} from '../models/labTest';
+import {Admission, Visit, Patient, Prescription, Diagnosis, Investigation, LabTest, User} from '../models';
 import {EditorModule} from 'primeng/editor';
 import {DoctorDropdown, MedicineDropdown, LabTestDropdown} from './dropdowns';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule} from 'primeng/primeng';
-import {User} from '../models/user';
 import {GenericService, InvestigationService, GlobalEventsManager} from '../services';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-investigation-details',
@@ -22,8 +16,6 @@ import {GenericService, InvestigationService, GlobalEventsManager} from '../serv
 })
 export class InvestigationDetails implements OnInit, OnDestroy {
 
-  public error: String = '';
-  displayDialog: boolean;
   investigation: Investigation = new Investigation();
   labTestCols: any[];
   labTests: LabTest[] = [];
@@ -43,6 +35,7 @@ export class InvestigationDetails implements OnInit, OnDestroy {
   patient: Patient = new Patient();
   itemNumber: string;
   itemNumberLabel: string = 'Visit';
+  messages: Message[] = [];
 
   constructor
     (
@@ -73,10 +66,6 @@ export class InvestigationDetails implements OnInit, OnDestroy {
               if (result.id > 0) {
                 this.investigation = result
               }
-              else {
-                this.error = Constants.SAVE_UNSUCCESSFUL;
-                this.displayDialog = true;
-              }
             })
         } else {
 
@@ -92,7 +81,7 @@ export class InvestigationDetails implements OnInit, OnDestroy {
   save() {
 
     try {
-      this.error = '';
+      this.messages = [];
       this.investigation.visit = this.visit;
 
       this.investigationService.saveInvestigaton(this.investigation)
@@ -100,11 +89,10 @@ export class InvestigationDetails implements OnInit, OnDestroy {
           alert(result.id)
           if (result.id > 0) {
             this.investigation = result
-            console.info(this.investigation);
+            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
           }
           else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-            this.displayDialog = true;
+            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
           }
         })
     }
@@ -112,38 +100,6 @@ export class InvestigationDetails implements OnInit, OnDestroy {
       console.log(e);
     }
   }
-
-
-  //  getPrescription(prescriptionId: number) {
-  //    this.admissionService.getPrescription(prescriptionId)
-  //        .subscribe(result => {
-  //      if (result.id > 0) {
-  //        this.prescription = result
-  //        this.prescription.prescriptionDatetime = new Date(this.prescription.prescriptionDatetime);
-  //      }
-  //      else {
-  //        this.error = Constants.saveFailed;
-  //        this.displayDialog = true;
-  //    }
-  //    })
-  //  }
-  
-  lookUpVisit() {
-    let parameters: string[] = [];
-
-    parameters.push('e.visitNumber = |visitNumber|' + this.itemNumber + '|String')
-
-    this.genericService.getAllByCriteria('Visit', parameters)
-      .subscribe((data: any[]) => {
-        if (data) {
-          this.visit = data[0];
-          this.patient = this.visit.patient;
-        }
-      },
-      error => console.log(error),
-      () => console.log('Get Patient complete'));
-  }
-
 
   populateLabTests(event) {
     let parameters: string[] = [];

@@ -35,6 +35,7 @@ export class EmployeeList implements OnInit, OnDestroy {
             { field: 'lastName', header: 'Last Name', type:'user' },
             { field: 'firstName', header: 'First Name', type:'user' },
             { field: 'departmentName', header: 'Department', type:'department' },
+            { field: 'groupName', header: 'Group' },
             { field: 'email', header: 'Email Address', type:'user' },
             { field: 'phone', header: 'Phone', type:'user' },
             { field: 'sex', header: 'Sex', type:'user' },
@@ -79,15 +80,14 @@ export class EmployeeList implements OnInit, OnDestroy {
    
         let parameters: string [] = []; 
             
-        parameters.push('e.status = |status|0|Integer')
         if (this.searchCriteria.lastName != null && this.searchCriteria.lastName.length > 0)  {
           parameters.push('e.user.lastName like |lastName|' + '%' + this.searchCriteria.lastName + '%' + '|String')
         }
         if (this.searchCriteria.firstName != null && this.searchCriteria.firstName.length > 0)  {
           parameters.push('e.user.firstName like |firstName|' + '%' + this.searchCriteria.firstName + '%' + '|String')
         } 
-        if (this.searchCriteria.departmentId != null && this.searchCriteria.departmentId > 0)  {
-          parameters.push('e.department.id = |departmentId|' + this.searchCriteria.departmentId + '|Long')
+        if (this.searchCriteria.department != null && this.searchCriteria.department.id > 0)  {
+          parameters.push('e.department.id = |departmentId|' + this.searchCriteria.department.id + '|Long')
         }  
         
         

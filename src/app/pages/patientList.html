@@ -30,6 +30,9 @@
 	<br/>
 	<br/>
 	<p-table [columns]="cols" [value]="patients" [responsive]="true">
+		<ng-template pTemplate="caption">
+	        PATIENT LIST
+	    </ng-template>
 		<ng-template pTemplate="header" let-columns>
 		<tr>
 			<th *ngFor="let col of columns" [pSortableColumn]="col.field">
@@ -48,12 +51,9 @@
 	               </div>
 			</td>
 			<td>
-				<button type="button" pButton icon="fa fa-edit" style="float: left"
-					(click)="edit(rowData.id)"></button>
-				<button type="button" pButton icon="fa fa-edit" style="float: left"
-					(click)="redirectToOrigialPage(rowData)"></button>
-				<button type="button" pButton icon="fa fa-eraser" style="float: left"
-					(click)="delete(rowData.id)"></button>
+				<button type="button" pButton icon="fa fa-edit"	(click)="edit(rowData.id)"></button> &nbsp;
+				<button type="button" pButton icon="fa fa-edit" (click)="redirectToOrigialPage(rowData)"></button>&nbsp;
+				<button type="button" pButton icon="fa fa-eraser" (click)="delete(rowData.id)"></button>
 			</td>
 		</tr>
 		</ng-template> 
