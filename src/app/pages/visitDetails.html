@@ -42,21 +42,26 @@
 					</div>
 				</div>
 			</div>
-		<p-tabView (onChange)="onTabChange($event)"> <p-tabPanel
-			header="VITAL/HISTORY"> <p-tabView> <p-tabPanel
-			header="Vital Sign/Allergies"> <app-vitalSign-details
-			[vitalSign]="visit.vitalSign"></app-vitalSign-details> <br />
-		<br />
-		<app-allergy-details [visit]="visit"></app-allergy-details> <br />
-		<br />
-		<app-vaccine-details [givenVaccines]="visit.givenVaccines"></app-vaccine-details>
-		</p-tabPanel> <p-tabPanel header="Symptoms"> <app-symptom-details
-			[visit]="visit"></app-symptom-details> </p-tabPanel> <p-tabPanel
-			header="Medical History"> <app-medicalHistory-details
-			[visit]="visit"></app-medicalHistory-details> </p-tabPanel> <p-tabPanel
-			header="Social History"> <app-socialHistory-details
-			[visit]="visit"></app-socialHistory-details> </p-tabPanel> <p-tabPanel
-			header="Home Medications"> </p-tabPanel> </p-tabView> </p-tabPanel> 
+		<p-tabView (onChange)="onTabChange($event)"> 
+			<p-tabPanel header="VITAL/HISTORY"> 
+				<p-tabView> 
+					<p-tabPanel header="Vital Sign/Allergies"> 
+						<app-vitalSign-details [vitalSign]="visit.vitalSign"></app-vitalSign-details> <br /> <br />
+						<app-allergy-details [visit]="visit"></app-allergy-details> <br /><br />
+						<app-vaccine-details [givenVaccines]="visit.givenVaccines"></app-vaccine-details>
+					</p-tabPanel> 
+					<p-tabPanel header="Symptoms"> 
+						<app-symptom-details [visit]="visit"></app-symptom-details> 
+					</p-tabPanel> 
+					<p-tabPanel header="Medical History"> 
+						<app-medicalHistory-details [visit]="visit"></app-medicalHistory-details> 
+					</p-tabPanel> 
+					<p-tabPanel header="Social History">
+						<app-socialHistory-details [visit]="visit"></app-socialHistory-details> 
+					</p-tabPanel> 
+					<p-tabPanel header="Home Medications"> </p-tabPanel> 
+				</p-tabView> 
+			</p-tabPanel> 
 			<p-tabPanel header="DOCTOR ORDERS" *ngIf="visit.id > 0"> 
 				<app-doctorOrder-details [visit]="visit"></app-doctorOrder-details> 
 				<br />
