@@ -1,47 +1,39 @@
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
 	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
 		<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="visit">
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-5 ui-sm-12">
 					<app-patient-lookup (patientEmit)="lookUpPatient($event)" [originalPage]="'admin/visitDetails'"
 						[patient]="patient"></app-patient-lookup>
+					<p-message *ngIf="f.submitted && !(patient.id > 0)" severity="error" text="Patient is required"></p-message>
 				</div>
 				<div class="ui-grid-col-7 ui-sm-12">
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-6 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@visitNumber" for="visitNumber">Visit No.</label>
-								</div>
-								<div class="ui-grid-col-8 ui-sm-12">{{visit.visitNumber}}</div>
-							</div>
-						</div>
-						<div class="ui-grid-col-6 ui-sm-12">
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-3 ui-sm-12">
-									<label i18n="@@visitDatetime" for="visitDatetime">Visit
-										Date Time<font color="red">*</font>
-									</label>
-								</div>
-								<div class="ui-grid-col-8 ui-sm-12">
-									<p-calendar [(ngModel)]="visit.visitDatetime" [showTime]="true"></p-calendar>
-								</div>
-							</div>
+					<div class="ui-grid-col-1 ui-sm-12">
+						<div class="form-group">
+							<label i18n="@@visitNumber" for="visitNumber">Visit No.</label>
+							<div class="ui-grid-col-8 ui-sm-12">{{visit.visitNumber}}</div>
 						</div>
 					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3 ui-sm-12">
-							<label i18n="@@chiefOfComplain" for="chiefOfComplain">Chief
-								Of Complain<font color="red">*</font>
-							</label>
+					<div class="ui-grid-col-3 ui-sm-12">
+						<div class="form-group">
+							<label i18n="@@visitDatetime" for="visitDatetime">Visit Date Time<font color="red">*</font></label>
+							<p-calendar [(ngModel)]="visit.visitDatetime" [showTime]="true" 
+								name="visitDatetime" #visitDatetime="ngModel" required>
+							</p-calendar>
+							<p-message *ngIf="f.submitted && visitDatetime.invalid" severity="error" text="Field is required"></p-message>
 						</div>
-						<div class="ui-grid-col-9 ui-sm-12">
-							<textarea pInputTextarea id="chiefOfComplain" rows="3" cols="40"
-								pInputTextarea maxlength="1000"
-								[(ngModel)]="visit.chiefOfComplain" #chiefOfComplain="ngModel"> </textarea>
+					</div>
+					<div class="ui-grid-col-8 ui-sm-12">
+						<div class="form-group">
+							<label i18n="@@chiefOfComplain" for="chiefOfComplain">Chief Of Complain<font color="red">*</font></label>
+							<textarea pInputTextarea id="chiefOfComplain" rows="3" cols="40" pInputTextarea maxlength="1000"
+								[(ngModel)]="visit.chiefOfComplain" name="chiefOfComplain" #chiefOfComplain="ngModel" required> </textarea>
+							<p-message *ngIf="f.submitted && chiefOfComplain.invalid" severity="error" text="Field is required"></p-message>
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
 		<p-tabView (onChange)="onTabChange($event)"> 
 			<p-tabPanel header="VITAL/HISTORY"> 
 				<p-tabView> 
@@ -60,7 +52,11 @@
 						<app-socialHistory-details [visit]="visit"></app-socialHistory-details> 
 					</p-tabPanel> 
 					<p-tabPanel header="Home Medications"> </p-tabPanel> 
-				</p-tabView> 
+				</p-tabView>
+				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+					<button type="button" pButton icon="fa fa-close" (click)="delete()" label="Supprimer"></button>&nbsp;&nbsp;
+					<button pButton icon="fa fa-check" label="Save"></button>
+				</div> 
 			</p-tabPanel> 
 			<p-tabPanel header="DOCTOR ORDERS" *ngIf="visit.id > 0"> 
 				<app-doctorOrder-details [visit]="visit"></app-doctorOrder-details> 
@@ -69,38 +65,29 @@
 				<app-doctorOrder-list [visit]="visit" (doctorOrderIdEvent)="onDoctorOrderSelected($event)"></app-doctorOrder-list>
 				<br/>
 			</p-tabPanel> 
-			<p-tabPanel header="DIAGNOSES" *ngIf="visit.id > 0"> <app-admissionDiagnoses
-			[visit]="visit"></app-admissionDiagnoses> </p-tabPanel> <p-tabPanel
-			header="PRESCRIPTIONS" *ngIf="visit.id > 0"> <app-prescription-details></app-prescription-details>
-		<br />
-		<br />
-		<app-prescription-list [visit]="visit"
-			(prescriptionIdEvent)="onPrescriptionSelected($event)"></app-prescription-list>
-		</p-tabPanel> 
-		<p-tabPanel header="INVESTIGATIONS" *ngIf="visit.id > 0">
-			<app-investigation-list [showActions]="false" [visit]="visit"></app-investigation-list> 
-		</p-tabPanel> 
-		<p-tabPanel header="PHARMACY" *ngIf="visit.id > 0">
-			<app-patientSale-details [visit]="visit"></app-patientSale-details> <br />
-			<br />
-			<app-patientSale-list (patientSaleIdEvent)="onPatientSaleSelected($event)" [visit]="visit"></app-patientSale-list> 
-		</p-tabPanel> 
-		<p-tabPanel header="DISCHARGE FORM" *ngIf="visit.id > 0">
-			<div>
-				<app-discharge-details [visit]="visit"></app-discharge-details>
-			</div>
-		</p-tabPanel> 
-	</p-tabView>
-
+			<p-tabPanel header="DIAGNOSES" *ngIf="visit.id > 0">
+				<app-admissionDiagnoses [visit]="visit"></app-admissionDiagnoses> 
+			</p-tabPanel> 
+			<p-tabPanel header="PRESCRIPTIONS" *ngIf="visit.id > 0"> 
+				<app-prescription-details></app-prescription-details><br /><br />
+				<app-prescription-list [visit]="visit" (prescriptionIdEvent)="onPrescriptionSelected($event)"></app-prescription-list>
+			</p-tabPanel> 
+			<p-tabPanel header="INVESTIGATIONS" *ngIf="visit.id > 0">
+				<app-investigation-list [showActions]="false" [visit]="visit"></app-investigation-list> 
+			</p-tabPanel> 
+			<p-tabPanel header="PHARMACY" *ngIf="visit.id > 0">
+				<app-patientSale-details [visit]="visit"></app-patientSale-details> <br />
+				<br />
+				<app-patientSale-list (patientSaleIdEvent)="onPatientSaleSelected($event)" [visit]="visit"></app-patientSale-list> 
+			</p-tabPanel> 
+			<p-tabPanel header="DISCHARGE FORM" *ngIf="visit.id > 0">
+				<div>
+					<app-discharge-details [visit]="visit"></app-discharge-details>
+				</div>
+			</p-tabPanel> 
+		</p-tabView>
+	
 		<br /> <br />
 	</div>
-	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-		<button type="button" pButton icon="fa fa-close" (click)="delete()"
-			label="Supprimer"></button>
-		&nbsp;
-		<button type="button" pButton icon="fa fa-check" (click)="save()"
-			label="Sauvegarder"></button>
-	</div>
-</div>
-
+</form>
 

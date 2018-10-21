@@ -68,17 +68,17 @@ export class VisitDetails implements OnInit, OnDestroy {
         .subscribe(params => {          
           
           if (params['patientId'] != null) {
-          this.patient.id = params['patientId'];
-          this.patient.medicalRecordNumber = params['mrn'];
-          this.patient.name = params['patientName'];
-          this.patient.user.birthDate = params['birthDate'];
-          this.patient.user.sex = params['gender'];
-        }
+            this.patient.id = params['patientId'];
+            this.patient.medicalRecordNumber = params['mrn'];
+            this.patient.name = params['patientName'];
+            this.patient.user.birthDate = params['birthDate'];
+            this.patient.user.sex = params['gender'];
+          }
           
+  
           this.visit.patient = new Patient();
           this.visit.patient.user = new User();
-          let gv =  new GivenVaccine();
-          this.visit.givenVaccines.push(gv);
+          this.visit.givenVaccines.push(new GivenVaccine());
           
           visitId = params['visitId'];
           if (visitId != null) {
@@ -88,7 +88,10 @@ export class VisitDetails implements OnInit, OnDestroy {
                 if (data.id > 0) {
                   this.visit = data;
                   this.patient = this.visit.patient;
-                  this.visit.visitDatetime = new Date(this.visit.visitDatetime)
+                  this.visit.visitDatetime = new Date(this.visit.visitDatetime);
+                  if (this.visit.givenVaccines.length == 0) {
+                    this.visit.givenVaccines.push(new GivenVaccine());
+                  }
                 } 
               },
               error => console.log(error),
@@ -105,7 +108,6 @@ export class VisitDetails implements OnInit, OnDestroy {
   }
   
   updateAllergy(event) {
-    console.info(event)
     if (-1 !== this.visit.selectedAllergies.indexOf(event.source.name)) {
       if (event.checked) {
         this.visit.selectedAllergies.push(event.source.name);
@@ -122,14 +124,12 @@ export class VisitDetails implements OnInit, OnDestroy {
       this.visit.patient = this.patient;
       this.visitService.saveVisit(this.visit)
         .subscribe(result => {
-          alert(result.id)
           if (result.id > 0) {
             this.visit = result
             this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
           }
           else { 
             this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
-            this.displayDialog = true;
           }
         })
     }

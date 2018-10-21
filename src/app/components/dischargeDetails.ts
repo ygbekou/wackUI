@@ -1,23 +1,17 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../app.constants';
-import { Admission } from '../models/admission';
-import { AdmissionDiagnosis } from '../models/admissionDiagnosis';
-import { Discharge } from '../models/discharge';
-import { PrescriptionMedicine } from '../models/prescription';
-import { Reference } from '../models/reference';
+import { Admission, AdmissionDiagnosis, Discharge, PrescriptionMedicine, Reference, User, Visit} from '../models';
 import { EditorModule } from 'primeng/editor';
 import { DoctorDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
-import { User } from '../models/user';  
-import { Visit } from '../models/visit';
 import { GenericService, AdmissionService, GlobalEventsManager, VisitService } from '../services';
 
 @Component({
   selector: 'app-discharge-details',
   templateUrl: '../pages/dischargeDetails.html',
-  providers: [GenericService, AdmissionService, DoctorDropdown]
+  providers: [GenericService, AdmissionService, VisitService, DoctorDropdown]
 })
 export class DischargeDetails implements OnInit, OnDestroy {
   
@@ -77,9 +71,13 @@ export class DischargeDetails implements OnInit, OnDestroy {
       () => console.log('Get ative discharge reasons complete'));
     
     let parameters: string [] = []; 
-    parameters.push('e.prescription.visit.id = |visitId|' + this.visit.id + '|Long')
-    parameters.push('e.prescription.isDischarge = |isDischarge|Y|String')
-    parameters.push('e.prescription.status = |status|0|Integer')
+    if (this.visit && this.visit.id > 0) {
+      parameters.push('e.prescription.visit.id = |visitId|' + this.visit.id + '|Long');
+    } else if (this.admission && this.admission.id > 0) {
+      parameters.push('e.prescription.admission.id = |admissionId|' + this.admission.id + '|Long');
+    }
+      parameters.push('e.prescription.isDischarge = |isDischarge|Y|String');
+      parameters.push('e.prescription.status = |status|0|Integer');
     
     this.genericService.getAllByCriteria('PrescriptionMedicine', parameters)
       .subscribe((data: PrescriptionMedicine[]) => 
@@ -95,6 +93,9 @@ export class DischargeDetails implements OnInit, OnDestroy {
     if (this.visit && this.visit.id > 0) {
       parameters.push('e.visit.id = |visitId|' + this.visit.id + '|Long')
       parentEntity = 'VisitDiagnosis';
+    } else if (this.admission && this.admission.id > 0) {
+      parameters.push('e.admission.id = |admissionId|' + this.admission.id + '|Long')
+      parentEntity = 'AdmissionDiagnosis';
     }
     
     this.genericService.getAllByCriteria(parentEntity, parameters)

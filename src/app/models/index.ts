@@ -24,4 +24,13 @@ export * from './product';
 export * from './investigation';
 export * from './labTest';
 export * from './supplier';
+export * from './discharge';
+export * from './bed';
+export * from './bedAssignment';
+export * from './floor';
+export * from './doctorAssignment';
+export * from './package';
+export * from './room';
+export * from './bill';
+export * from './service';
 

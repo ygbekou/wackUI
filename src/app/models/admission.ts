@@ -11,6 +11,7 @@ export class Admission {
   patient: Patient;
   pckage: Package;
   admissionDatetime: Date = new Date();
+  admissionReason: string;
   contactName: string;
   contactRelation: string;
   contactPhone: string;

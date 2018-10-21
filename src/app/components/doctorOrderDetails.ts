@@ -13,7 +13,7 @@ import { Message } from 'primeng/api';
 @Component({ 
   selector: 'app-doctorOrder-details',
   templateUrl: '../pages/doctorOrderDetails.html', 
-  providers: [GenericService, DoctorDropdown, DoctorOrderTypeDropdown, ProductDropdown, 
+  providers: [GenericService, VisitService, DoctorDropdown, DoctorOrderTypeDropdown, ProductDropdown, 
     DoctorOrderPriorityDropdown, DoctorOrderKindDropdown, LabTestDropdown]
 })
 export class DoctorOrderDetails implements OnInit, OnDestroy {
@@ -61,6 +61,7 @@ export class DoctorOrderDetails implements OnInit, OnDestroy {
     
     this.messages = [];
     this.doctorOrder.visit = this.visit;
+    this.doctorOrder.admission = this.admission;
     
     try {
       

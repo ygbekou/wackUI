@@ -1,21 +1,14 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../app.constants';
-import { Appointment } from '../models/appointment';
-import { Admission } from '../models/admission';
-import { Bill } from '../models/bill';
-import { BillPayment } from '../models/billPayment';
-import { BillService } from '../models/billService';
-import { Employee } from '../models/employee';
-import { Patient } from '../models/patient';
-import { Service } from '../models/service';
+import { Appointment, Admission, Bill, BillPayment, BillService, Employee, Patient, User, Visit, Service  } from '../models';
 import { EditorModule } from 'primeng/editor';
 import { DoctorDropdown, ServiceDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
-import { User } from '../models/user';  
-import { Visit } from '../models/visit';
+import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
+
 import { GenericService, BillingService } from '../services';
+import { Message } from 'primeng/api';
 
 @Component({ 
   selector: 'app-bill-details',
@@ -24,19 +17,10 @@ import { GenericService, BillingService } from '../services';
 })
 export class BillDetails implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
+  messages: Message[] = [];
   bill: Bill = new Bill();
   serviceCols: any[];
   billPaymentCols: any[];
-  
-  serviceDropdown: ServiceDropdown;
-  doctorDropdown: DoctorDropdown;
-  
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
-  SELECT_OPTION: string = Constants.SELECT_OPTION;
   
   patient: Patient = new Patient();
   
@@ -50,14 +34,12 @@ export class BillDetails implements OnInit, OnDestroy {
     (
       private genericService: GenericService,
       private billingService: BillingService,
-      private srvDropdown: ServiceDropdown,
-      private dctDropdown: DoctorDropdown,
+      private serviceDropdown: ServiceDropdown,
+      private doctorDropdown: DoctorDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
     ) {
-    this.serviceDropdown = srvDropdown;
-    this.doctorDropdown = dctDropdown;
     this.patient.user = new User();
   }
 
@@ -65,7 +47,6 @@ export class BillDetails implements OnInit, OnDestroy {
 
      this.serviceCols = [
             { field: 'service', header: 'Name' },
-            { field: 'description', header: 'Description' },
             { field: 'doctor', header: 'Doctor' },
             { field: 'quantity', header: 'Quantity' },
             { field: 'unitAmount', header: 'Price' },
@@ -84,7 +65,6 @@ export class BillDetails implements OnInit, OnDestroy {
         .queryParams
         .subscribe(params => {          
           
-          this.bill.admission = new Admission();
           this.bill.appointment = new Appointment();
           this.addRow();
           this.addPaymentRow();
@@ -95,17 +75,15 @@ export class BillDetails implements OnInit, OnDestroy {
               this.billingService.getBill(billId)
                   .subscribe(result => {
                 if (result.id > 0) {
-                  this.bill = result
-                  this.patient = this.bill.appointment.patient;
+                  this.bill = result;
+                  this.admission = this.bill.admission;
+                  this.visit = this.bill.visit;
                   if (this.bill.billServices.length == 0) 
                     this.addRow();
                   if (this.bill.billPayments.length == 0) 
                     this.addPaymentRow();
                 }
-                else {
-                  this.error = Constants.SAVE_UNSUCCESSFUL;
-                  this.displayDialog = true;
-                }
+                
               })
           } else {
               
@@ -158,37 +136,65 @@ export class BillDetails implements OnInit, OnDestroy {
   } 
   
   savePayment(rowData) {
+    this.messages = [];
     rowData.data.bill = new Bill()
     rowData.data.bill.id = this.bill.id;
-    alert(rowData.amount)
     this.genericService.save(rowData.data, 'BillPayment')
         .subscribe(result => {
           alert(result.id)
           if (result.id > 0) {
             rowData.data = result
-            console.info(rowData.data);
+            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
           }
           else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-            this.displayDialog = true;
+            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
           }
         })
   }
   
-  save() {
+  
+  validate() {
+    this.messages = [];
+    let noProductFound: boolean = true;
+    if (!(
+        (this.visit && this.visit.id > 0)
+        || (this.admission && this.admission.id > 0)
+      )) {
+      return false;
+    }
     
+    for (let i in this.bill.billServices) {
+      let bs = this.bill.billServices[i];
+      if (bs.service && bs.service.id > 0) {
+        noProductFound = false;
+        if (bs.quantity == null || bs.quantity <= 0)
+          this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'Quantity is required and must be greater than 0.'});
+        if (bs.unitAmount == null || bs.unitAmount <= 0)
+          this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'Price is required and must be greater than 0.'});
+        
+      }
+    }
+    
+    if (noProductFound) {
+      this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'At least 1 service is required.'});
+    }
+    
+    return this.messages.length == 0;
+  }
+  
+  save() {
+    this.messages = [];
+    this.bill.admission = this.admission;
+    this.bill.visit = this.visit;
     try {
-      this.error = '';
       this.billingService.saveBill(this.bill)
         .subscribe(result => {
-          alert(result.id)
           if (result.id > 0) {
-            this.bill = result
-            console.info(this.bill);
+            this.bill = result;
+            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
           }
           else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-            this.displayDialog = true;
+            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
           }
         })
     }
@@ -197,21 +203,12 @@ export class BillDetails implements OnInit, OnDestroy {
     }
   }
   
-  lookUpVisit() {
-    let parameters: string [] = []; 
-            
-    parameters.push('e.visitNumber = |visitNumber|' + this.itemNumber + '|String')
-    
-    this.billingService.getBillByItemNumber(this.itemNumber)
-      .subscribe((data: Bill) => 
-      { 
-        if (data) {
-          this.bill = data;
-          this.patient = this.bill.visit.patient;
-        }
-      },
-      error => console.log(error),
-      () => console.log('Get Patient complete'));
+  lookUpVisit(event) {
+    this.visit = event;
+  }
+  
+  lookUpAdmission(event) {
+    this.admission = event;
   }
 
  }

@@ -61,7 +61,6 @@ import {CategoryDropdown, PackageDropdown} from '../components/dropdowns';
 
 
 import {AdminPatient} from '../components/adminPatient';
-import {AdminAdmission} from '../components/adminAdmission';
 import {VisitDetails} from '../components/visitDetails';
 import {VisitList} from '../components/visitList';
 import {AllergyDetails} from '../components/allergyDetails';
@@ -150,7 +149,6 @@ const routes: Routes = [
   {path: 'visitDetails', component: VisitDetails},
   {path: 'visitList', component: VisitList},
   {path: 'adminPatient', component: AdminPatient},
-  {path: 'adminAdmission', component: AdminAdmission},
   {path: 'adminBedStatus', component: AdminBedStatus},
   {path: 'adminReference', component: AdminReference},
   {path: 'investigationDetails', component: InvestigationDetails},
@@ -187,7 +185,7 @@ const routes: Routes = [
     ServiceList, PackageDetails, PackageList, BillDetails, BillList, VitalSignDetails, VitalSignList, AllergyDetails,
     MedicalHistoryDetails, SocialHistoryDetails, VaccineDetails, SymptomDetails, BedTransfer,
     DoctorOrderDetails, DoctorOrderList, AdmissionDetails, AdmissionList, DoctorTransfer, FloorDetails, FloorList,
-    RoomDetails, RoomList, BedDetails, BedList, AdminPatient, AdminAdmission, AdminBedStatus, AdmissionDiagnoses,
+    RoomDetails, RoomList, BedDetails, BedList, AdminPatient, AdminBedStatus, AdmissionDiagnoses,
     AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails,
     InvestigationList, PurchaseOrderDetails, PurchaseOrderList, ReceiveOrderDetails, ReceiveOrderList,
     PatientSaleDetails, PatientSaleList, SaleReturnDetails, SaleReturnList, BirthReportDetails, BirthReportList,

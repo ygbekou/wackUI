@@ -1,20 +1,15 @@
-
-		<div class="ui-grid-row" *ngIf="admission">
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-3 ui-sm-12">
-						<label i18n="@@vitalSignDatetime" for="vitalSignDatetime">Date Time<font color="red">*</font></label> 
-					</div>
-					<div class="ui-grid-col-8 ui-sm-12">
-						<p-calendar [(ngModel)]="vitalSign.vitalSignDatetime" [showTime]="true"></p-calendar>
-					</div>
-					<div class="ui-grid-col-1 ui-sm-12">
-					</div>
+<form name="form" (ngSubmit)="f.form.valid && validate() && save()" #f="ngForm" validate>
+	<div class="ui-grid ui-grid-responsive ui-fluid">
+		<p-messages [(value)]="messages"></p-messages>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-2 ui-sm-12" *ngIf="admission">
+				<div class="form-group">
+					<label i18n="@@vitalSignDatetime" for="vitalSignDatetime">Vital Sign Date Time<font color="red">*</font></label> 
+					<p-calendar [(ngModel)]="vitalSign.vitalSignDatetime" [showTime]="true" name="vitalSignDatetime" 
+						#vitalSignDatetime="ngModel" required></p-calendar>
+					<p-message *ngIf="f.submitted && vitalSignDatetime.invalid" severity="error" text="Field is required"></p-message>
 				</div>
 			</div>
-		</div>
-		<br/>
-		<div class="ui-grid-row">
 			<div class="ui-grid-col-2 ui-sm-12">
 				<div class="form-group">
 					<label i18n="@@temperature" for="temperature">Temperature</label>
@@ -81,4 +76,11 @@
 				</div>
 			</div>
 		</div>
-		
+	</div>
+	<br/>
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+		<button type="button" pButton icon="fa fa-refresh" (click)="addNew()" label="Effacer"></button>&nbsp;&nbsp;&nbsp;&nbsp;
+		<button pButton icon="fa fa-save" label="Save"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<button type="button" pButton icon="fa fa-remove" (click)="delete()" label="Delete"></button>
+	</div>
+</form>

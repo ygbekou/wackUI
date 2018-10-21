@@ -4,7 +4,7 @@ import { Constants } from '../../app.constants';
 import { ReceiveOrder, ReceiveOrderProduct } from '../../models/stocks/receiveOrder';
 import { SaleReturn } from '../../models/stocks/saleReturn';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
+import { InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { User } from '../../models/user';  
 import { GenericService, PurchasingService } from '../../services';
 
@@ -15,14 +15,8 @@ import { GenericService, PurchasingService } from '../../services';
 })
 export class SaleReturnList implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   saleReturns: SaleReturn[] = [];
   cols: any[];
-  
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
   
   constructor
     (
@@ -38,10 +32,10 @@ export class SaleReturnList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'returnDatetime', header: 'Return Date', type:'date' },
+            { field: 'returnDatetime', header: 'Return Date', type:'date', format: 'dd/MM/yyyy' },
             { field: 'comments', header: 'Comments' },
             { field: 'patientSaleId', header: 'PS ID' },
-            { field: 'saleDatetime', header: 'Sale Date' },
+            { field: 'patientSaleDatetime', header: 'Sale Date', type: 'date', format: 'dd/MM/yyyy hh:mm'},
             { field: 'status', header: 'Status', type:'string' }
         ];
     
@@ -50,8 +44,6 @@ export class SaleReturnList implements OnInit, OnDestroy {
         .subscribe(params => {          
           
             let parameters: string [] = []; 
-            
-            parameters.push('e.status = |status|0|Integer')
             
             this.genericService.getAllByCriteria('com.qkcare.model.stocks.SaleReturn', parameters)
               .subscribe((data: SaleReturn[]) => 

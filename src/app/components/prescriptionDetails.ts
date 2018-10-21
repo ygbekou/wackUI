@@ -22,7 +22,6 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
   medicineCols: any[];
   diagnosisCols: any[];
   
-  medicineDropdown: MedicineDropdown;
   messages: Message[] = [];
   
   @Input() admission: Admission;
@@ -36,12 +35,11 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
       private globalEventsManager: GlobalEventsManager,
       private genericService: GenericService,
       private admissionService: AdmissionService,
-      private mdDropdown: MedicineDropdown,
+      private medicineDropdown: MedicineDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
     ) {
-    this.medicineDropdown = mdDropdown;
     
   }
 
@@ -130,6 +128,7 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
     
     try {
       this.prescription.visit = this.visit;
+      this.prescription.admission = this.admission;
       
       this.admissionService.savePrescription(this.prescription)
         .subscribe(result => {

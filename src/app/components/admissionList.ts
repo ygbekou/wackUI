@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@ang
 import { Employee } from '../models/employee';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../app.constants';
+import { SearchCriteria } from '../models';
 import { Admission } from '../models/admission';
 import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
@@ -16,14 +17,10 @@ import { GenericService } from '../services';
 })
 export class AdmissionList implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   admissions: Admission[] = [];
   cols: any[];
   
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
+  searchCriteria: SearchCriteria = new SearchCriteria();
   
   constructor
     (
@@ -42,17 +39,20 @@ export class AdmissionList implements OnInit, OnDestroy {
             { field: 'admissionDatetime', header: 'Date', type:'date' },
             { field: 'patientId', header: 'Patient ID' },
             { field: 'patientName', header: 'Patient Name' },
-            
             { field: 'status', header: 'Status', type:'string' }
         ];
     
+    // Get all admission of the last 24 hrs;
     this.route
         .queryParams
         .subscribe(params => {          
           
             let parameters: string [] = []; 
             
-            parameters.push('e.status = |status|0|Integer')
+            let endDate = new Date();
+            let startDate  = new Date(new Date().setDate(new Date().getDate() - 1));
+            parameters.push('e.admissionDatetime >= |admissionDateStart|' + startDate.toLocaleDateString() + ' ' + startDate.toLocaleTimeString() + '|Timestamp');
+            parameters.push('e.admissionDatetime < |admissionDateEnd|' + endDate.toLocaleDateString() + ' ' + endDate.toLocaleTimeString() + '|Timestamp');
             
             this.genericService.getAllByCriteria('Admission', parameters)
               .subscribe((data: Admission[]) => 
@@ -76,7 +76,7 @@ export class AdmissionList implements OnInit, OnDestroy {
           "admissionId": admissionId,
         }
       }
-      this.router.navigate(["/admin/adminAdmission"], navigationExtras);
+      this.router.navigate(["/admin/admissionDetails"], navigationExtras);
     }
     catch (e) {
       console.log(e);
@@ -95,6 +95,42 @@ export class AdmissionList implements OnInit, OnDestroy {
     catch (e) {
       console.log(e);
     }
+  }
+  
+  
+  search() {
+   
+    let parameters: string [] = []; 
+        
+    if (this.searchCriteria.medicalRecordNumber != null && this.searchCriteria.medicalRecordNumber.length > 0)  {
+      parameters.push('e.patient.medicalRecordNumber = |medicalRecordNumber|' + this.searchCriteria.medicalRecordNumber + '|String');
+    }
+    if (this.searchCriteria.lastName != null && this.searchCriteria.lastName.length > 0)  {
+      parameters.push('e.patient.user.lastName like |lastName|' + '%' + this.searchCriteria.lastName + '%' + '|String');
+    }
+    if (this.searchCriteria.firstName != null && this.searchCriteria.firstName.length > 0)  {
+      parameters.push('e.patient.user.firstName like |firstName|' + '%' + this.searchCriteria.firstName + '%' + '|String');
+    } 
+    if (this.searchCriteria.birthDate != null)  {
+      parameters.push('e.patient.user.birthDate = |birthDate|' + this.searchCriteria.birthDate.toLocaleDateString() + '|Date');
+    }  
+    if (this.searchCriteria.admissionId != null)  {
+      parameters.push('e.id = |admissionId|' + this.searchCriteria.admissionId + '|Long');
+    }
+    if (this.searchCriteria.admissionDate != null)  {
+      let startDate = new Date(this.searchCriteria.admissionDate.setDate(this.searchCriteria.admissionDate.getDate()));
+      let endDate  = new Date(this.searchCriteria.admissionDate.setDate(this.searchCriteria.admissionDate.getDate() + 1));
+      parameters.push('e.admissionDatetime >= |admissionDateStart|' + startDate.toLocaleDateString() + '|Timestamp');
+      parameters.push('e.admissionDatetime < |admissionDateEnd|' + endDate.toLocaleString() + '|Timestamp');
+    } 
+    
+    this.genericService.getAllByCriteria('Admission', parameters)
+      .subscribe((data: Admission[]) => 
+      { 
+        this.admissions = data 
+      },
+      error => console.log(error),
+      () => console.log('Get all Admissions complete'));
   }
 
  }

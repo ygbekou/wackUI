@@ -20,10 +20,9 @@ import { Message } from 'primeng/api';
 })
 export class SaleReturnDetails implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   saleReturn: SaleReturn = new SaleReturn();
   returnProductCols: any[];
+  messages: Message[] = [];
   
   patientSale: PatientSale = new PatientSale();
   
@@ -43,7 +42,7 @@ export class SaleReturnDetails implements OnInit, OnDestroy {
 
      this.returnProductCols = [
             { field: 'productName', header: 'Name' },
-            { field: 'productDescription', header: 'Description' },
+            { field: 'unitPrice', header: 'Unit Price', type: 'amount', inputType: 'text'},
             { field: 'originalQuantity', header: 'Sale Quantity', type: 'amount'},
             { field: 'quantity', header: 'Returned Quantity', type: 'number'},
             { field: 'notes', header: 'Notes', type: "text"}
@@ -62,17 +61,12 @@ export class SaleReturnDetails implements OnInit, OnDestroy {
                 if (result.id > 0) {
                   this.saleReturn = result
                 }
-                else {
-                  this.error = Constants.SAVE_UNSUCCESSFUL;
-                  this.displayDialog = true;
-                }
               })
           } else {
               
           }
      });
     
-    console.info(this.saleReturn)
   }
   
   ngOnDestroy() {
@@ -84,20 +78,48 @@ export class SaleReturnDetails implements OnInit, OnDestroy {
     return value != undefined ? value : 0;
   } 
   
+  validate(): boolean {
+    this.messages = [];
+    let noProductFound = true;
+    if (!this.patientSale || !(this.patientSale.id > 0))
+      return false;
+    
+    for (let i in this.saleReturn.saleReturnProducts) {
+      let srp = this.saleReturn.saleReturnProducts[i];
+      if (srp.product && srp.product.id > 0) {
+        noProductFound = false;
+        if (srp.quantity == null || srp.quantity <= 0)
+          this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'Quantity is required.'});
+      }
+    }
+    
+    
+    if (noProductFound) {
+      this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'At least 1 medication is required.'});
+    }
+    
+    return this.messages.length == 0;
+  }
+  
   save(status: number) {
-    this.saleReturn.status = status;
+    this.messages = []
+    
+    if (!status) {
+      this.saleReturn.status = 1
+    } else {
+      this.saleReturn.status = status;
+    }
     
     try {
-      this.error = '';
-      this.genericService.saveWithUrl('/service/purchasing/receiveOrder/save', this.saleReturn)
+      
+      this.genericService.saveWithUrl('/service/purchasing/saleReturn/save', this.saleReturn)
         .subscribe(result => {
           if (result.id > 0) {
             this.saleReturn = result
-            console.info(this.saleReturn);
+            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
           }
           else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-            this.displayDialog = true;
+            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
           }
         })
     }
@@ -111,13 +133,30 @@ export class SaleReturnDetails implements OnInit, OnDestroy {
     
     this.genericService.getNewObject('/service/purchasing/patientSale/newSaleReturn/', this.patientSale.id)
       .subscribe((data: SaleReturn) => 
-      { 
-
+      {
         this.saleReturn = data;
-        
       },
       error => console.log(error),
       () => console.log('Get saleReturn complete'));
   }
 
+  calculateGrandTotal() {
+    this.saleReturn.grandTotal = +this.getNumber(this.saleReturn.subTotal) + +this.getNumber(this.saleReturn.taxes)
+                    - +this.getNumber(this.saleReturn.discount);
+  }
+  
+  
+  calculateTotal() {
+    this.saleReturn.subTotal = 0;
+    for (let i in this.saleReturn.saleReturnProducts) {
+       this.saleReturn.subTotal += this.calculateRowTotal(this.saleReturn.saleReturnProducts[i]);
+    }
+    this.calculateGrandTotal();
+  }
+  
+  calculateRowTotal(rowData) {
+    rowData.totalAmount = (+this.getNumber(rowData.quantity) * +this.getNumber(rowData.unitPrice));
+    return rowData.totalAmount;
+    
+  }
  }

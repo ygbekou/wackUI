@@ -6,6 +6,10 @@ export class SaleReturn {
   patientSale: PatientSale;
   comments: string;
   returnDatetime: Date = new Date();
+  subTotal: number;
+  taxes: number;
+  discount: number;
+  grandTotal: number;
   status: number;
   
   saleReturnProducts: SaleReturnProduct[] = [];
@@ -22,5 +26,8 @@ export class SaleReturnProduct {
   product: Product;
   quantity: number;
   unitPrice: number;
+  totalAmount: number;
+  discountPercentage: number;
+  discountAmount: number;
   originalQuantity: number;
 }

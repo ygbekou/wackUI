@@ -44,7 +44,10 @@ export class VisitList implements OnInit, OnDestroy {
           
             let parameters: string [] = []; 
             
-            parameters.push('e.status = |status|0|Integer')
+            let endDate = new Date();
+            let startDate  = new Date(new Date().setDate(new Date().getDate() - 1));
+            parameters.push('e.visitDatetime >= |visitDateStart|' + startDate.toLocaleDateString() + ' ' + startDate.toLocaleTimeString() + '|Timestamp');
+            parameters.push('e.visitDatetime < |visitDateEnd|' + endDate.toLocaleDateString() + ' ' + endDate.toLocaleTimeString() + '|Timestamp');
             
             this.genericService.getAllByCriteria('Visit', parameters)
               .subscribe((data: Visit[]) => 
@@ -106,7 +109,15 @@ export class VisitList implements OnInit, OnDestroy {
     if (this.searchCriteria.birthDate != null)  {
       parameters.push('e.patient.user.birthDate = |birthDate|' + this.searchCriteria.birthDate.toLocaleDateString() + '|Date')
     }  
-    
+    if (this.searchCriteria.visitId != null && this.searchCriteria.visitId > 0)  {
+      parameters.push('e.id = |visitId|' + this.searchCriteria.visitId + '|Long');
+    }
+    if (this.searchCriteria.visitDate != null)  {
+      let startDate = new Date(new Date().setDate(this.searchCriteria.visitDate.getDate()));
+      let endDate  = new Date(new Date().setDate(this.searchCriteria.visitDate.getDate() + 1));
+      parameters.push('e.visitDatetime >= |visitDateStart|' + startDate.toLocaleDateString() + '|Timestamp');
+      parameters.push('e.visitDatetime < |visitDateEnd|' + endDate.toLocaleString() + '|Timestamp');
+    } 
     
     this.genericService.getAllByCriteria('Visit', parameters)
       .subscribe((data: Visit[]) => 

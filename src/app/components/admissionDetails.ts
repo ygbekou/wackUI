@@ -1,26 +1,20 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../app.constants';
-import { Bed } from '../models/bed';
-import { BedAssignment } from '../models/bedAssignment';
-import { Country } from '../models/country';
-import { DoctorAssignment } from '../models/doctorAssignment';
-import { Floor } from '../models/floor';
-import { Package } from '../models/package'; 
-import { Patient } from '../models/patient';
-import { Admission } from '../models/admission';
-import { Reference } from '../models/reference';
-import { Room } from '../models/room';
+import { Admission, Bed, BedAssignment, Country, DoctorAssignment, Floor, Package, Patient, Reference, Room, User } from '../models';
 import { EditorModule } from 'primeng/editor';
 import { DoctorDropdown, PackageDropdown, InsuranceDropdown, BuildingDropdown, FloorDropdown, RoomDropdown, 
       CategoryDropdown, BedDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
-import { User } from '../models/user';  
+import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { GenericService, AppointmentService, GlobalEventsManager, AdmissionService } from '../services';
 import { AdmissionDiagnoses } from './admissionDiagnoses';
+import { DoctorOrderDetails } from './doctorOrderDetails';
 import { PrescriptionDetails } from './prescriptionDetails';
 import { PrescriptionList } from './prescriptionList';
+import { PatientSaleDetails } from './stocks/patientSaleDetails';
+import { VitalSignDetails } from './vitalSignDetails';
+import { Message } from 'primeng/api';
  
 @Component({
   selector: 'app-admission-details',
@@ -30,26 +24,19 @@ import { PrescriptionList } from './prescriptionList';
 })
 export class AdmissionDetails implements OnInit, OnDestroy {
   
+  @ViewChild(DoctorOrderDetails) doctorOrderDetails: DoctorOrderDetails;
   @ViewChild(AdmissionDiagnoses) admissionDiagnoses: AdmissionDiagnoses;
   @ViewChild(PrescriptionDetails) prescriptionDetails: PrescriptionDetails;
+  @ViewChild(PatientSaleDetails) patientSaleDetails: PatientSaleDetails;
+  @ViewChild(VitalSignDetails) vitalSignDetails: VitalSignDetails;
   @ViewChild(PrescriptionList) prescriptionList: PrescriptionList;
   
-  public error: String = '';
-  displayDialog: boolean;
   admission: Admission = new Admission();
   medicineCols: any[];
   diagnosisCols: any[];
   patient: Patient = new Patient();
   
-  doctorDropdown: DoctorDropdown;
-  packageDropdown: PackageDropdown;
-  insuranceDropdown: InsuranceDropdown;
-  buildingDropdown: BuildingDropdown;
-  floorDropdown: FloorDropdown;
-  roomDropdown: RoomDropdown;
-  categoryDropdown: CategoryDropdown;
-  bedDropdown: BedDropdown
-  
+  messages: Message[] = [];
   activeTab: number = 0;
   
   DETAIL: string = Constants.DETAIL;
@@ -65,26 +52,18 @@ export class AdmissionDetails implements OnInit, OnDestroy {
       private genericService: GenericService,
       private admissionService: AdmissionService,
       private globalEventsManager: GlobalEventsManager,
-      private dcDropdown: DoctorDropdown,
-      private pkgeDropdown: PackageDropdown,
-      private insceDropdown: InsuranceDropdown,
-      private bdgDropdown: BuildingDropdown,
-      private flrDropdown: FloorDropdown,
-      private rmDropdown: RoomDropdown,
-      private catDropdown: CategoryDropdown,
-      private bdDropdown: BedDropdown,
+      private doctorDropdown: DoctorDropdown,
+      private packageDropdown: PackageDropdown,
+      private insuranceDropdown: InsuranceDropdown,
+      private buildingDropdown: BuildingDropdown,
+      private floorDropdown: FloorDropdown,
+      private roomDropdown: RoomDropdown,
+      private categoryDropdown: CategoryDropdown,
+      private bedDropdown: BedDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
     ) {
-    this.doctorDropdown = dcDropdown;
-    this.packageDropdown = pkgeDropdown;
-    this.insuranceDropdown = insceDropdown;
-    this.buildingDropdown = bdgDropdown;
-    this.floorDropdown = flrDropdown;
-    this.roomDropdown = rmDropdown;
-    this.categoryDropdown = catDropdown;
-    this.bedDropdown = bdDropdown;
     
     // Initialize data
     this.initilizePatientAdmissionPatient();
@@ -92,7 +71,7 @@ export class AdmissionDetails implements OnInit, OnDestroy {
     this.initilizePatientAdmissionDoctor();
     
     // Initialize the selectedParentCategoryId 
-    this.categoryDropdown.getAllCategories(100);
+    this.categoryDropdown.getAllCategories(Constants.CATEGORY_MEDICINE);
   }
 
   initilizePatientAdmissionPatient() {
@@ -134,6 +113,7 @@ export class AdmissionDetails implements OnInit, OnDestroy {
                 if (data.id > 0) {
                   this.admission = data;
                   this.patient = this.admission.patient;
+                  this.admission.admissionDatetime = new Date(this.admission.admissionDatetime);
                   this.globalEventsManager.selectedAdmissionId = this.admission.id;
                   if (this.admission.bedAssignment == null) {
                     this.initilizePatientAdmissionBed();
@@ -159,20 +139,17 @@ export class AdmissionDetails implements OnInit, OnDestroy {
   }
 
   save() {
-    
+    this.messages = [];
     try {
-      this.error = '';
       this.admission.patient = this.patient;
       this.admissionService.saveAdmission(this.admission)
         .subscribe(result => {
-          alert(result.id)
           if (result.id > 0) {
-            this.admission = result
-            console.info(this.admission);
+            this.admission = result;
+            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
           }
           else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-            this.displayDialog = true;
+            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
           }
         })
     }
@@ -181,24 +158,8 @@ export class AdmissionDetails implements OnInit, OnDestroy {
     }
   }
   
-  lookUpPatient() {
-    let parameters: string [] = []; 
-            
-    parameters.push('e.matricule = |matricule|' + this.patient.medicalRecordNumber + '|String')
-    let patientMatricule = this.patient.medicalRecordNumber;
-    this.patient = new Patient()
-    this.patient.medicalRecordNumber = patientMatricule;
-    
-    this.genericService.getAllByCriteria('Patient', parameters)
-      .subscribe((data: Patient[]) => 
-      { 
-        if (data.length > 0) {
-          console.info(this.patient)
-          this.patient = data[0];
-        }
-      },
-      error => console.log(error),
-      () => console.log('Get Patient complete'));
+  lookUpPatient(event) {
+    this.patient = event;
   }
   
   populateFloorDropdown(event) {
@@ -220,10 +181,16 @@ export class AdmissionDetails implements OnInit, OnDestroy {
   onTabChange(evt) {
     this.activeTab = evt.index;
     if (evt.index == 1) {
-      this.admissionDiagnoses.getDiagnoses();
+   
     } 
     else if (evt.index == 2) {
+      this.admissionDiagnoses.getDiagnoses();
     } 
+    else if (evt.index == 3) {
+      this.prescriptionDetails.admission = this.admission;
+      this.prescriptionList.admission = this.admission;
+      this.prescriptionList.getPrescriptions();
+    }
   }
   
   onPrescriptionSelected($event) {
@@ -231,4 +198,18 @@ export class AdmissionDetails implements OnInit, OnDestroy {
     this.prescriptionDetails.getPrescription(prescriptionId);
   }
   
+  onVitalSignSelected($event) {
+    let vitalSignId = $event;
+    this.vitalSignDetails.getVitalSign(vitalSignId);
+  }
+  
+  onDoctorOrderSelected($event) {
+    let doctorOrderId = $event;
+    this.doctorOrderDetails.getDoctorOrder(doctorOrderId);
+  }
+  
+  onPatientSaleSelected($event) {
+    let patientSaleId = $event;
+    this.patientSaleDetails.getPatientSale(patientSaleId);
+  }
  }

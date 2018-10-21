@@ -294,6 +294,37 @@
 				</div>
 			</div>
 		</div>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@accountNumber" for="accountNumber">Account Number</label> <input
+						type="text" pInputText class="form-control" id="accountNumber" [(ngModel)]="patient.accountNumber"
+						 name="accountNumber" #accountNumber="ngModel">
+				</div>
+			</div>
+			<div class="ui-grid-col-3 ui-sm-12">
+				<div class="form-group">
+					<br/>
+					<p-checkbox [(ngModel)]="patient.isSelfResponsible" binary="true"
+							 name="isSelfResponsible" #isSelfResponsible="ngModel"> </p-checkbox>&nbsp;
+					<label i18n="@@isSelfResponsible" for="isSelfResponsible">Is Self Responsible</label> 
+				</div>
+			</div>
+			<div class="ui-grid-col-3 ui-sm-12" *ngIf="!patient.isSelfResponsible">
+				<div class="form-group">
+					<label i18n="@@responsiblePartyFirstName" for="responsiblePartyFirstName">Responsible Party First Name</label> <input
+						type="text" pInputText class="form-control" id="responsiblePartyFirstName" [(ngModel)]="patient.responsiblePartyFirstName"
+						 name="responsiblePartyFirstName" #responsiblePartyFirstName="ngModel">
+				</div>
+			</div>
+			<div class="ui-grid-col-3 ui-sm-12" *ngIf="!patient.isSelfResponsible">
+				<div class="form-group">
+					<label i18n="@@responsiblePartyLastName" for="responsiblePartyLastName">Responsible Party Last Name</label> <input
+						type="text" pInputText class="form-control" id="responsiblePartyLastName" [(ngModel)]="patient.responsiblePartyLastName"
+						 name="responsiblePartyLastName" #responsiblePartyLastName="ngModel">
+				</div>
+			</div>
+		</div>
 		</p-accordionTab> </p-accordion>
 		<br />
 	

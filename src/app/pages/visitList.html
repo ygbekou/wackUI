@@ -1,42 +1,63 @@
 <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-	<p-fieldset legend="Search Criteria" *ngIf="!((visit && visit.id > 0) || (admission && admission.id > 0))">
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@patientId" for="patientId">Patient ID:
-					</label> <input type="text" pInputText class="form-control" id="medicalRecordNumber"
-						 [(ngModel)]="searchCriteria.medicalRecordNumber" name="medicalRecordNumber" >
+	<div class="ui-grid ui-grid-responsive ui-fluid">
+		<p-fieldset legend="Search Criteria">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-1 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@visitId" for="visitId">Visit ID:
+						</label> <input type="text" pInputText class="form-control" id="visitId"
+							 [(ngModel)]="searchCriteria.visitId" name="visitId" >
+					</div>
+				</div>
+				<div class="ui-grid-col-1 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@visitDate" for="visitDate">Visit Date:
+						</label> <p-calendar [(ngModel)]="searchCriteria.visitDate" id="visitDate"
+									name="visitDate" #visitDate="ngModel"></p-calendar>
+					</div>
+				</div>
+				<div class="ui-grid-col-1 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@patientId" for="patientId">Patient ID:
+						</label> <input type="text" pInputText class="form-control" id="medicalRecordNumber"
+							 [(ngModel)]="searchCriteria.medicalRecordNumber" name="medicalRecordNumber" >
+					</div>
+				</div>
+				<div class="ui-grid-col-2 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@lastName" for="lastName">Last Name:
+						</label> <input type="text" pInputText class="form-control" id="lastName"
+							 [(ngModel)]="searchCriteria.lastName" name="lastName" >
+					</div>
+				</div>
+				<div class="ui-grid-col-2 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@firstName" for="firstName">First Name:
+						</label> <input type="text" pInputText class="form-control" id="firstName"
+							 [(ngModel)]="searchCriteria.firstName" name="firstName">
+					</div>
+				</div>
+				<div class="ui-grid-col-2 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@birthDate" for="birthDate">Birth Date:
+						</label> <p-calendar [(ngModel)]="searchCriteria.birthDate" id="birthDate"
+									name="birthDate" #birthDate="ngModel"></p-calendar>
+					</div>
 				</div>
 			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@lastName" for="lastName">Last Name:
-					</label> <input type="text" pInputText class="form-control" id="lastName"
-						 [(ngModel)]="searchCriteria.lastName" name="lastName" >
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-1 ui-sm-12">
+					<button pButton icon="fa fa-search" label="Search" (click)="search()"></button>
 				</div>
 			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@firstName" for="firstName">First Name:
-					</label> <input type="text" pInputText class="form-control" id="firstName"
-						 [(ngModel)]="searchCriteria.firstName" name="firstName">
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@birthDate" for="birthDate">Birth Date:
-					</label> <p-calendar [(ngModel)]="searchCriteria.birthDate" id="birthDate"
-								name="birthDate" #birthDate="ngModel"></p-calendar>
-				</div>
-			</div>
-			<div>
-				<button pButton icon="fa fa-search" label="Search" (click)="search()"></button>
-			</div>
-		</div>
-	</p-fieldset>
+		</p-fieldset>
+	</div>
 	<br/>
 	<br/>
 	<p-table [columns]="cols" [value]="visits">
+		<ng-template pTemplate="caption">
+			VISIT LIST
+		</ng-template>
 	    <ng-template pTemplate="header" let-columns>
 	        <tr>
 	            <th *ngFor="let col of columns" [pSortableColumn]="col.field">

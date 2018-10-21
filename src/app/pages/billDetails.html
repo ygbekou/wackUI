@@ -1,74 +1,36 @@
-<div class="ui-grid-row"> 
-		<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-			<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="bill">
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@itemNumber" for="itemNumber">{{itemNumberLabel}}<font color="red">*</font></label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								<input type="text" pInputText class="form-control" id="itemNumber" (change)="lookUpVisit()"
-								[(ngModel)]="itemNumber" name="itemNumber" #itemNumberModel="ngModel">
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@patientName" for="patientName">Patient Name</label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								{{patient.name}}
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@patientBirthDate" for="patientSex">Sex</label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								{{patient.user.sex}}
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>
-					</div>
+<form name="form" (ngSubmit)="f.form.valid && validate() && save()" #f="ngForm" validate>
+	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+		<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="bill">
+			<p-messages [(value)]="messages"></p-messages>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-5 ui-sm-12">
+					<app-visitAdm-lookup (visitEmit)="lookUpVisit($event)" (admissionEmit)="lookUpAdmission($event)" 
+						[originalPage]="'admin/billDetails'" [visit]="visit"></app-visitAdm-lookup>
+					<p-message *ngIf="f.submitted && !((visit && visit.id > 0) || (admission && admission.id > 0))" severity="error" text="Visit is required"></p-message>
 				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@patientSex" for="patientBirthDate">Birth Date: </label>
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								{{patient.user.birthDate | date:'dd/MM/yyyy'}}
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
-						</div>				
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-3 ui-sm-12">
-								<label i18n="@@billDate" for="billDate">Date<font color="red">*</font></label> 
-							</div>
-							<div class="ui-grid-col-8 ui-sm-12">
-								<p-calendar [(ngModel)]="bill.billDate"></p-calendar>
-							</div>
-							<div class="ui-grid-col-1 ui-sm-12">
-							</div>
+				<div class="ui-grid-col-7 ui-sm-12">
+					<div class="ui-grid-col-3 ui-sm-12">
+						<div class="form-group">
+							<label i18n="@@billDate" for="billDate">Statement Date<font color="red">*</font></label> 
+							<p-calendar [(ngModel)]="bill.billDate" name="billDate"  #billDate="ngModel" required></p-calendar>
+							<p-message *ngIf="f.submitted && billDate.invalid" severity="error" text="Field is required"></p-message>
+						</div>
+						<div class="form-group">
+							<label i18n="@@dueDate" for="dueDate">Due Date<font color="red">*</font></label> 
+							<p-calendar [(ngModel)]="bill.dueDate" name="dueDate"  #dueDate="ngModel" required></p-calendar>
+							<p-message *ngIf="f.submitted && dueDate.invalid" severity="error" text="Field is required"></p-message>
 						</div>
 					</div>
-					
+					<div class="ui-grid-col-9 ui-sm-12">
+						<div class="form-group">
+							<label i18n="@@notes" for="notes">Notes</label>  
+							<textarea pInputTextarea id="notes" rows="4" cols="40" pInputTextarea maxlength="1000" 
+									[(ngModel)]="bill.notes" name="notes" #notes="ngModel"> </textarea>		
+						</div>
+					</div>
 				</div>
 			</div>
-			
+		</div>
 			<br/>
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-12 ui-sm-12">
@@ -88,19 +50,11 @@
 					    <ng-template pTemplate="body" let-rowData let-columns="columns">
 					        <tr>			           
 					            <td *ngFor="let col of columns" [pEditableColumn]="rowData" [pEditableColumnField]="rowData[col.field]">
-					            	<p-cellEditor *ngIf="col.field != 'service' && col.field != 'doctor' && col.field != 'quantity' && col.field != 'unitPrice' && 
-					                		col.field != 'discountAmount' && col.field != 'payerAmount' && col.field != 'patientAmount'">
-					                    <ng-template pTemplate="input">
-					                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled">
-					                    </ng-template>
-					                    <ng-template pTemplate="output">
-					                        {{rowData[col.field]}}
-					                    </ng-template>
-					                </p-cellEditor>
-					                <p-cellEditor *ngIf="col.field == 'quantity' || col.field == 'unitPrice' || 
+					                <p-cellEditor *ngIf="col.field == 'quantity' || col.field == 'unitAmount' || 
 					                		col.field == 'discountAmount' || col.field == 'payerAmount' || col.field == 'patientAmount'">
 					                    <ng-template pTemplate="input">
-					                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled">
+					                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled"
+					                        	 name="{{col.field}}" >
 					                    </ng-template>
 					                    <ng-template pTemplate="output">
 					                        {{rowData[col.field]}}
@@ -150,7 +104,7 @@
 			
 			
 			<div class="ui-grid-row">
-				<div class="ui-grid-col-7 ui-sm-12">					
+				<div class="ui-grid-col-8 ui-sm-12">					
 					<p-table [columns]="billPaymentCols" [value]="bill.billPayments" (onEditComplete)="savePayment($event)" *ngIf="bill.id">
 						<ng-template pTemplate="caption">
 					        List of Payments
@@ -169,7 +123,7 @@
 					            <td *ngFor="let col of columns" [pEditableColumn]="rowData">
 					            	<p-cellEditor>
 					                    <ng-template pTemplate="input">
-					                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled">
+					                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled" name="{{col.field}}">
 					                    </ng-template>
 					                    <ng-template pTemplate="output">
 					                        {{rowData[col.field]}}
@@ -187,7 +141,7 @@
 				<div class="ui-grid-col-1 ui-sm-12">
 					<div class="form-group"></div>
 				</div>
-				<div class="ui-grid-col-4 ui-sm-12">
+				<div class="ui-grid-col-3 ui-sm-12">
 					<div class="ui-grid-row">
 						<div class="ui-grid-col-4 ui-sm-12">
 							<label i18n="@@subTotal" for="subTotal">Sub Total </label> 
@@ -247,15 +201,12 @@
 				
 			<br/>
 			<br />
-			<div *ngIf="error" class="alert alert-danger">{{error}}</div>
 			<div>
 				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-					<button type="button" pButton icon="fa fa-close" (click)="delete()"
-						label="Supprimer"></button>&nbsp;&nbsp;
-					<button type="button" pButton icon="fa fa-check" (click)="save()"
-						label="Sauvegarder"></button>
+					<button pButton icon="fa fa-check" label="Save"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button type="button" pButton icon="fa fa-close" (click)="delete()" label="Supprimer"></button>
 				</div>
 			</div>
 		</div>
-	</div>
- 
+
+ </form>

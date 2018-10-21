@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../app.constants';
+import { Admission } from '../models';
 import { VitalSign } from '../models/vitalSign';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
@@ -14,15 +15,12 @@ import { GenericService } from '../services';
 })
 export class VitalSignList implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   vitalSigns: VitalSign[] = [];
   cols: any[];
   
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
-  
+  @Input() admission: Admission;
+  @Output() vitalSignIdEvent = new EventEmitter<string>();
+
   constructor
     (
     private genericService: GenericService,
@@ -37,7 +35,7 @@ export class VitalSignList implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.cols = [
             { field: 'vitalSignDatetime', header: 'Date', type:'date' },
-            { field: 'patientId', header: 'Patient ID' },
+            { field: 'patientMRN', header: 'Patient ID' },
             { field: 'patientName', header: 'Patient Name' },
             { field: 'temperature', header: 'Temperature' },
             { field: 'pulse', header: 'Pulse' },
@@ -50,18 +48,24 @@ export class VitalSignList implements OnInit, OnDestroy {
             { field: 'bmi', header: 'BMI' }
         ];
     
+    let parameters: string [] = []; 
+ 
+    if (this.admission && this.admission.id > 0)  {
+      parameters.push('e.admission.id = |admissionId|' + this.admission.id + '|Long')
+    } 
+    
     this.route
         .queryParams
         .subscribe(params => {          
           
-            this.genericService.getAll('VitalSign')
-              .subscribe((data: VitalSign[]) => 
-              { 
-                this.vitalSigns = data 
-              },
-              error => console.log(error),
-              () => console.log('Get all VitalSigns complete'));
-          });
+        this.genericService.getAllByCriteria('VitalSign', parameters)
+          .subscribe((data: VitalSign[]) => 
+          { 
+            this.vitalSigns = data 
+          },
+          error => console.log(error),
+          () => console.log('Get all VitalSigns complete'));
+      });
   }
  
   
@@ -69,18 +73,8 @@ export class VitalSignList implements OnInit, OnDestroy {
     this.vitalSigns = null;
   }
   
-  edit(vitalSignId : number) {
-    try {
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          "vitalSignId": vitalSignId,
-        }
-      }
-      this.router.navigate(["/admin/vitalSignDetails"], navigationExtras);
-    }
-    catch (e) {
-      console.log(e);
-    }
+  edit(prescriptionId: string) {
+    this.vitalSignIdEvent.emit(prescriptionId);
   }
 
   delete(vitalSignId : number) {

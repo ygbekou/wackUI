@@ -1,8 +1,8 @@
-import { Appointment } from './appointment';
+import { Admission } from './';
 
 export class VitalSign {
   id: number;
-  appointment: Appointment;
+  admission: Admission;
   vitalSignDatetime: Date = new Date();
   temperature: number;
   pulse: string;

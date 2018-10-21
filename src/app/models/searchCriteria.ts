@@ -12,6 +12,8 @@ export class SearchCriteria {
   medicalRecordNumber: string;
   visitId: number;
   admissionId: number;
+  visitDate: Date;
+  admissionDate: Date;
   supplier: Reference;
   requestor: Reference;
   shipTo: Reference;

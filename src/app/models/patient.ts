@@ -28,6 +28,10 @@ export class Patient {
   insurance: Insurance;
   policyNumber: string;
   insuranceExpiryDate: Date;
+  isSelfResponsible: boolean;
+  responsiblePartyFirstName: string;
+  responsiblePartyLastName: string;
+  accountNumber: string;
   
   payerTypeName: string;
   maritalStatusName: string;

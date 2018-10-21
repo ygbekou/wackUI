@@ -1,28 +1,26 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../app.constants';
-import { Appointment } from '../models/appointment';
-import { VitalSign } from '../models/vitalSign';
-import { Patient } from '../models/patient';
+import { Admission, Visit, VitalSign, Patient, User } from '../models';
 import { EditorModule } from 'primeng/editor';
-import { AppointmentDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
-import { User } from '../models/user';  
+import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { GenericService } from '../services';
+import { Message } from 'primeng/api';
 
 @Component({ 
   selector: 'app-vitalSign-details',
   templateUrl: '../pages/vitalSignDetails.html',
-  providers: [GenericService, AppointmentDropdown]
+  providers: [GenericService]
 })
 export class VitalSignDetails implements OnInit, OnDestroy {
   
   public error: String = '';
   displayDialog: boolean;
   @Input() vitalSign: VitalSign = new VitalSign();
+  @Input() admission: Admission;
  
-  appointmentDropdown: AppointmentDropdown;
+  messages: Message[] = [];
   
   DETAIL: string = Constants.DETAIL;
   ADD_IMAGE: string = Constants.ADD_IMAGE;
@@ -35,12 +33,10 @@ export class VitalSignDetails implements OnInit, OnDestroy {
   constructor
     (
       private genericService: GenericService,
-      private aptDropdown: AppointmentDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
     ) {
-    this.appointmentDropdown = aptDropdown;
     this.patient.user = new User();
   }
 
@@ -49,9 +45,8 @@ export class VitalSignDetails implements OnInit, OnDestroy {
     let vitalSignId = null;
     this.route
         .queryParams
-        .subscribe(params => {          
-          
-          this.vitalSign.appointment = new Appointment();         
+        .subscribe(params => {
+      
           vitalSignId = params['vitalSignId'];
           
           if (vitalSignId != null) {
@@ -60,11 +55,6 @@ export class VitalSignDetails implements OnInit, OnDestroy {
                 if (result.id > 0) {
                   this.vitalSign = result
                   this.vitalSign.vitalSignDatetime = new Date(this.vitalSign.vitalSignDatetime);
-                  this.patient = this.vitalSign.appointment.patient;
-                }
-                else {
-                  this.error = Constants.SAVE_UNSUCCESSFUL;
-                  this.displayDialog = true;
                 }
               })
           } else {
@@ -80,11 +70,12 @@ export class VitalSignDetails implements OnInit, OnDestroy {
   
   save() {
     
+    this.messages = [];
+    this.vitalSign.admission = this.admission;
+    
     try {
-      this.error = '';
       this.genericService.save(this.vitalSign, "VitalSign")
         .subscribe(result => {
-          alert(result.id)
           if (result.id > 0) {
             this.vitalSign = result;
           }
@@ -106,5 +97,31 @@ export class VitalSignDetails implements OnInit, OnDestroy {
     let bmi = weightInKg / heightInMeterSquare;
     this.vitalSign.bmi = Math.round(bmi);
   }
+  
+  getVitalSign(vitalSignId: number) {
+    this.messages = [];
+    this.genericService.getOne(vitalSignId, 'VitalSign')
+        .subscribe(result => {
+      if (result.id > 0) {
+        this.vitalSign = result;
+        this.vitalSign.vitalSignDatetime = new Date(this.vitalSign.vitalSignDatetime);
+      }
+    })
+  }
+  
+  addNew() {
+    this.vitalSign = new VitalSign();
+  }
  
+  validate() {
+    this.messages = [];
+    if (this.vitalSign.temperature == null && this.vitalSign.pulse == null
+      && this.vitalSign.respiration == null && this.vitalSign.bloodPressure == null
+      && this.vitalSign.bloodSugar == null && this.vitalSign.pain == null
+      && this.vitalSign.weight == null && this.vitalSign.height == null) {
+      this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'At least 1 vital sign. '});
+    }
+    
+    return this.messages.length == 0;
+  }
  }

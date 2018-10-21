@@ -7,7 +7,6 @@ import { VitalSign } from './vitalSign';
 
 export class Visit {
   id: number;
-  visitNumber: string;
   chiefOfComplain: string;
   patient: Patient;
   pckage: Package;
