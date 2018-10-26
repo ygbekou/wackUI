@@ -60,6 +60,14 @@
 					                        {{rowData[col.field]}}
 					                    </ng-template>
 					                </p-cellEditor>
+					                <p-cellEditor *ngIf="col.type == 'date'">
+					                    <ng-template pTemplate="input">
+					                        <p-calendar [(ngModel)]="rowData[col.field]" name="{{col.field}}"></p-calendar>
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+					                        {{rowData[col.field] | date:'dd/MM/yyyy'}}
+					                    </ng-template>
+					                </p-cellEditor>
 					                <p-cellEditor *ngIf="col.field == 'service'">
 					                    <ng-template pTemplate="input">
 					                        <p-autoComplete [(ngModel)]="rowData[col.field]"
@@ -121,7 +129,15 @@
 					    <ng-template pTemplate="body" let-rowData let-columns="columns">
 					        <tr>			           
 					            <td *ngFor="let col of columns" [pEditableColumn]="rowData">
-					            	<p-cellEditor>
+					            	<p-cellEditor *ngIf="col.type == 'date'">
+					                    <ng-template pTemplate="input">
+					                        <p-calendar [(ngModel)]="rowData[col.field]" name="{{col.field}}"></p-calendar>
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+					                        {{rowData[col.field] | date:'dd/MM/yyyy'}}
+					                    </ng-template>
+					                </p-cellEditor>
+					            	<p-cellEditor *ngIf="col.type == 'text'">
 					                    <ng-template pTemplate="input">
 					                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled" name="{{col.field}}">
 					                    </ng-template>
@@ -204,7 +220,12 @@
 			<div>
 				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 					<button pButton icon="fa fa-check" label="Save"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="button" pButton icon="fa fa-close" (click)="delete()" label="Supprimer"></button>
+					<button type="button" pButton icon="fa fa-close" (click)="delete()" label="Supprimer"></button>&nbsp;&nbsp;
+					<button type="button" pButton icon="fa fa-print" (click)="printBill()" label="Print"></button>
+					<div >
+						<a *ngIf="reportName" target="_blank"
+							href="assets/reports/{{reportName}}">Download Report {{reportName}}</a>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -1,31 +1,27 @@
 import {Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef, Input} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../app.constants';
-import { Patient } from '../models/patient';
-import { UserGroup } from '../models/userGroup';
+import { ReportView, Parameter, User, UserGroup, Patient } from '../models';
 import { FileUploader } from './fileUploader';
 import { EditorModule } from 'primeng/editor';
 import { CountryDropdown, ReligionDropdown, OccupationDropdown, PayerTypeDropdown, InsuranceDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DialogModule, InputTextareaModule, CheckboxModule} from 'primeng/primeng';
-import { User } from '../models/user';  
-import { GenericService, UserService } from '../services';
+import { GenericService, UserService, ReportService } from '../services';
+import { Message } from 'primeng/api';
+import { TranslateService} from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-patient-details',
   templateUrl: '../pages/patientDetails.html',
-  providers: [GenericService, CountryDropdown, ReligionDropdown, OccupationDropdown, PayerTypeDropdown, InsuranceDropdown]
+  providers: [GenericService, UserService, ReportService, CountryDropdown, ReligionDropdown,
+     OccupationDropdown, PayerTypeDropdown, InsuranceDropdown]
 })
 export class PatientDetails implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
+  messages: Message[] = [];
   patient: Patient = new Patient();
-  countryDropdown:  CountryDropdown;
-  religionDropdown:  ReligionDropdown;
-  occupationDropdown:  OccupationDropdown;
-  payerTypeDropdown: PayerTypeDropdown
-  insuranceDropdown: InsuranceDropdown
   
   DETAIL: string = Constants.DETAIL;
   COUNTRY: string = Constants.COUNTRY;
@@ -35,24 +31,25 @@ export class PatientDetails implements OnInit, OnDestroy {
   @ViewChild('uploadFile') input: ElementRef;
   formData = new FormData();
   
+  reportView: ReportView = new ReportView();
+  reportName: string;
+  
   constructor
     (
       private genericService: GenericService,
       private userService: UserService,
-      private cntryDropdown: CountryDropdown,
-      private rlgDropdown: ReligionDropdown,
-      private occDropdown: OccupationDropdown,
-      private pTypeDropdown: PayerTypeDropdown,
-      private insDropdown: InsuranceDropdown,
+      private reportService: ReportService,
+      private translate: TranslateService,
+      private countryDropdown: CountryDropdown,
+      private religionDropdown: ReligionDropdown,
+      private occupationDropdown: OccupationDropdown,
+      private payerTypeDropdown: PayerTypeDropdown,
+      private insuranceDropdown: InsuranceDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
     ) {
-      this.countryDropdown = cntryDropdown;
-      this.religionDropdown = rlgDropdown;
-      this.occupationDropdown = occDropdown;
-      this.payerTypeDropdown = pTypeDropdown;
-      this.insuranceDropdown = insDropdown;
+   
   }
 
   ngOnInit(): void {
@@ -74,10 +71,6 @@ export class PatientDetails implements OnInit, OnDestroy {
                   if (this.patient.user.birthDate != null)
                     this.patient.user.birthDate = new Date(this.patient.user.birthDate);
                 }
-                else {
-                  this.error = Constants.SAVE_UNSUCCESSFUL;
-                  this.displayDialog = true;
-                }
               })
           } else {
               
@@ -85,8 +78,7 @@ export class PatientDetails implements OnInit, OnDestroy {
                 this.patient.user.userGroup.id = params['groupId'];
               }
           }
-        });
-    
+      });
   }
   
   ngOnDestroy() {
@@ -107,7 +99,6 @@ export class PatientDetails implements OnInit, OnDestroy {
        this.formData.append('file', null, null);
     }
     try {
-      this.error = '';
       this.patient.user.userName = this.patient.user.email;
       this.patient.user.userGroup.id = Constants.USER_GROUP_PATIENT;
       if (inputEl && inputEl.files && (inputEl.files.length > 0)) {
@@ -115,10 +106,10 @@ export class PatientDetails implements OnInit, OnDestroy {
           .subscribe(result => {
             if (result.id > 0) {
               this.patient = result;
+              this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
             }
             else {
-              this.error = Constants.SAVE_UNSUCCESSFUL;
-              this.displayDialog = true;
+              this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
             }
           })
       }
@@ -127,10 +118,10 @@ export class PatientDetails implements OnInit, OnDestroy {
           .subscribe(result => {
             if (result.id > 0) {
               this.patient = result;
+              this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
             }
             else {
-              this.error = Constants.SAVE_UNSUCCESSFUL;
-              this.displayDialog = true;
+              this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
             }
           })
       }
@@ -138,6 +129,30 @@ export class PatientDetails implements OnInit, OnDestroy {
     catch (e) {
       console.log(e);
     }
+  }
+  
+  
+  
+  printIdCard() {
+    this.reportView.reportName = 'patientIdCard';
+    let parameter: Parameter = new Parameter();
+    parameter.name = 'PATIENT_ID_PARAM';
+    parameter.dataType = 'Long';
+    parameter.value = this.patient.id + '';
+    
+    this.reportView.parameters = [];
+    this.reportView.parameters.push(parameter);
+    
+    this.reportService.runReport(this.reportView)
+        .subscribe(result => {
+          if (result.reportName) {
+            this.reportName = result.reportName;
+            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
+          }
+          else {
+            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
+          }
+        })
   }
 
  }

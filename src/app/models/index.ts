@@ -1,3 +1,4 @@
+export * from './hospital';
 export * from './searchCriteria';
 export * from './patient';
 export * from './user';
@@ -33,4 +34,5 @@ export * from './package';
 export * from './room';
 export * from './bill';
 export * from './service';
+export * from './report';
 

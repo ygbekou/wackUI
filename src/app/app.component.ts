@@ -1,5 +1,8 @@
 import {Component, AfterViewInit, ElementRef, Renderer2, ViewChild, OnDestroy} from '@angular/core';
 import {ScrollPanel} from 'primeng/primeng';
+import { TranslateService} from '@ngx-translate/core';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 @Component({
   selector: 'app-root',
@@ -44,7 +47,15 @@ export class AppComponent implements AfterViewInit {
 
   @ViewChild('layoutMenuScroller') layoutMenuScrollerViewChild: ScrollPanel;
 
-  constructor(public renderer: Renderer2) {}
+  constructor(public translate: TranslateService,
+              public renderer: Renderer2) {
+    
+    translate.addLangs(['en', 'fr']);
+    translate.setDefaultLang('en');
+
+    const browserLang = translate.getBrowserLang();
+    translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
+  }
 
   ngAfterViewInit() {
     setTimeout(() => {this.layoutMenuScrollerViewChild.moveBar(); }, 100);

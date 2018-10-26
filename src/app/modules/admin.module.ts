@@ -1,5 +1,10 @@
 import {Routes, RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
+
 import {AdminMain} from '../components/adminMain';
 import {AdminAppointment} from '../components/adminAppointment';
 import {DocumentDetails} from '../components/documentDetails';
@@ -90,6 +95,7 @@ import {DeathReportDetails} from '../components/activities/deathReportDetails';
 import {DeathReportList} from '../components/activities/deathReportList';
 import {HospitalLocationDetails} from '../components/hospitalLocationDetails';
 import {HospitalLocationList} from '../components/hospitalLocationList';
+import {HospitalDetails} from '../components/hospitalDetails';
 
 import {PatientLookup} from '../components/includes/patientLookup';
 import {PatientSaleLookup} from '../components/includes/patientSaleLookup';
@@ -169,12 +175,25 @@ const routes: Routes = [
   {path: 'hospitalLocationList', component: HospitalLocationList},
 ];
 
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http);
+}
+
 @NgModule({
   imports: [
-    RouterModule.forChild(routes), CommonSharedModule
+    RouterModule.forChild(routes), CommonSharedModule, 
+    TranslateModule.forChild({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }
+    )
   ],
 
-  exports: [CommonSharedModule],
+  exports: [CommonSharedModule, TranslateModule],
 
   declarations: [FileUploader, AdminMenu, AdminMain, AdminAppointment, DocumentDetails,
     DocumentList, EmployeeDetails, EmployeeList, PatientDetails, PatientList, ScheduleDetails, ScheduleList,
@@ -190,7 +209,7 @@ const routes: Routes = [
     InvestigationList, PurchaseOrderDetails, PurchaseOrderList, ReceiveOrderDetails, ReceiveOrderList,
     PatientSaleDetails, PatientSaleList, SaleReturnDetails, SaleReturnList, BirthReportDetails, BirthReportList,
     DeathReportDetails, DeathReportList, HospitalLocationDetails, HospitalLocationList, PatientLookup, VisitAdmLookup, 
-    PurchaseOrderLookup, PatientSaleLookup],
+    PurchaseOrderLookup, PatientSaleLookup, HospitalDetails],
 
   providers: [CategoryDropdown, PackageDropdown]
 })

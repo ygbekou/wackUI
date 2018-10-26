@@ -136,7 +136,7 @@ export class DocumentDetails implements OnInit, OnDestroy {
       }
       
       
-      this.genericService.saveWithFile(this.document, "Document", this.formData)
+      this.genericService.saveWithFile(this.document, "Document", this.formData, 'saveWithFile')
         .subscribe(result => {
           if (result.id > 0) {
             this.document = result

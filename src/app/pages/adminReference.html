@@ -162,6 +162,11 @@
 				        <app-hospitalLocation-list (hospitalLocationIdEvent)="onHospitalLocationSelected($event)"></app-hospitalLocation-list>
 				    </div>
 			    </p-tabPanel>
+			    <p-tabPanel id="hospital" header="Hospital">
+			    	<div *ngIf="activeTab == 20" class="ui-grid-row">
+				        <app-hospital-details></app-hospital-details>
+				    </div>
+			    </p-tabPanel>
 			</p-tabView>
 		</div>
 

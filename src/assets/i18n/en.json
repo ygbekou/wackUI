@@ -1,0 +1,24 @@
+{
+  "COMMON": {
+  	"SELECT": "Choose a Language",
+    "LAST_NAME": "Last Name",
+    "FIRST_NAME": "First Name",
+    "MIDDLE_NAME": "Middle Name",
+    "GENDER": "Gender",
+    "BLOOD_GROUP": "Blood Group",
+    "E_MAIL": "E-mail",
+    "BIRTH_DATE": "Birth Date",
+    "CITIZENSHIP": "Citizenship",
+    "OCCUPATION": "Occupation",
+    "RELIGION": "Religion",
+    "MEDICAL_HISTORY": "Medical History",
+    "PHONE_1": "Phone 1",
+    "PHONE_2": "Phone 2",
+    "ADDRESS": "Address",
+    "CITY": "City",
+    "COUNTRY": "Country",
+    "ZIP_CODE": "Zip Code",
+    "CONTACT": "Contact",
+    "CONTACT_PHONE": "Contact Phone"
+  }
+}

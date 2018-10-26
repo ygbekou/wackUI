@@ -1,19 +1,19 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../app.constants';
-import { Appointment, Admission, Bill, BillPayment, BillService, Employee, Patient, User, Visit, Service  } from '../models';
+import { Appointment, Admission, Bill, BillPayment, BillService, Employee, Patient, User, Visit, Service, ReportView, Parameter  } from '../models';
 import { EditorModule } from 'primeng/editor';
 import { DoctorDropdown, ServiceDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 
-import { GenericService, BillingService } from '../services';
+import { GenericService, BillingService, ReportService } from '../services';
 import { Message } from 'primeng/api';
 
 @Component({ 
   selector: 'app-bill-details',
   templateUrl: '../pages/billDetails.html',
-  providers: [GenericService, BillingService, ServiceDropdown, DoctorDropdown]
+  providers: [GenericService, BillingService, ReportService, ServiceDropdown, DoctorDropdown]
 })
 export class BillDetails implements OnInit, OnDestroy {
   
@@ -29,11 +29,14 @@ export class BillDetails implements OnInit, OnDestroy {
   
   itemNumber: string;
   itemNumberLabel: string = 'Visit';
+  reportView: ReportView = new ReportView();
+  reportName: string;
   
   constructor
     (
       private genericService: GenericService,
       private billingService: BillingService,
+      private reportService: ReportService,
       private serviceDropdown: ServiceDropdown,
       private doctorDropdown: DoctorDropdown,
       private changeDetectorRef: ChangeDetectorRef,
@@ -46,6 +49,7 @@ export class BillDetails implements OnInit, OnDestroy {
   ngOnInit(): void {
 
      this.serviceCols = [
+            { field: 'serviceDate', header: 'Date', type: 'date' },
             { field: 'service', header: 'Name' },
             { field: 'doctor', header: 'Doctor' },
             { field: 'quantity', header: 'Quantity' },
@@ -56,8 +60,9 @@ export class BillDetails implements OnInit, OnDestroy {
         ]; 
     
       this.billPaymentCols = [
-            { field: 'description', header: 'Description' },
-            { field: 'amount', header: 'Amount' }
+            { field: 'paymentDate', header: 'Date', type: 'date' },
+            { field: 'description', header: 'Description', type: 'text' },
+            { field: 'amount', header: 'Amount', type: 'text' }
         ];
     
     let billId = null;
@@ -78,6 +83,8 @@ export class BillDetails implements OnInit, OnDestroy {
                   this.bill = result;
                   this.admission = this.bill.admission;
                   this.visit = this.bill.visit;
+                  this.bill.billDate = new Date(this.bill.billDate);
+                  this.bill.dueDate = new Date(this.bill.dueDate);
                   if (this.bill.billServices.length == 0) 
                     this.addRow();
                   if (this.bill.billPayments.length == 0) 
@@ -141,7 +148,6 @@ export class BillDetails implements OnInit, OnDestroy {
     rowData.data.bill.id = this.bill.id;
     this.genericService.save(rowData.data, 'BillPayment')
         .subscribe(result => {
-          alert(result.id)
           if (result.id > 0) {
             rowData.data = result
             this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
@@ -209,6 +215,28 @@ export class BillDetails implements OnInit, OnDestroy {
   
   lookUpAdmission(event) {
     this.admission = event;
+  }
+  
+  printBill() {
+    this.reportView.reportName = 'bill';
+    let parameter: Parameter = new Parameter();
+    parameter.name = 'BILL_ID_PARAM';
+    parameter.dataType = 'Long';
+    parameter.value = this.bill.id + '';
+    
+    this.reportView.parameters = [];
+    this.reportView.parameters.push(parameter);
+    
+    this.reportService.runReport(this.reportView)
+        .subscribe(result => {
+          if (result.reportName) {
+            this.reportName = result.reportName;
+            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
+          }
+          else {
+            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
+          }
+        })
   }
 
  }

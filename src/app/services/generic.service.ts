@@ -114,7 +114,7 @@ export class GenericService {
    }
   
   
-   public saveWithFile = (entity: any, entityClass: string, formData: FormData): Observable<any> => {
+   public saveWithFile = (entity: any, entityClass: string, formData: FormData, method: string): Observable<any> => {
    
       let head = new Headers();
      
@@ -128,7 +128,7 @@ export class GenericService {
           type: "application/json"
       }));
      
-      let actionUrl = Constants.apiServer + '/service/' + entityClass + '/saveWithFile';
+      let actionUrl = Constants.apiServer + '/service/' + entityClass + '/' + method;
       return this.http.post(actionUrl, formData, { headers: head })
         .map((response: Response) => {
             if (response && response.json()) {

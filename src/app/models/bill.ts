@@ -27,6 +27,7 @@ export class Bill {
 export class BillPayment                                                                                                                                                {
   id: number;
   bill: Bill;
+  paymentDate: Date;
   description: string;
   amount: number;
 }
@@ -35,6 +36,7 @@ export class BillService {
   id: number;
   service: Service;
   doctor: Employee;
+  serviceDate: Date;
   description: string;
   quantity: number;
   unitAmount: number;

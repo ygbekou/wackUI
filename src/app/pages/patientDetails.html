@@ -9,7 +9,7 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@lastName" for="lastName">Last Name<font
+							<label for="lastName">{{ 'COMMON.LAST_NAME' | translate }}<font
 								color="red">*</font>:
 							</label> <input type="text" pInputText class="form-control" id="lastName"
 								required [(ngModel)]="patient.user.lastName" name="lastName" #lastName="ngModel" >
@@ -18,7 +18,7 @@
 					</div>
 					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@firstName" for="firstName">First Name<font
+							<label for="firstName">{{ 'COMMON.FIRST_NAME' | translate }}<font
 								color="red">*</font>:
 							</label> <input type="text" pInputText class="form-control" id="firstName"
 								required [(ngModel)]="patient.user.firstName" name="firstName"
@@ -32,8 +32,8 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@middleName" for="middleName">Middle Name</label> <input
-								type="text" pInputText class="form-control" id="middleName"
+							<label for="middleName">{{ 'COMMON.MIDDLE_NAME' | translate }}</label> 
+							<input type="text" pInputText class="form-control" id="middleName"
 								[(ngModel)]="patient.user.middleName" name="middleName" #middleName="ngModel">
 						</div>
 					</div>
@@ -42,7 +42,7 @@
 							<div class="ui-grid-col-6 ui-sm-12">
 								<div class="form-group">
 									<div class="ui-grid-row">
-										<label i18n="@@sex" for="sex">Gender</label>
+										<label for="sex">{{ 'COMMON.GENDER' | translate }}</label>
 									</div>
 									<div class="ui-grid-row">
 										<p-radioButton name="sex" value="M" label="Male"
@@ -54,7 +54,7 @@
 							</div>
 							<div class="ui-grid-col-4 ui-sm-12">
 								<div class="form-group">
-									<label i18n="@@bloodGroup" for="bloodGroup">Blood Group:</label>
+									<label for="bloodGroup">{{ 'COMMON.BLOOD_GROUP' | translate }}:</label>
 									<p-dropdown [options]="genericService.bloodGroups"
 										[(ngModel)]="patient.bloodGroup" [style]="{'width':'190px'}"></p-dropdown>
 								</div>
@@ -65,7 +65,7 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-4 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@email" for="email">E-mail<font color="red">*</font>
+							<label for="email">{{ 'COMMON.E_MAIL' | translate }}<font color="red">*</font>
 							</label> <input type="text" pInputText class="form-control" id="email"
 								[(ngModel)]="patient.user.email" name="email" #email="ngModel" email>
 							<p-message *ngIf="f.submitted && email.errors && email.errors.email" severity="error" 
@@ -74,7 +74,7 @@
 					</div>
 					<div class="ui-grid-col-4 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@birthDate" for="birthDate">Birth Date<font color="red">*</font>:</label>
+							<label for="birthDate">{{ 'COMMON.BIRTH_DATE' | translate }}<font color="red">*</font>:</label>
 							<p-calendar [(ngModel)]="patient.user.birthDate" id="birthDate"
 							name="birthDate" #birthDate="ngModel" required date></p-calendar>
 							<p-message *ngIf="f.submitted && birthDate.errors && birthDate.errors.required" severity="error" 
@@ -83,7 +83,7 @@
 					</div>
 					<div class="ui-grid-col-4 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@nationality" for="nationality">Nationality</label>
+							<label for="nationality">{{ 'COMMON.CITIZENSHIP' | translate }}</label>
 							<p-autoComplete [(ngModel)]="patient.nationality"
 								(onDropdownClick)="countryDropdown.handleDropdownClick($event)"
 								[suggestions]="countryDropdown.filteredCountries" [dropdown]="true"
@@ -96,7 +96,7 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@occupation" for="occupation">Occupation</label>
+							<label for="occupation">{{ 'COMMON.OCCUPATION' | translate }}</label>
 							<p-autoComplete [(ngModel)]="patient.occupation"
 								(onDropdownClick)="occupationDropdown.handleDropdownClick($event)"
 								[suggestions]="occupationDropdown.filteredOccupations"
@@ -108,7 +108,7 @@
 					</div>
 					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@religion" for="religion">Religion</label>
+							<label for="religion">{{ 'COMMON.RELIGION' | translate }}</label>
 							<p-autoComplete [(ngModel)]="patient.religion"
 								(onDropdownClick)="religionDropdown.handleDropdownClick($event)"
 								[suggestions]="religionDropdown.filteredReligions"
@@ -122,13 +122,11 @@
 			</div>
 			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="ui-grid-col-2">
-					<img class="thumb" src="assets/images/User/{{patient.user.picture}}"
-						alt="" />
+					<img class="thumb" src="assets/images/User/{{patient.user.picture}}" alt="" />
 				</div>
 				<div class="ui-grid-col-12 ui-sm-12">
 					<div class="form-group">
-						<input type="file" #uploadFile
-							[attr.multiple]="multiple ? true : null">
+						<input type="file" #uploadFile [attr.multiple]="multiple ? true : null">
 					</div>
 				</div>
 			</div>
@@ -137,8 +135,7 @@
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-12 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@medicalHistory" for="medicalHistory">Medical
-						History</label>
+					<label for="medicalHistory">{{ 'COMMON.MEDICAL_HISTORY' | translate }}</label>
 					<p-editor [(ngModel)]="patient.medicalHistory"
 						[style]="{'height':'100px'}"></p-editor>
 				</div>
@@ -149,8 +146,8 @@
 			
 			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@homePhone" for="homePhone">Phone 1<font color="red">*</font>
-					</label> <input type="text" pInputText class="form-control" id="homePhone"
+					<label for="homePhone">{{ 'COMMON.PHONE_1' | translate }}<font color="red">*</font></label> 
+					<input type="text" pInputText class="form-control" id="homePhone"
 						[(ngModel)]="patient.user.homePhone" name="homePhone" #homePhone="ngModel" required>
 					<p-message *ngIf="f.submitted && homePhone.errors && homePhone.errors.required" severity="error" 
 							text="Phone 1 is required"></p-message>
@@ -158,31 +155,30 @@
 			</div>
 			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@mobilePhone" for="mobilePhone">Phone 2</label> 
+					<label for="mobilePhone">{{ 'COMMON.PHONE_2' | translate }}</label> 
 					<input type="text" pInputText class="form-control" id="mobilePhone"
 						[(ngModel)]="patient.user.mobilePhone" name="mobilePhone" #mobilePhone="ngModel">
 				</div>
 			</div>
 			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@address" for="address">Address</label> <input
+					<label for="address">{{ 'COMMON.ADDRESS' | translate }}</label> <input
 						type="text" pInputText class="form-control" id="address"
-						[(ngModel)]="patient.user.address" name="address"
-						#address="ngModel">
+						[(ngModel)]="patient.user.address" name="address" #address="ngModel">
 				</div>
 			</div>
 		</div>
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@city" for="city">City</label> <input type="text"
+					<label for="city">{{ 'COMMON.CITY' | translate }}</label> <input type="text"
 						pInputText class="form-control" id="city"
 						[(ngModel)]="patient.user.city" name="city" #city="ngModel">
 				</div>
 			</div>
 			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@country" for="country">Country</label>
+					<label for="country">{{ 'COMMON.COUNTRY' | translate }}</label>
 					<p-autoComplete [(ngModel)]="patient.user.country"
 						(onDropdownClick)="countryDropdown.handleDropdownClick($event)"
 						[suggestions]="countryDropdown.filteredCountries" [dropdown]="true"
@@ -193,26 +189,24 @@
 			</div>
 			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@zipCode" for="zipCode">Zip Code</label> <input
-						type="text" pInputText class="form-control" id="zipCode"
-						[(ngModel)]="patient.user.zipCode" name="zipCode"
-						#zipCode="ngModel">
+					<label for="zipCode">{{ 'COMMON.ZIP_CODE' | translate }}</label> 
+					<input type="text" pInputText class="form-control" id="zipCode"
+						[(ngModel)]="patient.user.zipCode" name="zipCode" #zipCode="ngModel">
 				</div>
 			</div>
 		</div>
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-6 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@contact" for="contact">Contact</label> <input
-						type="text" pInputText class="form-control" id="contact"
+					<label for="contact">{{ 'COMMON.CONTACT' | translate }}</label> 
+					<input type="text" pInputText class="form-control" id="contact"
 						[(ngModel)]="patient.contact" name="contact" #contact="ngModel">
 				</div>
 			</div>
 			<div class="ui-grid-col-6 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@contactPhone" for="contactPhone">Contact
-						Phone</label> <input type="text" pInputText class="form-control"
-						id="contactPhone" [(ngModel)]="patient.contactPhone"
+					<label for="contactPhone">{{ 'COMMON.CONTACT_PHONE' | translate }}</label> 
+					<input type="text" pInputText class="form-control" id="contactPhone" [(ngModel)]="patient.contactPhone"
 						name="contactPhone" #contactPhone="ngModel">
 				</div>
 			</div>
@@ -337,7 +331,11 @@
 			<button type="button" pButton icon="fa fa-save" (click)="save()"
 				label="Save"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<button type="button" pButton icon="fa fa-remove" (click)="delete()"
-				label="Delete"></button>
+				label="Delete"></button> &nbsp;&nbsp;
+			<button type="button" pButton icon="fa fa-print" (click)="printIdCard()" label="Print ID Card"></button>
+			<div>
+				<a *ngIf="reportName" target="_blank" href="assets/reports/{{reportName}}">Download Report {{reportName}}</a>
+			</div>
 	</div>
 </form>
 
