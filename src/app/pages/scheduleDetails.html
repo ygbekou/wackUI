@@ -4,7 +4,7 @@
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@doctor" for="doctor">Doctor<font color="red">*</font></label> 
+					<label for="doctor">{{ 'COMMON.DOCTOR' | translate }}<font color="red">*</font></label> 
 					<p-autoComplete [(ngModel)]="schedule.doctor" required
 						(onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
 						[suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
@@ -16,7 +16,7 @@
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@location" for="location">Hospital Location<font color="red">*</font></label> 
+					<label for="location">{{ 'COMMON.LOCATION' | translate }}<font color="red">*</font></label> 
 					<p-autoComplete [(ngModel)]="schedule.hospitalLocation" required
 						(onDropdownClick)="hospitalLocationDropdown.handleDropdownClick($event)"
 						[suggestions]="hospitalLocationDropdown.filteredLocations" [dropdown]="true"
@@ -28,7 +28,7 @@
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@availableDays" for="availableDays">Available Days<font color="red">*</font></label> 
+					<label for="availableDays">{{ 'COMMON.AVAILABLE_DAYS' | translate }}<font color="red">*</font></label> 
 					<p-autoComplete [(ngModel)]="schedule.weekday" required
 						(onDropdownClick)="weekdayDropdown.handleDropdownClick($event)"
 						[suggestions]="weekdayDropdown.filteredWeekdays" [dropdown]="true"
@@ -42,7 +42,7 @@
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@beginTime" for="beginTime">Start Time<font color="red">*</font></label> 
+					<label for="beginTime">{{ 'COMMON.START_TIME' | translate }}<font color="red">*</font></label> 
 					<p-calendar [(ngModel)]="schedule.beginTime" [stepMinute]="5" dataType="string" timeOnly="true" 
 					showTime="false" hourFormat="24" name="beginTime" #beginTime="ngModel" required></p-calendar>
 					<p-message *ngIf="f.submitted && availableDays.invalid" severity="error" text="Field is required"></p-message>
@@ -50,7 +50,7 @@
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@endTime" for="endTime">End Time<font color="red">*</font></label> 
+					<label for="endTime">{{ 'COMMON.END_TIME' | translate }}<font color="red">*</font></label> 
 					<p-calendar [(ngModel)]="schedule.endTime" [stepMinute]="5" dataType="string" timeOnly="true" 
 					showTime="false" hourFormat="24" name="endTime" #endTime="ngModel" required></p-calendar>
 					<p-message *ngIf="f.submitted && availableDays.invalid" severity="error" text="Field is required"></p-message>
@@ -58,7 +58,7 @@
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@perPatientTime" for="perPatientTime">Per Patient Time<font color="red">*</font></label>
+					<label for="endTime">{{ 'COMMON.PER_PATIENT_TIME' | translate }}<font color="red">*</font></label>
 					<p-calendar [(ngModel)]="schedule.perPatientTime" [stepMinute]="5" dataType="string" timeOnly="true"
 					 showTime="false" hourFormat="24" name="perPatientTime" #perPatientTime="ngModel" required></p-calendar>
 					 <p-message *ngIf="f.submitted && availableDays.invalid" severity="error" text="Field is required"></p-message>
@@ -68,8 +68,8 @@
 	</div>
 	<br />
 	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-		<button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="Clear"></button>&nbsp;&nbsp;
-		<button pButton icon="fa fa-save" label="Save"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<button type="button" pButton icon="fa fa-remove" (click)="delete()" label="Delete"></button>
+		<button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
+		<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<button type="button" pButton icon="fa fa-remove" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>
 	</div>
 </form>

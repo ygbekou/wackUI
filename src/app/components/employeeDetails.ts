@@ -11,11 +11,12 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { User } from '../models/user';  
 import { GenericService, UserService } from '../services';
+import { TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-employee-details',
   templateUrl: '../pages/employeeDetails.html',
-  providers: [GenericService, DepartmentDropdown, UserGroupDropdown, CountryDropdown]
+  providers: [GenericService, UserService, DepartmentDropdown, UserGroupDropdown, CountryDropdown]
 })
 export class EmployeeDetails implements OnInit, OnDestroy {
   
@@ -25,9 +26,6 @@ export class EmployeeDetails implements OnInit, OnDestroy {
   public error: String = '';
   displayDialog: boolean;
   employee: Employee = new Employee();
-  departmentDropdown: DepartmentDropdown;
-  userGroupDropdown: UserGroupDropdown;
-  countryDropdown:  CountryDropdown;
   
   SAVE_LABEL: string = Constants.SAVE_LABEL;
   DELETE_LABEL: string = Constants.DELETE_LABEL;  
@@ -40,16 +38,13 @@ export class EmployeeDetails implements OnInit, OnDestroy {
     (
       private genericService: GenericService,
       private userService: UserService,
-      private dptDropdown: DepartmentDropdown,
-      private usrGrpDropdown: UserGroupDropdown,
-      private cntryDropdown: CountryDropdown,
+      private departmentDropdown: DepartmentDropdown,
+      private userGroupDropdown: UserGroupDropdown,
+      private countryDropdown: CountryDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
     ) {
-      this.departmentDropdown = dptDropdown;
-      this.userGroupDropdown = usrGrpDropdown;
-      this.countryDropdown = cntryDropdown;
   }
 
   ngOnInit(): void {

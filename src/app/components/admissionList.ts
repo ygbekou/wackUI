@@ -9,6 +9,7 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { User } from '../models/user';  
 import { GenericService } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-patientAdmission-list',
@@ -25,6 +26,7 @@ export class AdmissionList implements OnInit, OnDestroy {
   constructor
     (
     private genericService: GenericService,
+    private translate: TranslateService,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
@@ -35,12 +37,17 @@ export class AdmissionList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'admissionNumber', header: 'Admission No' },
-            { field: 'admissionDatetime', header: 'Date', type:'date' },
-            { field: 'patientId', header: 'Patient ID' },
-            { field: 'patientName', header: 'Patient Name' },
-            { field: 'status', header: 'Status', type:'string' }
+            { field: 'admissionNumber', header: 'Admission No', headerKey: 'COMMON.ADMISSION_NUMBER' },
+            { field: 'admissionDatetime', header: 'Date/Time', headerKey: 'COMMON.ADMISSION_DATETIME', type:'date' },
+            { field: 'patientId', header: 'Patient ID', headerKey: 'COMMON.PATIENT_ID' },
+            { field: 'patientName', header: 'Patient Name', headerKey: 'COMMON.PATIENT_NAME' },
+            { field: 'status', header: 'Status', headerKey: 'COMMON.STATUS', type:'string' }
         ];
+    
+    this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        this.updateCols();
+    });
     
     // Get all admission of the last 24 hrs;
     this.route
@@ -64,6 +71,14 @@ export class AdmissionList implements OnInit, OnDestroy {
           });
   }
  
+  updateCols() {
+    for (var index in this.cols) {
+      let col = this.cols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+  }
   
   ngOnDestroy() {
     this.admissions = null;

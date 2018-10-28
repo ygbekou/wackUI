@@ -1,6 +1,14 @@
 {
   "COMMON": {
     "SELECT": "Choisir un Language: ",
+    "DEMOGRAPHIC_INFO": "Information Demographique",
+    "CONTACT_INFO": "Information Contact",
+    "PAYER_INFO": "Information Payeur",
+    "PROFESSIONAL_INFO": "Information Professionelle",
+    
+    "USER_NAME": "Nom d'Utilisateur'",
+    "PASSWORD": "Mot de Passe",
+    "NAME": "Nom",
     "LAST_NAME": "Nom",
     "FIRST_NAME": "Prenom",
     "MIDDLE_NAME": "Deuxieme Prenom",
@@ -12,13 +20,69 @@
     "OCCUPATION": "Occupation",
     "RELIGION": "Religion",
     "MEDICAL_HISTORY": "Histoire Medicale",
-    "PHONE_1": "Phone 1",
-    "PHONE_2": "Phone 2",
+    "PHONE": "Phone",
     "ADDRESS": "Adresse",
     "CITY": "Ville",
     "COUNTRY": "Pays",
     "ZIP_CODE": "Code Postal",
     "CONTACT": "Contact",
-    "CONTACT_PHONE": "Phone du Contact"
+    "CONTACT_PHONE": "Phone du Contact",
+    "PAYER_TYPE": "Type de Payeur",
+    "ACCOUNT_NUMBER": "Numero de Compte",
+    "EMPLOYER": "Employeur",
+    "AUTHORIZATION_LETTER_NUMBER": "Numero de Letter d'Authorization'",
+    "EXPIRY_DATE": "Date d'expiration",
+    "EMPLOYEE_ID": "Identification de l'employe",
+    "INSURANCE": "Assurance",
+    "POLICY_NUMBER": "Numero de police ",
+    "IS_SELF_RESPONSIBLE": "Est Auto-Responsable",
+    "RESPONSIBLE_PARTY": "Partie Responsable",
+    
+    "DESIGNATION": "Designation",
+    "SPECIALIST": "Specialite",
+    "DEPARTMENT": "Department",
+    "ROLE": "Role",
+    "RESUME": "CV",
+    "BIOGRAPHY": "Biographie",
+    "STATUS": "Status",
+    
+    "ADMISSION_DETAILS": "Details Admission",
+    "ADMISSION_LIST": "LISTE DES ADMISSION",
+    "ADMISSION_DATETIME": "Date/Heure Admission",
+    "TRANSFER_DATETIME": "Date/Heure de Transfer",
+    "ADMISSION_DATE": "Date Admission",
+    "REASON": "Raison",
+    "ADMISSION_NUMBER": "No. Admission",
+    "BUILDING": "Immeuble",
+    "FLOOR": "Etage",
+    "ROOM": "Chambre",
+    "CATEGORY": "Categorie",
+    "BED": "Lit",
+    "DOCTOR": "Docteur",
+    "PATIENT_ID": "ID du Patient",
+    "PATIENT_NAME": "Nom du Patient",
+    
+    "TRANSFER_DATE": "Date de Transfer",
+    "LOCATION": "Emplacement",
+    "AVAILABLE_DAYS": "Jours disponibles",
+    "START_TIME": "Heure de Debut",
+    "END_TIME": "Heure de Fin",
+    "PER_PATIENT_TIME": "Temps par Patient",
+    
+    "APPOINTMENT_DATE": "Date du Rendez-vous",
+    
+    "CLEAR": "Effacer",
+    "DELETE": "Supprimer",
+    "SAVE": "Sauvegarder",
+    "PRINT_ID_CARD": "Imprimer Carte Identite",
+    "DOWNLOAD_REPORT": "Telecharger l'etat",
+    "SEARCH": "Chercher"
+    
+    
+  },
+  "MESSAGE": {
+  	"TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigne doit etre different de l'ancien.",
+  	"TRANFER_BED_FAILED": "Le noueau lit dit etre diferent de l'ancien.",
+  	"TRANFER_DATE_FAILED": "La date de transfer doit etre plus grande que l'ancienne date."
   }
 }

@@ -1,6 +1,6 @@
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
 	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="employee">
-		<p-accordion> <p-accordionTab header="Demographic Info"
+		<p-accordion> <p-accordionTab header="{{ 'COMMON.DEMOGRAPHIC_INFO' | translate }}"
 			selected="true">
 		
 		<div class="ui-grid-row">
@@ -8,7 +8,7 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@userName" for="userName">User Name:<font color="red">*</font>
+							<label for="userName">{{ 'COMMON.USER_NAME' | translate }}:<font color="red">*</font>
 							</label> <input type="text" pInputText class="form-control" id="userName"
 								[(ngModel)]="employee.user.userName" name="userName" #userName="ngModel" required>
 							<p-message *ngIf="f.submitted && userName.invalid" severity="error" text="Field is required"></p-message>
@@ -16,7 +16,7 @@
 					</div>
 					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@password" for="password1">Mot de Passe:<font color="red">*</font></label> 
+							<label for="password">{{ 'COMMON.PASSWORD' | translate }}:<font color="red">*</font></label> 
 							<input type="password" pPassword class="form-control" id="password1" 
 								[(ngModel)]="employee.user.password" name="password1" #password1="ngModel" required>
 							<p-message *ngIf="f.submitted && password1.invalid" severity="error" text="Field is required"></p-message>
@@ -26,7 +26,7 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@lastName" for="lastName">Last Name<font color="red">*</font>:
+							<label for="lastName">{{ 'COMMON.LAST_NAME' | translate }}<font color="red">*</font>:
 							</label> <input type="text" pInputText class="form-control" id="lastName"
 								 [(ngModel)]="employee.user.lastName" name="lastName" #lastName="ngModel" required>
 							<p-message *ngIf="f.submitted && lastName.invalid" severity="error" text="Field is required"></p-message>
@@ -44,7 +44,7 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@middleName" for="middleName">Middle Name</label> 
+							<label for="middleName">{{ 'COMMON.MIDDLE_NAME' | translate }}</label> 
 							<input type="text" pInputText class="form-control" id="middleName"
 								[(ngModel)]="employee.user.middleName" name="middleName" #middleName="ngModel">
 						</div>
@@ -62,7 +62,7 @@
 					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
 							<div class="ui-grid-row">
-								<label i18n="@@sex" for="sex">Sex</label>
+								<label for="sex">{{ 'COMMON.DEMOGRAPHIC_INFO' | translate }}</label>
 							</div>
 							<div class="ui-grid-row">
 								<p-radioButton name="sex" value="M" label="Male"
@@ -75,7 +75,7 @@
 					</div>
 					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@phone" for="phone">Phone<font color="red">*</font>
+							<label for="phone">{{ 'COMMON.PHONE' | translate }}<font color="red">*</font>
 							</label> <input type="text" pInputText class="form-control" id="phone"
 								[(ngModel)]="employee.user.phone" name="phone" #phone="ngModel" required>
 							<p-message *ngIf="f.submitted && phone.invalid" severity="error" text="Invalid email"></p-message>
@@ -86,24 +86,22 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@address" for="address">Address</label> <input
+							<label for="address">{{ 'COMMON.ADDRESS' | translate }}</label> <input
 								type="text" pInputText class="form-control" id="address"
-								[(ngModel)]="employee.user.address" name="address"
-								#address="ngModel">
+								[(ngModel)]="employee.user.address" name="address" #address="ngModel">
 						</div>
 					</div>
 					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@city" for="city">City</label> <input type="text"
-								pInputText class="form-control" id="city"
-								[(ngModel)]="employee.user.city" name="city" #city="ngModel">
+							<label for="city">{{ 'COMMON.CITY' | translate }}</label> <input type="text"
+								pInputText class="form-control" id="city" [(ngModel)]="employee.user.city" name="city" #city="ngModel">
 						</div>
 					</div>
 				</div>
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@country" for="country">Country</label>
+							<label for="country">{{ 'COMMON.COUNTRY' | translate }}</label>
 							<p-autoComplete [(ngModel)]="employee.user.country"
 								(onDropdownClick)="countryDropdown.handleDropdownClick($event)"
 								[suggestions]="countryDropdown.filteredCountries"
@@ -115,10 +113,9 @@
 					</div>
 					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@zipCode" for="zipCode">Zip Code</label> <input
-								type="text" pInputText class="form-control" id="zipCode"
-								[(ngModel)]="employee.user.zipCode" name="zipCode"
-								#zipCode="ngModel">
+							<label for="zipCode">{{ 'COMMON.ZIP_CODE' | translate }}</label> 
+							<input type="text" pInputText class="form-control" id="zipCode"
+								[(ngModel)]="employee.user.zipCode" name="zipCode" #zipCode="ngModel">
 						</div>
 					</div>
 				</div>
@@ -140,29 +137,27 @@
 		</div>	
 			
 		
-		</p-accordionTab> <p-accordionTab header="Professional Info">
+		</p-accordionTab> <p-accordionTab header="{{ 'COMMON.PROFESSIONAL_INFO' | translate }}">
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-6 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@designation" for="designation">Designation</label>
+					<label for="designation">{{ 'COMMON.DESIGNATION' | translate }}</label>
 					<input type="text" pInputText class="form-control"
-						id="designation" [(ngModel)]="employee.designation"
-						name="designation" #designation="ngModel">
+						id="designation" [(ngModel)]="employee.designation" name="designation" #designation="ngModel">
 				</div>
 			</div>
 			<div class="ui-grid-col-6 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@specialist" for="specialist">Specialist</label> <input
-						type="text" pInputText class="form-control" id="specialist"
-						[(ngModel)]="employee.specialist" name="specialist"
-						#specialist="ngModel">
+					<label for="specialist">{{ 'COMMON.SPECIALIST' | translate }}</label> 
+					<input type="text" pInputText class="form-control" id="specialist"
+						[(ngModel)]="employee.specialist" name="specialist" #specialist="ngModel">
 				</div>
 			</div>
 		</div>
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-6 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@department" for="department">Departement</label>
+					<label for="department">{{ 'COMMON.DEPARTMENT' | translate }}</label>
 					<p-autoComplete [(ngModel)]="employee.department"
 						(onDropdownClick)="departmentDropdown.handleDropdownClick($event)"
 						[suggestions]="departmentDropdown.filteredDepartments"
@@ -174,7 +169,7 @@
 			</div>
 			<div class="ui-grid-col-6 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@userGroup" for="userGroup">Role</label>
+					<label for="userGroup">{{ 'COMMON.ROLE' | translate }}</label>
 					<p-autoComplete [(ngModel)]="employee.user.userGroup"
 						[disabled]="employee.user.userGroup.id == 1"
 						(onDropdownClick)="userGroupDropdown.handleDropdownClick($event)"
@@ -191,17 +186,14 @@
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-6 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@resume" for="resume">Resume</label>
-					<p-editor [(ngModel)]="employee.resume"
-						[style]="{'height':'100px'}"></p-editor>
+					<label for="resume">{{ 'COMMON.RESUME' | translate }}</label>
+					<p-editor [(ngModel)]="employee.resume" [style]="{'height':'100px'}"></p-editor>
 				</div>
 			</div>
 			<div class="ui-grid-col-6 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@shortBiography" for="shortBiography">Short
-						Biography</label>
-					<p-editor [(ngModel)]="employee.shortBiographie"
-						[style]="{'height':'100px'}"></p-editor>
+					<label for="shortBiography">{{ 'COMMON.BIOGRAPHY' | translate }}</label>
+					<p-editor [(ngModel)]="employee.shortBiographie" [style]="{'height':'100px'}"></p-editor>
 				</div>
 			</div>
 		</div>
@@ -214,9 +206,9 @@
 
 	<div class="form-group">
 		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-			<button type="button" pButton icon="fa fa-refresh" (click)="clear()"label="{{CLEAR_LABEL}}"></button>&nbsp;&nbsp;
-			<button pButton icon="fa fa-save" label="{{SAVE_LABEL}}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{DELETE_LABEL}}"></button>
+			<button type="button" pButton icon="fa fa-refresh" (click)="clear()"label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
+			<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>
 			
 		</div>
 	</div>

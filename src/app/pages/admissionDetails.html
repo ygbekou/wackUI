@@ -10,7 +10,7 @@
 			<div class="ui-grid-col-7 ui-sm-12">
 				<div class="ui-grid-col-3 ui-sm-12">
 					<div class="form-group">
-						<label i18n="@@patientAdmissionDate" for="patientAdmissionDate">Adm. Date Time<font color="red">*</font></label>
+						<label for="patientAdmissionDate">{{ 'COMMON.ADMISSION_DATETIME' | translate }}<font color="red">*</font></label>
 						<br/>
 						<p-calendar [(ngModel)]="admission.admissionDatetime" [showTime]="true"
 							name="admissionDatetime" #admissionDatetime="ngModel" required></p-calendar>
@@ -19,14 +19,14 @@
 				</div>
 				<div class="ui-grid-col-8 ui-sm-12">
 					<div class="form-group">
-						<label i18n="@@reason" for="reason">Reason</label>
+						<label for="reason">{{ 'COMMON.REASON' | translate }}</label>
 						<textarea pInputTextarea id="reason" rows="3" cols="40" pInputTextarea maxlength="1000"
 						 [(ngModel)]="admission.admissionReason" name="admissionReason" #reason="ngModel"> </textarea>
 					</div>
 				</div>
 				<div class="ui-grid-col-1 ui-sm-12">
 					<div class="form-group">
-						<label i18n="@@patientAdmissionId" for="patientAdmissionId">Adm. No.</label>
+						<label for="patientAdmissionId">{{ 'COMMON.ADMISSION_NUMBER' | translate }}</label>
 						<br/>
 						{{admission.admissionNumber}}
 					</div>
@@ -42,7 +42,7 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-4 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@building" for="building">Building<font color="red">*</font></label>
+							<label for="building">{{ 'COMMON.BUILDING' | translate }}<font color="red">*</font></label>
 							<p-autoComplete
 								[(ngModel)]="admission.bedAssignment.bed.room.floor.building"
 								(ngModelChange)="populateFloorDropdown($event)"
@@ -57,7 +57,7 @@
 					</div>
 					<div class="ui-grid-col-4 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@floor" for="floor">Floor<font color="red">*</font></label>
+							<label for="floor">{{ 'COMMON.FLOOR' | translate }}<font color="red">*</font></label>
 							<p-autoComplete [(ngModel)]="admission.bedAssignment.bed.room.floor"
 								(ngModelChange)="populateRoomDropdown($event)"
 								(onDropdownClick)="floorDropdown.handleDropdownClick($event)"
@@ -72,7 +72,7 @@
 					</div>
 					<div class="ui-grid-col-4 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@room" for="room">Room<font color="red">*</font></label>
+							<label for="room">{{ 'COMMON.ROOM' | translate }}<font color="red">*</font></label>
 							<p-autoComplete [(ngModel)]="admission.bedAssignment.bed.room"
 								(ngModelChange)="populateBedDropdown($event)"
 								(onDropdownClick)="roomDropdown.handleDropdownClick($event)"
@@ -89,7 +89,7 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-4 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@category" for="category">Category<font color="red">*</font></label>
+							<label for="category">{{ 'COMMON.CATEGORY' | translate }}<font color="red">*</font></label>
 							<p-autoComplete [(ngModel)]="admission.bedAssignment.bed.category"
 								(ngModelChange)="populateBedDropdown($event)"
 								(onDropdownClick)="categoryDropdown.handleDropdownClick($event)"
@@ -104,7 +104,7 @@
 					</div>
 					<div class="ui-grid-col-4 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@bed" for="bed">Bed<font color="red">*</font></label>
+							<label for="bed">{{ 'COMMON.BED' | translate }}<font color="red">*</font></label>
 							<p-autoComplete [(ngModel)]="admission.bedAssignment.bed"
 								(onDropdownClick)="bedDropdown.handleDropdownClick($event)"
 								[suggestions]="bedDropdown.filteredBeds" [dropdown]="true"
@@ -117,7 +117,7 @@
 					</div>
 					<div class="ui-grid-col-4 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@doctor" for="doctor">Doctor<font color="red">*</font></label>
+							<label for="doctor">{{ 'COMMON.DOCTOR' | translate }}<font color="red">*</font></label>
 							<p-autoComplete [(ngModel)]="admission.doctorAssignment.doctor"
 								(onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
 								[suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
@@ -133,8 +133,8 @@
 			<br />
 	
 			<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-				<button type="button" pButton icon="fa fa-close" (click)="delete()" label="Supprimer"></button>&nbsp;
-				<button pButton icon="fa fa-check" label="Save"></button>
+				<button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>&nbsp;
+				<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>
 			</div>
 		</p-tabPanel> 
 		<p-tabPanel header="VITAL SIGNS" *ngIf="admission && admission.id > 0"> 

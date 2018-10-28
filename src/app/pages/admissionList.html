@@ -4,42 +4,42 @@
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-1 ui-sm-24">
 					<div class="form-group">
-						<label i18n="@@admissionId" for="admissionId">Admission ID:</label> 
+						<label for="admissionId">{{ 'COMMON.ADMISSION_NUMBER' | translate }}</label> 
 						<input type="text" pInputText class="form-control" id="admissionId" size="10"
 							[(ngModel)]="searchCriteria.admissionId" name="admissionId" >
 					</div>
 				</div>
 				<div class="ui-grid-col-2 ui-sm-12">
 					<div class="form-group">
-						<label i18n="@@admissionDate" for="admissionDate">Admission Date:</label> 
+						<label for="admissionDate">{{ 'COMMON.ADMISSION_DATE' | translate }}</label> 
 						<p-calendar [(ngModel)]="searchCriteria.admissionDate" id="admissionDate"
 									name="admissionDate" #admissionDate="ngModel"></p-calendar>
 					</div>
 				</div>
 				<div class="ui-grid-col-1 ui-sm-12">
 					<div class="form-group">
-						<label i18n="@@patientId" for="patientId">Patient ID:</label> 
+						<label for="patientId">{{ 'COMMON.PATIENT_ID' | translate }}:</label> 
 						<input type="text" pInputText class="form-control" id="medicalRecordNumber"
 							 [(ngModel)]="searchCriteria.medicalRecordNumber" name="medicalRecordNumber" >
 					</div>
 				</div>
 				<div class="ui-grid-col-2 ui-sm-12">
 					<div class="form-group">
-						<label i18n="@@lastName" for="lastName">Last Name:</label> 
+						<label for="lastName">{{ 'COMMON.LAST_NAME' | translate }}:</label> 
 						<input type="text" pInputText class="form-control" id="lastName"
 							 [(ngModel)]="searchCriteria.lastName" name="lastName" >
 					</div>
 				</div>
 				<div class="ui-grid-col-2 ui-sm-12">
 					<div class="form-group">
-						<label i18n="@@firstName" for="firstName">First Name:</label> 
+						<label for="firstName">{{ 'COMMON.FIRST_NAME' | translate }}:</label> 
 						<input type="text" pInputText class="form-control" id="firstName"
 							 [(ngModel)]="searchCriteria.firstName" name="firstName">
 					</div>
 				</div>
 				<div class="ui-grid-col-2 ui-sm-12">
 					<div class="form-group">
-						<label i18n="@@birthDate" for="birthDate">Birth Date:</label> 
+						<label for="birthDate">{{ 'COMMON.BIRTH_DATE' | translate }}:</label> 
 						<p-calendar [(ngModel)]="searchCriteria.birthDate" id="birthDate"
 									name="birthDate" #birthDate="ngModel"></p-calendar>
 					</div>
@@ -47,7 +47,7 @@
 			</div>
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-1 ui-sm-12">
-				<button pButton icon="fa fa-search" label="Search" (click)="search()"></button>
+				<button pButton icon="fa fa-search" label="{{ 'COMMON.SEARCH' | translate }}" (click)="search()"></button>
 			</div>
 		</div>
 		</p-fieldset>
@@ -55,7 +55,7 @@
 		<br/>
 		<p-table [columns]="cols" [value]="admissions">
 			<ng-template pTemplate="caption">
-				ADMISSION LIST
+				{{ 'COMMON.ADMISSION_LIST' | translate }}
 			</ng-template>
 		    <ng-template pTemplate="header" let-columns>
 		        <tr>

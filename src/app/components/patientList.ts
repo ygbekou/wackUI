@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../app.constants';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { GenericService, GlobalEventsManager } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-patient-list',
@@ -17,9 +18,12 @@ export class PatientList implements OnInit, OnDestroy {
   searchCriteria: SearchCriteria = new SearchCriteria();
   originalPage: string;
   
+  LAST_NAME: any;
+  
   constructor
     (
     private genericService: GenericService,
+    private translate: TranslateService,
     private globalEventsManager: GlobalEventsManager,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
@@ -29,23 +33,41 @@ export class PatientList implements OnInit, OnDestroy {
     
   }
 
-  ngOnInit(): void {
+  updateCols() {
+    for (var index in this.cols) {
+      let col = this.cols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+  }
+  
+  generateCols(){
     this.cols = [
-            { field: 'lastName', header: 'Last Name', type:'user' },
-            { field: 'firstName', header: 'First Name', type:'user' },
-            { field: 'birthDate', header: 'Birth Date', type:'date' },
-            { field: 'email', header: 'Email Address', type:'user' },
-            { field: 'phone', header: 'Phone', type:'user' },
-            { field: 'address', header: 'Address', type:'user' },
-            { field: 'sex', header: 'Sex', type:'user' }
+            { field: 'lastName', header: 'Last Name', headerKey: 'COMMON.LAST_NAME', type:'user' },
+            { field: 'firstName', header: 'First Name', headerKey: 'COMMON.FIRST_NAME', type:'user' },
+            { field: 'birthDate', header: 'Birth Date', headerKey: 'COMMON.BIRTH_DATE', type:'date' },
+            { field: 'email', header: 'Email', headerKey: 'COMMON.E_MAIL', type:'user' },
+            { field: 'phone', header: 'Phone', headerKey: 'COMMON.PHONE_1', type:'user' },
+            { field: 'address', header: 'Address', headerKey: 'COMMON.ADDRESS', type:'user' },
+            { field: 'sex', header: 'Sex', headerKey: 'COMMON.GENDER', type:'user' }
         ];
+  }
+  
+  ngOnInit(): void {
     
+    this.generateCols();
+
      this.route
         .queryParams
         .subscribe(params => {
      
         this.originalPage = params['originalPage'];
      });
+    
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        this.updateCols();
+    });
   }
  
   

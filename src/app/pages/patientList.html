@@ -3,27 +3,27 @@
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@lastName" for="lastName">Last Name:
-					</label> <input type="text" pInputText class="form-control" id="lastName"
+					<label for="lastName">{{ 'COMMON.LAST_NAME' | translate }}:</label> 
+					<input type="text" pInputText class="form-control" id="lastName"
 						 [(ngModel)]="searchCriteria.lastName" name="lastName" >
 				</div>
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@firstName" for="firstName">First Name:
-					</label> <input type="text" pInputText class="form-control" id="firstName"
+					<label for="firstName">{{ 'COMMON.FIRST_NAME' | translate }}:</label> 
+					<input type="text" pInputText class="form-control" id="firstName"
 						 [(ngModel)]="searchCriteria.firstName" name="firstName">
 				</div>
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@birthDate" for="birthDate">Birth Date:
-					</label> <p-calendar [(ngModel)]="searchCriteria.birthDate" id="birthDate"
+					<label for="birthDate">{{ 'COMMON.BIRTH_DATE' | translate }}:</label> 
+					<p-calendar [(ngModel)]="searchCriteria.birthDate" id="birthDate"
 								name="birthDate" #birthDate="ngModel"></p-calendar>
 				</div>
 			</div>
 			<div>
-				<button pButton icon="fa fa-search" label="Search" (click)="search()"></button>
+				<button pButton icon="fa fa-search" label="{{ 'COMMON.SEARCH' | translate }}" (click)="search()"></button>
 			</div>
 		</div>
 	</p-fieldset>

@@ -51,7 +51,6 @@ import {DoctorOrderDetails} from '../components/doctorOrderDetails';
 import {DoctorOrderList} from '../components/doctorOrderList';
 import {AdmissionDetails} from '../components/admissionDetails';
 import {AdmissionList} from '../components/admissionList';
-import {DoctorTransfer} from '../components/doctorTransfer';
 import {BedTransfer} from '../components/bedTransfer';
 import {FloorDetails} from '../components/floorDetails';
 import {FloorList} from '../components/floorList';
@@ -144,7 +143,6 @@ const routes: Routes = [
   {path: 'doctorOrderList', component: DoctorOrderList},
   {path: 'admissionDetails', component: AdmissionDetails},
   {path: 'admissionList', component: AdmissionList},
-  {path: 'doctorTransfer', component: DoctorTransfer},
   {path: 'bedTransfer', component: BedTransfer},
   {path: 'floorDetails', component: FloorDetails},
   {path: 'floorList', component: FloorList},
@@ -203,7 +201,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     InvoiceDetails, InvoiceList, PaymentDetails, PaymentList, InsuranceDetails, InsuranceList, ServiceDetails,
     ServiceList, PackageDetails, PackageList, BillDetails, BillList, VitalSignDetails, VitalSignList, AllergyDetails,
     MedicalHistoryDetails, SocialHistoryDetails, VaccineDetails, SymptomDetails, BedTransfer,
-    DoctorOrderDetails, DoctorOrderList, AdmissionDetails, AdmissionList, DoctorTransfer, FloorDetails, FloorList,
+    DoctorOrderDetails, DoctorOrderList, AdmissionDetails, AdmissionList, FloorDetails, FloorList,
     RoomDetails, RoomList, BedDetails, BedList, AdminPatient, AdminBedStatus, AdmissionDiagnoses,
     AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails,
     InvestigationList, PurchaseOrderDetails, PurchaseOrderList, ReceiveOrderDetails, ReceiveOrderList,

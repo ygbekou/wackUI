@@ -5,7 +5,7 @@
 			<div class="ui-grid ui-grid-responsive ui-fluid">
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-6ui-sm-12">
-						<label i18n="@@appointmentDate" for="appointmentDate">Appointment Date:</label> 
+						<label for="appointmentDate">{{ 'COMMON.APPOINTMENT_DATE' | translate }}:</label> 
 					</div>
 					<div class="ui-grid-col-6ui-sm-12">
 						{{appointment.appointmentDate | date:'MM/dd/yyyy'}}
@@ -13,7 +13,7 @@
 				</div>
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-6ui-sm-12">
-						<label i18n="@@department" for="department">Department:</label> 
+						<label for="department">{{ 'COMMON.DEPARTMENT' | translate }}:</label> 
 					</div>
 					<div class="ui-grid-col-6ui-sm-12">
 						{{appointment.department.name}}
@@ -21,7 +21,7 @@
 				</div>
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-6ui-sm-12">
-						<label i18n="@@doctor" for="doctor">Doctor:</label> 
+						<label for="doctor">{{ 'COMMON.DOCTOR' | translate }}:</label> 
 					</div>
 					<div class="ui-grid-col-6ui-sm-12">
 						{{appointment.doctor.name}}
@@ -29,7 +29,7 @@
 				</div>
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-6ui-sm-12">
-						Patient: 
+						{{ 'COMMON.PATIENT_NAME' | translate }}: 
 					</div>
 					<div class="ui-grid-col-6ui-sm-12">
 						{{appointment.patient.name}}
@@ -38,7 +38,7 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-6ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@beginTime" for="beginTime">Start Time<font color="red">*</font></label> 
+							<label for="beginTime">{{ 'COMMON.START_TIME' | translate }}<font color="red">*</font></label> 
 							{{appointment.beginTime}}
 						</div>
 					</div>
@@ -46,7 +46,7 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-6ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@endTime" for="endTime">End Time<font color="red">*</font></label> 
+							<label for="endTime">{{ 'COMMON.END_TIME' | translate }}<font color="red">*</font></label> 
 							{{appointment.endTime}}
 						</div>
 					</div>
@@ -54,7 +54,7 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-6ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@problem" for="problem">Problem<font color="red">*</font></label> 
+							<label for="problem">{{ 'COMMON.PROBLEM' | translate }}<font color="red">*</font></label> 
 							<textarea pInputTextarea id="problem" [(ngModel)]="appointment.problem" #problem="ngModel"> </textarea>
 						</div>
 					</div>
@@ -63,10 +63,8 @@
 			</div>
 			<div>
 				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-					<button type="button" pButton icon="fa fa-close" (click)="delete()"
-						label="Supprimer"></button>&nbsp;&nbsp;
-					<button type="button" pButton icon="fa fa-check" (click)="save()"
-						label="Sauvegarder"></button>
+					<button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>&nbsp;&nbsp;
+					<button type="button" pButton icon="fa fa-check" (click)="save()" label="{{ 'COMMON.SAVE' | translate }}"></button>
 				</div>
 			</div>
 		</div>
@@ -81,7 +79,7 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-4 ui-sm-12">		
 						<div class="form-group">
-							<label i18n="@@patient" for="location">Location</label>
+							<label for="location">{{ 'COMMON.LOCATION' | translate }}</label>
 							<p-autoComplete [(ngModel)]="appointment.hospitalLocation"
 								(onDropdownClick)="hospitalLocationDropdown.handleDropdownClick($event)"
 								[suggestions]="hospitalLocationDropdown.filteredLocations" [dropdown]="true"
@@ -92,7 +90,7 @@
 					</div>
 					<div class="ui-grid-col-4 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@department" for="department">Department</label>
+							<label for="department">{{ 'COMMON.DEPARTMENT' | translate }}</label>
 							<p-autoComplete [(ngModel)]="appointment.department" 
 								(onDropdownClick)="departmentDropdown.handleDropdownClick($event)"
 								[suggestions]="departmentDropdown.filteredDepartments" [dropdown]="true"
@@ -103,7 +101,7 @@
 					</div>
 					<div class="ui-grid-col-4 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@doctor" for="doctor">Doctor<font color="red">*</font></label> 
+							<label for="doctor">{{ 'COMMON.DOCTOR' | translate }}<font color="red">*</font></label> 
 							<p-autoComplete [(ngModel)]="appointment.doctor" 
 								(onSelect)="appointment.department = appointment.doctor.department"
 								(onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
@@ -124,6 +122,7 @@
 		</div>
 		<p-schedule [events]="events" [header]="headerConfig" (onDayClick)="addEventClick($event)" 
 			(onEventClick)="editEventClick($event)"></p-schedule>
+			
 	</div>
 </div>
  

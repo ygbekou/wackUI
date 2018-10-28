@@ -6,6 +6,7 @@ import {  } from 'primeng/primeng';
 import { GenericService } from '../services';
 import { Employee, User, SearchCriteria } from '../models';
 import { DepartmentDropdown } from './dropdowns';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-employee-list',
@@ -21,6 +22,7 @@ export class EmployeeList implements OnInit, OnDestroy {
   constructor
     (
     private genericService: GenericService,
+    private translate: TranslateService,
     private changeDetectorRef: ChangeDetectorRef,
     private departmentDropdown: DepartmentDropdown,
     private route: ActivatedRoute,
@@ -29,18 +31,31 @@ export class EmployeeList implements OnInit, OnDestroy {
 
     
   }
+  
+  updateCols() {
+    for (var index in this.cols) {
+      let col = this.cols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+  }
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'lastName', header: 'Last Name', type:'user' },
-            { field: 'firstName', header: 'First Name', type:'user' },
-            { field: 'departmentName', header: 'Department', type:'department' },
-            { field: 'groupName', header: 'Group' },
-            { field: 'email', header: 'Email Address', type:'user' },
-            { field: 'phone', header: 'Phone', type:'user' },
-            { field: 'sex', header: 'Sex', type:'user' },
-            { field: 'status', header: 'Status', type:'string' }
+            { field: 'lastName', header: 'Last Name', headerKey: 'COMMON.LAST_NAME', type:'user' },
+            { field: 'firstName', header: 'First Name', headerKey: 'COMMON.FIRST_NAME', type:'user' },
+            { field: 'departmentName', header: 'Department', headerKey: 'COMMON.DEPARTMENT', type:'department' },
+            { field: 'groupName', header: 'Role', headerKey: 'COMMON.ROLE' },
+            { field: 'email', header: 'Email', headerKey: 'COMMON.E_MAIL', type:'user' },
+            { field: 'phone', header: 'Phone', headerKey: 'COMMON.PHONE', type:'user' },
+            { field: 'sex', header: 'Gender', headerKey: 'COMMON.GENDER', type:'user' },
+            { field: 'status', header: 'Status', headerKey: 'COMMON.STATUS', type:'string' }
         ];
+    
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        this.updateCols();
+    });
   }
  
   

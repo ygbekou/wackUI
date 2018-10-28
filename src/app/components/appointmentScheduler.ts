@@ -5,9 +5,10 @@ import { Constants } from '../app.constants';
 import { EditorModule } from 'primeng/editor';
 import { DoctorDropdown, DepartmentDropdown, HospitalLocationDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { Message } from 'primeng/api';
 import { DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { GenericService, AppointmentService } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-appointment-scheduler',
@@ -18,6 +19,7 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
   
   events: any[];
   headerConfig: any;
+  dateConfig: any;
   displayEdit: boolean = false;
   appointment: Appointment;
   searchCriteria: SearchCriteria = new SearchCriteria();
@@ -28,6 +30,7 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
     (
       private genericService: GenericService,
       private appointmentService: AppointmentService,
+      private translate: TranslateService,
       private doctorDropdown: DoctorDropdown,
       private departmentDropdown: DepartmentDropdown,
       private hospitalLocationDropdown: HospitalLocationDropdown,
@@ -71,6 +74,11 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
     
   }
 
+   
+   setScheduleConfig() {
+     
+   }
+  
   save() {
     this.messages = [];
     if (this.appointment.patient.id == undefined) {

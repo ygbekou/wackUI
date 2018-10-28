@@ -40,8 +40,8 @@ export class AppMenuComponent implements OnInit {
         items: [
           {label: 'Admettre un patient', icon: 'fa fa-plus', routerLink: ['/admin/admissionDetails']},
           {label: 'Liste des admissions', icon: 'fa fa-search', routerLink: ['/admin/admissionList']},
-          {label: 'Changer de lit', icon: 'fa fa-edit', routerLink: ['/admin/bedTransfer']},
-          {label: 'Changer de medecin', icon: 'fa fa-edit', routerLink: ['/admin/doctorTransfer']}
+          {label: 'Changer de lit', icon: 'fa fa-edit', url: ['#/admin/bedTransfer?transferType=BED']},
+          {label: 'Changer de medecin', icon: 'fa fa-edit', url: ['#/admin/bedTransfer?transferType=DOCTOR']}
         ]
       },
       {

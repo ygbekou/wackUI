@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { Employee } from '../models/employee';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../app.constants';
-import { Schedule } from '../models/schedule';
+import { Employee, Schedule, User } from '../models';
 import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User } from '../models/user';  
 import { GenericService } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-schedule-list',
@@ -16,18 +16,13 @@ import { GenericService } from '../services';
 })
 export class ScheduleList implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   schedules: Schedule[] = [];
   cols: any[];
-  
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
   
   constructor
     (
     private genericService: GenericService,
+    private translate: TranslateService,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
@@ -38,14 +33,19 @@ export class ScheduleList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'departmentName', header: 'Department' },
-            { field: 'locationName', header: 'Location' },
-            { field: 'day', header: 'Day' },
-            { field: 'beginTime', header: 'Start Time' },
-            { field: 'endTime', header: 'End Time' },
-            { field: 'perPatientTime', header: 'Per Patient Time' },
-            { field: 'status', header: 'Status', type:'string' }
+            { field: 'departmentName', header: 'Department', headerKey: 'COMMON.DEPARTMENT' },
+            { field: 'locationName', header: 'Location', headerKey: 'COMMON.LOCATION' },
+            { field: 'day', header: 'Available Day', headerKey: 'COMMON.AVAILABLE_DAYS' },
+            { field: 'beginTime', header: 'Start Time', headerKey: 'COMMON.START_TIME' },
+            { field: 'endTime', header: 'End Time', headerKey: 'COMMON.END_TIME' },
+            { field: 'perPatientTime', header: 'Per Patient Time', headerKey: 'COMMON.PER_PATIENT_TIME' },
+            { field: 'status', header: 'Status', type:'string', headerKey: 'COMMON.STATUS' }
         ];
+    
+    this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        this.updateCols();
+    });
     
     this.route
         .queryParams
@@ -66,8 +66,22 @@ export class ScheduleList implements OnInit, OnDestroy {
           });
   }
  
+ updateCols() {
+    for (var index in this.cols) {
+      let col = this.cols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+  }
+  
+  
+  
+  
+  
+  
   onSort() {
-        this.updateRowGroupMetaData();
+    this.updateRowGroupMetaData();
   }
   
   ngOnDestroy() {

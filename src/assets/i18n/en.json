@@ -1,6 +1,14 @@
 {
   "COMMON": {
   	"SELECT": "Choose a Language",
+  	"DEMOGRAPHIC_INFO": "Demographic Information",
+    "CONTACT_INFO": "Contact Information",
+    "PAYER_INFO": "Payer Information",
+    "PROFESSIONAL_INFO": "Information Professionelle",
+    
+    "USER_NAME": "User Name",
+    "PASSWORD": "Password",
+  	"NAME": "Name",
     "LAST_NAME": "Last Name",
     "FIRST_NAME": "First Name",
     "MIDDLE_NAME": "Middle Name",
@@ -12,13 +20,69 @@
     "OCCUPATION": "Occupation",
     "RELIGION": "Religion",
     "MEDICAL_HISTORY": "Medical History",
-    "PHONE_1": "Phone 1",
-    "PHONE_2": "Phone 2",
+    "PHONE": "Phone",
     "ADDRESS": "Address",
     "CITY": "City",
     "COUNTRY": "Country",
     "ZIP_CODE": "Zip Code",
     "CONTACT": "Contact",
-    "CONTACT_PHONE": "Contact Phone"
+    "CONTACT_PHONE": "Contact Phone",
+    "PAYER_TYPE": "Payer Type",
+    "ACCOUNT_NUMBER": "Account Number",
+    "EMPLOYER": "Employer",
+    "AUTHORIZATION_LETTER_NUMBER": "Authorization Letter Number",
+    "EXPIRY_DATE": "Expiry Date",
+    "EMPLOYEE_ID": "Employee ID",
+    "INSURANCE": "Insurance",
+    "POLICY_NUMBER": "Policy Number",
+    "IS_SELF_RESPONSIBLE": "Is Self Responsible",
+    "RESPONSIBLE_PARTY": "Responsible Party",
+    
+    "DESIGNATION": "Designation",
+    "SPECIALIST": "Specialist",
+    "DEPARTMENT": "Department",
+    "ROLE": "Role",
+    "RESUME": "Resume",
+    "BIOGRAPHY": "Biography",
+    "STATUS": "Status",
+    
+    "ADMISSION_DETAILS": "Admission Details",
+    "ADMISSION_LIST": "ADMISSION LIST",
+    "ADMISSION_DATETIME": "Admission Date/Time",
+    "TRANSFER_DATETIME": "Transfer Date/Time",
+    "ADMISSION_DATE": "Admission Date",
+    "REASON": "Reason",
+    "ADMISSION_NUMBER": "Admission No.",
+    "BUILDING": "Building",
+    "FLOOR": "Floor",
+    "ROOM": "Room",
+    "CATEGORY": "Category",
+    "BED": "Bed",
+    "DOCTOR": "Doctor",
+    "PATIENT_ID": "Patient ID",
+    "PATIENT_NAME": "Patient Name",
+    
+    "TRANSFER_DATE": "Transfer Date",
+    "LOCATION": "Location",
+    "AVAILABLE_DAYS": "Available Days",
+    "START_TIME": "Start Time",
+    "END_TIME": "End Time",
+    "PER_PATIENT_TIME": "Per Patient Time",
+    
+    "APPOINTMENT_DATE": "Appointment Date",
+    
+    "CLEAR": "Clear",
+    "DELETE": "Delete",
+    "SAVE": "Save",
+    "PRINT_ID_CARD": "Print ID Card",
+    "DOWNLOAD_REPORT": "Download Report",
+    "SEARCH": "Search"
+    
+
+  },
+  "MESSAGE": {
+  	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different than the current doctor.",
+  	"TRANFER_BED_FAILED": "The transfer bed should be different than the current bed.",
+  	"TRANFER_DATE_FAILED": "The Transfer Date should be greater than the current assignment Date."
   }
 }

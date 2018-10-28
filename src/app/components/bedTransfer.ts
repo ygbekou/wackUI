@@ -1,17 +1,7 @@
 import {Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Constants} from '../app.constants';
-import {Bed} from '../models/bed';
-import {BedAssignment} from '../models/bedAssignment';
-import {Country} from '../models/country';
-import {DoctorAssignment} from '../models/doctorAssignment';
-import {Employee} from '../models/employee';
-import {Floor} from '../models/floor';
-import {Package} from '../models/package';
-import {Patient} from '../models/patient';
-import {Admission} from '../models/admission';
-import {Reference} from '../models/reference';
-import {Room} from '../models/room';
+import {Bed, BedAssignment, Country, DoctorAssignment, Employee, Floor, Package, Patient, Admission, Reference, Room, User} from '../models';
 import {EditorModule} from 'primeng/editor';
 import {
   DoctorDropdown, PackageDropdown, InsuranceDropdown, BuildingDropdown, FloorDropdown, RoomDropdown,
@@ -19,8 +9,9 @@ import {
 } from './dropdowns';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule} from 'primeng/primeng';
-import {User} from '../models/user';
 import {GenericService, AppointmentService, GlobalEventsManager, AdmissionService} from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-doctor-transfer',
@@ -30,51 +21,30 @@ import {GenericService, AppointmentService, GlobalEventsManager, AdmissionServic
 })
 export class BedTransfer implements OnInit, OnDestroy {
 
-  public error: String = '';
-  displayDialog: boolean;
   admission: Admission = new Admission();
 
-  doctorDropdown: DoctorDropdown;
-  buildingDropdown: BuildingDropdown;
-  floorDropdown: FloorDropdown;
-  roomDropdown: RoomDropdown;
-  categoryDropdown: CategoryDropdown;
-  bedDropdown: BedDropdown
-
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;
-  DEPARTMENT: string = Constants.DEPARTMENT;
-  COUNTRY: string = Constants.COUNTRY;
-  ROLE: string = Constants.ROLE;
-  SELECT_OPTION: string = Constants.SELECT_OPTION;
-
   transferType: string;
+  messages: Message[] = [];
 
   constructor
     (
     private genericService: GenericService,
     private admissionService: AdmissionService,
+    private translate: TranslateService,
     private globalEventsManager: GlobalEventsManager,
-    private dcDropdown: DoctorDropdown,
-    private bdgDropdown: BuildingDropdown,
-    private flrDropdown: FloorDropdown,
-    private rmDropdown: RoomDropdown,
-    private catDropdown: CategoryDropdown,
-    private bdDropdown: BedDropdown,
+    private doctorDropdown: DoctorDropdown,
+    private buildingDropdown: BuildingDropdown,
+    private floorDropdown: FloorDropdown,
+    private roomDropdown: RoomDropdown,
+    private categoryDropdown: CategoryDropdown,
+    private bedDropdown: BedDropdown,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router
     ) {
-    this.doctorDropdown = dcDropdown;
-    this.buildingDropdown = bdgDropdown;
-    this.floorDropdown = flrDropdown;
-    this.roomDropdown = rmDropdown;
-    this.categoryDropdown = catDropdown;
-    this.bedDropdown = bdDropdown;
     this.initilizePatientAdmission();
     this.initTansferBedData();
-    this.categoryDropdown.getAllCategories(100);
+    this.categoryDropdown.getAllCategories(Constants.CATEGORY_BED);
   }
 
   initilizePatientAdmission() {
@@ -127,17 +97,15 @@ export class BedTransfer implements OnInit, OnDestroy {
   transferDoctor() {
 
     try {
-      this.error = '';
       if (this.validateDoctorTransfer()) {
         this.admissionService.transferDoctor(this.admission.doctorAssignment)
           .subscribe(result => {
-            alert(result.id)
             if (result.id > 0) {
-              this.admission.doctorAssignment = result
+              this.admission.doctorAssignment = result;
+               this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
             }
             else {
-              this.error = Constants.SAVE_UNSUCCESSFUL;
-              this.displayDialog = true;
+               this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
             }
           })
       }
@@ -150,17 +118,15 @@ export class BedTransfer implements OnInit, OnDestroy {
   transferBed() {
 
     try {
-      this.error = '';
       if (this.validateBedTransfer()) {
         this.admissionService.transferBed(this.admission.bedAssignment)
           .subscribe(result => {
-            alert(result.id)
             if (result.id > 0) {
-              this.admission.bedAssignment = result
+              this.admission.bedAssignment = result;
+               this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
             }
             else {
-              this.error = Constants.SAVE_UNSUCCESSFUL;
-              this.displayDialog = true;
+               this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
             }
           })
       }
@@ -171,16 +137,21 @@ export class BedTransfer implements OnInit, OnDestroy {
   }
 
   validateDoctorTransfer() {
+    this.messages = [];
     if (this.admission.doctorAssignment.transferDoctor != null
       && this.admission.doctorAssignment.doctor.id
       == this.admission.doctorAssignment.transferDoctor.id) {
-      alert("The transfer doctor should be different than the current doctor.");
+        this.translate.get('MESSAGE.TRANFER_DOCTOR_FAILED').subscribe((res: string) => {
+           this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:res});
+        });
       return false;
     }
     if (this.admission.doctorAssignment.transferDate != null
       && this.admission.doctorAssignment.transferDate
       < this.admission.doctorAssignment.startDate) {
-      alert("The Transfer Date should be greater than the current assignment Date.")
+      this.translate.get('MESSAGE.TRANFER_DATE_FAILED').subscribe((res: string) => {
+           this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:res});
+        });
       return false;
     }
 
@@ -189,16 +160,21 @@ export class BedTransfer implements OnInit, OnDestroy {
   }
 
   validateBedTransfer() {
+    this.messages = [];
     if (this.admission.bedAssignment.transferBed != null
       && this.admission.bedAssignment.bed.id
       == this.admission.bedAssignment.transferBed.id) {
-      alert("The transfer bed should be different than the current doctor.");
+       this.translate.get('MESSAGE.TRANFER_BED_FAILED').subscribe((res: string) => {
+           this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:res});
+        });
       return false;
     }
     if (this.admission.bedAssignment.transferDate != null
       && this.admission.bedAssignment.transferDate
       < this.admission.bedAssignment.startDate) {
-      alert("The Transfer Date should be greater than the current assignment Date.")
+      this.translate.get('MESSAGE.TRANFER_DATE_FAILED').subscribe((res: string) => {
+           this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:res});
+        });
       return false;
     }
 

@@ -1,8 +1,7 @@
 
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
 	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="patient">
-		<p-accordion> <p-accordionTab header="Demographic Info"
-			selected="true">
+		<p-accordion> <p-accordionTab header="{{ 'COMMON.DEMOGRAPHIC_INFO' | translate }}" selected="true">
 	
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-8 ui-sm-12">
@@ -141,7 +140,7 @@
 				</div>
 			</div>
 		</div>
-		</p-accordionTab> <p-accordionTab header="Contact Info">
+		</p-accordionTab> <p-accordionTab header="{{ 'COMMON.CONTACT_INFO' | translate }}">
 		<div class="ui-grid-row">
 			
 			<div class="ui-grid-col-4 ui-sm-12">
@@ -212,31 +211,39 @@
 			</div>
 	
 		</div>
-		</p-accordionTab> <p-accordionTab header="Payer Info">
-		<div class="ui-grid-col-4 ui-sm-12">
-			<div class="form-group">
-				<label i18n="@@payerType" for="payerType">Payer Type</label>
-				<p-autoComplete [(ngModel)]="patient.payerType"
-					(onDropdownClick)="payerTypeDropdown.handleDropdownClick($event)"
-					[suggestions]="payerTypeDropdown.filteredPayerTypes"
-					[dropdown]="true" id="payerType"
-					(completeMethod)="payerTypeDropdown.filter($event)" name="payerType"
-					field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
-					[minLength]="1"></p-autoComplete>
+		</p-accordionTab> <p-accordionTab header="{{ 'COMMON.PAYER_INFO' | translate }}">
+		<div class="ui=grid-row">
+			<div class="ui-grid-col-3 ui-sm-12">
+				<div class="form-group">
+					<label for="payerType">{{ 'COMMON.PAYER_TYPE' | translate }}</label>
+					<p-autoComplete [(ngModel)]="patient.payerType"
+						(onDropdownClick)="payerTypeDropdown.handleDropdownClick($event)"
+						[suggestions]="payerTypeDropdown.filteredPayerTypes"
+						[dropdown]="true" id="payerType"
+						(completeMethod)="payerTypeDropdown.filter($event)" name="payerType"
+						field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
+						[minLength]="1"></p-autoComplete>
+				</div>
+			</div>
+			<div class="ui-grid-col-3 ui-sm-12">
+				<div class="form-group">
+					<label for="accountNumber">{{ 'COMMON.ACCOUNT_NUMBER' | translate }}</label> <input
+						type="text" pInputText class="form-control" id="accountNumber" [(ngModel)]="patient.accountNumber"
+						 name="accountNumber" #accountNumber="ngModel">
+				</div>
 			</div>
 		</div>
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@employer" for="employer">Employer</label> <input
+					<label for="employer">{{ 'COMMON.EMPLOYER' | translate }}</label> <input
 						type="text" pInputText class="form-control" id="employer"
 						[(ngModel)]="patient.employer" name="employer" #employer="ngModel">
 				</div>
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@authorizationLetterNumber"
-						for="authorizationLetterNumber">Authorization Letter Number</label>
+					<label for="authorizationLetterNumber">{{ 'COMMON.AUTHORIZATION_LETTER_NUMBER' | translate }}</label>
 					<input type="text" pInputText class="form-control"
 						id="authorizationLetterNumber"
 						[(ngModel)]="patient.authorizationLetterNumber"
@@ -246,79 +253,74 @@
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@expiryDate" for="expiryDate">Expiry Date:</label>
+					<label for="expiryDate">{{ 'COMMON.EXPIRY_DATE' | translate }}:</label>
 					<p-calendar [(ngModel)]="patient.expiryDate"></p-calendar>
 				</div>
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@employeeId" for="employeeId">Employee Id</label> <input
+					<label for="employeeId">{{ 'COMMON.EMPLOYEE_ID' | translate }}</label> <input
 						type="text" pInputText class="form-control" id="employeeId"
 						[(ngModel)]="patient.employeeId" name="employeeId"
 						#employeeId="ngModel">
 				</div>
 			</div>
 		</div>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@insurance" for="insurance">Insurance</label>
-					<p-autoComplete [(ngModel)]="patient.insurance"
-						(onDropdownClick)="insuranceDropdown.handleDropdownClick($event)"
-						[suggestions]="insuranceDropdown.filteredInsurances"
-						[dropdown]="true" id="insurance"
-						(completeMethod)="insuranceDropdown.filter($event)"
-						name="insurance" field="name" [size]="30"
-						placeholder="{{SELECT_OPTION}}" [minLength]="1"></p-autoComplete>
+		<p-fieldset legend="{{ 'COMMON.INSURANCE' | translate }}">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label for="insurance">{{ 'COMMON.NAME' | translate }}</label>
+						<p-autoComplete [(ngModel)]="patient.insurance"
+							(onDropdownClick)="insuranceDropdown.handleDropdownClick($event)"
+							[suggestions]="insuranceDropdown.filteredInsurances"
+							[dropdown]="true" id="insurance"
+							(completeMethod)="insuranceDropdown.filter($event)"
+							name="insurance" field="name" [size]="30"
+							placeholder="{{SELECT_OPTION}}" [minLength]="1"></p-autoComplete>
+					</div>
+				</div>
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label for="policyNumber">{{ 'COMMON.POLICY_NUMBER' | translate }}</label> <input type="text" pInputText class="form-control"
+							id="policyNumber" [(ngModel)]="patient.policyNumber"
+							name="policyNumber" #policyNumber="ngModel">
+					</div>
+				</div>
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label for="insuranceExpiryDate">{{ 'COMMON.EXPIRY_DATE' | translate }}:</label>
+						<p-calendar [(ngModel)]="patient.insuranceExpiryDate" name="insuranceExpiryDate"></p-calendar>
+					</div>
 				</div>
 			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@policyNumber" for="policyNumber">Policy
-						Number</label> <input type="text" pInputText class="form-control"
-						id="policyNumber" [(ngModel)]="patient.policyNumber"
-						name="policyNumber" #policyNumber="ngModel">
+		</p-fieldset>
+		<p-fieldset legend="{{ 'COMMON.RESPONSIBLE_PARTY' | translate }}">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<br/>
+						<p-checkbox [(ngModel)]="patient.isSelfResponsible" binary="true"
+								 name="isSelfResponsible" #isSelfResponsible="ngModel"> </p-checkbox>&nbsp;
+						<label for="isSelfResponsible">{{ 'COMMON.IS_SELF_RESPONSIBLE' | translate }}?</label> 
+					</div>
+				</div>
+				<div class="ui-grid-col-3 ui-sm-12" *ngIf="!patient.isSelfResponsible">
+					<div class="form-group">
+						<label for="responsiblePartyLastName">{{ 'COMMON.LAST_NAME' | translate }}</label> 
+						<input type="text" pInputText class="form-control" id="responsiblePartyLastName" 
+						[(ngModel)]="patient.responsiblePartyLastName" name="responsiblePartyLastName" #responsiblePartyLastName="ngModel">
+					</div>
+				</div>
+				<div class="ui-grid-col-3 ui-sm-12" *ngIf="!patient.isSelfResponsible">
+					<div class="form-group">
+						<label for="responsiblePartyFirstName">{{ 'COMMON.FIRST_NAME' | translate }}</label> 
+						<input type="text" pInputText class="form-control" id="responsiblePartyFirstName" 
+						[(ngModel)]="patient.responsiblePartyFirstName" name="responsiblePartyFirstName" #responsiblePartyFirstName="ngModel">
+					</div>
 				</div>
 			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@insuranceExpiryDate" for="insuranceExpiryDate">Insurance
-						Expiry Date:</label>
-					<p-calendar [(ngModel)]="patient.insuranceExpiryDate" name="insuranceExpiryDate"></p-calendar>
-				</div>
-			</div>
-		</div>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@accountNumber" for="accountNumber">Account Number</label> <input
-						type="text" pInputText class="form-control" id="accountNumber" [(ngModel)]="patient.accountNumber"
-						 name="accountNumber" #accountNumber="ngModel">
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<br/>
-					<p-checkbox [(ngModel)]="patient.isSelfResponsible" binary="true"
-							 name="isSelfResponsible" #isSelfResponsible="ngModel"> </p-checkbox>&nbsp;
-					<label i18n="@@isSelfResponsible" for="isSelfResponsible">Is Self Responsible</label> 
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12" *ngIf="!patient.isSelfResponsible">
-				<div class="form-group">
-					<label i18n="@@responsiblePartyFirstName" for="responsiblePartyFirstName">Responsible Party First Name</label> <input
-						type="text" pInputText class="form-control" id="responsiblePartyFirstName" [(ngModel)]="patient.responsiblePartyFirstName"
-						 name="responsiblePartyFirstName" #responsiblePartyFirstName="ngModel">
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12" *ngIf="!patient.isSelfResponsible">
-				<div class="form-group">
-					<label i18n="@@responsiblePartyLastName" for="responsiblePartyLastName">Responsible Party Last Name</label> <input
-						type="text" pInputText class="form-control" id="responsiblePartyLastName" [(ngModel)]="patient.responsiblePartyLastName"
-						 name="responsiblePartyLastName" #responsiblePartyLastName="ngModel">
-				</div>
-			</div>
-		</div>
+		</p-fieldset>
 		</p-accordionTab> </p-accordion>
 		<br />
 	
@@ -326,15 +328,12 @@
 	<br />
 	
 	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-			<button type="button" pButton icon="fa fa-refresh" (click)="clear()"
-				label="Clear"></button>&nbsp;&nbsp;
-			<button type="button" pButton icon="fa fa-save" (click)="save()"
-				label="Save"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<button type="button" pButton icon="fa fa-remove" (click)="delete()"
-				label="Delete"></button> &nbsp;&nbsp;
-			<button type="button" pButton icon="fa fa-print" (click)="printIdCard()" label="Print ID Card"></button>
+			<button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
+			<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button type="button" pButton icon="fa fa-remove" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button> &nbsp;&nbsp;
+			<button type="button" pButton icon="fa fa-print" (click)="printIdCard()" label="{{ 'COMMON.PRINT_ID_CARD' | translate }}"></button>
 			<div>
-				<a *ngIf="reportName" target="_blank" href="assets/reports/{{reportName}}">Download Report {{reportName}}</a>
+				<a *ngIf="reportName" target="_blank" href="assets/reports/{{reportName}}">{{ 'COMMON.DOWNLOAD_REPORT' | translate }} {{reportName}}</a>
 			</div>
 	</div>
 </form>
