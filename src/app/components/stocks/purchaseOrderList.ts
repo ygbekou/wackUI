@@ -7,6 +7,7 @@ import { EmployeeDropdown, SupplierDropdown, ProductDropdown } from '../dropdown
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { GenericService, PurchasingService } from '../../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-purchaseOrder-list',
@@ -24,6 +25,7 @@ export class PurchaseOrderList implements OnInit, OnDestroy {
     (
     private genericService: GenericService,
     private purchasingService: PurchasingService,
+    private translate: TranslateService,
     private supplierDropdown: SupplierDropdown,
     private productDropdown: ProductDropdown,
     private employeeDropdown: EmployeeDropdown,
@@ -37,16 +39,16 @@ export class PurchaseOrderList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'purchaseOrderDate', header: 'Date', type:'date' },
-            { field: 'supplierName', header: 'Supplier' },
-            { field: 'requestorName', header: 'Requestor' },
-            { field: 'receiverName', header: 'Receiver' },
-            { field: 'subTotal', header: 'Sub Total' },
-            { field: 'taxes', header: 'Taxes' },
-            { field: 'discount', header: 'Discount' },
-            { field: 'grandTotal', header: 'Grand Total' },
-            { field: 'due', header: 'Due' },
-            { field: 'status', header: 'Status', type:'string' }
+            { field: 'purchaseOrderDate', header: 'Date', headerKey: 'COMMON.DATE', type:'date' },
+            { field: 'supplierName', header: 'Supplier', headerKey: 'COMMON.SUPPLIER' },
+            { field: 'requestorName', header: 'Requestor', headerKey: 'COMMON.REQUESTOR' },
+            { field: 'receiverName', header: 'Receiver', headerKey: 'COMMON.RECEIVER' },
+            { field: 'subTotal', header: 'Sub Total', headerKey: 'COMMON.SUBTOTAL' },
+            { field: 'taxes', header: 'Taxes', headerKey: 'COMMON.TAXES' },
+            { field: 'discount', header: 'Discount', headerKey: 'COMMON.DISCOUNT' },
+            { field: 'grandTotal', header: 'Grand Total', headerKey: 'COMMON.GRANDTOTAL' },
+            { field: 'due', header: 'Due', headerKey: 'COMMON.AMOUNT_DUE' },
+            { field: 'status', header: 'Status', headerKey: 'COMMON.STATUS', type:'string' }
         ];
     
     this.route
@@ -65,6 +67,21 @@ export class PurchaseOrderList implements OnInit, OnDestroy {
               error => console.log(error),
               () => console.log('Get all PurchaseOrders complete'));
           });
+    
+    this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols();
+    });
+  }
+ 
+  
+  updateCols() {
+    for (var index in this.cols) {
+      let col = this.cols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
   }
  
   

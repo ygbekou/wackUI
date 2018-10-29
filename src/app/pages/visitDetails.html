@@ -10,13 +10,13 @@
 				<div class="ui-grid-col-7 ui-sm-12">
 					<div class="ui-grid-col-1 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@visitNumber" for="visitNumber">Visit No.</label>
-							<div class="ui-grid-col-8 ui-sm-12">{{visit.visitNumber}}</div>
+							<label for="visitId">{{ 'COMMON.VISIT_NUMBER' | translate }}</label>
+							<div class="ui-grid-col-8 ui-sm-12">{{visit.id}}</div>
 						</div>
 					</div>
 					<div class="ui-grid-col-3 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@visitDatetime" for="visitDatetime">Visit Date Time<font color="red">*</font></label>
+							<label for="visitDatetime">{{ 'COMMON.VISIT_DATETIME' | translate }}<font color="red">*</font></label>
 							<p-calendar [(ngModel)]="visit.visitDatetime" [showTime]="true" 
 								name="visitDatetime" #visitDatetime="ngModel" required>
 							</p-calendar>
@@ -25,7 +25,7 @@
 					</div>
 					<div class="ui-grid-col-8 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@chiefOfComplain" for="chiefOfComplain">Chief Of Complain<font color="red">*</font></label>
+							<label for="chiefOfComplain">{{ 'COMMON.CHIEF_OF_COMPLAIN' | translate }}<font color="red">*</font></label>
 							<textarea pInputTextarea id="chiefOfComplain" rows="3" cols="40" pInputTextarea maxlength="1000"
 								[(ngModel)]="visit.chiefOfComplain" name="chiefOfComplain" #chiefOfComplain="ngModel" required> </textarea>
 							<p-message *ngIf="f.submitted && chiefOfComplain.invalid" severity="error" text="Field is required"></p-message>
@@ -35,27 +35,27 @@
 			</div>
 		</div>
 		<p-tabView (onChange)="onTabChange($event)"> 
-			<p-tabPanel header="VITAL/HISTORY"> 
+			<p-tabPanel header="{{ 'COMMON.VITAL_HISTORY' | translate }}"> 
 				<p-tabView> 
-					<p-tabPanel header="Vital Sign/Allergies"> 
+					<p-tabPanel header="{{ 'COMMON.VITALSIGN_ALLERGIES' | translate }}"> 
 						<app-vitalSign-details [vitalSign]="visit.vitalSign"></app-vitalSign-details> <br /> <br />
 						<app-allergy-details [visit]="visit"></app-allergy-details> <br /><br />
 						<app-vaccine-details [givenVaccines]="visit.givenVaccines"></app-vaccine-details>
 					</p-tabPanel> 
-					<p-tabPanel header="Symptoms"> 
+					<p-tabPanel header="{{ 'COMMON.SYMPTOMS' | translate }}"> 
 						<app-symptom-details [visit]="visit"></app-symptom-details> 
 					</p-tabPanel> 
-					<p-tabPanel header="Medical History"> 
+					<p-tabPanel header="{{ 'COMMON.MEDICAL_HISTORY' | translate }}"> 
 						<app-medicalHistory-details [visit]="visit"></app-medicalHistory-details> 
 					</p-tabPanel> 
-					<p-tabPanel header="Social History">
+					<p-tabPanel header="{{ 'COMMON.SOCIAL_HISTORY' | translate }}">
 						<app-socialHistory-details [visit]="visit"></app-socialHistory-details> 
 					</p-tabPanel> 
-					<p-tabPanel header="Home Medications"> </p-tabPanel> 
+					<p-tabPanel header="{{ 'COMMON.HOME_MEDICATIONS' | translate }}"> </p-tabPanel> 
 				</p-tabView>
 				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-					<button type="button" pButton icon="fa fa-close" (click)="delete()" label="Supprimer"></button>&nbsp;&nbsp;
-					<button pButton icon="fa fa-check" label="Save"></button>
+					<button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>&nbsp;&nbsp;
+					<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>
 				</div> 
 			</p-tabPanel> 
 			<p-tabPanel header="DOCTOR ORDERS" *ngIf="visit.id > 0"> 

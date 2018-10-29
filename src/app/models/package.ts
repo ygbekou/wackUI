@@ -10,4 +10,8 @@ export class Package {
   
   packageServices: PackageService[] = [];
   
+  constructor() {
+    this.packageServices = [];
+  }
+  
 }

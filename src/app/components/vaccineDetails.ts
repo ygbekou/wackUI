@@ -8,11 +8,12 @@ import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, Mul
 import { User } from '../models/user';  
 import { Visit } from '../models/visit';
 import { GenericService, GlobalEventsManager, VisitService } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { VaccineDropdown } from './dropdowns';
  
 @Component({
   selector: 'app-vaccine-details',
-  template: `<p-fieldset legend="IMMUNIZATIONS" >
+  template: `<p-fieldset legend="{{ 'COMMON.IMMUNIZATIONS' | translate }}" >
              <p-table [columns]="vaccineCols" [value]="givenVaccines">
                 <ng-template pTemplate="header" let-vaccineCols>
                     <tr>
@@ -71,6 +72,7 @@ export class VaccineDetails implements OnInit, OnDestroy {
       (
         private genericService: GenericService,
         private visitService: VisitService,
+        private translate: TranslateService,
         private vaccineDropdown: VaccineDropdown,
         private changeDetectorRef: ChangeDetectorRef,
         private route: ActivatedRoute,
@@ -81,9 +83,14 @@ export class VaccineDetails implements OnInit, OnDestroy {
     ngOnInit(): void {
       
       this.vaccineCols = [
-              { field: 'vaccine', header: 'Name' },
-              { field: 'givenDate', header: 'Given Date', type: 'Date' }
+              { field: 'vaccine', header: 'Name', headerKey: 'COMMON.NAME' },
+              { field: 'givenDate', header: 'Given Date', headerKey: 'COMMON.DATE', type: 'Date' }
           ];
+      
+      this.updateCols();
+      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        this.updateCols();
+      });
     }
     
     addNew() {
@@ -97,4 +104,14 @@ export class VaccineDetails implements OnInit, OnDestroy {
     ngOnDestroy() {
       
     }
+  
+   updateCols() {
+    for (var index in this.vaccineCols) {
+      let col = this.vaccineCols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+  }
+  
  }

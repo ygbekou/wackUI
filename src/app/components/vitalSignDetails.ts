@@ -6,6 +6,7 @@ import { EditorModule } from 'primeng/editor';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { GenericService } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 
 @Component({ 
@@ -33,6 +34,7 @@ export class VitalSignDetails implements OnInit, OnDestroy {
   constructor
     (
       private genericService: GenericService,
+      private translate: TranslateService,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router

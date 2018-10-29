@@ -6,8 +6,8 @@ import { EditorModule } from 'primeng/editor';
 import { DoctorDropdown, ServiceDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
-
 import { GenericService, BillingService, ReportService } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 
 @Component({ 
@@ -37,6 +37,7 @@ export class BillDetails implements OnInit, OnDestroy {
       private genericService: GenericService,
       private billingService: BillingService,
       private reportService: ReportService,
+      private translate: TranslateService,
       private serviceDropdown: ServiceDropdown,
       private doctorDropdown: DoctorDropdown,
       private changeDetectorRef: ChangeDetectorRef,
@@ -49,20 +50,20 @@ export class BillDetails implements OnInit, OnDestroy {
   ngOnInit(): void {
 
      this.serviceCols = [
-            { field: 'serviceDate', header: 'Date', type: 'date' },
-            { field: 'service', header: 'Name' },
-            { field: 'doctor', header: 'Doctor' },
-            { field: 'quantity', header: 'Quantity' },
-            { field: 'unitAmount', header: 'Price' },
-            { field: 'discountAmount', header: 'Discount' },
-            { field: 'payerAmount', header: 'Payer Amount' },
-            { field: 'patientAmount', header: 'Patient Amount' }
+            { field: 'serviceDate', header: 'Date', headerKey: 'COMMON.DATE', type: 'date' },
+            { field: 'service', header: 'Name', headerKey: 'COMMON.NAME' },
+            { field: 'doctor', header: 'Doctor', headerKey: 'COMMON.DOCTOR' },
+            { field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY' },
+            { field: 'unitAmount', header: 'Price', headerKey: 'COMMON.PRICE' },
+            { field: 'discountAmount', header: 'Discount', headerKey: 'COMMON.DISCOUNT' },
+            { field: 'payerAmount', header: 'Payer Amount', headerKey: 'COMMON.PAYER_AMOUNT' },
+            { field: 'patientAmount', header: 'Patient Amount', headerKey: 'COMMON.PATIENT_AMOUNT' }
         ]; 
     
       this.billPaymentCols = [
-            { field: 'paymentDate', header: 'Date', type: 'date' },
-            { field: 'description', header: 'Description', type: 'text' },
-            { field: 'amount', header: 'Amount', type: 'text' }
+            { field: 'paymentDate', header: 'Date', headerKey: 'COMMON.DATE', type: 'date' },
+            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'text' },
+            { field: 'amount', header: 'Amount', headerKey: 'COMMON.AMOUNT', type: 'text' }
         ];
     
     let billId = null;
@@ -97,6 +98,28 @@ export class BillDetails implements OnInit, OnDestroy {
           }
      });
     
+    
+    this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols();
+    });
+    
+  }
+  
+  updateCols() {
+    for (var index in this.serviceCols) {
+      let col = this.serviceCols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+    
+    for (var index in this.billPaymentCols) {
+      let col = this.billPaymentCols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
   }
   
   ngOnDestroy() {

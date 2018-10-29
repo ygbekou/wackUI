@@ -7,6 +7,7 @@ import { FileUploader } from './../fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { ToolbarModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { GenericService, PurchasingService, GlobalEventsManager } from '../../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 @Component({ 
   selector: 'app-patientSale-list',
@@ -29,6 +30,7 @@ export class PatientSaleList implements OnInit, OnDestroy {
     (
     private genericService: GenericService,
     private purchasingService: PurchasingService,
+    private translate: TranslateService,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
@@ -39,14 +41,14 @@ export class PatientSaleList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'saleDatetime', header: 'Date time', type:'date' },
-            { field: 'patientId', header: 'MRN' },
-            { field: 'patientName', header: 'Patient' },
-            { field: 'subTotal', header: 'Sub Total' },
-            { field: 'taxes', header: 'Taxes' },
-            { field: 'discount', header: 'Discount' },
-            { field: 'grandTotal', header: 'Grand Total' },
-            { field: 'status', header: 'Status', type:'string' }
+            { field: 'saleDatetime', header: 'Date time', headerKey: 'COMMON.SALE_DATETIME', type:'date' },
+            { field: 'patientId', header: 'MRN', headerKey: 'COMMON.PATIENT_ID' },
+            { field: 'patientName', header: 'Patient', headerKey: 'COMMON.PATIENT_NAME' },
+            { field: 'subTotal', header: 'Sub Total', headerKey: 'COMMON.SUBTOTAL' },
+            { field: 'taxes', header: 'Taxes', headerKey: 'COMMON.TAXES' },
+            { field: 'discount', header: 'Discount', headerKey: 'COMMON.DISCOUNT' },
+            { field: 'grandTotal', header: 'Grand Total', headerKey: 'COMMON.GRANDTOTAL' },
+            { field: 'status', header: 'Status', headerKey: 'COMMON.STATUS', type:'string' }
         ];
     
     this.route
@@ -69,6 +71,21 @@ export class PatientSaleList implements OnInit, OnDestroy {
               error => console.log(error),
               () => console.log('Get all PatientSale complete'));
           });
+    
+    this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols();
+    });
+  }
+
+
+  updateCols() {
+    for (var index in this.cols) {
+      let col = this.cols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
   }
  
   

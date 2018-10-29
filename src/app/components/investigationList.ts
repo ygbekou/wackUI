@@ -6,6 +6,7 @@ import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { ToolbarModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { GenericService, InvestigationService, GlobalEventsManager } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 @Component({ 
   selector: 'app-investigation-list',
@@ -42,6 +43,7 @@ export class InvestigationList implements OnInit, OnDestroy {
     private globalEventsManager: GlobalEventsManager,
     private genericService: GenericService,
     private investigationService: InvestigationService,
+    private translate: TranslateService,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
@@ -51,27 +53,33 @@ export class InvestigationList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'investigationDatetime', header: 'Date', type: 'Date' },
-            { field: 'name', header: 'Name' },
-            { field: 'labTestName', header: 'LabTest/Group' },
-            { field: 'statusDesc', header: 'Status' },
-            { field: 'collectionDatetime', header: 'Coll Date', type: 'Date' },
-            { field: 'finalizationDatetime', header: 'Finalized Date', type: 'Date' }
+            { field: 'investigationDatetime', header: 'Date', headerKey: 'COMMON.INVESTIGATION_DATETIME', type: 'Date' },
+            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
+            { field: 'labTestName', header: 'LabTest/Group', headerKey: 'COMMON.LAB_TEST_GROUP' },
+            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS' },
+            { field: 'collectionDatetime', header: 'Coll Date', headerKey: 'COMMON.COLLECTION_DATE', type: 'Date' },
+            { field: 'finalizationDatetime', header: 'Finalized Date', headerKey: 'COMMON.FINALIZED_DATE', type: 'Date' }
         ];
     
     this.iTCols = [
-            { field: 'name', header: 'Name' },
-            { field: 'method', header: 'Method' },
-            { field: 'result', header: 'Result' },
-            { field: 'normalRange', header: 'Normal Range' },
-            { field: 'unit', header: 'Unit' },
-            { field: 'interpretation', header: 'Interpretation' },
-            { field: 'impression', header: 'Impression' },
-            { field: 'resultDatetime', header: 'Result Date', type: 'Date' },
-            { field: 'dispatchDatetime', header: 'Dispatch Date', type: 'Date' }
+            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
+            { field: 'method', header: 'Method', headerKey: 'COMMON.METHOD' },
+            { field: 'result', header: 'Result', headerKey: 'COMMON.RESULT' },
+            { field: 'normalRange', header: 'Normal Range', headerKey: 'COMMON.NORMAL_RANGE' },
+            { field: 'unit', header: 'Unit', headerKey: 'COMMON.UNIT' },
+            { field: 'interpretation', header: 'Interpretation', headerKey: 'COMMON.INTERPRETATION' },
+            { field: 'impression', header: 'Impression', headerKey: 'COMMON.IMPRESSION' },
+            { field: 'resultDatetime', header: 'Result Date', headerKey: 'COMMON.RESULT_DATE', type: 'Date' },
+            { field: 'dispatchDatetime', header: 'Dispatch Date', headerKey: 'COMMON.DISPATCH_DATE', type: 'Date' }
         ];
     
+    this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols();
+    });
+    
     this.getInvestigations();
+
   }
  
   
@@ -81,6 +89,22 @@ export class InvestigationList implements OnInit, OnDestroy {
   
   edit(investigationId: string) {
     this.investigationIdEvent.emit(investigationId);
+  }
+  
+ updateCols() {
+    for (var index in this.cols) {
+      let col = this.cols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+    
+    for (var index in this.iTCols) {
+      let col = this.iTCols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
   }
   
   getInvestigations() {

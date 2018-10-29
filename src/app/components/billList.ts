@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../app.constants';
-import { Bill } from '../models/bill';
-import { Invoice } from '../models/invoice';
+import { Bill, User } from '../models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User } from '../models/user';  
+import { DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { GenericService } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-bill-list',
@@ -15,18 +14,13 @@ import { GenericService } from '../services';
 })
 export class BillList implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   bills: Bill[] = [];
   cols: any[];
-  
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
   
   constructor
     (
     private genericService: GenericService,
+    private translate: TranslateService,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
@@ -37,16 +31,16 @@ export class BillList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'billDate', header: 'Date', type:'date' },
-            { field: 'patientId', header: 'Patient ID' },
-            { field: 'patientName', header: 'Patient Name' },
-            { field: 'subTotal', header: 'Sub Total' },
-            { field: 'taxes', header: 'Taxes' },
-            { field: 'discount', header: 'Discount' },
-            { field: 'grandTotal', header: 'Grand Total' },
-            { field: 'paid', header: 'Paid' },
-            { field: 'due', header: 'Due' },
-            { field: 'status', header: 'Status', type:'string' }
+            { field: 'billDate', header: 'Date', headerKey: 'COMMON.DATE', type:'date' },
+            { field: 'patientId', header: 'Patient ID', headerKey: 'COMMON.PATIENT_ID' },
+            { field: 'patientName', header: 'Patient Name', headerKey: 'COMMON.PATIENT_NAME' },
+            { field: 'subTotal', header: 'Sub Total', headerKey: 'COMMON.SUBTOTAL' },
+            { field: 'taxes', header: 'Taxes', headerKey: 'COMMON.TAXES' },
+            { field: 'discount', header: 'Discount', headerKey: 'COMMON.DISCOUNT' },
+            { field: 'grandTotal', header: 'Grand Total', headerKey: 'COMMON.GRANDTOTAL' },
+            { field: 'paid', header: 'Paid', headerKey: 'COMMON.AMOUNT_PAID' },
+            { field: 'due', header: 'Due', headerKey: 'COMMON.AMOUNT_DUE' },
+            { field: 'status', header: 'Status', headerKey: 'COMMON.STATUS', type:'string' }
         ];
     
     this.route
@@ -65,8 +59,21 @@ export class BillList implements OnInit, OnDestroy {
               error => console.log(error),
               () => console.log('Get all Bills complete'));
           });
+    
+    this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols();
+    });
   }
  
+  updateCols() {
+    for (var index in this.cols) {
+      let col = this.cols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+  }
   
   ngOnDestroy() {
     this.bills = null;

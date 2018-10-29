@@ -65,6 +65,7 @@ export class PatientList implements OnInit, OnDestroy {
         this.originalPage = params['originalPage'];
      });
     
+    this.updateCols();
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
         this.updateCols();
     });

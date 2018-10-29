@@ -1,19 +1,16 @@
-<div class="ui-grid-row"> 
-		<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-			<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="service">
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4">
-						<label for="name">Name<font color="red">*</font></label>
-					</div>
-					<div class="ui-grid-col-8">
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+		<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="service">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label for="name">{{ 'COMMON.NAME' | translate }}<font color="red">*</font></label>
 						<input pInputText id="name" [(ngModel)]="service.name" required />
 					</div>
 				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4">
-						<label i18n="@@doctorOrderType" for="doctorOrderType">Service Type<font color="red">*</font></label> 
-					</div>
-					<div class="ui-grid-col-8">
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label for="doctorOrderType">{{ 'COMMON.SERVICE_TYPE' | translate }}<font color="red">*</font></label> 
 						<p-autoComplete [(ngModel)]="service.serviceType"
 							(onDropdownClick)="doctorOrderTypeDropdown.handleDropdownClick($event)"
 							[suggestions]="doctorOrderTypeDropdown.filteredDoctorOrderTypes" [dropdown]="true"
@@ -23,50 +20,44 @@
 						</p-autoComplete>
 					</div>
 				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4">
-						<label for="description">Description</label>
-					</div>
-					<div class="ui-grid-col-8">
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
 						<textarea pInputTextarea id="description" [(ngModel)]="service.description"> </textarea>
 					</div>
 				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4">
-						<label for="quantity">Quantity<font color="red">*</font></label>
-					</div>
-					<div class="ui-grid-col-8">
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label for="quantity">{{ 'COMMON.QUANTITY' | translate }}<font color="red">*</font></label>
 						<input pInputText id="quantity" [(ngModel)]="service.quantity" required />
 					</div>
 				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4">
-						<label for="rate">Rate<font color="red">*</font></label>
-					</div>
-					<div class="ui-grid-col-8">
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label for="rate">{{ 'COMMON.RATE' | translate }}<font color="red">*</font></label>
 						<input pInputText id="rate" [(ngModel)]="service.rate" required />
 					</div>
 				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4">
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
 						<label for="status">Status</label>
-					</div>
-					<div class="ui-grid-col-8">
+						<br />
 						<p-radioButton name="status" value="0" label="Active" [(ngModel)]="service.status"></p-radioButton>
 						<p-radioButton name="status" value="1" label="Inactive" [(ngModel)]="service.status"></p-radioButton>
 					</div>
 				</div>
 			</div>
-			<br />
-			<div *ngIf="error" class="alert alert-danger">{{error}}</div>
-			<div>
-				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-					<button type="button" pButton icon="fa fa-close" (click)="delete()"
-						label="Supprimer"></button>&nbsp;&nbsp;
-					<button type="button" pButton icon="fa fa-check" (click)="save()"
-						label="Sauvegarder"></button>
-				</div>
+		</div>
+		<br />
+		<br />
+		<div>
+			<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+				<button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>&nbsp;&nbsp;
+				<button type="button" pButton icon="fa fa-check" (click)="save()" label="{{ 'COMMON.SAVE' | translate }}"></button>
 			</div>
 		</div>
 	</div>
+</form>
  

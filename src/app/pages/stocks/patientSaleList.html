@@ -1,37 +1,37 @@
 <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-	<p-fieldset legend="Search Criteria" *ngIf="!isVisitOrAdmissionPage()">
+	<p-fieldset legend="{{ 'COMMON.SEARCH_CRITERIA' | translate }}" *ngIf="!isVisitOrAdmissionPage()">
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@visitId" for="visitId">Visit ID:
-					</label> <input type="text" pInputText class="form-control" id="visitId"
+					<label for="visitId">{{ 'COMMON.VISIT_ID' | translate }}:</label> 
+					<input type="text" pInputText class="form-control" id="visitId"
 						 [(ngModel)]="searchCriteria.visitId" name="visit" >
 				</div>
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@patientId" for="patientId">Patient ID:
-					</label> <input type="text" pInputText class="form-control" id="medicalRecordNumber"
+					<label for="patientId">{{ 'COMMON.PATIENT_ID' | translate }}:</label> 
+					<input type="text" pInputText class="form-control" id="medicalRecordNumber"
 						 [(ngModel)]="searchCriteria.medicalRecordNumber" name="medicalRecordNumber" >
 				</div>
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@lastName" for="lastName">Last Name:
-					</label> <input type="text" pInputText class="form-control" id="lastName"
+					<label for="lastName">{{ 'COMMON.LAST_NAME' | translate }}:</label> 
+					<input type="text" pInputText class="form-control" id="lastName"
 						 [(ngModel)]="searchCriteria.lastName" name="lastName" >
 				</div>
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@firstName" for="firstName">First Name:
-					</label> <input type="text" pInputText class="form-control" id="firstName"
+					<label for="firstName">{{ 'COMMON.FIRST_NAME' | translate }}:</label> 
+					<input type="text" pInputText class="form-control" id="firstName"
 						 [(ngModel)]="searchCriteria.firstName" name="firstName">
 				</div>
 			</div>
 			
 			<div>
-				<button pButton icon="fa fa-search" label="Search" (click)="search()"></button>
+				<button pButton icon="fa fa-search" label="{{ 'COMMON.SEARCH' | translate }}" (click)="search()"></button>
 			</div>
 		</div>
 	</p-fieldset>
@@ -39,7 +39,7 @@
 	<br/>
 	<p-table [columns]="cols" [value]="patientSales">
 		<ng-template pTemplate="caption">
-	        SALE LIST
+	        {{ 'COMMON.SALE_LIST' | translate }}
 	    </ng-template>
 	    <ng-template pTemplate="header" let-columns>
 	        <tr>

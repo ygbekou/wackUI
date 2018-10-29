@@ -1,15 +1,14 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../app.constants';
-import { Package } from '../models/package';
-import { Service } from '../models/service';
-import { PackageService } from '../models/packageService';
+import { Package, Service, PackageService, User } from '../models';
 import { EditorModule } from 'primeng/editor';
 import { ServiceDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
-import { User } from '../models/user';  
+import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { GenericService, BillingService } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-package-details',
@@ -18,22 +17,17 @@ import { GenericService, BillingService } from '../services';
 })
 export class PackageDetails implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   pckage: Package = new Package();
   serviceCols: any[];
   
   serviceDropdown: ServiceDropdown;
-  
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
-  SELECT_OPTION: string = Constants.SELECT_OPTION;
+  messages: Message[] = [];
   
   constructor
     (
       private genericService: GenericService,
       private billingService: BillingService,
+      private translate: TranslateService,
       private srvDropdown: ServiceDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
@@ -46,41 +40,58 @@ export class PackageDetails implements OnInit, OnDestroy {
   ngOnInit(): void {
 
      this.serviceCols = [
-            { field: 'service', header: 'Name' },
-            { field: 'description', header: 'Description' },
-            { field: 'quantity', header: 'Quantity' },
-            { field: 'rate', header: 'Rate' }
+            { field: 'service', header: 'Name', headerKey: 'COMMON.NAME' },
+            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
+            { field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY' },
+            { field: 'rate', header: 'Rate', headerKey: 'COMMON.RATE' }
         ];
      
     let packageId = null;
     this.route
         .queryParams
-        .subscribe(params => {          
-          
-          this.addRow();
+        .subscribe(params => {
           
           packageId = params['packageId'];
           
           if (packageId != null) {
-              this.genericService.getOne(packageId, 'Package')
+              this.billingService.getPackage(packageId)
                   .subscribe(result => {
                 if (result.id > 0) {
-                  this.pckage = result
-                }
-                else {
-                  this.error = Constants.SAVE_UNSUCCESSFUL;
-                  this.displayDialog = true;
+                  this.pckage = result;
+                  if (this.pckage.packageServices == null || this.pckage.packageServices.length == 0 ){
+                    this.pckage.packageServices = [];
+                    this.addRow();
+                  }
                 }
               })
           } else {
-              
+            this.addRow();
           }
      });
     
+  this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols();
+    });
+  }
+ 
+  
+  updateCols() {
+    for (var index in this.serviceCols) {
+      let col = this.serviceCols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
   }
   
   ngOnDestroy() {
     this.pckage = null;
+  }
+  
+  clear() {
+    this.pckage = new Package();
+    this.addRow();
   }
   
   addRow() {
@@ -92,18 +103,16 @@ export class PackageDetails implements OnInit, OnDestroy {
   
   save() {
     
+    this.messages = [];
     try {
-      this.error = '';
       this.billingService.savePackage(this.pckage)
         .subscribe(result => {
-          alert(result.id)
           if (result.id > 0) {
-            this.pckage = result
-            console.info(this.pckage);
+            this.pckage = result;
+            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
           }
           else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-            this.displayDialog = true;
+            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
           }
         })
     }

@@ -109,9 +109,11 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
   }
   
   addEventClick(e) {
-    
+      this.messages = [];
       if (this.appointment.doctor.id == null || this.appointment.department.id == null) {
-        alert('Please Select a Department and a Doctor to add an appointment.')
+        this.translate.get('MESSAGE.APPOINTMENT_DISPLAY_FAILED').subscribe((res: string) => {
+           this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:res});
+        });
         return;
       }
       this.displayEdit = true;

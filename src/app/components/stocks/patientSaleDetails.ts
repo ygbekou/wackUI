@@ -6,8 +6,9 @@ import {PatientSale, PatientSaleProduct} from '../../models/stocks/patientSale';
 import {EditorModule} from 'primeng/editor';
 import {DoctorDropdown, ProductDropdown} from './../dropdowns';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
-import {DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule} from 'primeng/primeng';
+import {InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule} from 'primeng/primeng';
 import {GenericService, PurchasingService, GlobalEventsManager} from '../../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 
 @Component({
@@ -35,6 +36,7 @@ export class PatientSaleDetails implements OnInit, OnDestroy {
     private globalEventsManager: GlobalEventsManager,
     private genericService: GenericService,
     private purchasingService: PurchasingService,
+    private translate: TranslateService,
     private productDropdown: ProductDropdown,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
@@ -46,13 +48,13 @@ export class PatientSaleDetails implements OnInit, OnDestroy {
   ngOnInit(): void {
 
      this.saleProductCols = [
-            { field: 'product', header: 'Name' },
-            { field: 'productDescription', header: 'Description' },
-            { field: 'quantity', header: 'Quantity', type: 'amount', inputType: 'number'},
-            { field: 'unitPrice', header: 'Price', type: 'amount', inputType: 'text'},
-            { field: 'discountPercentage', header: 'Discount %'},
-            { field: 'discountAmount', header: 'Discount Amt', type: 'amount', inputType: 'text'},
-            { field: 'totalAmount', header: 'Total', type: 'amount', inputType: 'text'}
+            { field: 'product', header: 'Name', headerKey: 'COMMON.NAME' },
+            { field: 'productDescription', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
+            { field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY', type: 'amount', inputType: 'number'},
+            { field: 'unitPrice', header: 'Price', headerKey: 'COMMON.PRICE', type: 'amount', inputType: 'text'},
+            { field: 'discountPercentage', header: 'Discount %', headerKey: 'COMMON.DISCOUNT_PERCENTAGE'},
+            { field: 'discountAmount', header: 'Discount Amt', headerKey: 'COMMON.DISCOUNT_AMOUNT', type: 'amount', inputType: 'text'},
+            { field: 'totalAmount', header: 'Total', headerKey: 'COMMON.TOTAL', type: 'amount', inputType: 'text'}
         ]; 
     
 
@@ -78,6 +80,20 @@ export class PatientSaleDetails implements OnInit, OnDestroy {
           }
      });
 
+   this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols();
+    });
+  }
+ 
+  
+  updateCols() {
+    for (var index in this.saleProductCols) {
+      let col = this.saleProductCols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
   }
 
   ngOnDestroy() {

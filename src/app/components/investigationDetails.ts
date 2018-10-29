@@ -7,6 +7,7 @@ import {DoctorDropdown, MedicineDropdown, LabTestDropdown} from './dropdowns';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule} from 'primeng/primeng';
 import {GenericService, InvestigationService, GlobalEventsManager} from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 
 @Component({
@@ -42,6 +43,7 @@ export class InvestigationDetails implements OnInit, OnDestroy {
     private globalEventsManager: GlobalEventsManager,
     private genericService: GenericService,
     private investigationService: InvestigationService,
+    private translate: TranslateService,
     private lbTestDropdown: LabTestDropdown,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,

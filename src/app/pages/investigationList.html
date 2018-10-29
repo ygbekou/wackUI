@@ -1,40 +1,27 @@
 
 <p-dialog header="{{actionType}}" [(visible)]="display">
-<div class="ui-grid-row">
-	<div class="ui-grid-col-4 ui-sm-12">
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-3 ui-sm-12">
-				<label i18n="@@actionDatetime" for="actionDatetime">Date
-					Time<font color="red">*</font>
-				</label>
-			</div>
-			<div class="ui-grid-col-8 ui-sm-12">
+	<div class="ui-grid-row">
+		<div class="ui-grid-col-4 ui-sm-12">
+	<		<div class="form-group">
+				<label for="actionDatetime">{{ 'COMMON.ACTION_DATETIME' | translate }}<font color="red">*</font></label>
 				<p-calendar [(ngModel)]="actionDatetime" [showTime]="true"></p-calendar>
 			</div>
-			<div class="ui-grid-col-1 ui-sm-12"></div>
 		</div>
-	</div>
-	<div class="ui-grid-col-4 ui-sm-12">
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-3 ui-sm-12">
-				<label i18n="@@actionComments" for="actionComments">Comments</label>
-			</div>
-			<div class="ui-grid-col-8 ui-sm-12">
+		<div class="ui-grid-col-4 ui-sm-12">
+			<div class="form-group">
+				<label for="actionComments">{{ 'COMMON.COMMENTS' | translate }}</label>
 				<input pInputText id="actionComments" [(ngModel)]="actionComments" />
 			</div>
-			<div class="ui-grid-col-1 ui-sm-12"></div>
 		</div>
 	</div>
-</div>
-<button type="button" pButton icon="fa fa-check" (click)="saveAction()"
-	label="Save"></button>
+	<button type="button" pButton icon="fa fa-check" (click)="saveAction()" label="Save"></button>
 </p-dialog>
 
 <div class="ui-grid-row">
 	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
 		<p-table [columns]="cols" [value]="investigations" dataKey="id" [(selection)]="parentSelection"> 
 			<ng-template pTemplate="caption">
-		        INVESTIGATION LIST
+		        {{ 'COMMON.INVESTIGATION_LIST' | translate }}
 		    </ng-template>
 			<ng-template pTemplate="header" let-columns>
 				<tr>
@@ -128,19 +115,17 @@
 								pTemplate="output"> {{childRowData[col.field]}} </ng-template> </p-cellEditor> <p-cellEditor
 								*ngIf="col.field !== 'result' && col.field !== 'interpretation' && col.field !== 'impression'">
 							<ng-template pTemplate="input">
-							<div *ngIf="col.type === 'Date'">{{childRowData[col.field] |
-								date:'dd/MM/yyyy'}}</div>
-							<div *ngIf="col.type !== 'Date'">
-								{{childRowData[col.field]}}</div>
-							</ng-template> <ng-template pTemplate="output">
-							<div *ngIf="col.type === 'Date'">{{childRowData[col.field] |
-								date:'dd/MM/yyyy'}}</div>
-							<div *ngIf="col.type !== 'Date'">
-								{{childRowData[col.field]}}</div>
-							</ng-template> </p-cellEditor>
+								<div *ngIf="col.type === 'Date'">{{childRowData[col.field] | date:'dd/MM/yyyy'}}</div>
+								<div *ngIf="col.type !== 'Date'"> {{childRowData[col.field]}}</div>
+							</ng-template> 
+							<ng-template pTemplate="output">
+								<div *ngIf="col.type === 'Date'">{{childRowData[col.field] | date:'dd/MM/yyyy'}}</div>
+								<div *ngIf="col.type !== 'Date'">{{childRowData[col.field]}}</div>
+							</ng-template> 
+						</p-cellEditor>
 						</td>
 						<td *ngIf="showActions">
-							<p-button label="Save" (click)="saveResult(childRowData)"></p-button> 
+							<p-button label="Save" (click)="saveResult(childRowData)"></p-button> &nbsp;
 							<p-button label="Disp" (click)="saveResult(childRowData)"></p-button>
 						</td>
 					</tr>

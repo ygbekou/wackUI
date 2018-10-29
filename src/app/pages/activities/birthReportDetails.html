@@ -7,7 +7,7 @@
 				<div class="ui-grid-col-3 ui-sm-12">
 					<div class="ui-grid-row">
 						<div class="ui-grid-col-3 ui-sm-12">
-							<label i18n="@@itemNumber" for="itemNumber">{{itemNumberLabel}}<font color="red">*</font></label>
+							<label for="itemNumber">{{ 'COMMON.ADMISSION' | translate }}<font color="red">*</font></label>
 						</div>
 						<div class="ui-grid-col-8 ui-sm-12">
 							<input type="text" pInputText class="form-control" id="itemNumber" (change)="lookUpPatientItem()"
@@ -20,7 +20,7 @@
 				<div class="ui-grid-col-3 ui-sm-12">
 					<div class="ui-grid-row">
 						<div class="ui-grid-col-3 ui-sm-12">
-							<label i18n="@@patientName" for="patientName">Patient Name:</label>
+							<label for="patientName">{{ 'COMMON.PATIENT_NAME' | translate }}:</label>
 						</div>
 						<div class="ui-grid-col-8 ui-sm-12">
 							{{patient.name}}
@@ -32,7 +32,7 @@
 				<div class="ui-grid-col-2 ui-sm-12">
 					<div class="ui-grid-row">
 						<div class="ui-grid-col-3 ui-sm-12">
-							<label i18n="@@patientBirthDate" for="patientSex">Sex:</label>
+							<label for="patientSex">{{ 'COMMON.GENDER' | translate }}</label>
 						</div>
 						<div class="ui-grid-col-8 ui-sm-12">
 							{{patient.user.sex}}
@@ -44,7 +44,7 @@
 				<div class="ui-grid-col-3 ui-sm-12">
 					<div class="ui-grid-row">
 						<div class="ui-grid-col-3 ui-sm-12">
-							<label i18n="@@patientSex" for="patientBirthDate">Birth Date: </label>
+							<label for="patientBirthDate">{{ 'COMMON.BIRTH_DATE' | translate }}: </label>
 						</div>
 						<div class="ui-grid-col-8 ui-sm-12">
 							{{patient.user.birthDate | date:'dd/MM/yyyy'}}
@@ -59,21 +59,21 @@
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@firstName" for="firstName">First Name<font color="red">*</font></label>
+					<label for="firstName">{{ 'COMMON.FIRST_NAME' | translate }}<font color="red">*</font></label>
 					<input type="text" pInputText class="form-control" id="firstName"
 						[(ngModel)]="birthReport.firstName" name="firstName" #firstNameModel="ngModel">
 				</div>
 			</div>
 			<div class="ui-grid-col-2 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@middleName" for="middleName">Middle Name</label>
+					<label for="middleName">{{ 'COMMON.MIDDLE_NAME' | translate }}</label>
 					<input type="text" pInputText class="form-control" id="middleName"
 						[(ngModel)]="birthReport.middleName" name="middleName" #middleNameModel="ngModel">
 				</div>
 			</div>
 			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@lastName" for="lastName">Last Name<font color="red">*</font></label>
+					<label for="lastName">{{ 'COMMON.LAST_NAME' | translate }}<font color="red">*</font></label>
 					<input type="text" pInputText class="form-control" id="lastName"
 						[(ngModel)]="birthReport.lastName" name="lastName" #lastNameModel="ngModel">
 				</div>
@@ -82,37 +82,37 @@
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-2 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@birthDatetime" for="birthDatetime">Birth Date Time<font color="red">*</font></label>
+					<label for="birthDatetime">{{ 'COMMON.BIRTH_DATE' | translate }}<font color="red">*</font></label>
 					<p-calendar [(ngModel)]="birthReport.birthDatetime" [showTime]="true"></p-calendar>
 				</div>
 			</div>
 			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@comments" for="comments">Comments</label> 
+					<label for="comments">{{ 'COMMON.COMMENTS' | translate }}</label> 
 					<textarea pInputTextarea id="comments" rows="4" cols="40" pInputTextarea maxlength="1000" 
 								[(ngModel)]="birthReport.comments" #comments="ngModel"> </textarea>						
 				</div>
 			</div>
 		</div>
-		<p-fieldset legend="Father">
+		<p-fieldset legend="{{ 'COMMON.FATHER' | translate }}">
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-4 ui-sm-12">
 					<div class="form-group">
-						<label i18n="@@fatherFirstName" for="fatherFirstName">First Name</label>
+						<label for="fatherFirstName">{{ 'COMMON.FIRST_NAME' | translate }}</label>
 						<input type="text" pInputText class="form-control" id="fatherFirstName"
 							[(ngModel)]="birthReport.fatherFirstName" name="fatherFirstName" #fatherFirstNameModel="ngModel">
 					</div>
 				</div>
 				<div class="ui-grid-col-2 ui-sm-12">
 					<div class="form-group">
-						<label i18n="@@fatherMiddleName" for="fatherMiddleName">Middle Name</label>
+						<label for="fatherMiddleName">{{ 'COMMON.MIDDLE_NAME' | translate }}</label>
 						<input type="text" pInputText class="form-control" id="fatherMiddleName"
 							[(ngModel)]="birthReport.fatherMiddleName" name="fatherMiddleName" #fatherMiddleNameModel="ngModel">
 					</div>
 				</div>
 				<div class="ui-grid-col-4 ui-sm-12">
 					<div class="form-group">
-						<label i18n="@@fatherLastName" for="fatherLastName">Last Name</label>
+						<label for="fatherLastName">{{ 'COMMON.LAST_NAME' | translate }}</label>
 						<input type="text" pInputText class="form-control" id="fatherLastName"
 							[(ngModel)]="birthReport.fatherLastName" name="fatherLastName" #fatherLastNameModel="ngModel">
 					</div>
@@ -120,25 +120,25 @@
 			</div>
 		</p-fieldset>
 		
-		<p-fieldset legend="Mother">
+		<p-fieldset legend="{{ 'COMMON.MOTHER' | translate }}">
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-4 ui-sm-12">
 					<div class="form-group">
-						<label i18n="@@motherFirstName" for="motherFirstName">First Name</label>
+						<label for="motherFirstName">{{ 'COMMON.FIRST_NAME' | translate }}</label>
 						<input type="text" pInputText class="form-control" id="motherFirstName"
 							[(ngModel)]="birthReport.motherFirstName" name="motherFirstName" #motherFirstNameModel="ngModel">
 					</div>
 				</div>
 				<div class="ui-grid-col-2 ui-sm-12">
 					<div class="form-group">
-						<label i18n="@@motherMiddleName" for="motherMiddleName">Middle Name</label>
+						<label for="motherMiddleName">{{ 'COMMON.MIDDLE_NAME' | translate }}</label>
 						<input type="text" pInputText class="form-control" id="motherMiddleName"
 							[(ngModel)]="birthReport.motherMiddleName" name="motherMiddleName" #motherMiddleNameModel="ngModel">
 					</div>
 				</div>
 				<div class="ui-grid-col-4 ui-sm-12">
 					<div class="form-group">
-						<label i18n="@@motherLastName" for="motherLastName">Last Name</label>
+						<label for="motherLastName">{{ 'COMMON.LAST_NAME' | translate }}</label>
 						<input type="text" pInputText class="form-control" id="motherLastName"
 							[(ngModel)]="birthReport.motherLastName" name="motherLastName" #motherLastNameModel="ngModel">
 					</div>
@@ -150,11 +150,8 @@
 	</div>	
 	
 	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-			<button type="button" pButton icon="fa fa-refresh" (click)="clear()"
-				label="Effacer"></button>&nbsp;&nbsp;
-			<button type="button" pButton icon="fa fa-save" (click)="save()"
-				label="Sauvegarder"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<button type="button" pButton icon="fa fa-remove" (click)="delete()"
-				label="Supprimer"></button>
+			<button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
+			<button type="button" pButton icon="fa fa-save" (click)="save()" label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button type="button" pButton icon="fa fa-remove" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>
 	</div>
 </div>

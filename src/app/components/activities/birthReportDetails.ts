@@ -1,8 +1,7 @@
 import {Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Constants} from '../../app.constants';
-import {Admission} from '../../models/admission';
-import {Patient} from '../../models/patient';
+import {Admission, Patient, User} from '../../models';
 import {BirthReport} from '../../models/activities';
 import {EditorModule} from 'primeng/editor';
 import {DoctorDropdown} from './../dropdowns';
@@ -10,7 +9,6 @@ import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule} from 'primeng/primeng';
 import {GrowlModule} from 'primeng/growl';
 import {Message} from 'primeng/api';
-import {User} from '../../models/user';
 import {GenericService, GlobalEventsManager} from '../../services';
 
 @Component({

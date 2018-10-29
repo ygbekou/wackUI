@@ -9,6 +9,7 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { User } from '../../models/user';  
 import { GenericService, GlobalEventsManager } from '../../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 @Component({ 
   selector: 'app-birthReport-list',
@@ -26,6 +27,7 @@ export class BirthReportList implements OnInit, OnDestroy {
   constructor
     (
     private genericService: GenericService,
+    private translate: TranslateService,
     private route: ActivatedRoute,
     private router: Router
     ) {
@@ -33,11 +35,11 @@ export class BirthReportList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'birthDatetime', header: 'Date time', type:'date' },
-            { field: 'name', header: 'Baby Name' },
-            { field: 'fatherName', header: 'Father Name' },
-            { field: 'motherName', header: 'Mother Name' },
-            { field: 'comments', header: 'Notes' }
+            { field: 'birthDatetime', header: 'Date time', headerKey: 'COMMON.BIRTH_DATE', type:'date' },
+            { field: 'name', header: 'Baby Name', headerKey: 'COMMON.BABY' },
+            { field: 'fatherName', header: 'Father Name', headerKey: 'COMMON.FATHER' },
+            { field: 'motherName', header: 'Mother Name', headerKey: 'COMMON.MOTHER' },
+            { field: 'comments', header: 'Notes', headerKey: 'COMMON.NOTES' }
         ];
     
     this.route
@@ -62,8 +64,22 @@ export class BirthReportList implements OnInit, OnDestroy {
               error => console.log(error),
               () => console.log('Get all BirthReport complete'));
           });
+    
+    this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols();
+    });
   }
  
+  
+  updateCols() {
+    for (var index in this.cols) {
+      let col = this.cols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+  }
   
   ngOnDestroy() {
     this.birthReports = null;

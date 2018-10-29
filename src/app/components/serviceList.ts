@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { Service } from '../models/service';
+import { Service, User } from '../models';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../app.constants';
 import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User } from '../models/user';  
 import { GenericService } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-service-list',
@@ -14,19 +14,14 @@ import { GenericService } from '../services';
   providers: [GenericService]
 })
 export class ServiceList implements OnInit, OnDestroy {
-  
-  public error: String = '';
-  displayDialog: boolean;
+ 
   services: Service[] = [];
   cols: any[];
-  
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
   
   constructor
     (
     private genericService: GenericService,
+    private translate: TranslateService,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
@@ -37,11 +32,11 @@ export class ServiceList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'name', header: 'Name' },
-            { field: 'description', header: 'Description' },
-            { field: 'quantity', header: 'Quantity' },
-            { field: 'rate', header: 'Rate' },
-            { field: 'statusDesc', header: 'Status' }
+            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
+            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
+            { field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY' },
+            { field: 'rate', header: 'Rate', headerKey: 'COMMON.RATE' },
+            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS' }
         ];
     
     this.genericService.getAll('Service')
@@ -51,8 +46,22 @@ export class ServiceList implements OnInit, OnDestroy {
       },
       error => console.log(error),
       () => console.log('Get all Services complete'));
+    
+    this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols();
+    });
   }
  
+  
+  updateCols() {
+    for (var index in this.cols) {
+      let col = this.cols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+  }
   
   ngOnDestroy() {
     this.services = null;

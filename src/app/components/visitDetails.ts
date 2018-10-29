@@ -12,6 +12,7 @@ import { DoctorOrderDetails } from './doctorOrderDetails';
 import { PrescriptionDetails } from './prescriptionDetails';
 import { PrescriptionList } from './prescriptionList';
 import { PatientSaleDetails } from './stocks/patientSaleDetails';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
  
 @Component({
@@ -29,14 +30,6 @@ export class VisitDetails implements OnInit, OnDestroy {
   
   activeTab: number = 0;
   
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
-  DEPARTMENT: string = Constants.DEPARTMENT;
-  COUNTRY: string = Constants.COUNTRY;
-  ROLE: string = Constants.ROLE;
-  SELECT_OPTION: string = Constants.SELECT_OPTION;
-  
   vaccineGroups: Reference[] = [];
   
   @ViewChild(DoctorOrderDetails) doctorOrderDetails: DoctorOrderDetails;
@@ -51,6 +44,7 @@ export class VisitDetails implements OnInit, OnDestroy {
     (
       private genericService: GenericService,
       private visitService: VisitService,
+      private translate: TranslateService,
       private packageDropdown: PackageDropdown,
       private globalEventsManager: GlobalEventsManager,
       private changeDetectorRef: ChangeDetectorRef,

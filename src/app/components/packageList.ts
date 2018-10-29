@@ -6,6 +6,7 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { User } from '../models/user';  
 import { GenericService } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-invoice-list',
@@ -26,6 +27,7 @@ export class PackageList implements OnInit, OnDestroy {
   constructor
     (
     private genericService: GenericService,
+    private translate: TranslateService,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
@@ -36,10 +38,10 @@ export class PackageList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'name', header: 'Package Name' },
-            { field: 'description', header: 'Description' },
-            { field: 'discount', header: 'Discount' },
-            { field: 'status', header: 'Status', type:'string' }
+            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
+            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
+            { field: 'discount', header: 'Discount', headerKey: 'COMMON.DISCOUNT' },
+            { field: 'status', header: 'Status', headerKey: 'COMMON.STATUS', type:'string' }
         ];
     
     this.route
@@ -58,8 +60,23 @@ export class PackageList implements OnInit, OnDestroy {
               error => console.log(error),
               () => console.log('Get all Packages complete'));
           });
+    
+    
+    this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols();
+    });
   }
  
+  
+  updateCols() {
+    for (var index in this.cols) {
+      let col = this.cols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+  }
   
   ngOnDestroy() {
     this.packages = null;

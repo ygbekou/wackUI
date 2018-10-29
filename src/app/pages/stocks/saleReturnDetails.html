@@ -11,14 +11,14 @@
 				<div class="ui-grid-col-7 ui-sm-12">
 					<div class="ui-grid-col-3 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@returnDatetime" for="returnDatetime">Return Date<font color="red">*</font></label> 
+							<label for="returnDatetime">{{ 'COMMON.RETURN_DATETIME' | translate }}<font color="red">*</font></label> 
 							<p-calendar [(ngModel)]="saleReturn.returnDatetime" name="returnDatetime" #returnDatetime="ngModel" required></p-calendar>
 							<p-message *ngIf="f.submitted && returnDatetime.invalid" severity="error" text="Field is required"></p-message>
 						</div>
 					</div>
 					<div class="ui-grid-col-9 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@comments" for="comments">Comments</label> 
+							<label for="comments">{{ 'COMMON.COMMENTS' | translate }}</label> 
 							<textarea pInputTextarea id="comments" rows="4" cols="40" pInputTextarea maxlength="1000" 
 								[(ngModel)]="saleReturn.comments" name="comments" #comments="ngModel"> </textarea>							
 						</div>
@@ -69,7 +69,7 @@
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-4 ui-sm-12">
-						<label i18n="@@subTotal" for="subTotal">Sub Total </label> 
+						<label for="subTotal">{{ 'COMMON.SUBTOTAL' | translate }} </label> 
 					</div>
 					<div class="ui-grid-col-6 ui-sm-12">
 						<input type="text" pInputText id="subTotal" [disabled]="true"
@@ -78,7 +78,7 @@
 				</div>
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-4 ui-sm-12">
-						<label i18n="@@taxes" for="taxes">Taxes </label> 
+						<label i18n="@@taxes" for="taxes">{{ 'COMMON.TAXES' | translate }} </label> 
 					</div>
 					<div class="ui-grid-col-6 ui-sm-12">
 						<input type="text" pInputText id="taxes" (change)="calculateGrandTotal()"
@@ -87,7 +87,7 @@
 				</div>
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-4 ui-sm-12">
-						<label i18n="@@discount" for="discount">Discount </label> 
+						<label i18n="@@discount" for="discount">{{ 'COMMON.DISCOUNT' | translate }} </label> 
 					</div>
 					<div class="ui-grid-col-6 ui-sm-12">
 						<input type="text" pInputText id="discount" (change)="calculateGrandTotal();"
@@ -96,7 +96,7 @@
 				</div>
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-4 ui-sm-12">
-						<label i18n="@@grandTotal" for="grandTotal">Grand Total </label> 
+						<label i18n="@@grandTotal" for="grandTotal">{{ 'COMMON.GRANDTOTAL' | translate }} </label> 
 					</div>
 					<div class="ui-grid-col-6 ui-sm-12">
 						<input type="text" pInputText id="grandTotal" [disabled]="true"
@@ -110,9 +110,9 @@
 		<br/>
 		<div>
 			<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-				<button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button> &nbsp;&nbsp;
-				<button pButton icon="fa fa-check" label="Save"></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<button type="button" pButton icon="fa fa-check" (click)="save(2)" label="Done"></button>
+				<button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button> &nbsp;&nbsp;
+				<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="button" pButton icon="fa fa-check" (click)="save(2)" label="{{ 'COMMON.DONE' | translate }}"></button>
 			</div>
 		</div>
 	</div>

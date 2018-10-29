@@ -4,8 +4,9 @@ import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../app.constants';
 import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
+import {  } from 'primeng/primeng';
 import { GenericService } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-visit-list',
@@ -21,6 +22,7 @@ export class VisitList implements OnInit, OnDestroy {
   constructor
     (
     private genericService: GenericService,
+    private translate: TranslateService,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
@@ -31,11 +33,11 @@ export class VisitList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'id', header: 'Visit ID' },
-            { field: 'visitDatetime', header: 'Date', type:'date' },
-            { field: 'patientId', header: 'Patient ID' },
-            { field: 'patientName', header: 'Patient Name' },
-            { field: 'status', header: 'Status', type:'string' }
+            { field: 'id', header: 'Visit ID', headerKey: 'COMMON.VISIT_ID' },
+            { field: 'visitDatetime', header: 'Date', headerKey: 'COMMON.VISIT_DATETIME', type:'date' },
+            { field: 'patientId', header: 'Patient ID', headerKey: 'COMMON.PATIENT_ID' },
+            { field: 'patientName', header: 'Patient Name', headerKey: 'COMMON.PATIENT_NAME' },
+            { field: 'status', header: 'Status', type:'string', headerKey: 'COMMON.STATUS' }
         ];
     
     this.route
@@ -57,8 +59,22 @@ export class VisitList implements OnInit, OnDestroy {
               error => console.log(error),
               () => console.log('Get all Admission complete'));
           });
+    
+    this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols();
+    });
   }
  
+ updateCols() {
+    for (var index in this.cols) {
+      let col = this.cols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+  }
+  
   
   ngOnDestroy() {
     this.visits = null;

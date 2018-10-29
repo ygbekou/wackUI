@@ -7,6 +7,7 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { User } from '../../models/user';  
 import { GenericService, PurchasingService } from '../../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-saleReturn-list',
@@ -22,6 +23,7 @@ export class SaleReturnList implements OnInit, OnDestroy {
     (
     private genericService: GenericService,
     private purchasingService: PurchasingService,
+    private translate: TranslateService,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
@@ -32,11 +34,11 @@ export class SaleReturnList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'returnDatetime', header: 'Return Date', type:'date', format: 'dd/MM/yyyy' },
-            { field: 'comments', header: 'Comments' },
-            { field: 'patientSaleId', header: 'PS ID' },
-            { field: 'patientSaleDatetime', header: 'Sale Date', type: 'date', format: 'dd/MM/yyyy hh:mm'},
-            { field: 'status', header: 'Status', type:'string' }
+            { field: 'returnDatetime', header: 'Return Date', headerKey: 'COMMON.RETURN_DATETIME', type:'date', format: 'dd/MM/yyyy' },
+            { field: 'comments', header: 'Comments', headerKey: 'COMMON.COMMENTS' },
+            { field: 'patientSaleId', header: 'PS ID', headerKey: 'COMMON.SALE_ID' },
+            { field: 'patientSaleDatetime', header: 'Sale Date', headerKey: 'COMMON.SALE_DATETIME', type: 'date', format: 'dd/MM/yyyy hh:mm'},
+            { field: 'status', header: 'Status', headerKey: 'COMMON.STATUS', type:'string' }
         ];
     
     this.route
@@ -53,6 +55,21 @@ export class SaleReturnList implements OnInit, OnDestroy {
               error => console.log(error),
               () => console.log('Get all SaleReturn complete'));
           });
+  
+    this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols();
+    });
+  }
+ 
+  
+  updateCols() {
+    for (var index in this.cols) {
+      let col = this.cols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
   }
  
   

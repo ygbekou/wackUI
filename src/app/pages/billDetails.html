@@ -11,19 +11,19 @@
 				<div class="ui-grid-col-7 ui-sm-12">
 					<div class="ui-grid-col-3 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@billDate" for="billDate">Statement Date<font color="red">*</font></label> 
+							<label for="billDate">{{ 'COMMON.BILL_DATE' | translate }}<font color="red">*</font></label> 
 							<p-calendar [(ngModel)]="bill.billDate" name="billDate"  #billDate="ngModel" required></p-calendar>
 							<p-message *ngIf="f.submitted && billDate.invalid" severity="error" text="Field is required"></p-message>
 						</div>
 						<div class="form-group">
-							<label i18n="@@dueDate" for="dueDate">Due Date<font color="red">*</font></label> 
+							<label for="dueDate">{{ 'COMMON.DUE_DATE' | translate }}<font color="red">*</font></label> 
 							<p-calendar [(ngModel)]="bill.dueDate" name="dueDate"  #dueDate="ngModel" required></p-calendar>
 							<p-message *ngIf="f.submitted && dueDate.invalid" severity="error" text="Field is required"></p-message>
 						</div>
 					</div>
 					<div class="ui-grid-col-9 ui-sm-12">
 						<div class="form-group">
-							<label i18n="@@notes" for="notes">Notes</label>  
+							<label for="notes">{{ 'COMMON.NOTES' | translate }}</label>  
 							<textarea pInputTextarea id="notes" rows="4" cols="40" pInputTextarea maxlength="1000" 
 									[(ngModel)]="bill.notes" name="notes" #notes="ngModel"> </textarea>		
 						</div>
@@ -36,7 +36,7 @@
 				<div class="ui-grid-col-12 ui-sm-12">
 					<p-table [columns]="serviceCols" [value]="bill.billServices" (change)="calculateTotal()">
 						<ng-template pTemplate="caption">
-					        List of Services
+					        {{ 'COMMON.SERVICE_LIST' | translate }}
 					    </ng-template>
 					    <ng-template pTemplate="header" let-accountCols>
 					        <tr>
@@ -115,7 +115,7 @@
 				<div class="ui-grid-col-8 ui-sm-12">					
 					<p-table [columns]="billPaymentCols" [value]="bill.billPayments" (onEditComplete)="savePayment($event)" *ngIf="bill.id">
 						<ng-template pTemplate="caption">
-					        List of Payments
+					        {{ 'COMMON.PAYMENT_LIST' | translate }}
 					    </ng-template>
 					    <ng-template pTemplate="header" let-accountCols>
 					        <tr>
@@ -160,7 +160,7 @@
 				<div class="ui-grid-col-3 ui-sm-12">
 					<div class="ui-grid-row">
 						<div class="ui-grid-col-4 ui-sm-12">
-							<label i18n="@@subTotal" for="subTotal">Sub Total </label> 
+							<label for="subTotal">{{ 'COMMON.SUBTOTAL' | translate }}</label> 
 						</div>
 						<div class="ui-grid-col-6 ui-sm-12">
 							<input type="text" pInputText id="subTotal" [disabled]="true"
@@ -169,7 +169,7 @@
 					</div>
 					<div class="ui-grid-row">
 						<div class="ui-grid-col-4 ui-sm-12">
-							<label i18n="@@taxes" for="taxes">Taxes </label> 
+							<label for="taxes">{{ 'COMMON.TAXES' | translate }}</label> 
 						</div>
 						<div class="ui-grid-col-6 ui-sm-12">
 							<input type="text" pInputText id="taxes" (change)="calculateGrandTotal()"
@@ -178,7 +178,7 @@
 					</div>
 					<div class="ui-grid-row">
 						<div class="ui-grid-col-4 ui-sm-12">
-							<label i18n="@@discount" for="discount">Discount </label> 
+							<label for="discount">{{ 'COMMON.DISCOUNT' | translate }}</label> 
 						</div>
 						<div class="ui-grid-col-6 ui-sm-12">
 							<input type="text" pInputText id="discount" (change)="calculateGrandTotal(); calculateDue()"
@@ -187,7 +187,7 @@
 					</div>
 					<div class="ui-grid-row">
 						<div class="ui-grid-col-4 ui-sm-12">
-							<label i18n="@@grandTotal" for="grandTotal">Grand Total </label> 
+							<label for="grandTotal">{{ 'COMMON.GRANDTOTAL' | translate }}</label> 
 						</div>
 						<div class="ui-grid-col-6 ui-sm-12">
 							<input type="text" pInputText id="grandTotal" [disabled]="true"
@@ -196,7 +196,7 @@
 					</div>
 					<div class="ui-grid-row">
 						<div class="ui-grid-col-4 ui-sm-12">
-							<label i18n="@@paid" for="paid">Paid </label> 
+							<label for="paid">{{ 'COMMON.AMOUNT_PAID' | translate }}</label> 
 						</div>
 						<div class="ui-grid-col-6 ui-sm-12">
 							<input type="text" pInputText id="paid" (change)="calculateDue()"
@@ -205,7 +205,7 @@
 					</div>
 					<div class="ui-grid-row">
 						<div class="ui-grid-col-4 ui-sm-12">
-							<label i18n="@@due" for="due">Due </label> 
+							<label for="due">{{ 'COMMON.AMOUNT_DUE' | translate }}</label> 
 						</div>
 						<div class="ui-grid-col-6 ui-sm-12">
 							<input type="text" pInputText id="due" [disabled]="true"
@@ -219,12 +219,12 @@
 			<br />
 			<div>
 				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-					<button pButton icon="fa fa-check" label="Save"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="button" pButton icon="fa fa-close" (click)="delete()" label="Supprimer"></button>&nbsp;&nbsp;
-					<button type="button" pButton icon="fa fa-print" (click)="printBill()" label="Print"></button>
+					<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>&nbsp;&nbsp;
+					<button type="button" pButton icon="fa fa-print" (click)="printBill()" label="{{ 'COMMON.PRINT' | translate }}"></button>
 					<div >
 						<a *ngIf="reportName" target="_blank"
-							href="assets/reports/{{reportName}}">Download Report {{reportName}}</a>
+							href="assets/reports/{{reportName}}">{{ 'COMMON.DOWNLOAD_REPORT' | translate }} {{reportName}}</a>
 					</div>
 				</div>
 			</div>

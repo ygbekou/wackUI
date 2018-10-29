@@ -11,6 +11,7 @@ import { EmployeeDropdown, SupplierDropdown, ProductDropdown } from '../dropdown
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { GenericService, PurchasingService } from '../../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
  
 @Component({  
@@ -30,6 +31,7 @@ export class SaleReturnDetails implements OnInit, OnDestroy {
     (
       private genericService: GenericService,
       private purchasingService: PurchasingService,
+      private translate: TranslateService,
       private productDropdown: ProductDropdown,
       private employeeDropdown: EmployeeDropdown,
       private changeDetectorRef: ChangeDetectorRef,
@@ -41,11 +43,11 @@ export class SaleReturnDetails implements OnInit, OnDestroy {
   ngOnInit(): void {
 
      this.returnProductCols = [
-            { field: 'productName', header: 'Name' },
-            { field: 'unitPrice', header: 'Unit Price', type: 'amount', inputType: 'text'},
-            { field: 'originalQuantity', header: 'Sale Quantity', type: 'amount'},
-            { field: 'quantity', header: 'Returned Quantity', type: 'number'},
-            { field: 'notes', header: 'Notes', type: "text"}
+            { field: 'productName', header: 'Name', headerKey: 'COMMON.NAME' },
+            { field: 'unitPrice', header: 'Unit Price', headerKey: 'COMMON.PRICE', type: 'amount', inputType: 'text'},
+            { field: 'originalQuantity', header: 'Sale Quantity', headerKey: 'COMMON.QUANTITY_SOLD', type: 'amount'},
+            { field: 'quantity', header: 'Returned Quantity', headerKey: 'COMMON.QUANTITY_RETURNED', type: 'number'},
+            { field: 'notes', header: 'Notes', headerKey: 'COMMON.NOTES', type: "text"}
         ]; 
     
     let saleReturnId = null;
@@ -67,6 +69,20 @@ export class SaleReturnDetails implements OnInit, OnDestroy {
           }
      });
     
+    this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols();
+    });
+  }
+ 
+  
+  updateCols() {
+    for (var index in this.returnProductCols) {
+      let col = this.returnProductCols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
   }
   
   ngOnDestroy() {

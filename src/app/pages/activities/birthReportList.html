@@ -1,6 +1,6 @@
 
 <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-	<p-fieldset legend="Search Criteria">
+	<p-fieldset legend="{{ 'COMMON.SEARCH_CRITERIA' | translate }}">
 	</p-fieldset>
 	<br/>
 	<br/>
@@ -25,10 +25,8 @@
 	                </div>
 	            </td>
 	            <td>
-	            	<button type="button" pButton icon="fa fa-edit" style="float: left"
-						(click)="edit(rowData.id)"></button>&nbsp;&nbsp;
-					<button type="button" pButton icon="fa fa-eraser" style="float: left"
-						(click)="delete(rowData.id)"></button>
+	            	<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
+					<button type="button" pButton icon="fa fa-eraser" (click)="delete(rowData.id)"></button>
 	            </td>
 	        </tr>
 	    </ng-template>

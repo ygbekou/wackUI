@@ -3,9 +3,11 @@ import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { ReceiveOrder, ReceiveOrderProduct } from '../../models/stocks/receiveOrder';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
+import { InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { User } from '../../models/user';  
 import { GenericService, PurchasingService } from '../../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-receiveOrder-list',
@@ -14,19 +16,14 @@ import { GenericService, PurchasingService } from '../../services';
 })
 export class ReceiveOrderList implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   receiveOrders: ReceiveOrder[] = [];
-  cols: any[];
-  
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
+  cols: any[]; 
   
   constructor
     (
     private genericService: GenericService,
     private purchasingService: PurchasingService,
+    private translate: TranslateService,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
@@ -37,11 +34,11 @@ export class ReceiveOrderList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'deliveryDate', header: 'Delivery Date', type:'date' },
-            { field: 'deliveryNote', header: 'Delivery Note' },
-            { field: 'purchaseOrderId', header: 'PO ID' },
-            { field: 'purchaseOrderDate', header: 'Order Date' },
-            { field: 'status', header: 'Status', type:'string' }
+            { field: 'deliveryDate', header: 'Delivery Date', headerKey: 'COMMON.DELIVERY_DATE', type:'date' },
+            { field: 'deliveryNote', header: 'Delivery Note', headerKey: 'COMMON.NOTES' },
+            { field: 'purchaseOrderId', header: 'PO ID', headerKey: 'COMMON.PURCHASE_ORDER_ID' },
+            { field: 'purchaseOrderDate', header: 'Order Date', headerKey: 'COMMON.ORDER_DATE' },
+            { field: 'status', header: 'Status', headerKey: 'COMMON.STATUS', type:'string' }
         ];
     
     this.route
@@ -60,6 +57,21 @@ export class ReceiveOrderList implements OnInit, OnDestroy {
               error => console.log(error),
               () => console.log('Get all ReceiveOrder complete'));
           });
+    
+    this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols();
+    });
+  }
+ 
+  
+  updateCols() {
+    for (var index in this.cols) {
+      let col = this.cols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
   }
  
   
