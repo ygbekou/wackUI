@@ -75,6 +75,7 @@ export class DeathReportDetails implements OnInit, OnDestroy {
   }
 
   save() {
+    this.messages = [];
     if (this.deathReport.deathDatetime == null) {
       this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.MISSING_REQUIRED_FIELD});
       return;
@@ -99,30 +100,14 @@ export class DeathReportDetails implements OnInit, OnDestroy {
   }
   
   clear() {
+      this.messages = [];
       this.deathReport = new DeathReport();
       this.admission = new Admission();
   }
 
-  lookUpPatientItem() {
-    let parameters: string[] = [];
-
-    if (this.itemNumberLabel == 'Visit') 
-      parameters.push('e.visitNumber = |visitNumber|' + this.itemNumber + '|String')
-    if (this.itemNumberLabel == 'Admission') 
-      parameters.push('e.id = |admissionId|' + this.itemNumber + '|Long')
-  
-      this.genericService.getAllByCriteria(this.itemNumberLabel, parameters)
-        .subscribe((data: any[]) => {
-          if (data) {
-            if (this.itemNumberLabel == 'Admission') {
-              this.admission = data[0];
-              this.patient = this.admission.patient;
-              this.deathReport.admission = this.admission;
-            }
-          }
-        },
-        error => console.log(error),
-        () => console.log('Get Item complete'));
+  lookUpVisitAdm(event) {
+    this.admission = event;
+    
   }
 
 }

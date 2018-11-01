@@ -1,10 +1,7 @@
 import { Component,LOCALE_ID,OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { User } from '../models/user';
+import { User, Patient, UserGroup,  } from '../models';
 import { PatientDetails } from './patientDetails';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { Constants } from '../app.constants';
-import { Patient } from '../models/patient';
-import { UserGroup } from '../models/userGroup';
 import { GenericService, UserService, GlobalEventsManager } from '../services';
 import { AppointmentDetails } from './appointmentDetails';
 import { BedDetails } from './bedDetails';
@@ -12,6 +9,7 @@ import { FloorDetails } from './floorDetails';
 import { ReferenceDetails } from './referenceDetails';
 import { ReferenceList } from './referenceList';
 import { RoomDetails } from './roomDetails';
+import { Constants } from '../app.constants';
 
 @Component({
   selector: 'app-admin-bedStatus',
@@ -78,7 +76,7 @@ export class AdminBedStatus implements OnInit {
     } else if (evt.index == 1) {
       this.activeTab = 1
       this.globalEventsManager.selectedReferenceType = "Category";
-      this.globalEventsManager.selectedParentId = 100;
+      this.globalEventsManager.selectedParentId = Constants.CATEGORY_BED;
     } else if (evt.index == 2) {
       this.activeTab = 2
       this.globalEventsManager.selectedReferenceType = "Building";

@@ -8,6 +8,7 @@ import { DoctorDropdown, MedicineDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { InputTextareaModule, CheckboxModule, CalendarModule } from 'primeng/primeng';
 import { GenericService, AdmissionService, GlobalEventsManager } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 
 
@@ -35,6 +36,7 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
       private globalEventsManager: GlobalEventsManager,
       private genericService: GenericService,
       private admissionService: AdmissionService,
+      private translate: TranslateService,
       private medicineDropdown: MedicineDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
@@ -46,23 +48,45 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
   ngOnInit(): void {
 
      this.medicineCols = [
-            { field: 'medicine', header: 'Medicine' },
-            { field: 'medicineType', header: 'Medicine Type' },
-            { field: 'dosage', header: 'Dosage' },
-            { field: 'quantity', header: 'Quantity' },
-            { field: 'frequency', header: 'Frequency' },
-            { field: 'numberOfDays', header: 'Number Of Days' }
+            { field: 'medicine', header: 'Medicine', headerKey: 'COMMON.MEDICINE' },
+            { field: 'medicineType', header: 'Medicine Type', headerKey: 'COMMON.MEDICINE_TYPE' },
+            { field: 'dosage', header: 'Dosage', headerKey: 'COMMON.DOSAGE' },
+            { field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY' },
+            { field: 'frequency', header: 'Frequency', headerKey: 'COMMON.FREQUENCY' },
+            { field: 'numberOfDays', header: 'Number Of Days', headerKey: 'COMMON.NUMBER_OD_DAYS' }
         ];
     
      this.diagnosisCols = [
-            { field: 'diagnosis', header: 'Diagnosis' },
-            { field: 'instructions', header: 'Instructions' }
+            { field: 'diagnosis', header: 'Diagnosis', headerKey: 'COMMON.DIAGNOSIS' },
+            { field: 'instructions', header: 'Instructions', headerKey: 'COMMON.INSTRUCTIONS'}
         ];
     
     
      this.addNewDiagnosisRow();
      this.addNewMedicineRow();
 
+  this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols();
+    });
+  }
+ 
+  
+  updateCols() {
+    for (var index in this.medicineCols) {
+      let col = this.medicineCols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+    
+    
+    for (var index in this.diagnosisCols) {
+      let col = this.diagnosisCols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
   }
   
   addNewMedicineRow() {

@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../app.constants';
-import { Admission } from '../models';
-import { VitalSign } from '../models/vitalSign';
+import { Admission, VitalSign, User } from '../models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User } from '../models/user';  
+import { DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { GenericService } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-vitalSign-list',
@@ -24,6 +24,7 @@ export class VitalSignList implements OnInit, OnDestroy {
   constructor
     (
     private genericService: GenericService,
+    private translate: TranslateService,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
@@ -34,18 +35,18 @@ export class VitalSignList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'vitalSignDatetime', header: 'Date', type:'date' },
-            { field: 'patientMRN', header: 'Patient ID' },
-            { field: 'patientName', header: 'Patient Name' },
-            { field: 'temperature', header: 'Temperature' },
-            { field: 'pulse', header: 'Pulse' },
-            { field: 'respiration', header: 'Respiration' },
-            { field: 'bloodPressure', header: 'Blood Pressure' },
-            { field: 'bloodSugar', header: 'Blood Sugar' },
-            { field: 'pain', header: 'Pain' },
-            { field: 'weight', header: 'Weight(pound)' },
-            { field: 'height', header: 'Height(in)' },
-            { field: 'bmi', header: 'BMI' }
+            { field: 'vitalSignDatetime', header: 'Date', headerKey: 'COMMON.VITAL_SIGN_DATE_TIME', type:'date' },
+            { field: 'patientMRN', header: 'Patient ID', headerKey: 'COMMON.PATIENT_ID' },
+            { field: 'patientName', header: 'Patient Name', headerKey: 'COMMON.PATIENT_NAME' },
+            { field: 'temperature', header: 'Temperature', headerKey: 'COMMON.TEMPERATURE' },
+            { field: 'pulse', header: 'Pulse', headerKey: 'COMMON.PULSE' },
+            { field: 'respiration', header: 'Respiration', headerKey: 'COMMON.RESPIRATION' },
+            { field: 'bloodPressure', header: 'Blood Pressure', headerKey: 'COMMON.BLOOD_PRESSURE'},
+            { field: 'bloodSugar', header: 'Blood Sugar', headerKey: 'COMMON.BLOOD_SUGAR' },
+            { field: 'pain', header: 'Pain', headerKey: 'COMMON.PAIN' },
+            { field: 'weight', header: 'Weight(pound)', headerKey: 'COMMON.WEIGHT' },
+            { field: 'height', header: 'Height(in)', headerKey: 'COMMON.HEIGHT' },
+            { field: 'bmi', header: 'BMI', headerKey: 'COMMON.BMI' }
         ];
     
     let parameters: string [] = []; 
@@ -66,8 +67,22 @@ export class VitalSignList implements OnInit, OnDestroy {
           error => console.log(error),
           () => console.log('Get all VitalSigns complete'));
       });
+  
+    this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols();
+    });
   }
  
+  
+  updateCols() {
+    for (var index in this.cols) {
+      let col = this.cols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+  }
   
   ngOnDestroy() {
     this.vitalSigns = null;

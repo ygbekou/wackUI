@@ -8,7 +8,7 @@
 		<p-messages [(value)]="messages"></p-messages>
 		<p-table [columns]="diagnosisCols" [value]="admissionDiagnoses">
 		<ng-template pTemplate="caption">
-	        DIAGNOSIS LIST
+	        {{ 'COMMON.DIAGNOSIS_LIST' | translate }}
 	    </ng-template>
 		    <ng-template pTemplate="header" let-diagnosisCols>
 		        <tr>

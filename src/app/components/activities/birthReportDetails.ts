@@ -102,26 +102,8 @@ export class BirthReportDetails implements OnInit, OnDestroy {
       this.admission = new Admission();
   }
 
-  lookUpPatientItem() {
-    let parameters: string[] = [];
-
-    if (this.itemNumberLabel == 'Visit') 
-      parameters.push('e.visitNumber = |visitNumber|' + this.itemNumber + '|String')
-    if (this.itemNumberLabel == 'Admission') 
-      parameters.push('e.id = |admissionId|' + this.itemNumber + '|Long')
-  
-      this.genericService.getAllByCriteria(this.itemNumberLabel, parameters)
-        .subscribe((data: any[]) => {
-          if (data) {
-            if (this.itemNumberLabel == 'Admission') {
-              this.admission = data[0];
-              this.patient = this.admission.patient;
-              this.birthReport.admission = this.admission;
-            }
-          }
-        },
-        error => console.log(error),
-        () => console.log('Get Item complete'));
+  lookUpVisitAdm(event) {
+    this.admission = event;
+    
   }
-
 }

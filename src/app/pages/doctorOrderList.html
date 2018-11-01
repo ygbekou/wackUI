@@ -1,7 +1,7 @@
 	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
 		<p-table [columns]="cols" [value]="doctorOrders">
 			 <ng-template pTemplate="caption">
-		        DOCTOR ORDERS
+		        {{ 'COMMON.DOCTOR_ORDER_LIST' | translate }}
 		    </ng-template>
 		    <ng-template pTemplate="header" let-columns>
 		        <tr>

@@ -8,6 +8,7 @@ import { DiagnosisDropdown } from './dropdowns';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { GenericService, GlobalEventsManager, AdmissionService } from '../services';
 import { Message } from 'primeng/api';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 @Component({ 
   selector: 'app-admissionDiagnoses',
@@ -34,6 +35,7 @@ export class AdmissionDiagnoses implements OnInit, OnDestroy {
     (
       private admissionService: AdmissionService,
       private genericService: GenericService,
+      private translate: TranslateService,
       private globalEventsManager: GlobalEventsManager,
       private diagnosisDropdown: DiagnosisDropdown,
       private changeDetectorRef: ChangeDetectorRef,
@@ -47,9 +49,9 @@ export class AdmissionDiagnoses implements OnInit, OnDestroy {
   ngOnInit(): void {
     
     this.diagnosisCols = [
-            { field: 'name', parent:'diagnosis', header: 'Name' },
-            { field: 'description', parent:'diagnosis', header: 'Description' },
-            { field: 'instructions', header: 'Instructions' }
+            { field: 'name', parent:'diagnosis', header: 'Name', headerKey: 'COMMON.NAME' },
+            { field: 'description', parent:'diagnosis', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
+            { field: 'instructions', header: 'Instructions', headerKey: 'COMMON.INSTRUCTIONS' }
         ];
     
     this.admissionDiagnoses.push(new AdmissionDiagnosis());
@@ -64,8 +66,23 @@ export class AdmissionDiagnoses implements OnInit, OnDestroy {
       this.parentEntity = 'admission';
       this.entity = 'AdmissionDiagnosis';
     }
-  }
   
+
+    this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols();
+    });
+  }
+ 
+  
+  updateCols() {
+    for (var index in this.diagnosisCols) {
+      let col = this.diagnosisCols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+  }
   ngOnDestroy() {
     this.admissionDiagnosis = null;
   }

@@ -1,16 +1,14 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Reference } from '../models/reference';
+import { Reference, Bed, Floor, Room, User  } from '../models';
 import { Constants } from '../app.constants';
-import { Bed } from '../models/bed';
-import { Floor } from '../models/floor';
-import { Room } from '../models/room';
 import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { BuildingDropdown, FloorDropdown, RoomDropdown, CategoryDropdown } from './dropdowns';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User } from '../models/user';  
 import { GenericService, GlobalEventsManager } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-bed-details',
@@ -20,37 +18,24 @@ import { GenericService, GlobalEventsManager } from '../services';
 }) 
 export class BedDetails implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   bed: Bed = new Bed();
-  
   hiddenMenu: boolean = true;
   
-  buildingDropdown: BuildingDropdown;
-  floorDropdown: FloorDropdown;
-  roomDropdown: RoomDropdown;
-  categoryDropdown: CategoryDropdown;
-  
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
-  
+  messages: Message[] = [];
+ 
   constructor
     (
       private genericService: GenericService,
+      private translate: TranslateService,
       private globalEventsManager: GlobalEventsManager,
-      private bdgDropdown: BuildingDropdown,
-      private flrDropdown: FloorDropdown,
-      private rmDropdown: RoomDropdown,
-      private catDropdown: CategoryDropdown,
+      private buildingDropdown: BuildingDropdown,
+      private floorDropdown: FloorDropdown,
+      private roomDropdown: RoomDropdown,
+      private categoryDropdown: CategoryDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
     ) {
-      this.buildingDropdown = bdgDropdown;
-      this.floorDropdown = flrDropdown;
-      this.roomDropdown = rmDropdown;
-      this.categoryDropdown = catDropdown;
       this.clear();
   }
 
@@ -70,10 +55,6 @@ export class BedDetails implements OnInit, OnDestroy {
                 if (result.id > 0) {
                   this.bed = result
                 }
-                else {
-                  this.error = Constants.SAVE_UNSUCCESSFUL;
-                  this.displayDialog = true;
-                }
               })
           }
         });
@@ -88,33 +69,34 @@ export class BedDetails implements OnInit, OnDestroy {
     this.genericService.getOne(bedId, 'Bed')
         .subscribe(result => {
       if (result.id > 0) {
-        this.bed = result
-      }
-      else {
-        this.error = Constants.SAVE_UNSUCCESSFUL;
-        this.displayDialog = true;
+        this.bed = result;
       }
     })
   }
   
   clear() {
     this.bed = new Bed();
-    this.bed.room = new Room()
+    this.bed.room = new Room();
     this.bed.room.floor = new Floor();
   }
   
   save() {
     try {
-      this.error = '';
+      this.messages = [];
       
       this.genericService.save(this.bed, 'Bed')
         .subscribe(result => {
           if (result.id > 0) {
-            this.bed = result
+            this.bed = result;
+            this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe(res => {
+              this.messages.push({severity:Constants.SUCCESS, summary:res['COMMON.SAVE'], detail:res['MESSAGE.SAVE_SUCCESS']});
+            });
+            
           }
           else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-            this.displayDialog = true;
+            this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe((res: string) => {
+              this.messages.push({severity:Constants.SUCCESS, summary:res['COMMON.SAVE'], detail:res['MESSAGE.SAVE_SUCCESS']});
+            });
           }
         })
     }

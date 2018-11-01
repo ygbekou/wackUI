@@ -4,7 +4,7 @@
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-2 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@prescriptionDatetime" for="prescriptionDatetime">Presc. Date Time<font color="red">*</font></label> 
+					<label for="prescriptionDatetime">{{ 'COMMON.PRESCRIPTION_DATETIME' | translate }}<font color="red">*</font></label> 
 					<p-calendar [(ngModel)]="prescription.prescriptionDatetime" [showTime]="true" required
 						name="prescriptionDatetime"  #prescriptionDatetime="ngModel"></p-calendar>
 					<p-message *ngIf="invalidDatetime" severity="error" text="Field is required"></p-message>
@@ -12,7 +12,7 @@
 			</div>
 			<div class="ui-grid-col-2 ui-sm-12">
 				<div class="form-group">							
-					<label i18n="@@prescriptionType" for="prescriptionType">Prescription Type<font color="red">*</font></label> 
+					<label for="prescriptionType">{{ 'COMMON.PRESCRIPTION_TYPE' | translate }}<font color="red">*</font></label> 
 					<div class="ui-grid-row">
 						<p-radioButton name="prescriptionType" value="NEW" label="New" [(ngModel)]="prescription.prescriptionType"
 							name="prescriptionType"  #prescriptionType="ngModel" required></p-radioButton>
@@ -25,12 +25,13 @@
 			<div class="ui-grid-col-2 ui-sm-12">
 				<div class="form-group">	
 					<br/>						
-					<p-checkbox id="status" [(ngModel)]="prescription.isDischarge" binary="true" label="Is Discharge"></p-checkbox>
+					<p-checkbox id="status" [(ngModel)]="prescription.isDischarge" binary="true" 
+						label="{{ 'COMMON.IS_DISCHARGE' | translate }}"></p-checkbox>
 				</div>
 			</div>
 			<div class="ui-grid-col-6 ui-sm-12">
 				<div class="form-group">									
-					<label i18n="@@notes" for="notes">Notes</label> 
+					<label for="notes">{{ 'COMMON.NOTES' | translate }}</label> 
 					<textarea pInputTextarea id="notes" rows="3" cols="60" pInputTextarea maxlength="1000" 
 								[(ngModel)]="prescription.notes" name="notes" #notes="ngModel"> </textarea>							
 				</div>
@@ -41,7 +42,7 @@
 			<div class="ui-grid-col-12 ui-sm-12">
 				<p-table [columns]="medicineCols" [value]="prescription.prescriptionMedicines">
 					<ng-template pTemplate="caption">
-				        MEDICINE LIST
+				        {{ 'COMMON.MEDICINE_LIST' | translate }}
 				    </ng-template>
 				    <ng-template pTemplate="header" let-medicineCols>
 				        <tr>
@@ -103,7 +104,7 @@
 				</p-table>
 			</div>
 		</div>
-			
+	
 		<br/>
 		<br />
 			
@@ -111,7 +112,7 @@
 			<div class="ui-grid-col-12 ui-sm-12">
 				<p-table [columns]="diagnosisCols" [value]="prescription.prescriptionDiagnoses">
 					<ng-template pTemplate="caption">
-				        DIAGNOSIS LIST
+				        {{ 'COMMON.DIAGNOSIS_LIST' | translate }}
 				    </ng-template>
 				    <ng-template pTemplate="header" let-diagnosisCols>
 				        <tr>
@@ -143,21 +144,12 @@
 				</p-table>
 			</div>
 		</div>
-		<br/>
-		<br/>
-		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-			<div class="ui-grid-row">
-				<div class="ui-grid-col-1 ui-sm-12">
-					<button type="button" pButton icon="fa fa-refresh" (click)="addNew()" label="Effacer"></button>
-				</div>
-				<div class="ui-grid-col-1 ui-sm-12">
-					<button pButton icon="fa fa-save" (click)="save()" label="Save"></button>
-				</div>
-				<div class="ui-grid-col-6 ui-sm-12">
-			</div>
-			<div class="ui-grid-col-1 ui-sm-12">
-				<button type="button" pButton icon="fa fa-remove" (click)="delete()" label="Delete"></button>
-			</div>
-			</div>
-		</div>
 	</div>
+	<br/>
+	<br/>
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+		<button type="button" pButton icon="fa fa-refresh" (click)="addNew()" label="Effacer"></button>&nbsp;&nbsp;
+		<button pButton icon="fa fa-save" (click)="save()" label="Save"></button>&nbsp;&nbsp;
+		<button type="button" pButton icon="fa fa-remove" (click)="delete()" label="Delete"></button>
+	</div>
+

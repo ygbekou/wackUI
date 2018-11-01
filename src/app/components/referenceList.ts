@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { Reference } from '../models/reference';
+import { Reference, User } from '../models';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../app.constants';
 import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User } from '../models/user';  
 import { GenericService, GlobalEventsManager } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-reference-list',
@@ -15,8 +15,6 @@ import { GenericService, GlobalEventsManager } from '../services';
 })
 export class ReferenceList implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   references: Reference[] = [];
   cols: any[];
   
@@ -25,13 +23,12 @@ export class ReferenceList implements OnInit, OnDestroy {
   hiddenMenu: boolean = false;
   @Output() referenceIdEvent = new EventEmitter<string>();
   
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL; 
+  REFERENCE_LIST: string;
   
   constructor
     (
     private genericService: GenericService,
+    private translate: TranslateService,
     private globalEventsManager: GlobalEventsManager,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
@@ -40,10 +37,11 @@ export class ReferenceList implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    
     this.cols = [
-            { field: 'name', header: 'Name' },
-            { field: 'description', header: 'Description' },
-            { field: 'statusDesc', header: 'Status' }
+            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
+            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
+            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS' }
         ];
     
     this.route
@@ -78,6 +76,25 @@ export class ReferenceList implements OnInit, OnDestroy {
      });
     
     
+    this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols();
+    });
+  }
+ 
+  
+  updateCols() {
+    for (var index in this.cols) {
+      let col = this.cols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+    
+    let refList = "COMMON." + this.referenceType.toUpperCase() + "_LIST";
+    this.translate.get(refList).subscribe((res: string) => {
+        this.REFERENCE_LIST = res;
+    });
   }
  
   

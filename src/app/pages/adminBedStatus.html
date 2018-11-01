@@ -3,14 +3,14 @@
 			
 			<p-tabView (onChange)="onTabChange($event)"> 
 			 	<p-tabPanel header="Ward">
-			    	<div *ngIf="activeTab == 0">
+			    	<div *ngIf="activeTab == 0" class="ui-grid-row">
 				        <app-reference-details></app-reference-details>
 				        <br/> 
 				        <br/>
 				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Ward')"></app-reference-list>
 				    </div>
 			    </p-tabPanel>
-			    <p-tabPanel header="Bed Category">
+			    <p-tabPanel header="Bed Category" class="ui-grid-row">
 			    	<div *ngIf="activeTab == 1">
 				        <app-reference-details></app-reference-details>
 				        <br/> 
@@ -18,7 +18,7 @@
 				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Category')"></app-reference-list>
 				    </div>
 			    </p-tabPanel>
-			    <p-tabPanel header="Building">
+			    <p-tabPanel header="Building" class="ui-grid-row">
 			    	<div *ngIf="activeTab == 2">
 				        <app-reference-details></app-reference-details>
 				        <br/> 

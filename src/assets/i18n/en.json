@@ -95,6 +95,7 @@
     "VISIT_ID": "Visit ID",
     "VISIT_DATE": "Visit Date",
     "VISIT_LIST": "VISIT LIST",
+    "BMI": "BMI",
     
     "INVESTIGATION_DATETIME": "Invest. Date Time",
     "DESCRIPTION": "Description",
@@ -160,10 +161,47 @@
 	"QUANTITY_RETURNED": "Quantity Returned",
 	"SALE_RETURN_LIST": "RETURN SALE LIST",
 	
+	"DOCTOR_ORDER_DATETIME": "Doctor Order Date / Time",
+	"DOCTOR_ORDER_PRIORITY": "Doctor Order Priority",
+	"DOCTOR_ORDER_TYPE": "Doctor Order Type",
+	"DOCTOR_ORDER_METHOD": "Doctor Order Method",
+	"ORDERING_DOCTOR": "Ordering Doctor",
+	"ORDER_RECEIVED_DATETIME": "Order Receive Date / Time",
+	"FOR_NURSES_USE_ONLY": "For Nurses Use Only",
+	"DOCTOR_ORDER_LIST": "Doctor Order List",
+	
 	"MOTHER": "Mother",
 	"FATHER": "Father",
 	"BABY": "Baby",
+	"DEATH_DATETIME": "Death Date / Time",
+	"BIRTH_LIST": "Birth List",
+	"DEATH_LIST": "Death List",
+	
+    "VITAL_SIGN_LIST": "Vital Sign List",
+    "DIAGNOSIS_LIST": "Diagnosis List",
+    "MEDICINE_LIST": "Medicine List",
+    "PRESCRIPTION_LIST": "Prescription List",
     
+    "PRESCRIPTION_DATETIME": "Presc. Date Time",
+    "PRESCRIPTION_TYPE": "Prescription Type",
+    "IS_DISCHARGE": "Is Discharge",
+    
+    "MEDICINE": "Medicine",
+	"MEDICINE_TYPE": "Medicine Type",
+	"DOSAGE": "Dosage",
+	"FREQUENCY": "Frequency",
+	"NUMBER_OF_DAYS": "Number Of days",
+	"DIAGNOSIS": "Diagnosis",
+	"INSTRUCTIONS": "Instructions",
+	"BED_NUMBER": "Bed Number",
+	
+	"WARD_LIST": "Ward List",
+	"CATEGORY_LIST": "Category List",
+	"BUILDING_LIST": "Building List",
+	"FLOOR_LIST": "Floor List",
+	"ROOM_LIST": "Room List",
+	"BED_LIST": "BED List",
+	
     "CLEAR": "Clear",
     "DELETE": "Delete",
     "SAVE": "Save",
@@ -171,14 +209,16 @@
     "DOWNLOAD_REPORT": "Download Report",
     "SEARCH": "Search",
     "PRINT": "Print",
-    "DONE": "Done"
-    
+    "DONE": "Done",
+    "CLOSE": "Close"
 
   },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different than the current doctor.",
   	"TRANFER_BED_FAILED": "The transfer bed should be different than the current bed.",
   	"TRANFER_DATE_FAILED": "The Transfer Date should be greater than the current assignment Date.",
-  	"APPOINTMENT_DISPLAY_FAILED": "Please Select a Department and a Doctor to add an appointment."
+  	"APPOINTMENT_DISPLAY_FAILED": "Please Select a Department and a Doctor to add an appointment.",
+    "SAVE_SUCCESS": "Save was successful",
+    "SAVE_UNSUCCESS": "Save was unsuccessful"
   }
 }

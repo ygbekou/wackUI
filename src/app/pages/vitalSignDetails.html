@@ -4,7 +4,7 @@
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-2 ui-sm-12" *ngIf="admission">
 				<div class="form-group">
-					<label for="vitalSignDatetime">Vital Sign Date Time<font color="red">*</font></label> 
+					<label for="vitalSignDatetime">{{ 'COMMON.VITAL_SIGN_DATE_TIME' | translate }}<font color="red">*</font></label> 
 					<p-calendar [(ngModel)]="vitalSign.vitalSignDatetime" [showTime]="true" name="vitalSignDatetime" 
 						#vitalSignDatetime="ngModel" required></p-calendar>
 					<p-message *ngIf="f.submitted && vitalSignDatetime.invalid" severity="error" text="Field is required"></p-message>
@@ -12,28 +12,28 @@
 			</div>
 			<div class="ui-grid-col-2 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@temperature" for="temperature">Temperature</label>
+					<label for="temperature">{{ 'COMMON.TEMPERATURE' | translate }}</label>
 					<input type="text" pInputText class="form-control" id="temperature" [(ngModel)]="vitalSign.temperature" 
 							name="temperature" #temperature="ngModel">
 				</div>
 			</div>
 			<div class="ui-grid-col-2 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@pulse" for="pulse">Pulse</label>
+					<label for="pulse">{{ 'COMMON.PULSE' | translate }}</label>
 					<input type="text" pInputText class="form-control" id="pulse" [(ngModel)]="vitalSign.pulse"  
 							name="pulse" #pulse="ngModel">
 				</div>
 			</div>
 			<div class="ui-grid-col-2 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@respiration" for="respiration">Respiration</label>
+					<label for="respiration">{{ 'COMMON.RESPIRATION' | translate }}</label>
 					<input type="text" pInputText class="form-control" id="respiration" [(ngModel)]="vitalSign.respiration"  
 							name="respiration" #respiration="ngModel">
 				</div>
 			</div>
 			<div class="ui-grid-col-2 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@bloodPressure" for="bloodPressure">Blood Pressure</label>
+					<label for="bloodPressure">{{ 'COMMON.BLOOD_PRESSURE' | translate }}</label>
 					<input type="text" pInputText class="form-control" id="bloodPressure" [(ngModel)]="vitalSign.bloodPressure" 
 							name="bloodPressure" #bloodPressure="ngModel">
 				</div>
@@ -42,35 +42,35 @@
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-2 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@bloodSugar" for="bloodSugar">Blood Sugar</label>
+					<label for="bloodSugar">{{ 'COMMON.BLOOD_SUGAR' | translate }}</label>
 					<input type="text" pInputText class="form-control" id="bloodSugar" [(ngModel)]="vitalSign.bloodSugar"  
 							name="bloodSugar" #bloodSugar="ngModel">
 				</div>
 			</div>
 			<div class="ui-grid-col-2 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@pain" for="pain">Pain</label>
+					<label for="pain">{{ 'COMMON.PAIN' | translate }}</label>
 					<input type="text" pInputText class="form-control" id="pain" [(ngModel)]="vitalSign.pain"  
 							name="pain" #pain="ngModel">
 				</div>
 			</div>
 			<div class="ui-grid-col-2 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@weight" for="weight">Weight (pound)</label>
+					<label for="weight">{{ 'COMMON.WEIGHT' | translate }} (pound)</label>
 					<input type="text" pInputText class="form-control" id="weight" [(ngModel)]="vitalSign.weight" 
 							name="weight" #weight="ngModel" (change)="calculateBMI()">
 				</div>
 			</div>
 			<div class="ui-grid-col-2 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@height" for="height">Height (inches)</label>
+					<label for="height">{{ 'COMMON.HEIGHT' | translate }} (inches)</label>
 					<input type="text" pInputText class="form-control" id="height" [(ngModel)]="vitalSign.height"  
 							name="height" #height="ngModel" (change)="calculateBMI()">
 				</div>
 			</div>
 			<div class="ui-grid-col-2 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@bmi" for="bmi">BMI</label>
+					<label for="bmi">{{ 'COMMON.BMI' | translate }}</label>
 					<br/>
 					{{vitalSign.bmi}}
 				</div>

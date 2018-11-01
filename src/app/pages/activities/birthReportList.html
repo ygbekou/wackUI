@@ -5,6 +5,9 @@
 	<br/>
 	<br/>
 	<p-table [columns]="cols" [value]="birthReports">
+		<ng-template pTemplate="caption">
+			{{ 'COMMON.BIRTH_LIST' | translate }}
+		</ng-template>
 	    <ng-template pTemplate="header" let-columns>
 	        <tr>
 	            <th *ngFor="let col of columns" [pSortableColumn]="col.field">

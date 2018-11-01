@@ -95,6 +95,7 @@
     "VISIT_ID": "ID de Visite",
     "VISIT_DATE": "Date de Visite",
     "VISIT_LIST": "LIST DES VISITES",
+    "BMI": "BMI",
     
     "INVESTIGATION_DATETIME": "Date/Heure Invest.",
     "DESCRIPTION": "Description",
@@ -160,9 +161,46 @@
 	"QUANTITY_RETURNED": "Quantité retournée",
 	"SALE_RETURN_LIST": "LISTE DE RETOUR VENTE",
 	
+	"DOCTOR_ORDER_DATETIME": "Date / heure Ordre du médecin",
+	"DOCTOR_ORDER_PRIORITY": "Priorité d'ordre de médecin",
+	"DOCTOR_ORDER_TYPE": "Type d'ordre de docteur",
+	"DOCTOR_ORDER_METHOD": "Methode d'ordre de docteur",
+	"ORDERING_DOCTOR": "Docteur d'ordre",
+	"ORDER_RECEIVED_DATETIME": "Date / heure de réception",
+	"FOR_NURSES_USE_ONLY": "Pour les infirmières seulement",
+	"DOCTOR_ORDER_LIST": "Liste de commande de médecin",
+	
 	"MOTHER": "Mere",
 	"FATHER": "Pere",
 	"BABY": "Bebe",
+	"DEATH_DATETIME": "Date / heure de décès",
+	"BIRTH_LIST": "Liste de naissance",
+	"DEATH_LIST": "Liste de décès",
+	
+	"VITAL_SIGN_LIST": "Liste des signes vitaux",
+	"DIAGNOSIS_LIST": "Liste de diagnostic",
+	"MEDICINE_LIST": "Liste de médecine",
+	"PRESCRIPTION_LIST": "Liste de prescription",
+	
+	"PRESCRIPTION_DATETIME": "Date / Heure de Prescription",
+    "PRESCRIPTION_TYPE": "Type Prescription",
+    "IS_DISCHARGE": "Pour le Discharge",
+    
+	"MEDICINE": "Medicine",
+	"MEDICINE_TYPE": "Type de Medicine",
+	"DOSAGE": "Dosage",
+	"FREQUENCY": "Frequence",
+	"NUMBER_OF_DAYS": "Nombre de jours",
+	"DIAGNOSIS": "Diagnostic",
+	"INSTRUCTIONS": "Instructions",
+	"BED_NUMBER": "Numero de Lit",
+	
+	"WARD_LIST": "Liste des quartiers",
+	"CATEGORY_LIST": "Liste de categorie",
+	"BUILDING_LIST": "Liste des immeuble",
+	"FLOOR_LIST": "Liste d'étage",
+	"ROOM_LIST": "Liste de chambre",
+	"BED_LIST": "Liste de lit",
 	
     "CLEAR": "Effacer",
     "DELETE": "Supprimer",
@@ -171,14 +209,16 @@
     "DOWNLOAD_REPORT": "Telecharger l'etat",
     "SEARCH": "Chercher",
     "PRINT": "Imprimer",
-    "DONE": "Done"
-    
+    "DONE": "Done",
+    "CLOSE": "Fermer"
     
   },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigne doit etre different de l'ancien.",
   	"TRANFER_BED_FAILED": "Le noueau lit dit etre diferent de l'ancien.",
   	"TRANFER_DATE_FAILED": "La date de transfer doit etre plus grande que l'ancienne date.",
-  	"APPOINTMENT_DISPLAY_FAILED": "Pardon Selectionner un Department et un Doctor pour ajouter un appointment."
+  	"APPOINTMENT_DISPLAY_FAILED": "Pardon Selectionner un Department et un Doctor pour ajouter un appointment.",
+  	"SAVE_SUCCESS": "Sauvegarde a marche",
+  	"SAVE_UNSUCCESS": "Sauvegarde n''a pas marche"
   }
 }

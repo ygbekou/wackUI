@@ -1,14 +1,11 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../app.constants';
-import { Admission } from '../models/admission';
-import { DoctorOrder } from '../models/doctorOrder';
-import { VitalSign } from '../models/vitalSign';
+import { Admission, User, Visit, DoctorOrder, VitalSign } from '../models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User } from '../models/user';  
-import { Visit } from '../models/visit';
+import { } from 'primeng/primeng';
 import { GenericService } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-doctorOrder-list',
@@ -17,15 +14,9 @@ import { GenericService } from '../services';
 })
 export class DoctorOrderList implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   doctorOrders: DoctorOrder[] = [];
   cols: any[];
   
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;
-    
   @Input() visit: Visit;
   @Input() admission: Admission;
   @Output() doctorOrderIdEvent = new EventEmitter<string>();
@@ -33,6 +24,7 @@ export class DoctorOrderList implements OnInit, OnDestroy {
   constructor
     (
     private genericService: GenericService,
+    private translate: TranslateService,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
@@ -43,10 +35,10 @@ export class DoctorOrderList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'doctorOrderDatetime', header: 'Date Time', type:'date' },
-            { field: 'doctorOrderTypeName', header: 'Type' },
-            { field: 'description', header: 'Description' },
-            { field: 'doctorOrderStatusName', header: 'Status' }
+            { field: 'doctorOrderDatetime', header: 'Date Time', headerKey: 'COMMON.DOCTOR_ORDER_DATETIME', type:'date' },
+            { field: 'doctorOrderTypeName', header: 'Type', headerKey: 'COMMON.DOCTOR_ORDER_TYPE' },
+            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
+            { field: 'doctorOrderStatusName', header: 'Status', headerKey: 'COMMON.STATUS' }
         ];
     
     this.route
@@ -70,8 +62,22 @@ export class DoctorOrderList implements OnInit, OnDestroy {
               error => console.log(error),
               () => console.log('Get all DoctorOrders complete'));
           });
+  
+    this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols();
+    });
   }
  
+  
+  updateCols() {
+    for (var index in this.cols) {
+      let col = this.cols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+  }
   
   ngOnDestroy() {
     this.doctorOrders = null;

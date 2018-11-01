@@ -6,6 +6,7 @@ import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { GenericService, AdmissionService, GlobalEventsManager } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-prescription-list',
@@ -14,14 +15,8 @@ import { GenericService, AdmissionService, GlobalEventsManager } from '../servic
 })
 export class PrescriptionList implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   prescriptions: Prescription[] = [];
   cols: any[];
-  
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
   
   @Input() admission: Admission;
   @Input() visit: Visit;
@@ -32,6 +27,7 @@ export class PrescriptionList implements OnInit, OnDestroy {
     private globalEventsManager: GlobalEventsManager,
     private genericService: GenericService,
     private admissionService: AdmissionService,
+    private translate: TranslateService,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
@@ -41,14 +37,28 @@ export class PrescriptionList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'prescriptionDatetime', header: 'Date', type: 'Date' },
-            { field: 'prescriptionTypeName', header: 'Type' },
-            { field: 'notes', header: 'Notes' },
-            { field: 'isDischargeDesc', header: 'Is Discharge'}
+            { field: 'prescriptionDatetime', header: 'Date', headerKey: 'COMMON.PRESCRIPTION_DATETIME', type: 'Date' },
+            { field: 'prescriptionTypeName', header: 'Type', headerKey: 'COMMON.PRESCRIPTION_TYPE' },
+            { field: 'notes', header: 'Notes', headerKey: 'COMMON.NOTES' },
+            { field: 'isDischargeDesc', header: 'Is Discharge', headerKey: 'COMMON.IS_DISCHARGE'}
         ];
     this.getPrescriptions();
+  
+    this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols();
+    });
   }
  
+  
+  updateCols() {
+    for (var index in this.cols) {
+      let col = this.cols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+  }
   
   ngOnDestroy() {
     this.prescriptions = null;

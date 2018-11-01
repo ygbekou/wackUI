@@ -1,86 +1,39 @@
 
-<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="deathReport">
-		<p-messages [(value)]="messages"></p-messages>
-		<p-fieldset legend="Admission Info">
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+		<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="deathReport">
+			<p-messages [(value)]="messages"></p-messages>
+			<p-fieldset legend="Admission Info">
+				<app-visitAdm-lookup (admissionEmit)="lookUpVisitAdm($event)" [originalPage]="'admin/patientSaleDetails'"
+					[itemType]="'ADMISSION'" [itemNumberLabel]="'Admission'" [admission]="admission"></app-visitAdm-lookup>
+				<p-message *ngIf="f.submitted && !(admission.id > 0)" severity="error" text="Admission is required"></p-message>
+			</p-fieldset>
+			<br/>
 			<div class="ui-grid-row">
-				<div class="ui-grid-col-3 ui-sm-12">
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3 ui-sm-12">
-							<label i18n="@@itemNumber" for="itemNumber">{{itemNumberLabel}}<font color="red">*</font></label>
-						</div>
-						<div class="ui-grid-col-8 ui-sm-12">
-							<input type="text" pInputText class="form-control" id="itemNumber" (change)="lookUpPatientItem()"
-							[(ngModel)]="itemNumber" name="itemNumber" #itemNumberModel="ngModel">
-						</div>
-						<div class="ui-grid-col-1 ui-sm-12">
-						</div>
-					</div>
-				</div>
-				<div class="ui-grid-col-3 ui-sm-12">
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3 ui-sm-12">
-							<label i18n="@@patientName" for="patientName">Patient Name:</label>
-						</div>
-						<div class="ui-grid-col-8 ui-sm-12">
-							{{patient.name}}
-						</div>
-						<div class="ui-grid-col-1 ui-sm-12">
-						</div>
-					</div>
-				</div>
 				<div class="ui-grid-col-2 ui-sm-12">
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3 ui-sm-12">
-							<label i18n="@@patientBirthDate" for="patientSex">Sex:</label>
-						</div>
-						<div class="ui-grid-col-8 ui-sm-12">
-							{{patient.user.sex}}
-						</div>
-						<div class="ui-grid-col-1 ui-sm-12">
-						</div>
+					<div class="form-group">
+						<label for="deathDatetime">{{ 'COMMON.DEATH_DATETIME' | translate }}<font color="red">*</font></label>
+						<p-calendar [(ngModel)]="deathReport.deathDatetime" [showTime]="true" required
+							name="deathDatetime" #deathDatetime="ngModel"></p-calendar>
+						<p-message *ngIf="f.submitted && deathDatetime.invalid" severity="error" text="Field is required"></p-message>
 					</div>
 				</div>
-				<div class="ui-grid-col-3 ui-sm-12">
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3 ui-sm-12">
-							<label i18n="@@patientSex" for="patientBirthDate">Birth Date: </label>
-						</div>
-						<div class="ui-grid-col-8 ui-sm-12">
-							{{patient.user.birthDate | date:'dd/MM/yyyy'}}
-						</div>
-						<div class="ui-grid-col-1 ui-sm-12">
-						</div>
-					</div>				
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="form-group">
+						<label for="comments">{{ 'COMMON.COMMENTS' | translate }}</label> 
+						<textarea pInputTextarea id="comments" rows="4" cols="40" pInputTextarea maxlength="1000" 
+									[(ngModel)]="deathReport.comments" name="comments" #comments="ngModel"> </textarea>						
+					</div>
 				</div>
 			</div>
-		</p-fieldset>
-		<br/>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-2 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@deathDatetime" for="deathDatetime">Death Date Time<font color="red">*</font></label>
-					<p-calendar [(ngModel)]="deathReport.deathDatetime" [showTime]="true"></p-calendar>
-				</div>
-			</div>
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@comments" for="comments">Comments</label> 
-					<textarea pInputTextarea id="comments" rows="4" cols="40" pInputTextarea maxlength="1000" 
-								[(ngModel)]="deathReport.comments" #comments="ngModel"> </textarea>						
-				</div>
-			</div>
-		</div>
-
-		<br/>
-	</div>	
 	
-	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-			<button type="button" pButton icon="fa fa-refresh" (click)="clear()"
-				label="Effacer"></button>&nbsp;&nbsp;
-			<button type="button" pButton icon="fa fa-save" (click)="save()"
-				label="Sauvegarder"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<button type="button" pButton icon="fa fa-remove" (click)="delete()"
-				label="Supprimer"></button>
+			<br/>
+		</div>	
+		
+		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+				<button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
+				<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="button" pButton icon="fa fa-remove" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>
+		</div>
 	</div>
-</div>
+</form>

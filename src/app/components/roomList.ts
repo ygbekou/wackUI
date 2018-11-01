@@ -1,14 +1,12 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { Reference } from '../models/reference';
+import { Floor, Room, Reference, User } from '../models';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../app.constants';
-import { Floor } from '../models/floor';
-import { Room } from '../models/room';
 import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User } from '../models/user';  
 import { GenericService, GlobalEventsManager } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-room-list',
@@ -16,22 +14,17 @@ import { GenericService, GlobalEventsManager } from '../services';
   providers: [GenericService]
 })
 export class RoomList implements OnInit, OnDestroy {
-  
-  public error: String = '';
-  displayDialog: boolean;
+
   rooms: Room[] = [];
   cols: any[];
   
   hiddenMenu: boolean = true;
   @Output() roomIdEvent = new EventEmitter<string>();
   
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL; 
-  
   constructor
     (
     private genericService: GenericService,
+    private translate: TranslateService,
     private globalEventsManager: GlobalEventsManager,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
@@ -41,9 +34,9 @@ export class RoomList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'name', header: 'Name' },
-            { field: 'description', header: 'Description' },
-            { field: 'status', header: 'Status' }
+            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
+            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
+            { field: 'status', header: 'Status', headerKey: 'COMMON.STATUS' }
         ];
     
     this.route
@@ -62,6 +55,20 @@ export class RoomList implements OnInit, OnDestroy {
      });
     
     
+    this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols();
+    });
+  }
+ 
+  
+  updateCols() {
+    for (var index in this.cols) {
+      let col = this.cols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
   }
  
   

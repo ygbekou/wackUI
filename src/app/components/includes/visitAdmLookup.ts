@@ -12,11 +12,17 @@ import { NavigationExtras, Router } from '@angular/router';
               <div class="ui-grid-row">
                 <div class="ui-grid-col-5 ui-sm-12">  
           
-                  <div class="ui-grid-row">
+                  <div class="ui-grid-row" *ngIf="itemType == 'ALL'">
                     <p-radioButton name="itemLabel" value="Visit" label="Visit" (onClick)="clearSelection()"
                     [(ngModel)]="itemNumberLabel" #itemLabelr="ngModel" required></p-radioButton>
                     <p-radioButton name="itemLabel" value="Admission" label="Admission" (onClick)="clearSelection()"
                     [(ngModel)]="itemNumberLabel" #itemLabelr="ngModel" required></p-radioButton>
+                 </div>
+                 <div class="ui-grid-row" *ngIf="itemType == 'ADMISSION'">
+                    Admission
+                 </div>
+                 <div class="ui-grid-row" *ngIf="itemType == 'VISIT'">
+                    Visit
                  </div>
                  <br/>
                   
@@ -101,11 +107,12 @@ import { NavigationExtras, Router } from '@angular/router';
 export class VisitAdmLookup implements OnInit {
    
   @Input() itemNumberLabel: string = 'Visit';
+  @Input() itemType: string = 'ALL';
   @Input() visit: Visit;
   @Input() admission: Admission;
   
   @Output() visitEmit: EventEmitter<Visit> = new EventEmitter<Visit>();
-   @Output() admissionEmit: EventEmitter<Admission> = new EventEmitter<Admission>();
+  @Output() admissionEmit: EventEmitter<Admission> = new EventEmitter<Admission>();
   @Input() itemNumber: string;
   @Input() originalPage: string;
   
