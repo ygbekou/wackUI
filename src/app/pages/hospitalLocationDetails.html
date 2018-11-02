@@ -3,22 +3,22 @@
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@name" for="name">Name<font color="red">*</font>
-					</label> <input type="text" pInputText class="form-control" id="name"
+					<label for="name">{{ 'COMMON.NAME' | translate }}<font color="red">*</font></label> 
+					<input type="text" pInputText class="form-control" id="name"
 						[(ngModel)]="hospitalLocation.name" name="name" #name="ngModel">
-						<p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
+					<p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
 				</div>
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@description" for="description">Description</label>
+					<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
 					<textarea pInputTextarea id="description" name="description" [(ngModel)]="hospitalLocation.description" #description="ngModel"> </textarea>
 				</div>
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@phone" for="phone">Phone <font color="red">*</font>
-					</label> <input type="text" pInputText class="form-control" id="phone"
+					<label for="phone">{{ 'COMMON.PHONE' | translate }}<font color="red">*</font></label>
+					<input type="text" pInputText class="form-control" id="phone"
 						[(ngModel)]="hospitalLocation.phone" name="phone" #phone="ngModel" required>
 					<p-message *ngIf="f.submitted && phone.errors && phone.errors.required" severity="error" 
 							text="Phone is required"></p-message>
@@ -26,10 +26,9 @@
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@address" for="address">Address</label> <input
-						type="text" pInputText class="form-control" id="address"
-						[(ngModel)]="hospitalLocation.address" name="address"
-						#address="ngModel">
+					<label for="address">{{ 'COMMON.ADDRESS' | translate }}</label> <input
+						type="text" pInputText class="form-control" id="address" [(ngModel)]="hospitalLocation.address" 
+							name="address" #address="ngModel">
 				</div>
 			</div>
 		</div>
@@ -37,14 +36,14 @@
 			
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@city" for="city">City</label> <input type="text"
-						pInputText class="form-control" id="city"
-						[(ngModel)]="hospitalLocation.city" name="city" #city="ngModel">
+					<label for="city">{{ 'COMMON.CITY' | translate }}</label> 
+					<input type="text" pInputText class="form-control" id="city" [(ngModel)]="hospitalLocation.city" 
+							name="city" #city="ngModel">
 				</div>
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@country" for="country">Country</label>
+					<label for="country">{{ 'COMMON.COUNTRY' | translate }}</label>
 					<p-autoComplete [(ngModel)]="hospitalLocation.country"
 						(onDropdownClick)="countryDropdown.handleDropdownClick($event)"
 						[suggestions]="countryDropdown.filteredCountries" [dropdown]="true"
@@ -55,7 +54,7 @@
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@zipCode" for="zipCode">Zip Code</label> <input
+					<label for="zipCode">{{ 'COMMON.ZIP_CODE' | translate }}</label> <input
 						type="text" pInputText class="form-control" id="zipCode"
 						[(ngModel)]="hospitalLocation.zipCode" name="zipCode"
 						#zipCode="ngModel">
@@ -65,12 +64,9 @@
 	</div>
 	<br />
 	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-			<button type="button" pButton icon="fa fa-refresh" (click)="clear()"
-				label="Clear"></button>&nbsp;&nbsp;
-			<button type="button" pButton icon="fa fa-save" (click)="save()"
-				label="Save"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<button type="button" pButton icon="fa fa-remove" (click)="delete()"
-				label="Delete"></button>
+			<button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
+			<button type="button" pButton icon="fa fa-save" (click)="save()" label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button type="button" pButton icon="fa fa-remove" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>
 	</div>
 </form>
 

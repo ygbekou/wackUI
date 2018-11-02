@@ -6,6 +6,7 @@ import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { GenericService } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-labTest-list',
@@ -14,20 +15,15 @@ import { GenericService } from '../services';
 })
 export class LabTestList implements OnInit, OnDestroy {
   
-  public error: String = ''; 
-  displayDialog: boolean;
   labTests: LabTest[] = [];
   cols: any[];
-  
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
   
   @Output() labTestIdEvent = new EventEmitter<string>();
   
   constructor
     (
     private genericService: GenericService,
+    private translate: TranslateService,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
@@ -38,12 +34,12 @@ export class LabTestList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'name'             , header: 'Name' },
-            { field: 'description'      , header: 'Description' },
-            { field: 'normalRange'      , header: 'Normal Range' },
-            { field: 'methodName'       , header: 'Method' },
-            { field: 'groupName'        , header: 'Group' },
-            { field: 'statusDesc'       , header: 'Status', type:'string' }
+            { field: 'name'             , header: 'Name', headerKey: 'COMMON.NAME' },
+            { field: 'description'      , header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
+            { field: 'normalRange'      , header: 'Normal Range', headerKey: 'COMMON.NORMAL_RANGE' },
+            { field: 'methodName'       , header: 'Method', headerKey: 'COMMON.METHOD' },
+            { field: 'groupName'        , header: 'Group', headerKey: 'COMMON.GROUP' },
+            { field: 'statusDesc'       , header: 'Status', headerKey: 'COMMON.STATUS', type:'string' }
         ];
     
     this.route
@@ -62,8 +58,23 @@ export class LabTestList implements OnInit, OnDestroy {
               error => console.log(error),
               () => console.log('Get all Lab Tests complete'));
           });
+  
+      this.updateCols();
+      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+          this.updateCols();
+      });
   }
  
+  
+  updateCols() {
+    for (var index in this.cols) {
+      let col = this.cols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+
+  }
   
   ngOnDestroy() {
     this.labTests = null;

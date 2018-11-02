@@ -1,10 +1,8 @@
-import { Component,LOCALE_ID,OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { User } from '../models/user';
+import { Component,LOCALE_ID,OnInit, ChangeDetectorRef, ViewChild, OnDestroy } from '@angular/core';
+import { Patient, User, UserGroup } from '../models';
 import { PatientDetails } from './patientDetails';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { Constants } from '../app.constants';
-import { Patient } from '../models/patient';
-import { UserGroup } from '../models/userGroup';
 import { GenericService, UserService, GlobalEventsManager } from '../services';
 import { CategoryDropdown } from './dropdowns';
 import { HospitalLocationDetails } from './hospitalLocationDetails';
@@ -15,17 +13,20 @@ import { MedicineDetails } from './medicineDetails';
 import { ReferenceDetails } from './referenceDetails';
 import { ReferenceList } from './referenceList';
 import { ReferenceWithCategoryDetails } from './referenceWithCategoryDetails';
+import { ReferenceWithCategoryList } from './referenceWithCategoryList';
 
 @Component({
   selector: 'app-admin-reference',
   templateUrl: '../pages/adminReference.html',
   providers: [GenericService ]
 })
-export class AdminReference implements OnInit {
+export class AdminReference implements OnInit, OnDestroy {
   [x: string]: any;
 
   @ViewChild(ReferenceDetails) referenceDetails: ReferenceDetails;
+  @ViewChild(ReferenceList) referenceList: ReferenceList;
   @ViewChild(ReferenceWithCategoryDetails) referenceWithCategoryDetails: ReferenceWithCategoryDetails;
+  @ViewChild(ReferenceWithCategoryList) referenceWithCategoryList: ReferenceWithCategoryList;
   @ViewChild(MedicineDetails) medicineDetails: MedicineDetails;
   @ViewChild(LabTestDetails) labTestDetails: LabTestDetails;
   @ViewChild(LabTestList) labTestList: LabTestList;
@@ -59,8 +60,24 @@ export class AdminReference implements OnInit {
     }
     this.globalEventsManager.selectedReferenceType = "Category";
     
+    setTimeout(() => {
+        this.referenceList.updateCols('SYMPTOM_GROUP');
+      }, 0);
+    
   }
 
+  ngOnDestroy () {
+    this.referenceDetails = null;
+    this.referenceList = null;
+    this.referenceWithCategoryDetails = null;
+    this.referenceWithCategoryList = null;
+    this.medicineDetails = null;
+    this.labTestDetails = null;
+    this.labTestList = null;
+    this.hospitalLocationDetails = null;
+    this.hospitalLocationtList = null;
+  }
+  
   onReferenceSelected($event, referenceType) {
     let referenceId = $event;
     this.referenceDetails.getReference(referenceId, referenceType);
@@ -88,56 +105,78 @@ export class AdminReference implements OnInit {
   
   onTabChange(evt) {
     this.activeTab = evt.index;
-    if (evt.index == 0) {
-      this.globalEventsManager.selectedParentId = 3;
-      this.globalEventsManager.selectedReferenceType = "Category";
-    } else if (evt.index == 1) {
-      this.globalEventsManager.selectedParentId = 3;
-      this.globalEventsManager.selectedReferenceWithCategoryType = "Symptom";
-      this.categoryDropdown.getAllCategories(3);
-    } else if (evt.index == 2) {
-      this.globalEventsManager.selectedParentId = 4;
-      this.globalEventsManager.selectedReferenceType = "Category";
-      this.referenceDetails.parentId = 4;
-    } else if (evt.index == 3) {
-      this.globalEventsManager.selectedParentId = 4;
-      this.globalEventsManager.selectedReferenceWithCategoryType = "Allergy";
-      this.categoryDropdown.getAllCategories(4);
-    } else if (evt.index == 4) {
-      this.globalEventsManager.selectedReferenceType = "Vaccine";
-    } else if (evt.index == 5) {
-      this.globalEventsManager.selectedReferenceType = "MedicalHistory";
-    }  else if (evt.index == 6) {
-      this.globalEventsManager.selectedReferenceType = "SocialHistory";
-    } else if (evt.index == 7) {
-      this.globalEventsManager.selectedReferenceType = "PayerType";
-    } else if (evt.index == 8) {
-      this.globalEventsManager.selectedReferenceType = "DoctorOrderType";
-    } else if (evt.index == 9) {
-      this.globalEventsManager.selectedReferenceType = "DoctorOrderPriority";
-    } else if (evt.index == 10) {
-      this.globalEventsManager.selectedReferenceType = "DoctorOrderKind";
-    } else if (evt.index == 11) {
-      this.globalEventsManager.selectedReferenceType = "Department";
-    } else if (evt.index == 13) {
-      this.globalEventsManager.selectedParentId = Constants.CATEGORY_MEDICINE;
-      this.globalEventsManager.selectedReferenceType = "Category";
-      this.referenceDetails.parentId = Constants.CATEGORY_MEDICINE;
-    } else if (evt.index == 14) {
-      this.globalEventsManager.selectedParentId = Constants.CATEGORY_MEDICINE;
-      this.categoryDropdown.getAllCategories(Constants.CATEGORY_MEDICINE);
-    } else if (evt.index == 15) {
-      this.globalEventsManager.selectedParentId = Constants.CATEGORY_SERVICE_TARIF;
-      this.globalEventsManager.selectedReferenceType = "Category";
-      this.referenceDetails.parentId = Constants.CATEGORY_SERVICE_TARIF;
-    } else if (evt.index == 16) {
-      this.globalEventsManager.selectedReferenceType = "LabTestMethod";
-    } else if (evt.index == 17) {
-      this.globalEventsManager.selectedReferenceType = "LabTestUnit";
-    } else if (evt.index == 18) {
-      this.labTestList.getAllLabTests();
-    } else if (evt.index == 19) {
-      this.hospitalLocationtList.getAllHospitalLocations();
-    } 
+    setTimeout(() => {
+        if (evt.index == 0) {
+          this.globalEventsManager.selectedParentId = 3;
+          this.globalEventsManager.selectedReferenceType = "Category";
+          this.referenceList.updateCols('SYMPTOM_GROUP');
+        } else if (evt.index == 1) {
+          this.globalEventsManager.selectedParentId = 3;
+          this.globalEventsManager.selectedReferenceWithCategoryType = "Symptom";
+          this.categoryDropdown.getAllCategories(3);
+          this.referenceWithCategoryList.updateCols('SYMPTOM');
+          this.referenceWithCategoryList.getAll();
+        } else if (evt.index == 2) {
+          this.globalEventsManager.selectedParentId = 4;
+          this.globalEventsManager.selectedReferenceType = "Category";
+          this.referenceDetails.parentId = 4;
+          this.referenceList.updateCols('ALLERGY_TYPE');
+        } else if (evt.index == 3) {
+          this.globalEventsManager.selectedParentId = 4;
+          this.globalEventsManager.selectedReferenceWithCategoryType = "Allergy";
+          this.categoryDropdown.getAllCategories(4);
+          this.referenceWithCategoryList.updateCols('ALLERGY');
+          this.referenceWithCategoryList.getAll();
+        } else if (evt.index == 4) {
+          this.globalEventsManager.selectedReferenceType = "Vaccine";
+          this.referenceList.updateCols('VACCINE');
+        } else if (evt.index == 5) {
+          this.globalEventsManager.selectedReferenceType = "MedicalHistory";
+          this.referenceList.updateCols('MEDICAL_HISTORY');
+        }  else if (evt.index == 6) {
+          this.globalEventsManager.selectedReferenceType = "SocialHistory";
+          this.referenceList.updateCols('SOCIAL_HISTORY');
+        } else if (evt.index == 7) {
+          this.globalEventsManager.selectedReferenceType = "PayerType";
+          this.referenceList.updateCols('PAYER_TYPE');
+        } else if (evt.index == 8) {
+          this.globalEventsManager.selectedReferenceType = "DoctorOrderType";
+          this.referenceList.updateCols('DOCTOR_ORDER_TYPE');
+        } else if (evt.index == 9) {
+          this.globalEventsManager.selectedReferenceType = "DoctorOrderPriority";
+          this.referenceList.updateCols('DOCTOR_ORDER_PRIORITY');
+        } else if (evt.index == 10) {
+          this.globalEventsManager.selectedReferenceType = "DoctorOrderKind";
+          this.referenceList.updateCols('DOCTOR_ORDER_KIND');
+        } else if (evt.index == 11) {
+          this.globalEventsManager.selectedReferenceType = "Department";
+          this.referenceList.updateCols('DEPARTMENT');
+        } else if (evt.index == 13) {
+          this.globalEventsManager.selectedParentId = Constants.CATEGORY_MEDICINE;
+          this.globalEventsManager.selectedReferenceType = "Category";
+          this.referenceDetails.parentId = Constants.CATEGORY_MEDICINE;
+          this.referenceList.updateCols('MANUFACTURER');
+        } else if (evt.index == 14) {
+          this.globalEventsManager.selectedParentId = Constants.CATEGORY_MEDICINE;
+          this.categoryDropdown.getAllCategories(Constants.CATEGORY_MEDICINE);
+        } else if (evt.index == 15) {
+          this.globalEventsManager.selectedParentId = Constants.CATEGORY_SERVICE_TARIF;
+          this.globalEventsManager.selectedReferenceType = "Category";
+          this.referenceDetails.parentId = Constants.CATEGORY_SERVICE_TARIF;
+          this.referenceList.updateCols('SERVICE');
+        } else if (evt.index == 16) {
+          this.globalEventsManager.selectedReferenceType = "LabTestMethod";
+          this.referenceList.updateCols('LAB_TEST_METHOD');
+        } else if (evt.index == 17) {
+          this.globalEventsManager.selectedReferenceType = "LabTestUnit";
+          this.referenceList.updateCols('LAB_TEST_UNIT');
+        } else if (evt.index == 18) {
+          this.labTestList.getAllLabTests();
+        } else if (evt.index == 19) {
+          this.hospitalLocationtList.getAllHospitalLocations();
+        } else if (evt.index == 20) {
+        } 
+    
+     }, 0);
   }
 }

@@ -23,6 +23,7 @@ export class ReferenceList implements OnInit, OnDestroy {
   hiddenMenu: boolean = false;
   @Output() referenceIdEvent = new EventEmitter<string>();
   
+  REFERENCE_LIST_LABEL: string;
   REFERENCE_LIST: string;
   
   constructor
@@ -76,14 +77,14 @@ export class ReferenceList implements OnInit, OnDestroy {
      });
     
     
-    this.updateCols();
+    this.updateCols(this.REFERENCE_LIST_LABEL);
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      this.updateCols();
+      this.updateCols(this.REFERENCE_LIST_LABEL);
     });
   }
  
   
-  updateCols() {
+  updateCols(category: string) {
     for (var index in this.cols) {
       let col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
@@ -91,9 +92,13 @@ export class ReferenceList implements OnInit, OnDestroy {
       });
     }
     
-    let refList = "COMMON." + this.referenceType.toUpperCase() + "_LIST";
+    let refList = "COMMON." + category + "_LIST";
     this.translate.get(refList).subscribe((res: string) => {
         this.REFERENCE_LIST = res;
+    });
+    
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols(category);
     });
   }
  

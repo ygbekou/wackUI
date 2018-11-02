@@ -6,6 +6,7 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { User, Schedule, Employee, HospitalLocation } from '../models';  
 import { GenericService } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-hospitalLocation-list',
@@ -17,15 +18,12 @@ export class HospitalLocationList implements OnInit, OnDestroy {
   hospitalLocations: HospitalLocation[] = [];
   cols: any[];
   
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
-  
   @Output() hospitalLocationIdEvent = new EventEmitter<string>();
   
   constructor
     (
     private genericService: GenericService,
+    private translate: TranslateService,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
@@ -36,11 +34,11 @@ export class HospitalLocationList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'name', header: 'Name' },
-            { field: 'address', header: 'Address' },
-            { field: 'city', header: 'City' },
-            { field: 'countryName', header: 'Country' },
-            { field: 'status', header: 'Status' }
+            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
+            { field: 'address', header: 'Address', headerKey: 'COMMON.ADDRESS' },
+            { field: 'city', header: 'City', headerKey: 'COMMON.CITY' },
+            { field: 'countryName', header: 'Country', headerKey: 'COMMON.COUNTRY' },
+            { field: 'status', header: 'Status', headerKey: 'COMMON.STATUS' }
         ];
     
     this.route
@@ -60,9 +58,26 @@ export class HospitalLocationList implements OnInit, OnDestroy {
               error => console.log(error),
               () => console.log('Get all hospitalLocations complete'));
           });
+  
+
+      this.updateCols();
+      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+          this.updateCols();
+      });
   }
  
   
+  updateCols() {
+    for (var index in this.cols) {
+      let col = this.cols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+
+  }
+ 
+ 
   ngOnDestroy() {
     this.hospitalLocations = null;
   }

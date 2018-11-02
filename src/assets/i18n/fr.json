@@ -114,6 +114,11 @@
     "IMPRESSION": "Impression",
     "RESULT_DATE": "Date de Collection",
     "DISPATCH_DATE": "Date de Finalisation",
+    "GROUP": "Groupe",
+    "NORMAL_RANGE_MINIMUM": "Plage normale minimale",
+    "NORMAL_RANGE_MAXIMUM": "Plage normale maximale",
+    "CRITICAL_LOW": "Critical Low",
+    "CRITICAL_HIGH": "Criical Haut",
     
     "BILL_DATE": "Date de facturation",    
 	"DUE_DATE": "Date d'échéance", 
@@ -194,6 +199,7 @@
 	"DIAGNOSIS": "Diagnostic",
 	"INSTRUCTIONS": "Instructions",
 	"BED_NUMBER": "Numero de Lit",
+	"MANUFACTURER": "Fabricant",
 	
 	"WARD_LIST": "Liste des quartiers",
 	"CATEGORY_LIST": "Liste de categorie",
@@ -201,6 +207,12 @@
 	"FLOOR_LIST": "Liste d'étage",
 	"ROOM_LIST": "Liste de chambre",
 	"BED_LIST": "Liste de lit",
+	"SYMPTOM_LIST": "Liste de Symptom",
+	"SYMPTOM_GROUP_LIST": "Liste de Groupe de Symptome",
+	"ALLERGY_TYPE_LIST": "Liste de type d''allergy",
+	"LAB_TEST_LIST": "Liste de Lab/Test",
+	"LAB_TEST_UNIT_LIST": "Liste de Lab/Test Unit",
+	"LAB_TEST_METHOD_LIST": "Liste de Lab/Test Method",
 	
     "CLEAR": "Effacer",
     "DELETE": "Supprimer",
