@@ -151,14 +151,15 @@ export class AdminReference implements OnInit, OnDestroy {
         } else if (evt.index == 11) {
           this.globalEventsManager.selectedReferenceType = "Department";
           this.referenceList.updateCols('DEPARTMENT');
-        } else if (evt.index == 13) {
+        } else if (evt.index == 12) {
           this.globalEventsManager.selectedParentId = Constants.CATEGORY_MEDICINE;
           this.globalEventsManager.selectedReferenceType = "Category";
           this.referenceDetails.parentId = Constants.CATEGORY_MEDICINE;
           this.referenceList.updateCols('MANUFACTURER');
-        } else if (evt.index == 14) {
+        } else if (evt.index == 13) {
           this.globalEventsManager.selectedParentId = Constants.CATEGORY_MEDICINE;
           this.categoryDropdown.getAllCategories(Constants.CATEGORY_MEDICINE);
+          this.referenceList.updateCols('MEDICINE_TYPE');
         } else if (evt.index == 15) {
           this.globalEventsManager.selectedParentId = Constants.CATEGORY_SERVICE_TARIF;
           this.globalEventsManager.selectedReferenceType = "Category";

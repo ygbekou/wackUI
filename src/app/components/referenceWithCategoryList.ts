@@ -51,7 +51,7 @@ export class ReferenceWithCategoryList implements OnInit, OnDestroy {
     });
   }
  
-  
+   
   updateCols(category: string) {
     for (var index in this.cols) {
       let col = this.cols[index];
@@ -63,6 +63,10 @@ export class ReferenceWithCategoryList implements OnInit, OnDestroy {
     let refList = "COMMON." + category + "_LIST";
     this.translate.get(refList).subscribe((res: string) => {
         this.REFERENCE_WITH_CATEGORY_LIST = res;
+    });
+    
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols(category);
     });
   }
  

@@ -7,6 +7,8 @@ import { DoctorDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { GenericService, AdmissionService, GlobalEventsManager, VisitService } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-discharge-details',
@@ -15,8 +17,6 @@ import { GenericService, AdmissionService, GlobalEventsManager, VisitService } f
 })
 export class DischargeDetails implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   discharge: Discharge = new Discharge();
   medicineCols: any[];
   diagnosisCols: any[];
@@ -25,10 +25,11 @@ export class DischargeDetails implements OnInit, OnDestroy {
   prescriptionMedicines: PrescriptionMedicine[] = [];
   diagnoses: AdmissionDiagnosis[] = [];
   
-  doctorDropdown: DoctorDropdown;
   
   @Input() admission: Admission;
   @Input() visit: Visit;
+  
+  messages: Message[] = [];
   
   constructor
     (
@@ -36,28 +37,28 @@ export class DischargeDetails implements OnInit, OnDestroy {
       private genericService: GenericService,
       private admissionService: AdmissionService,
       private visitService: VisitService,
-      private dctDropdown: DoctorDropdown,
+      private translate: TranslateService,
+      private doctorDropdown: DoctorDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
     ) {
-    this.doctorDropdown = this.dctDropdown;
   }
 
   ngOnInit(): void {
 
      this.medicineCols = [
-            { field: 'medicine', header: 'Name' },
-            { field: 'type', header: 'Type' },
-            { field: 'dosage', header: 'Dosage' },
-            { field: 'quantity', header: 'Quantity' },
-            { field: 'frequency', header: 'Frequency' },
-            { field: 'numberOfDays', header: 'Number Of Days' }
+            { field: 'medicine', header: 'Name', headerKey: 'COMMON.NAME' },
+            { field: 'type', header: 'Type', headerKey: 'COMMON.TYPE' },
+            { field: 'dosage', header: 'Dosage', headerKey: 'COMMON.DOSAGE' },
+            { field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY' },
+            { field: 'frequency', header: 'Frequency', headerKey: 'COMMON.FREQUENCY' },
+            { field: 'numberOfDays', header: 'Number Of Days', headerKey: 'COMMON.NUMBER_OF_DAYS' }
         ];
     this.diagnosisCols = [
-            { field: 'name', parent:'diagnosis', header: 'Name' },
-            { field: 'description', parent:'diagnosis', header: 'Description' },
-            { field: 'instructions', header: 'Instructions' }
+            { field: 'name', parent:'diagnosis', header: 'Name', headerKey: 'COMMON.NAME' },
+            { field: 'description', parent:'diagnosis', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
+            { field: 'instructions', header: 'Instructions', headerKey: 'COMMON.INSTRUCTIONS' }
         ];
     
     this.genericService.getActiveElements('dischargereason')
@@ -116,7 +117,30 @@ export class DischargeDetails implements OnInit, OnDestroy {
       },
       error => console.log(error),
       () => console.log('Get all diagnoses complete'));
+  
+
+    this.updateCols();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateCols();
+    });
   }
+ 
+ updateCols() {
+    for (var index in this.medicineCols) {
+      let col = this.medicineCols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+   
+   for (var index in this.diagnosisCols) {
+      let col = this.diagnosisCols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+  }
+  
   
   ngOnDestroy() {
     this.discharge = null;
@@ -125,7 +149,7 @@ export class DischargeDetails implements OnInit, OnDestroy {
   save() {
     
     try {
-      this.error = '';
+      this.messages = [];
       if (this.visit && this.visit.id > 0) {
         this.discharge.visit = this.visit;
       }
@@ -134,16 +158,19 @@ export class DischargeDetails implements OnInit, OnDestroy {
       }
       
       let dischargeReasonId = this.discharge.dischargeReason;
-      alert(dischargeReasonId.id)
       
       this.genericService.save(this.discharge, 'Discharge')
         .subscribe(result => {
           if (result.id > 0) {
-            this.discharge = result
+            this.discharge = result;
+            this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe(res => {
+              this.messages.push({severity:Constants.SUCCESS, summary:res['COMMON.SAVE'], detail:res['MESSAGE.SAVE_SUCCESS']});
+            });
           }
           else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-            this.displayDialog = true;
+            this.translate.get(['COMMON.SAVE', 'MESSAGE.UNSAVE_SUCCESS']).subscribe(res => {
+              this.messages.push({severity:Constants.SUCCESS, summary:res['COMMON.SAVE'], detail:res['MESSAGE.UNSAVE_SUCCESS']});
+            });
           }
         })
     }

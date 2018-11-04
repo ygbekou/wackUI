@@ -11,6 +11,7 @@ export class Appointment {
   patient: Patient = new Patient();
   hospitalLocation: HospitalLocation = new HospitalLocation();
   appointmentDate: Date;
+  appointmentDateStr: string;
   beginTime: string;
   endTime: string;
   problem: string;

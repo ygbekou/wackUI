@@ -208,11 +208,37 @@
 	"ROOM_LIST": "Room List",
 	"BED_LIST": "BED List",
 	"SYMPTOM_LIST": "Symptom List",
+	"ALLERGY_LIST": "Allergy List",
 	"SYMPTOM_GROUP_LIST": "Symptom Group List",
 	"ALLERGY_TYPE_LIST": "Allergy Type List",
 	"LAB_TEST_LIST": "Lab Test List",
 	"LAB_TEST_UNIT_LIST": "Lab Test Unit List",
 	"LAB_TEST_METHOD_LIST": "Lab Test Method List",
+	"VACCINE_LIST": "Vaccine List",
+	"MEDICAL_HISTORY_LIST": "Medical History List",
+	"SOCIAL_HISTORY_LIST": "Social History List",
+	"PAYER_TYPE_LIST": "Payer Type List",
+	"DOCTOR_ORDER_TYPE_LIST": "Doctor Order Type List",
+	"DOCTOR_ORDER_KIND_LIST": "Doctor Order Kind List",
+	"DEPARTMENT_LIST": "Department List",
+	"MANUFACTURER_LIST": "Manufacturer List",
+	"MEDICINE_TYPE_LIST": "Medicine Type List",
+	"ENQUIRY_LIST": "Enquiry List",
+	
+	"ADMITTANCE_REASON": "Admittance Reason",
+	"TREATMENT_SUMMARY": "Treatment Summary",
+	"DISCHARGE_DATETIME": "Discharge Date/Time",
+	"PHYSICIAN_APPROVED": "Physician Approved",
+	"DISCHARGE_DOCTOR": "Discharge Doctor",
+	"DISCHARGE_REASON": "Discharge Reason",
+	"NEXT_CHECKUP_DATE": "Next Checkup Date",
+	"CLIENT_CONSENT_APPROVAL": "Client Consent Approval",
+	"FURTHER_TREATMENT_PLAN": "Further Treatment Plan",
+	"DISCHARGE_NOTES": "Discharge Notes",
+	
+	"READ": "Read / Unread",
+	"CHECKED_BY": "Read By",
+	"ENQUIRY_DATETIME": "Enquiry Date / Time",
 	
     "CLEAR": "Clear",
     "DELETE": "Delete",
@@ -222,7 +248,8 @@
     "SEARCH": "Search",
     "PRINT": "Print",
     "DONE": "Done",
-    "CLOSE": "Close"
+    "CLOSE": "Close",
+    "MARK_AS_READ": "Mark as read"
 
   },
   "MESSAGE": {
@@ -231,6 +258,8 @@
   	"TRANFER_DATE_FAILED": "The Transfer Date should be greater than the current assignment Date.",
   	"APPOINTMENT_DISPLAY_FAILED": "Please Select a Department and a Doctor to add an appointment.",
     "SAVE_SUCCESS": "Save was successful",
-    "SAVE_UNSUCCESS": "Save was unsuccessful"
+    "SAVE_UNSUCCESS": "Save was unsuccessful",
+    "READ_SUCCESS": "Read was successful",
+    "READ_UNSUCCESS": "Read was unsuccessful"
   }
 }

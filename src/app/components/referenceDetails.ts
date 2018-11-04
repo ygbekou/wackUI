@@ -1,49 +1,42 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Reference } from '../models/reference';
-import { CategoryDropdown } from './dropdowns';
 import { Constants } from '../app.constants';
 import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { User } from '../models/user';  
 import { GenericService, GlobalEventsManager } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-reference-details',
   templateUrl: '../pages/referenceDetails.html',
-  providers: [GenericService, CategoryDropdown]
+  providers: [GenericService]
   
 })
 export class ReferenceDetails implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   reference: Reference = new Reference();
   category: Reference = new Reference();
   referenceType: string = null;
   parentId: number = null;
-  categoryDropdown: CategoryDropdown;
   
   hiddenMenu: boolean = false;
-  
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
+  messages: Message[] = [];
   
   @Input() viewOnly: boolean;
-  
+ 
   constructor
     (
       private genericService: GenericService,
-      private categDropdown: CategoryDropdown,
+      private translate: TranslateService,
       private globalEventsManager: GlobalEventsManager,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
     ) {
-      this.categoryDropdown = categDropdown;
-      this.categoryDropdown.getGroupCategories();
       this.reference = new Reference();
   }
 
@@ -74,10 +67,7 @@ export class ReferenceDetails implements OnInit, OnDestroy {
                 if (result.id > 0) {
                   this.reference = result
                 }
-                else {
-                  this.error = Constants.SAVE_UNSUCCESSFUL;
-                  this.displayDialog = true;
-                }
+                
               })
           }
         });
@@ -89,14 +79,16 @@ export class ReferenceDetails implements OnInit, OnDestroy {
   }
 
   getReference(referenceId: number, referenceType: string) {
+    this.messages = [];
     this.genericService.getOne(referenceId, referenceType)
         .subscribe(result => {
       if (result.id > 0) {
-        this.reference = result
+        this.reference = result;
       }
       else {
-        this.error = Constants.SAVE_UNSUCCESSFUL;
-        this.displayDialog = true;
+        this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
+          this.messages.push({severity:Constants.ERROR, summary:res['COMMON.READ'], detail:res['MESSAGE.READ_FAILED']});
+        });
       }
     })
   }
@@ -108,8 +100,8 @@ export class ReferenceDetails implements OnInit, OnDestroy {
   }
   
   save() {
+    this.messages = [];
     try {
-      this.error = '';
       this.reference.parent = new Reference();
       this.reference.parent.id = this.parentId;
       if (this.category.id > 0) {
@@ -120,11 +112,15 @@ export class ReferenceDetails implements OnInit, OnDestroy {
       this.genericService.save(this.reference, this.referenceType)
         .subscribe(result => {
           if (result.id > 0) {
-            this.reference = result
+            this.reference = result;
+            this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe(res => {
+              this.messages.push({severity:Constants.SUCCESS, summary:res['COMMON.SAVE'], detail:res['MESSAGE.SAVE_SUCCESS']});
+            });
           }
           else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-            this.displayDialog = true;
+            this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_UNSUCCESS']).subscribe(res => {
+              this.messages.push({severity:Constants.SUCCESS, summary:res['COMMON.SAVE'], detail:res['MESSAGE.SAVE_UNSUCCESS']});
+            });
           }
         })
     }

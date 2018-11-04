@@ -119,7 +119,7 @@ export class VisitDetails implements OnInit, OnDestroy {
       this.visitService.saveVisit(this.visit)
         .subscribe(result => {
           if (result.id > 0) {
-            this.visit = result
+            this.visit = result;
             this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
           }
           else { 

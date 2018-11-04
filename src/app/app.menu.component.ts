@@ -47,6 +47,8 @@ export class AppMenuComponent implements OnInit {
       {
         label: 'Rendez-vous', icon: 'fa fa-calendar',
         items: [
+          {label: 'Ajouter une requete', icon: 'fa fa-plus', routerLink: ['/admin/enquiryDetails']},
+          {label: 'Anciennes requete', icon: 'fa fa-plus', routerLink: ['/admin/enquiryList']},
           {label: 'Ajouter un horaire', icon: 'fa fa-plus', routerLink: ['/admin/scheduleDetails']},
           {label: 'Liste des horaires', icon: 'fa fa-search', routerLink: ['/admin/scheduleList']},
           {label: 'Les Rendez-vous', icon: 'fa fa-calendar-check-o', routerLink: ['/admin/appointmentScheduler']} 
@@ -81,6 +83,19 @@ export class AppMenuComponent implements OnInit {
         label: 'Pharmacy', icon: 'fa fa-ambulance',
         items: [
           {label: 'Commander Medecine', icon: 'fa fa-plus', routerLink: ['/admin/purchaseOrderDetails']},
+          {label: 'Liste des commandes', icon: 'fa fa-search', routerLink: ['/admin/purchaseOrderList']},
+          {label: 'Reception de commande', icon: 'fa fa-plus', routerLink: ['/admin/receiveOrderDetails']},
+          {label: 'Liste des receptions', icon: 'fa fa-search', routerLink: ['/admin/receiveOrderList']},
+          {label: 'Ajouter une vente', icon: 'fa fa-plus', routerLink: ['/admin/patientSaleDetails']},
+          {label: 'Liste des ventes', icon: 'fa fa-search', routerLink: ['/admin/patientSaleList']},
+          {label: 'Ajouter un retour achat', icon: 'fa fa-plus', routerLink: ['/admin/saleReturnDetails']},
+          {label: 'Liste des retours', icon: 'fa fa-search', routerLink: ['/admin/saleReturnList']}
+        ]
+      },
+      {
+        label: 'Store', icon: 'fa fa-shopping-cart',
+        items: [
+          {label: 'Commander Produit', icon: 'fa fa-plus', routerLink: ['/admin/purchaseOrderDetails']},
           {label: 'Liste des commandes', icon: 'fa fa-search', routerLink: ['/admin/purchaseOrderList']},
           {label: 'Reception de commande', icon: 'fa fa-plus', routerLink: ['/admin/receiveOrderDetails']},
           {label: 'Liste des receptions', icon: 'fa fa-search', routerLink: ['/admin/receiveOrderList']},

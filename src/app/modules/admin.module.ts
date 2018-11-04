@@ -101,6 +101,9 @@ import {PatientSaleLookup} from '../components/includes/patientSaleLookup';
 import {VisitAdmLookup} from '../components/includes/visitAdmLookup';
 import {PurchaseOrderLookup} from '../components/includes/purchaseOrderLookup';
 
+import {EnquiryDetails} from '../components/enquiryDetails';
+import {EnquiryList} from '../components/enquiryList';
+
 const routes: Routes = [
   {path: 'adminMain', component: AdminMain},
   {path: 'adminAppointment', component: AdminAppointment},
@@ -171,6 +174,8 @@ const routes: Routes = [
   {path: 'deathReportList', component: DeathReportList},
   {path: 'hospitalLocationDetails', component: HospitalLocationDetails},
   {path: 'hospitalLocationList', component: HospitalLocationList},
+  {path: 'enquiryDetails', component: EnquiryDetails},
+  {path: 'enquiryList', component: EnquiryList},
 ];
 
 // AoT requires an exported function for factories
@@ -207,7 +212,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     InvestigationList, PurchaseOrderDetails, PurchaseOrderList, ReceiveOrderDetails, ReceiveOrderList,
     PatientSaleDetails, PatientSaleList, SaleReturnDetails, SaleReturnList, BirthReportDetails, BirthReportList,
     DeathReportDetails, DeathReportList, HospitalLocationDetails, HospitalLocationList, PatientLookup, VisitAdmLookup, 
-    PurchaseOrderLookup, PatientSaleLookup, HospitalDetails],
+    PurchaseOrderLookup, PatientSaleLookup, HospitalDetails, EnquiryDetails, EnquiryList],
 
   providers: [CategoryDropdown, PackageDropdown]
 })

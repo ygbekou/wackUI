@@ -90,6 +90,7 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
       return;
     }
     try {
+      console.info(this.appointment.appointmentDate)
       this.genericService.save(this.appointment, "Appointment")
         .subscribe(result => {
           if (result.id > 0) {

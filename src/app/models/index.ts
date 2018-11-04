@@ -36,4 +36,5 @@ export * from './bill';
 export * from './service';
 export * from './packageService';
 export * from './report';
+export * from './enquiry';
 

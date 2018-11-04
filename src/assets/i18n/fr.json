@@ -208,11 +208,37 @@
 	"ROOM_LIST": "Liste de chambre",
 	"BED_LIST": "Liste de lit",
 	"SYMPTOM_LIST": "Liste de Symptom",
+	"ALLERGY_LIST": "Liste d''Allergie",
 	"SYMPTOM_GROUP_LIST": "Liste de Groupe de Symptome",
 	"ALLERGY_TYPE_LIST": "Liste de type d''allergy",
 	"LAB_TEST_LIST": "Liste de Lab/Test",
 	"LAB_TEST_UNIT_LIST": "Liste de Lab/Test Unit",
 	"LAB_TEST_METHOD_LIST": "Liste de Lab/Test Method",
+	"VACCINE_LIST": "Liste de Vaccin",
+	"MEDICAL_HISTORY_LIST": "Liste des antécédents médicaux",
+	"SOCIAL_HISTORY_LIST": "Liste d'histoire sociale",
+	"PAYER_TYPE_LIST": "Liste de Type de Payeur",
+	"DOCTOR_ORDER_TYPE_LIST": "Liste des types d''ordonnances de médecin",
+	"DOCTOR_ORDER_KIND_LIST": "Liste des Manieres d''ordonnances de médecin",
+	"DEPARTMENT_LIST": "Liste de Department",
+	"MANUFACTURER_LIST": "Liste de fabricant",
+	"MEDICINE_TYPE_LIST": "Liste de type de medicament",
+	"ENQUIRY_LIST": "Liste de requete",
+	
+	"ADMITTANCE_REASON": "Admittance Reason",
+	"TREATMENT_SUMMARY": "Résumé du traitement",
+	"DISCHARGE_DATETIME": "Date / heure de decharge",
+	"PHYSICIAN_APPROVED": "Médecin approuvé",
+	"DISCHARGE_DOCTOR": "Docteur de décharge",
+	"DISCHARGE_REASON": "Motif de decharge",
+	"NEXT_CHECKUP_DATE": "Date de la prochaine vérification",
+	"CLIENT_CONSENT_APPROVAL": "Approbation du consentement du client",
+	"FURTHER_TREATMENT_PLAN": "Plan de traitement supplémentaire",
+	"DISCHARGE_NOTES": "Notes de decharge",
+	
+	"READ": "Lu / Non lu",
+	"CHECKED_BY": "Lu par",
+	"ENQUIRY_DATETIME": "Date / Heure de requete",
 	
     "CLEAR": "Effacer",
     "DELETE": "Supprimer",
@@ -222,7 +248,8 @@
     "SEARCH": "Chercher",
     "PRINT": "Imprimer",
     "DONE": "Done",
-    "CLOSE": "Fermer"
+    "CLOSE": "Fermer",
+    "MARK_AS_READ": "Marquer comme lu"
     
   },
   "MESSAGE": {
@@ -231,6 +258,8 @@
   	"TRANFER_DATE_FAILED": "La date de transfer doit etre plus grande que l'ancienne date.",
   	"APPOINTMENT_DISPLAY_FAILED": "Pardon Selectionner un Department et un Doctor pour ajouter un appointment.",
   	"SAVE_SUCCESS": "Sauvegarde a marche",
-  	"SAVE_UNSUCCESS": "Sauvegarde n''a pas marche"
+  	"SAVE_UNSUCCESS": "Sauvegarde n''a pas marche",
+  	"READ_SUCCESS": "Read was successful",
+    "READ_UNSUCCESS": "Read was unsuccessful"
   }
 }
