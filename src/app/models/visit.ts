@@ -10,6 +10,7 @@ export class Visit {
   chiefOfComplain: string;
   patient: Patient;
   pckage: Package;
+  doctor: Employee;
   visitDatetime: Date = new Date();
   status: number;
   isHealthCheckupSel: number;

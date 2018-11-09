@@ -58,7 +58,8 @@ export class AppMenuComponent implements OnInit {
         label: 'Visites', icon: ' fa fa-user-md',
         items: [
           {label: 'Ajouter une visite', icon: 'fa fa-plus', routerLink: ['/admin/visitDetails']},
-          {label: 'Liste des visites', icon: 'fa fa-search', routerLink: ['/admin/visitList']} 
+          {label: 'Liste des visites', icon: 'fa fa-search', routerLink: ['/admin/visitList']},
+          {label: "Liste d'attente", icon: 'fa fa-search', routerLink: ['/admin/waitingList']},
         ]
       },
       {

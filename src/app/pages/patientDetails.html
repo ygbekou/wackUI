@@ -122,10 +122,11 @@
 			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="ui-grid-col-2">
 					<img class="thumb" src="assets/images/User/{{patient.user.picture}}" alt="" />
+					<img class="thumb" [src]="url" alt="" />
 				</div>
 				<div class="ui-grid-col-12 ui-sm-12">
 					<div class="form-group">
-						<input type="file" #uploadFile [attr.multiple]="multiple ? true : null">
+						<input type="file" (change)="readUrl($event)" #uploadFile [attr.multiple]="multiple ? true : null">
 					</div>
 				</div>
 			</div>

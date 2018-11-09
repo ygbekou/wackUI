@@ -96,6 +96,7 @@
     "VISIT_DATE": "Visit Date",
     "VISIT_LIST": "VISIT LIST",
     "BMI": "BMI",
+    "PACKAGE": "Package",
     
     "INVESTIGATION_DATETIME": "Invest. Date Time",
     "DESCRIPTION": "Description",
@@ -128,6 +129,7 @@
 	"TAXES": "Taxes",
 	"DISCOUNT": "Discount",
 	"GRANDTOTAL": "Grand Total",
+	"NET_AMOUNT": "Net Amount",
 	"AMOUNT_PAID": "Amount Paid",
 	"AMOUNT_DUE": "Amount Due",
 	"QUANTITY": "Quantity",
@@ -224,6 +226,7 @@
 	"MANUFACTURER_LIST": "Manufacturer List",
 	"MEDICINE_TYPE_LIST": "Medicine Type List",
 	"ENQUIRY_LIST": "Enquiry List",
+	"WAITING_LIST": "Waiting List",
 	
 	"ADMITTANCE_REASON": "Admittance Reason",
 	"TREATMENT_SUMMARY": "Treatment Summary",
@@ -249,7 +252,9 @@
     "PRINT": "Print",
     "DONE": "Done",
     "CLOSE": "Close",
-    "MARK_AS_READ": "Mark as read"
+    "MARK_AS_READ": "Mark as read",
+    "CANCEL": "Cancel",
+    "CONFIRM": "Confirm"
 
   },
   "MESSAGE": {
@@ -260,6 +265,7 @@
     "SAVE_SUCCESS": "Save was successful",
     "SAVE_UNSUCCESS": "Save was unsuccessful",
     "READ_SUCCESS": "Read was successful",
-    "READ_UNSUCCESS": "Read was unsuccessful"
+    "READ_UNSUCCESS": "Read was unsuccessful",
+    "OVERLAP_SCHEDULE": "Two schedules are overlaping"
   }
 }

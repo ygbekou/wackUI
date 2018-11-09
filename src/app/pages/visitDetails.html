@@ -34,6 +34,33 @@
 					</div>
 				</div>
 			</div>
+			
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label for="package">{{ 'COMMON.PACKAGE' | translate }}<font color="red">*</font></label>
+						<p-autoComplete [(ngModel)]="visit.pckage" #package="ngModel" required
+							(onDropdownClick)="packageDropdown.handleDropdownClick($event)"
+							[suggestions]="packageDropdown.filteredPackages" [dropdown]="true"
+							(completeMethod)="packageDropdown.filter($event)"
+							name="name" field="name" [size]="30" placeholder="" [minLength]="1">
+						</p-autoComplete>
+						<p-message *ngIf="f.submitted && package.invalid" severity="error" text="Field is required"></p-message>
+					</div>
+				</div>
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label for="doctor">{{ 'COMMON.DOCTOR' | translate }}<font color="red">*</font></label>
+						<p-autoComplete [(ngModel)]="visit.doctor" #doctor="ngModel" required
+							(onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
+							[suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
+							(completeMethod)="doctorDropdown.filter($event)"
+							name="name" field="name" [size]="30" placeholder="" [minLength]="1">
+						</p-autoComplete>
+						<p-message *ngIf="f.submitted && pdoctor.invalid" severity="error" text="Field is required"></p-message>
+					</div>
+				</div>
+			</div>
 		</div>
 		<p-tabView (onChange)="onTabChange($event)"> 
 			<p-tabPanel header="{{ 'COMMON.VITAL_HISTORY' | translate }}"> 

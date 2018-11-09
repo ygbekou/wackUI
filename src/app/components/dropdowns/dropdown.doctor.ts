@@ -26,7 +26,7 @@ export class DoctorDropdown {
   
   private getAllDoctors(): void {
     let parameters: string [] = []; 
-    parameters.push('e.user.userGroup.id = |userGroupId|1|Long');
+    parameters.push('e.user.userGroup.id = |userGroupId|2|Long');
     
     this.genericService.getAllByCriteria('Employee', parameters)
       .subscribe((data: Employee[]) => 

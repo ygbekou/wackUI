@@ -96,6 +96,7 @@
     "VISIT_DATE": "Date de Visite",
     "VISIT_LIST": "LIST DES VISITES",
     "BMI": "BMI",
+    "PACKAGE": "Paquet",
     
     "INVESTIGATION_DATETIME": "Date/Heure Invest.",
     "DESCRIPTION": "Description",
@@ -128,6 +129,7 @@
 	"TAXES": "Taxes",
 	"DISCOUNT": "Remise",
 	"GRANDTOTAL": "Somme finale",
+	"NET_AMOUNT": "Montant Net",
 	"AMOUNT_PAID": "Montant paye",
 	"AMOUNT_DUE": "Montant restant",
 	"QUANTITY": "Quantite",
@@ -224,6 +226,7 @@
 	"MANUFACTURER_LIST": "Liste de fabricant",
 	"MEDICINE_TYPE_LIST": "Liste de type de medicament",
 	"ENQUIRY_LIST": "Liste de requete",
+	"WAITING_LIST": "Liste d'attente",
 	
 	"ADMITTANCE_REASON": "Admittance Reason",
 	"TREATMENT_SUMMARY": "Résumé du traitement",
@@ -249,7 +252,9 @@
     "PRINT": "Imprimer",
     "DONE": "Done",
     "CLOSE": "Fermer",
-    "MARK_AS_READ": "Marquer comme lu"
+    "MARK_AS_READ": "Marquer comme lu",
+    "CANCEL": "Annuler",
+    "CONFIRM": "Confirmer"
     
   },
   "MESSAGE": {
@@ -260,6 +265,7 @@
   	"SAVE_SUCCESS": "Sauvegarde a marche",
   	"SAVE_UNSUCCESS": "Sauvegarde n''a pas marche",
   	"READ_SUCCESS": "Read was successful",
-    "READ_UNSUCCESS": "Read was unsuccessful"
+    "READ_UNSUCCESS": "Read was unsuccessful",
+    "OVERLAP_SCHEDULE": "Deux horaires se chevauchent"
   }
 }

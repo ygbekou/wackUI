@@ -35,6 +35,18 @@ export class VisitService {
         .catch(this.handleError);
    }
   
+   public updateStatus = (visit: Visit): Observable<Visit> => {
+    
+      let toAdd = JSON.stringify(visit);
+      
+      let actionUrl = Constants.apiServer + '/service/visit/visit/updateStatus';
+      return this.http.post(actionUrl, toAdd, { headers: this.headers })
+        .map((response: Response) => {
+            return response.json();
+        })
+        .catch(this.handleError);
+   }
+  
    public getVisit = (id: number): Observable<any> => {
    
       let actionUrl = Constants.apiServer + '/service/visit/visit/get/' + id;

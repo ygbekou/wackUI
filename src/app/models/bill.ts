@@ -43,6 +43,7 @@ export class BillService {
   totalAmount: number;
   discountPercentage: number;
   discountAmount: number;
+  netAmount: number;
   payerAmount: number;
   patientAmount: number;
 }

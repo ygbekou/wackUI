@@ -63,8 +63,13 @@
 			</div>
 			<div>
 				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-					<button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>&nbsp;&nbsp;
-					<button type="button" pButton icon="fa fa-check" (click)="save()" label="{{ 'COMMON.SAVE' | translate }}"></button>
+					<button type="button" pButton icon="fa fa-close" (click)="save(0)" label="{{ 'COMMON.CANCEL' | translate }}"
+						[disabled]="appointment.id == null || appointment.id <= 0 || appointment.status == 0"></button>&nbsp;&nbsp;
+					<button type="button" pButton icon="fa fa-check" (click)="save(1)" label="{{ 'COMMON.SAVE' | translate }}"
+						[disabled]="!(appointment.status == 0 || appointment.status == 1) && appointment.id != null"></button>
+					
+					<button type="button" pButton icon="fa fa-check" (click)="save(2)" label="{{ 'COMMON.CONFIRM' | translate }}"
+						[disabled]="appointment.id == null || appointment.id <= 0 || appointment.status != 1"></button>
 				</div>
 			</div>
 		</div>

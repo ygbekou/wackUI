@@ -5,9 +5,11 @@ import { Constants } from '../app.constants';
 import { EditorModule } from 'primeng/editor';
 import { DoctorDropdown, WeekdayDropdown, HospitalLocationDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { Message } from 'primeng/api';
 import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { GenericService, UserService } from '../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { Message } from 'primeng/api';
+
 
 @Component({
   selector: 'app-schedule-details',
@@ -25,6 +27,7 @@ export class ScheduleDetails implements OnInit, OnDestroy {
     (
       private genericService: GenericService,
       private userService: UserService,
+      private translate: TranslateService,
       private doctorDropdown: DoctorDropdown,
       private weekdayDropdown: WeekdayDropdown,
       private hospitalLocationDropdown: HospitalLocationDropdown,
@@ -70,15 +73,18 @@ export class ScheduleDetails implements OnInit, OnDestroy {
   }
   
   save() {
+    this.messages = [];
     try {
       this.genericService.save(this.schedule, "Schedule")
         .subscribe(result => {
-          if (result.id > 0) {
+          if (result.errors.length == 0) {
             this.schedule = result
             this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
           }
           else {
-            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
+            this.translate.get(['COMMON.SAVE', 'MESSAGE.' + result.errors[0]]).subscribe(res => {
+              this.messages.push({severity:Constants.ERROR, summary:res['COMMON.SAVE'], detail:res['MESSAGE.' + result.errors[0]]});
+            });
           }
         })
     }

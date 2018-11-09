@@ -4,8 +4,9 @@
 			<p-messages [(value)]="messages"></p-messages>
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-5 ui-sm-12">
-					<app-visitAdm-lookup (visitEmit)="lookUpVisit($event)" (admissionEmit)="lookUpAdmission($event)" 
-						[originalPage]="'admin/billDetails'" [visit]="visit"></app-visitAdm-lookup>
+					<app-visitAdm-lookup (visitEmit)="lookUpVisit($event)" (admissionEmit)="lookUpAdmission($event)" (billEmit)="lookUpBill($event)"
+						[originalPage]="'admin/billDetails'" [visit]="visit" [admission]="admission" 
+						[itemNumberLabel]="itemNumberLabel" ></app-visitAdm-lookup>
 					<p-message *ngIf="f.submitted && !((visit && visit.id > 0) || (admission && admission.id > 0))" severity="error" text="Visit is required"></p-message>
 				</div>
 				<div class="ui-grid-col-7 ui-sm-12">
@@ -50,8 +51,8 @@
 					    <ng-template pTemplate="body" let-rowData let-columns="columns">
 					        <tr>			           
 					            <td *ngFor="let col of columns" [pEditableColumn]="rowData" [pEditableColumnField]="rowData[col.field]">
-					                <p-cellEditor *ngIf="col.field == 'quantity' || col.field == 'unitAmount' || 
-					                		col.field == 'discountAmount' || col.field == 'payerAmount' || col.field == 'patientAmount'">
+					                <p-cellEditor *ngIf="col.field == 'quantity' || col.field == 'unitAmount' || col.field == 'totalAmount' || 
+					                		col.field == 'netAmount' || col.field == 'discountAmount' || col.field == 'payerAmount' || col.field == 'patientAmount'">
 					                    <ng-template pTemplate="input">
 					                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled"
 					                        	 name="{{col.field}}" >
@@ -163,7 +164,7 @@
 							<label for="subTotal">{{ 'COMMON.SUBTOTAL' | translate }}</label> 
 						</div>
 						<div class="ui-grid-col-6 ui-sm-12">
-							<input type="text" pInputText id="subTotal" [disabled]="true"
+							<input type="text" pInputText id="subTotal" readonly
 							[(ngModel)]="bill.subTotal" name="subTotal" #subTotal="ngModel">
 						</div>
 					</div>
@@ -190,7 +191,7 @@
 							<label for="grandTotal">{{ 'COMMON.GRANDTOTAL' | translate }}</label> 
 						</div>
 						<div class="ui-grid-col-6 ui-sm-12">
-							<input type="text" pInputText id="grandTotal" [disabled]="true"
+							<input type="text" pInputText id="grandTotal"  readonly
 								[(ngModel)]="bill.grandTotal" name="grandTotal" #grandTotal="ngModel">
 						</div>
 					</div>
@@ -199,17 +200,17 @@
 							<label for="paid">{{ 'COMMON.AMOUNT_PAID' | translate }}</label> 
 						</div>
 						<div class="ui-grid-col-6 ui-sm-12">
-							<input type="text" pInputText id="paid" (change)="calculateDue()"
+							<input type="text" pInputText id="paid" readonly
 								[(ngModel)]="bill.paid" name="paid" #paid="ngModel">
 						</div>
 					</div>
 					<div class="ui-grid-row">
 						<div class="ui-grid-col-4 ui-sm-12">
-							<label for="due">{{ 'COMMON.AMOUNT_DUE' | translate }}</label> 
+							<font color="red"><label for="due">{{ 'COMMON.AMOUNT_DUE' | translate }}</label></font>
 						</div>
 						<div class="ui-grid-col-6 ui-sm-12">
-							<input type="text" pInputText id="due" [disabled]="true"
-								[(ngModel)]="bill.due" name="due" #due="ngModel">
+							<font color="red"><input type="text" pInputText id="due" readonly
+								[(ngModel)]="bill.due" name="due" #due="ngModel"></font>
 						</div>
 					</div>
 				</div>

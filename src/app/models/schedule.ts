@@ -12,6 +12,7 @@ export class Schedule {
   availableTimes: Date[] = [];
   perPatientTime: string;
   status: number;
+  errors: string[];
   
   doctorName: string;
 }

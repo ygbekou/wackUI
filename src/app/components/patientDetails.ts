@@ -30,6 +30,7 @@ export class PatientDetails implements OnInit, OnDestroy {
   
   @ViewChild('uploadFile') input: ElementRef;
   formData = new FormData();
+  url: any
   
   reportView: ReportView = new ReportView();
   reportName: string;
@@ -153,6 +154,19 @@ export class PatientDetails implements OnInit, OnDestroy {
             this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
           }
         })
+  }
+  
+  
+  readUrl(event:any) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+  
+      reader.onload = (event: ProgressEvent) => {
+        this.url = (<FileReader>event.target).result;
+      }
+  
+      reader.readAsDataURL(event.target.files[0]);
+    }
   }
 
  }

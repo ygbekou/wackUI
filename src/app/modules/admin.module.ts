@@ -61,7 +61,7 @@ import {BedList} from '../components/bedList';
 import {AdminBedStatus} from '../components/adminBedStatus';
 import {AdmissionDiagnoses} from '../components/admissionDiagnoses';
 import {AdminReference} from '../components/adminReference';
-import {CategoryDropdown, PackageDropdown} from '../components/dropdowns';
+import {CategoryDropdown, PackageDropdown, DoctorDropdown} from '../components/dropdowns';
 
 
 import {AdminPatient} from '../components/adminPatient';
@@ -100,9 +100,11 @@ import {PatientLookup} from '../components/includes/patientLookup';
 import {PatientSaleLookup} from '../components/includes/patientSaleLookup';
 import {VisitAdmLookup} from '../components/includes/visitAdmLookup';
 import {PurchaseOrderLookup} from '../components/includes/purchaseOrderLookup';
+import {WaitingList} from '../components/waitingList';
 
 import {EnquiryDetails} from '../components/enquiryDetails';
 import {EnquiryList} from '../components/enquiryList';
+import { BillingService, VisitService } from '../services';
 
 const routes: Routes = [
   {path: 'adminMain', component: AdminMain},
@@ -176,6 +178,7 @@ const routes: Routes = [
   {path: 'hospitalLocationList', component: HospitalLocationList},
   {path: 'enquiryDetails', component: EnquiryDetails},
   {path: 'enquiryList', component: EnquiryList},
+  {path: 'waitingList', component: WaitingList},
 ];
 
 // AoT requires an exported function for factories
@@ -212,9 +215,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     InvestigationList, PurchaseOrderDetails, PurchaseOrderList, ReceiveOrderDetails, ReceiveOrderList,
     PatientSaleDetails, PatientSaleList, SaleReturnDetails, SaleReturnList, BirthReportDetails, BirthReportList,
     DeathReportDetails, DeathReportList, HospitalLocationDetails, HospitalLocationList, PatientLookup, VisitAdmLookup, 
-    PurchaseOrderLookup, PatientSaleLookup, HospitalDetails, EnquiryDetails, EnquiryList],
+    PurchaseOrderLookup, PatientSaleLookup, HospitalDetails, EnquiryDetails, EnquiryList, WaitingList],
 
-  providers: [CategoryDropdown, PackageDropdown]
+  providers: [CategoryDropdown, PackageDropdown, DoctorDropdown, BillingService, VisitService]
 })
 
 export class AdminModule {}

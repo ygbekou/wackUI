@@ -55,7 +55,10 @@ export class BillDetails implements OnInit, OnDestroy {
             { field: 'doctor', header: 'Doctor', headerKey: 'COMMON.DOCTOR' },
             { field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY' },
             { field: 'unitAmount', header: 'Price', headerKey: 'COMMON.PRICE' },
+            { field: 'totalAmount', header: 'Total', headerKey: 'COMMON.TOTAL' },
             { field: 'discountAmount', header: 'Discount', headerKey: 'COMMON.DISCOUNT' },
+            { field: 'discountPercentage', header: 'Discount' + '%', headerKey: 'COMMON.DISCOUNT_PERCENTAGE' },
+            { field: 'netAmount', header: 'Price', headerKey: 'COMMON.NET_AMOUNT' },
             { field: 'payerAmount', header: 'Payer Amount', headerKey: 'COMMON.PAYER_AMOUNT' },
             { field: 'patientAmount', header: 'Patient Amount', headerKey: 'COMMON.PATIENT_AMOUNT' }
         ]; 
@@ -86,10 +89,12 @@ export class BillDetails implements OnInit, OnDestroy {
                   this.visit = this.bill.visit;
                   this.bill.billDate = new Date(this.bill.billDate);
                   this.bill.dueDate = new Date(this.bill.dueDate);
-                  if (this.bill.billServices.length == 0) 
-                    this.addRow();
-                  if (this.bill.billPayments.length == 0) 
-                    this.addPaymentRow();
+                  this.addEmptyRows();
+                  
+                  if (this.visit != null)
+                    this.itemNumberLabel = 'Visit';
+                  else if (this.admission != null)
+                    this.itemNumberLabel = 'Admission';
                 }
                 
               })
@@ -126,7 +131,17 @@ export class BillDetails implements OnInit, OnDestroy {
     this.bill = null;
   }
   
+  addEmptyRows() {
+    if (this.bill.billServices == null || this.bill.billServices.length == 0) 
+      this.addRow();
+    if (this.bill.billPayments == null || this.bill.billPayments.length == 0) 
+      this.addPaymentRow();
+  }
+  
   addRow() {
+    if (this.bill.billServices == null) {
+      this.bill.billServices = [];
+    }
     let bs =  new BillService();
     bs.service = new Service();
     bs.doctor = new Employee();
@@ -134,6 +149,9 @@ export class BillDetails implements OnInit, OnDestroy {
   }
   
   addPaymentRow() {
+    if (this.bill.billPayments == null) {
+      this.bill.billPayments = [];
+    }
     let bp =  new BillPayment();
     this.bill.billPayments.push(bp);
   }
@@ -152,12 +170,16 @@ export class BillDetails implements OnInit, OnDestroy {
     for (let i in this.bill.billServices) {
        this.bill.subTotal += this.calculateRowTotal(this.bill.billServices[i]);
     }
+    
+    this.calculateGrandTotal();
+    this.calculateDue();
   }
   
   calculateRowTotal(rowData) {
     rowData.totalAmount = (+this.getNumber(rowData.quantity) * +this.getNumber(rowData.unitAmount));
-    rowData.patientAmount = rowData.totalAmount - +this.getNumber(rowData.discountAmount) - +this.getNumber(rowData.payerAmount);
-    return rowData.totalAmount;
+    rowData.netAmount = ( rowData.totalAmount - +this.getNumber(rowData.discountAmount));
+    rowData.patientAmount = rowData.netAmount - +this.getNumber(rowData.payerAmount);
+    return rowData.netAmount;
     
   }
   
@@ -169,10 +191,11 @@ export class BillDetails implements OnInit, OnDestroy {
     this.messages = [];
     rowData.data.bill = new Bill()
     rowData.data.bill.id = this.bill.id;
-    this.genericService.save(rowData.data, 'BillPayment')
+    
+    this.genericService.saveWithUrl('/service/billing/payment/save', rowData.data)
         .subscribe(result => {
-          if (result.id > 0) {
-            rowData.data = result
+          if (result.errors == null || result.errors.length == 0) {
+            this.bill = result;
             this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
           }
           else {
@@ -221,6 +244,7 @@ export class BillDetails implements OnInit, OnDestroy {
           if (result.id > 0) {
             this.bill = result;
             this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
+            this.addEmptyRows();
           }
           else {
             this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
@@ -240,6 +264,13 @@ export class BillDetails implements OnInit, OnDestroy {
     this.admission = event;
   }
   
+  lookUpBill(event) {
+    this.bill = event;
+    this.bill.billDate = new Date(this.bill.billDate);
+    this.bill.dueDate = new Date(this.bill.dueDate);
+    this.addEmptyRows();
+  }
+  
   printBill() {
     this.reportView.reportName = 'bill';
     let parameter: Parameter = new Parameter();
@@ -251,15 +282,15 @@ export class BillDetails implements OnInit, OnDestroy {
     this.reportView.parameters.push(parameter);
     
     this.reportService.runReport(this.reportView)
-        .subscribe(result => {
-          if (result.reportName) {
-            this.reportName = result.reportName;
-            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
-          }
-          else {
-            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
-          }
-        })
+      .subscribe(result => {
+        if (result.reportName) {
+          this.reportName = result.reportName;
+          this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
+        }
+        else {
+          this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
+        }
+      })
   }
 
  }

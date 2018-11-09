@@ -3,9 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../app.constants';
 import { Country, GivenVaccine, Patient, Visit, Reference, User } from '../models';
 import { EditorModule } from 'primeng/editor';
-import { PackageDropdown } from './dropdowns';
+import { PackageDropdown, DoctorDropdown } from './dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
+import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { GenericService, GlobalEventsManager, VisitService } from '../services';
 import { AdmissionDiagnoses } from './admissionDiagnoses';
 import { DoctorOrderDetails } from './doctorOrderDetails';
@@ -45,6 +45,7 @@ export class VisitDetails implements OnInit, OnDestroy {
       private genericService: GenericService,
       private visitService: VisitService,
       private translate: TranslateService,
+      private doctorDropdown: DoctorDropdown,
       private packageDropdown: PackageDropdown,
       private globalEventsManager: GlobalEventsManager,
       private changeDetectorRef: ChangeDetectorRef,
@@ -114,6 +115,7 @@ export class VisitDetails implements OnInit, OnDestroy {
   save() {
     
     this.visit.patient = this.patient;
+    this.visit.status = 1;
     try {
       this.visit.patient = this.patient;
       this.visitService.saveVisit(this.visit)

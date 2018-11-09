@@ -79,8 +79,9 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
      
    }
   
-  save() {
+  save(status: number) {
     this.messages = [];
+    this.appointment.status = status;
     if (this.appointment.patient.id == undefined) {
       this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'Please Select a patient'});
       return;
@@ -111,6 +112,7 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
   
   addEventClick(e) {
       this.messages = [];
+      this.appointment.id = null;
       if (this.appointment.doctor.id == null || this.appointment.department.id == null) {
         this.translate.get('MESSAGE.APPOINTMENT_DISPLAY_FAILED').subscribe((res: string) => {
            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:res});
@@ -122,12 +124,8 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
    }
   
   editEventClick(e) {
-      this.displayEdit = true;
-      this.appointment.problem = '';
-      this.appointment.appointmentDate = e.calEvent.start._i.split("T")[0];    
-      this.appointment.beginTime = e.calEvent.start._i.split("T")[1];
-      this.appointment.endTime = e.calEvent.end._i.split("T")[1];
-    
+
+    this.displayEdit = true;
      let eventId = e.calEvent.id;
      if (eventId != null && eventId > 0) {
               this.genericService.getOne(eventId, 'Appointment')
@@ -139,7 +137,15 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
                 else {
                 }
               })
-          }
+      } else {
+       
+      this.appointment.id = null;
+      this.appointment.problem = '';
+      this.appointment.appointmentDate = e.calEvent.start._i.split("T")[0];    
+      this.appointment.beginTime = e.calEvent.start._i.split("T")[1];
+      this.appointment.endTime = e.calEvent.end._i.split("T")[1];
+    
+     }
       
    }
   

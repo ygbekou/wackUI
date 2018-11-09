@@ -1,9 +1,9 @@
 import { Constants } from '../../app.constants';
-import { Patient, Visit, Admission } from '../../models';
+import { Patient, Visit, Admission, Bill } from '../../models';
 import { User } from '../../models/user';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { GenericService, AppointmentService } from '../../services';
+import { GenericService, AppointmentService, BillingService } from '../../services';
 import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
@@ -113,6 +113,7 @@ export class VisitAdmLookup implements OnInit {
   
   @Output() visitEmit: EventEmitter<Visit> = new EventEmitter<Visit>();
   @Output() admissionEmit: EventEmitter<Admission> = new EventEmitter<Admission>();
+  @Output() billEmit: EventEmitter<Bill> = new EventEmitter<Bill>();
   @Input() itemNumber: string;
   @Input() originalPage: string;
   
@@ -120,6 +121,7 @@ export class VisitAdmLookup implements OnInit {
   
   constructor(
         private genericService: GenericService,
+        private billingService: BillingService,
         private router: Router
     ) {
 
@@ -161,13 +163,27 @@ export class VisitAdmLookup implements OnInit {
             } 
             if (this.itemNumberLabel == 'Admission') {
               this.admission = data[0];
-               this.admissionEmit.emit(this.admission);
+              this.admissionEmit.emit(this.admission);
             }
           }
         },
         error => console.log(error),
         () => console.log('Get Item complete'));
+    
+        if (this.originalPage == 'admin/billDetails') {
+
+            this.billingService.getBillByItemNumber(this.itemNumberLabel, this.itemNumber)
+              .subscribe((data: Bill) => {
+                if (data) {
+                    this.billEmit.emit(data);
+                }
+              },
+              error => console.log(error),
+              () => console.log('Get Item complete'));
+                 
+        }
   }
+  
   
   clearSelection() {
     this.itemNumber = '';
