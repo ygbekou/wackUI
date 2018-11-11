@@ -59,12 +59,13 @@ export class UserService {
 
   public login = (user: User): Observable<Boolean> => {
     let toAdd = JSON.stringify(user);
-    let actionUrl = Constants.apiServer + '/service/user/login/login';
-
+    //let actionUrl = Constants.apiServer + '/service/user/login/login';
+    let actionUrl = Constants.apiServer + '/service/token/generate-token';
     return this.http.post(actionUrl, toAdd, {headers: this.headers})
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
         if (response && response.json()) {
+          console.info(response.json())
           user = response.json();
           if (user.id > 0) {
             Cookie.set('user', JSON.stringify(response.json()));

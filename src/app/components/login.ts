@@ -1,8 +1,7 @@
 import {Component, OnInit, Output, EventEmitter, NgZone} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
-import {UserService} from '../services/user.service';
-import {GenericService} from '../services/generic.service';
+import {AuthenticationService, TokenStorage, UserService} from '../services';
 import {Constants} from '../app.constants';
 import {User} from '../models/user';
 import {Country} from '../models/country';
@@ -23,7 +22,7 @@ import {
 @Component({
   selector: 'user-login-form',
   templateUrl: '../pages/login.html',
-  providers: [UserService, Constants, GenericService, CountryDropdown]
+  providers: [Constants, CountryDropdown]
 })
 
 export class Login implements OnInit {
@@ -47,7 +46,8 @@ export class Login implements OnInit {
   constructor(
     private router: Router,
     private userService: UserService,
-    private baseService: GenericService,
+    private tokenStorage: TokenStorage,
+    private authenticationService: AuthenticationService,
     private globalEventsManager: GlobalEventsManager,
     private cDropdown: CountryDropdown,
     private route: ActivatedRoute) {
@@ -84,9 +84,11 @@ export class Login implements OnInit {
         this.sendPassword();
         
       } else {
-        this.userService.login(this.user)
-          .subscribe(result => {
-            if (result == true) {
+        this.authenticationService.attemptAuth(this.user)
+          .subscribe(data => {
+            this.tokenStorage.saveAuthData(data);
+            console.info(data);
+            if (data == true) {
               this.globalEventsManager.showNavBar.emit(this.user);
 
               this.user = JSON.parse(Cookie.get('user'));

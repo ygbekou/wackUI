@@ -5,6 +5,7 @@ import {Constants} from '../app.constants';
 import {Country} from '../models/country';
 import { Reference } from '../models/reference';
 import {User} from '../models/user';
+import { TokenStorage } from './';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {SelectItem} from 'primeng/api';
 
@@ -16,8 +17,9 @@ export class GenericService {
   
   public bloodGroups: SelectItem[];
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private token: TokenStorage) {
     this.headers = new Headers();
+    this.headers.append('Authorization', 'Bearer ' + this .token.getToken());
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');
     

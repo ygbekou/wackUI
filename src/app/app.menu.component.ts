@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {trigger, state, style, transition, animate} from '@angular/animations';
 import {MenuItem} from 'primeng/primeng';
 import {AppComponent} from './app.component';
+import { TokenStorage } from './services';
 
 @Component({
   selector: 'app-menu',
@@ -20,12 +21,12 @@ export class AppMenuComponent implements OnInit {
 
   ngOnInit() {
     this.model = [
-      {label: 'Dashboard', icon: 'fa fa-fw fa-home', routerLink: ['/']},
+      {label: 'Dashboard', icon: 'fa fa-fw fa-home', routerLink: ['/'], displayList: '2,3'},
       {
         label: 'Patients', icon: '  fa fa-wheelchair',
         items: [
-          {label: 'Ajouter un patient', icon: 'fa fa-plus', routerLink: ['/admin/patientDetails']},
-          {label: 'Liste des patients', icon: 'fa fa-search', routerLink: ['/admin/patientList']}
+          {label: 'Ajouter un patient', icon: 'fa fa-plus', routerLink: ['/admin/patientDetails'], displayList: '2,3'},
+          {label: 'Liste des patients', icon: 'fa fa-search', routerLink: ['/admin/patientList'], displayList: '2,3'}
         ]
       },
       {
@@ -506,6 +507,8 @@ export class AppMenuComponent implements OnInit {
 
     this.app.menuMode = scheme;
   }
+  
+  
 }
 
 @Component({
@@ -523,7 +526,7 @@ export class AppMenuComponent implements OnInit {
                     <i class="fa fa-fw fa-angle-down layout-menuitem-toggler" *ngIf="child.items"></i>
                 </a>
 
-                <a (click)="itemClick($event,child,i)" class="ripplelink" *ngIf="child.routerLink"
+                <a (click)="itemClick($event,child,i)" class="ripplelink" *ngIf="child.routerLink && shouldDisplay(child.displayList)"
                    [routerLink]="child.routerLink" routerLinkActive="active-menuitem-routerlink"
                    [routerLinkActiveOptions]="{exact: true}" [attr.tabindex]="!visible ? '-1' : null" [attr.target]="child.target">
                     <i [ngClass]="child.icon"></i><span>{{child.label}}</span>
@@ -565,7 +568,7 @@ export class AppSubMenuComponent {
 
   activeIndex: number;
 
-  constructor(public app: AppComponent) {}
+  constructor(public app: AppComponent, private tokenStorage: TokenStorage) {}
 
   itemClick(event: Event, item: MenuItem, index: number) {
 
@@ -624,5 +627,16 @@ export class AppSubMenuComponent {
     if (!this._parentActive) {
       this.activeIndex = null;
     }
+  }
+  
+  
+  shouldDisplay(displayList: string) {
+    if (displayList == null) return true
+   
+    let authorizedRoles = displayList.split(',');
+    let authRole = this.tokenStorage.getRole();
+    
+    
+    return (authRole in authorizedRoles);
   }
 }

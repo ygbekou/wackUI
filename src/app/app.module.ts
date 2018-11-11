@@ -104,15 +104,17 @@ import { EventService } from './demo/service/eventservice';
 import { NodeService } from './demo/service/nodeservice';
 import { BreadcrumbService } from './breadcrumb.service';
 import {Constants} from './app.constants';
+import { TokenInterceptor } from './app.interceptor';
 import {Routes, RouterModule} from '@angular/router';
 import {routes} from './app.routes';
 import {Home} from './components/home';
 import {Login} from './components/login';
 import {CommonSharedModule} from './modules/common.shared.module';
 import {
-  GenericService, UserService
+  GenericService, UserService, TokenStorage, AuthenticationService
 } from './services/';
 import {GlobalEventsManager} from './services/globalEventsManager';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -229,9 +231,10 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     CarService, CountryService, EventService, NodeService, BreadcrumbService,
     
-    GenericService, UserService, Constants, GlobalEventsManager
+    GenericService, UserService, Constants, GlobalEventsManager, TokenStorage, AuthenticationService
   ],
   bootstrap: [AppComponent]
 })

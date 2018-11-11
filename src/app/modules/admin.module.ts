@@ -1,6 +1,7 @@
+import { TokenInterceptor } from '../app.interceptor';
 import {Routes, RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
@@ -217,7 +218,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DeathReportDetails, DeathReportList, HospitalLocationDetails, HospitalLocationList, PatientLookup, VisitAdmLookup, 
     PurchaseOrderLookup, PatientSaleLookup, HospitalDetails, EnquiryDetails, EnquiryList, WaitingList],
 
-  providers: [CategoryDropdown, PackageDropdown, DoctorDropdown, BillingService, VisitService]
+  providers: [
+    CategoryDropdown, PackageDropdown, DoctorDropdown, BillingService, VisitService]
 })
 
 export class AdminModule {}
