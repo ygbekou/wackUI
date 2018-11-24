@@ -141,4 +141,8 @@ export class DoctorOrderDetails implements OnInit, OnDestroy {
   clear() {
     this.doctorOrder = new DoctorOrder();
   }
+  
+  delete() {
+    
+  }
  }

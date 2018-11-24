@@ -172,4 +172,12 @@ export class PurchaseOrderDetails implements OnInit, OnDestroy {
   populateDefaultProductValues(rowData: PurchaseOrderProduct) {
     rowData.unitPrice = rowData.product.price;
   }
+  
+  delete() {
+  
+  }
+  
+  clear() {
+  
+  }
  }

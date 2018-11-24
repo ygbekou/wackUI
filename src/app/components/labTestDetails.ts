@@ -86,5 +86,9 @@ export class LabTestDetails implements OnInit, OnDestroy {
       console.log(e);
     }
   }
+  
+  delete() {
+  
+  }
 
  }

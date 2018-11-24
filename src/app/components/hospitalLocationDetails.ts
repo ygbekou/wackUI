@@ -100,4 +100,8 @@ export class HospitalLocationDetails implements OnInit, OnDestroy {
     })
   }
   
+  delete() {
+    
+  }
+  
  }

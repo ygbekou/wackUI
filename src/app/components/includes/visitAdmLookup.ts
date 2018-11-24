@@ -29,9 +29,9 @@ import { NavigationExtras, Router } from '@angular/router';
                   
                   <div class="ui-grid-row">
                      <div class="form-group">
-                        <form (ngSubmit)="search()" #searchForm="ngForm">
+                        <form #searchForm="ngForm">
                           <input type="text" pInputText class="form-control" id="searchT"
-                            required [(ngModel)]="itemNumber" (change)="lookUpItem($event)"
+                            required [(ngModel)]="itemNumber" (change)="lookUpItem()"
                             placeholder="{{SEARCH_TEXT}}" name="searchT"
                             #searchT="ngModel">
                         </form>

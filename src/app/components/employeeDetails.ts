@@ -128,5 +128,11 @@ export class EmployeeDetails implements OnInit, OnDestroy {
     }
   }
 
-
+  clear() {
+    this.employee = new Employee();
+  }
+  
+  delete() {
+    alert('To Do');
+  }
  }

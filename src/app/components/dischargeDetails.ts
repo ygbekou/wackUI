@@ -179,4 +179,8 @@ export class DischargeDetails implements OnInit, OnDestroy {
     }
   }
   
+  delete() {
+  
+  }
+  
 }

@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {trigger, state, style, transition, animate} from '@angular/animations';
 import {MenuItem} from 'primeng/primeng';
 import {AppComponent} from './app.component';
-import { TokenStorage } from './services';
+import { TokenStorage, AuthenticationService, GlobalEventsManager } from './services';
 
 @Component({
   selector: 'app-menu',
@@ -16,43 +16,53 @@ export class AppMenuComponent implements OnInit {
   @Input() reset: boolean;
 
   model: any[];
-
-  constructor(public app: AppComponent) {}
+  
+  constructor(
+    private globalEventsManager: GlobalEventsManager,
+    public app: AppComponent) {}
 
   ngOnInit() {
+    
+    this.globalEventsManager.showNavBar.subscribe((data: boolean) => {
+      
+    }, error => console.log(error));
+    
+   
+    
+
     this.model = [
-      {label: 'Dashboard', icon: 'fa fa-fw fa-home', routerLink: ['/'], displayList: '2,3'},
+      {label: 'Dashboard', icon: 'fa fa-fw fa-home', routerLink: ['/dashboard'], displayList: '1,2,3,4,5,6,20'},
       {
-        label: 'Patients', icon: '  fa fa-wheelchair',
+        label: 'Patients', icon: '  fa fa-wheelchair' , displayList: '1,2,3',
         items: [
-          {label: 'Ajouter un patient', icon: 'fa fa-plus', routerLink: ['/admin/patientDetails'], displayList: '2,3'},
-          {label: 'Liste des patients', icon: 'fa fa-search', routerLink: ['/admin/patientList'], displayList: '2,3'}
+          {label: 'Ajouter un patient', icon: 'fa fa-plus', routerLink: ['/admin/patientDetails'], displayList: '1,2,3'},
+          {label: 'Liste des patients', icon: 'fa fa-search', routerLink: ['/admin/patientList'], displayList: '1,2,3'}
         ]
       },
       {
-        label: 'Personnel', icon: 'fa fa-user-md',
+        label: 'Personnel', icon: 'fa fa-user-md', displayList: '1,2',
         items: [
-          {label: 'Ajouter un personnel', icon: 'fa fa-plus', routerLink: ['/admin/employeeDetails']},
-          {label: 'Liste du personnel', icon: 'fa fa-search', routerLink: ['/admin/employeeList']}
+          {label: 'Ajouter un personnel', icon: 'fa fa-plus', routerLink: ['/admin/employeeDetails'], displayList: '1,2'}, 
+          {label: 'Liste du personnel', icon: 'fa fa-search', routerLink: ['/admin/employeeList'], displayList: '1,2'}
         ]
       },
       {
         label: 'Admission', icon: 'fa fa-ambulance',
         items: [
-          {label: 'Admettre un patient', icon: 'fa fa-plus', routerLink: ['/admin/admissionDetails']},
-          {label: 'Liste des admissions', icon: 'fa fa-search', routerLink: ['/admin/admissionList']},
-          {label: 'Changer de lit', icon: 'fa fa-edit', url: ['#/admin/bedTransfer?transferType=BED']},
-          {label: 'Changer de medecin', icon: 'fa fa-edit', url: ['#/admin/bedTransfer?transferType=DOCTOR']}
+          {label: 'Admettre un patient', icon: 'fa fa-plus', routerLink: ['/admin/admissionDetails'], displayList: '1,2'},
+          {label: 'Liste des admissions', icon: 'fa fa-search', routerLink: ['/admin/admissionList'], displayList: '1,2,20'},
+          {label: 'Changer de lit', icon: 'fa fa-edit', url: ['#/admin/bedTransfer?transferType=BED'], displayList: '1,2'},
+          {label: 'Changer de medecin', icon: 'fa fa-edit', url: ['#/admin/bedTransfer?transferType=DOCTOR'], displayList: '1,2'}
         ]
       },
       {
         label: 'Rendez-vous', icon: 'fa fa-calendar',
         items: [
-          {label: 'Ajouter une requete', icon: 'fa fa-plus', routerLink: ['/admin/enquiryDetails']},
-          {label: 'Anciennes requete', icon: 'fa fa-plus', routerLink: ['/admin/enquiryList']},
-          {label: 'Ajouter un horaire', icon: 'fa fa-plus', routerLink: ['/admin/scheduleDetails']},
-          {label: 'Liste des horaires', icon: 'fa fa-search', routerLink: ['/admin/scheduleList']},
-          {label: 'Les Rendez-vous', icon: 'fa fa-calendar-check-o', routerLink: ['/admin/appointmentScheduler']} 
+          {label: 'Ajouter une requete', icon: 'fa fa-plus', routerLink: ['/admin/enquiryDetails'], displayList: '1,2,3,20'},
+          {label: 'Anciennes requete', icon: 'fa fa-plus', routerLink: ['/admin/enquiryList'], displayList: '1,2,3,20'},
+          {label: 'Ajouter un horaire', icon: 'fa fa-plus', routerLink: ['/admin/scheduleDetails'], displayList: '1'},
+          {label: 'Liste des horaires', icon: 'fa fa-search', routerLink: ['/admin/scheduleList'], displayList: '1'},
+          {label: 'Les Rendez-vous', icon: 'fa fa-calendar-check-o', routerLink: ['/admin/appointmentScheduler'], displayList: '1,2'} 
         ]
       },
       {
@@ -519,7 +529,7 @@ export class AppMenuComponent implements OnInit {
         <ng-template ngFor let-child let-i="index" [ngForOf]="(root ? item : item.items)">
             <li [ngClass]="{'active-menuitem': isActive(i)}" [class]="child.badgeStyleClass" *ngIf="child.visible === false ? false : true">
                 <a [href]="child.url||'#'" (click)="itemClick($event,child,i)"
-                   class="ripplelink" *ngIf="!child.routerLink"
+                   class="ripplelink" *ngIf="!child.routerLink && shouldDisplay(child.displayList)"
                    [attr.tabindex]="!visible ? '-1' : null" [attr.target]="child.target">
                     <i [ngClass]="child.icon"></i><span>{{child.label}}</span>
                     <span class="menuitem-badge" *ngIf="child.badge">{{child.badge}}</span>
@@ -568,7 +578,7 @@ export class AppSubMenuComponent {
 
   activeIndex: number;
 
-  constructor(public app: AppComponent, private tokenStorage: TokenStorage) {}
+  constructor(public app: AppComponent, private authService: AuthenticationService, private tokenStorage: TokenStorage) {}
 
   itemClick(event: Event, item: MenuItem, index: number) {
 
@@ -629,14 +639,8 @@ export class AppSubMenuComponent {
     }
   }
   
-  
   shouldDisplay(displayList: string) {
-    if (displayList == null) return true
-   
-    let authorizedRoles = displayList.split(',');
-    let authRole = this.tokenStorage.getRole();
-    
-    
-    return (authRole in authorizedRoles);
+     return this.authService.shouldDisplay(displayList, this.tokenStorage.getRole());
   }
+
 }

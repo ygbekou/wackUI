@@ -14,9 +14,9 @@ import { NavigationExtras, Router } from '@angular/router';
                   <div class="ui-grid-row">
                      <div class="form-group">
                         <label i18n="@@patientId" for="patientId">Patient ID</label>
-                        <form (ngSubmit)="search()" #searchForm="ngForm">
+                        <form #searchForm="ngForm">
                           <input type="text" pInputText class="form-control" id="searchT"
-                            required [(ngModel)]="schText" (change)="lookUpPatient($event)"
+                            required [(ngModel)]="schText" (change)="lookUpPatient()"
                             placeholder="{{SEARCH_TEXT}}" name="searchT"
                             #searchT="ngModel">
                         </form>

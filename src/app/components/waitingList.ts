@@ -36,7 +36,8 @@ export class WaitingList implements OnInit, OnDestroy {
     this.cols = [
             { field: 'id', header: 'Visit ID', headerKey: 'COMMON.VISIT_ID' },
             { field: 'doctorName', header: 'Date', headerKey: 'COMMON.DOCTOR' },
-            { field: 'patientName', header: 'Patient Name', headerKey: 'COMMON.PATIENT_NAME' }
+            { field: 'patientName', header: 'Patient Name', headerKey: 'COMMON.PATIENT_NAME' },
+            { field: 'visitDatetime', header: 'Visit Date/Time', headerKey: 'COMMON.VISIT_DATETIME' }
         ];
     
     this.getWaitingList();

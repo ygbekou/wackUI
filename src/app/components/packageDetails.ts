@@ -120,4 +120,8 @@ export class PackageDetails implements OnInit, OnDestroy {
       console.log(e);
     }
   }
- }
+  
+  delete() {
+    
+  }
+}

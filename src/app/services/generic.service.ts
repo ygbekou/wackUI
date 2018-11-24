@@ -19,7 +19,9 @@ export class GenericService {
 
   constructor(private http: Http, private token: TokenStorage) {
     this.headers = new Headers();
-    this.headers.append('Authorization', 'Bearer ' + this .token.getToken());
+    if (this.token.hasToken()) {
+      this.headers.append('Authorization', 'Bearer ' + this.token.getToken());
+    }
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');
     
@@ -97,7 +99,6 @@ export class GenericService {
   public saveDoctorOrder = (entity: any): Observable<any> => {
    
       let toAdd = JSON.stringify(entity);
-      alert(toAdd)
       let re = /\"/gi;
       let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
       
@@ -121,7 +122,6 @@ export class GenericService {
       let head = new Headers();
      
       let toAdd = JSON.stringify(entity);
-      alert(toAdd)
       let re = /\"/gi;
       let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
       

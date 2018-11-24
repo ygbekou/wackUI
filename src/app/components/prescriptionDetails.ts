@@ -156,7 +156,6 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
       
       this.admissionService.savePrescription(this.prescription)
         .subscribe(result => {
-          alert(result.id)
           if (result.id > 0) {
             this.prescription = result;
             this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
@@ -191,4 +190,7 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
     })
   }
   
+  delete() {
+    
+  }
 }

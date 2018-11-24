@@ -135,4 +135,7 @@ export class ReceiveOrderDetails implements OnInit, OnDestroy {
     }
   }
 
+  delete() {
+    
+  }
  }

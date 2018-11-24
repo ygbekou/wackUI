@@ -120,4 +120,6 @@ export class RoomDetails implements OnInit, OnDestroy {
     this.floorDropdown.buildingId = this.room.floor.building.id;
     this.floorDropdown.getAllFloors();
   }
+  
+  delete() {}
 }

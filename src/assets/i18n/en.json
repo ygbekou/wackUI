@@ -254,7 +254,8 @@
     "CLOSE": "Close",
     "MARK_AS_READ": "Mark as read",
     "CANCEL": "Cancel",
-    "CONFIRM": "Confirm"
+    "CONFIRM": "Confirm",
+    "SUBMIT": "Submit"
 
   },
   "MESSAGE": {

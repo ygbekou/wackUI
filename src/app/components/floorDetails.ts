@@ -110,4 +110,6 @@ export class FloorDetails implements OnInit, OnDestroy {
     }
   }
 
+  delete() {}
+  
  }

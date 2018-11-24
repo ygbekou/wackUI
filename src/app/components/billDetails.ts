@@ -52,7 +52,8 @@ export class BillDetails implements OnInit, OnDestroy {
      this.serviceCols = [
             { field: 'serviceDate', header: 'Date', headerKey: 'COMMON.DATE', type: 'date' },
             { field: 'service', header: 'Name', headerKey: 'COMMON.NAME' },
-            { field: 'doctor', header: 'Doctor', headerKey: 'COMMON.DOCTOR' },
+            //{ field: 'doctor', header: 'Doctor', headerKey: 'COMMON.DOCTOR' },
+            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
             { field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY' },
             { field: 'unitAmount', header: 'Price', headerKey: 'COMMON.PRICE' },
             { field: 'totalAmount', header: 'Total', headerKey: 'COMMON.TOTAL' },
@@ -291,6 +292,10 @@ export class BillDetails implements OnInit, OnDestroy {
           this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
         }
       })
+  }
+  
+  delete() {
+    
   }
 
  }

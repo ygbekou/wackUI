@@ -167,4 +167,9 @@ export class VisitDetails implements OnInit, OnDestroy {
   lookUpPatient(event) {
     this.patient = event;
   }
+  
+  delete() {
+  
+  }
+  
  }

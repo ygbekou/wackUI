@@ -1,11 +1,12 @@
 import { EventEmitter, Injectable} 	from "@angular/core";
 import { User } 					from '../models/user';
+import { TokenStorage } from './token.storage';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
-
 export class GlobalEventsManager {
-    public showNavBar: EventEmitter<User> = new EventEmitter<User>();
+    public showNavBar: EventEmitter<Boolean> = new EventEmitter<Boolean>();
+    public showMenu: Boolean = false;
 
     private moduleNameSource = new BehaviorSubject<string>("");
     private patientIdSource = new BehaviorSubject<number>(0);
@@ -17,8 +18,10 @@ export class GlobalEventsManager {
     selectedParentId: number;
     selectedAdmissionId: number;
   
-    constructor() {
-
+    constructor(private token: TokenStorage) {
+      if (this.token.getToken() != null) {
+        this.showMenu = true;
+      }
     }
   
     changeModuleName(moduleName: string) {

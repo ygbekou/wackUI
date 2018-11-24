@@ -11,3 +11,4 @@ export * from './report.service';
 export * from './authentication.service';
 export * from './globalEventsManager';
 export * from './token.storage';
+export * from './loggedIn.guard';

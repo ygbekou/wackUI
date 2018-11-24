@@ -74,7 +74,7 @@ export class EnquiryDetails implements OnInit, OnDestroy {
     this.enquiry = new Enquiry();
   }
   
-  save(saveType : number) {
+  save(saveType : number = 1) {
     this.messages = [];
     try {
       

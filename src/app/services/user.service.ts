@@ -7,6 +7,7 @@ import { Department } from '../models/department';
 import { Employee } from '../models/employee';
 import { Patient } from '../models/patient';
 import { UserGroup } from '../models/userGroup';
+import { TokenStorage } from './token.storage';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 
 @Injectable()
@@ -15,8 +16,11 @@ export class UserService {
   private actionUrl: string;
   private headers: Headers;
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private token: TokenStorage) {
     this.headers = new Headers();
+    if (this.token.hasToken()) {
+      this.headers.append('Authorization', 'Bearer ' + this.token.getToken());
+    }
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');
   }
@@ -133,7 +137,7 @@ export class UserService {
   
   public sendPassword = (user: User): Observable<Boolean> => {
     let toAdd = JSON.stringify(user);
-    let actionUrl = Constants.apiServer + '/service/user/sendPassword';
+    let actionUrl = Constants.apiServer + '/service/user/forgot/sendPassword';
 
     return this.http.post(actionUrl, toAdd, {headers: this.headers})
       .map((response: Response) => {

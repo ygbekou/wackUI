@@ -90,5 +90,9 @@ export class CaseStudyDetails implements OnInit, OnDestroy {
       console.log(e);
     }
   }
+  
+  delete() {
+    
+  }
 
  }

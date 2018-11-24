@@ -24,7 +24,7 @@ export class EmployeeList implements OnInit, OnDestroy {
     private genericService: GenericService,
     private translate: TranslateService,
     private changeDetectorRef: ChangeDetectorRef,
-    private departmentDropdown: DepartmentDropdown,
+    public departmentDropdown: DepartmentDropdown,
     private route: ActivatedRoute,
     private router: Router,
     ) {

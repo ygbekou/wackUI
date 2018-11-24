@@ -126,7 +126,6 @@ export class InvoiceDetails implements OnInit, OnDestroy {
       this.error = '';
       this.accountService.saveInvoice(this.invoice)
         .subscribe(result => {
-          alert(result.id)
           if (result.id > 0) {
             this.invoice = result
             console.info(this.invoice);
@@ -157,6 +156,10 @@ export class InvoiceDetails implements OnInit, OnDestroy {
       },
       error => console.log(error),
       () => console.log('Get Patient complete'));
+  }
+  
+  delete() {
+    
   }
 
  }

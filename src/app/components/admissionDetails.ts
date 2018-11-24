@@ -19,7 +19,7 @@ import { Message } from 'primeng/api';
 @Component({
   selector: 'app-admission-details',
   templateUrl: '../pages/admissionDetails.html',
-  providers: [GenericService, AdmissionService, DoctorDropdown, PackageDropdown, 
+  providers: [DoctorDropdown, PackageDropdown, 
     InsuranceDropdown, BuildingDropdown, FloorDropdown, RoomDropdown, CategoryDropdown, BedDropdown]
 })
 export class AdmissionDetails implements OnInit, OnDestroy {
@@ -52,14 +52,14 @@ export class AdmissionDetails implements OnInit, OnDestroy {
       private genericService: GenericService,
       private admissionService: AdmissionService,
       private globalEventsManager: GlobalEventsManager,
-      private doctorDropdown: DoctorDropdown,
-      private packageDropdown: PackageDropdown,
-      private insuranceDropdown: InsuranceDropdown,
-      private buildingDropdown: BuildingDropdown,
-      private floorDropdown: FloorDropdown,
-      private roomDropdown: RoomDropdown,
-      private categoryDropdown: CategoryDropdown,
-      private bedDropdown: BedDropdown,
+      public doctorDropdown: DoctorDropdown,
+      public packageDropdown: PackageDropdown,
+      public insuranceDropdown: InsuranceDropdown,
+      public buildingDropdown: BuildingDropdown,
+      public floorDropdown: FloorDropdown,
+      public roomDropdown: RoomDropdown,
+      public categoryDropdown: CategoryDropdown,
+      public bedDropdown: BedDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
@@ -212,4 +212,7 @@ export class AdmissionDetails implements OnInit, OnDestroy {
     let patientSaleId = $event;
     this.patientSaleDetails.getPatientSale(patientSaleId);
   }
+  
+  delete() {}
+
  }

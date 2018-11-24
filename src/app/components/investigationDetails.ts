@@ -88,7 +88,6 @@ export class InvestigationDetails implements OnInit, OnDestroy {
 
       this.investigationService.saveInvestigaton(this.investigation)
         .subscribe(result => {
-          alert(result.id)
           if (result.id > 0) {
             this.investigation = result
             this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
@@ -114,5 +113,13 @@ export class InvestigationDetails implements OnInit, OnDestroy {
       },
       error => console.log(error),
       () => console.log('Get LabTest List complete'));
+  }
+  
+  delete() {
+  
+  }
+  
+  clear() {
+  
   }
 }

@@ -105,7 +105,8 @@ import {WaitingList} from '../components/waitingList';
 
 import {EnquiryDetails} from '../components/enquiryDetails';
 import {EnquiryList} from '../components/enquiryList';
-import { BillingService, VisitService } from '../services';
+import { SearchComponent } from '../components/includes/search';
+import { BillingService, VisitService, TokenStorage, LoggedInGuard } from '../services';
 
 const routes: Routes = [
   {path: 'adminMain', component: AdminMain},
@@ -189,7 +190,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes), CommonSharedModule, 
+    RouterModule.forChild(routes), CommonSharedModule,
     TranslateModule.forChild({
             loader: {
                 provide: TranslateLoader,
@@ -202,7 +203,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
   exports: [CommonSharedModule, TranslateModule],
 
-  declarations: [FileUploader, AdminMenu, AdminMain, AdminAppointment, DocumentDetails,
+  declarations: [SearchComponent, FileUploader, AdminMenu, AdminMain, AdminAppointment, DocumentDetails,
     DocumentList, EmployeeDetails, EmployeeList, PatientDetails, PatientList, ScheduleDetails, ScheduleList,
     AppointmentScheduler, AppointmentDetails, AppointmentList, CaseStudyDetails, CaseStudyList, ReferenceDetails,
     ReferenceList, ReferenceWithCategoryDetails, ReferenceWithCategoryList, MedicineDetails, MedicineList,
@@ -219,7 +220,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PurchaseOrderLookup, PatientSaleLookup, HospitalDetails, EnquiryDetails, EnquiryList, WaitingList],
 
   providers: [
-    CategoryDropdown, PackageDropdown, DoctorDropdown, BillingService, VisitService]
+    CategoryDropdown, PackageDropdown, DoctorDropdown, TokenStorage,  BillingService, VisitService, LoggedInGuard]
 })
 
 export class AdminModule {}

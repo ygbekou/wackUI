@@ -61,6 +61,15 @@
 					                        {{rowData[col.field]}}
 					                    </ng-template>
 					                </p-cellEditor>
+					                <p-cellEditor *ngIf="col.field == 'description'">
+					                    <ng-template pTemplate="input">
+					                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled"
+					                        	 name="{{col.field}}" >
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+					                        {{rowData[col.field]}}
+					                    </ng-template>
+					                </p-cellEditor>
 					                <p-cellEditor *ngIf="col.type == 'date'">
 					                    <ng-template pTemplate="input">
 					                        <p-calendar [(ngModel)]="rowData[col.field]" name="{{col.field}}"></p-calendar>
@@ -93,7 +102,7 @@
 												[minLength]="1">
 											</p-autoComplete>
 					                    </ng-template>
-					                    <ng-template pTemplate="output">
+					                    <ng-template pTemplate="output" *ngIf="rowData[col.field]">
 					                        {{rowData[col.field].name}}
 					                    </ng-template>
 					                </p-cellEditor>

@@ -107,4 +107,8 @@ export class ReferenceWithCategoryDetails implements OnInit, OnDestroy {
     })
   }
   
+  delete() {
+    
+  }
+  
  }

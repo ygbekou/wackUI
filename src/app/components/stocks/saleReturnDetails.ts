@@ -13,8 +13,8 @@ import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule 
 import { GenericService, PurchasingService } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
- 
-@Component({  
+
+@Component({
   selector: 'app-saleReturn-details',
   templateUrl: '../../pages/stocks/saleReturnDetails.html',
   providers: [GenericService, PurchasingService, EmployeeDropdown, SupplierDropdown, ProductDropdown]
@@ -117,7 +117,7 @@ export class SaleReturnDetails implements OnInit, OnDestroy {
     return this.messages.length == 0;
   }
   
-  save(status: number) {
+  save(status: number = 1) {
     this.messages = []
     
     if (!status) {
@@ -173,6 +173,10 @@ export class SaleReturnDetails implements OnInit, OnDestroy {
   calculateRowTotal(rowData) {
     rowData.totalAmount = (+this.getNumber(rowData.quantity) * +this.getNumber(rowData.unitPrice));
     return rowData.totalAmount;
+    
+  }
+  
+  delete() {
     
   }
  }

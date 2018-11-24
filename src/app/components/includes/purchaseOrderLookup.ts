@@ -14,9 +14,9 @@ import { NavigationExtras, Router } from '@angular/router';
                   <div class="ui-grid-row">
                      <div class="form-group"> 
                         <label i18n="@@purchaseOrderId" for="purchaseOrderId">Purchase Order ID</label>
-                        <form (ngSubmit)="search()" #searchForm="ngForm">
+                        <form #searchForm="ngForm">
                           <input type="text" pInputText class="form-control" id="searchT"
-                            required [(ngModel)]="schText" (change)="lookUpPurchaseOrder($event)"
+                            required [(ngModel)]="schText" (change)="lookUpPurchaseOrder()"
                             placeholder="{{SEARCH_TEXT}}" name="searchT"
                             #searchT="ngModel">
                         </form>
@@ -84,7 +84,7 @@ export class PurchaseOrderLookup implements OnInit {
   
   }
   
-  openPatientSearchPage() {
+  openPurchaseOrderSearchPage() {
     try {
       let navigationExtras: NavigationExtras = {
         queryParams: {

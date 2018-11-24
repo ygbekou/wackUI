@@ -220,4 +220,7 @@ export class BedTransfer implements OnInit, OnDestroy {
     this.bedDropdown.getAllBeds();
   }
 
+  delete() {
+    
+  }
 }

@@ -9,6 +9,7 @@ import { Package } from '../models/package';
 import { Admission } from '../models/admission';
 import { AdmissionDiagnosis } from '../models/admissionDiagnosis';
 import { Prescription } from '../models/prescription';
+import { TokenStorage } from './token.storage';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 
 @Injectable()
@@ -17,8 +18,11 @@ export class AdmissionService {
   private actionUrl: string;
   private headers: Headers;
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private token: TokenStorage) {
     this.headers = new Headers();
+    if (this.token.hasToken()) {
+      this.headers.append('Authorization', 'Bearer ' + this.token.getToken());
+    }
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');
   }

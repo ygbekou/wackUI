@@ -85,5 +85,9 @@ export class InsuranceDetails implements OnInit, OnDestroy {
       console.log(e);
     }
   }
+  
+  delete() {
+    
+  }
 
  }

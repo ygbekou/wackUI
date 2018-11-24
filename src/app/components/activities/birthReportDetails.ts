@@ -106,4 +106,8 @@ export class BirthReportDetails implements OnInit, OnDestroy {
     this.admission = event;
     
   }
+  
+  delete() {
+    
+  }
 }

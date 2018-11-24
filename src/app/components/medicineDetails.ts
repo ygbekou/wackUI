@@ -110,5 +110,9 @@ export class MedicineDetails implements OnInit, OnDestroy {
       console.log(e);
     }
   }
+  
+  delete() {
+    
+  }
 
  }

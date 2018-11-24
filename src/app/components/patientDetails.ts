@@ -168,5 +168,13 @@ export class PatientDetails implements OnInit, OnDestroy {
       reader.readAsDataURL(event.target.files[0]);
     }
   }
+  
+  clear() {
+    this.patient = new Patient();
+  }
+  
+  delete() {
+    this.patient = new Patient();
+  }
 
  }

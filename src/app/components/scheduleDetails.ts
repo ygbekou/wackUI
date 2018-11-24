@@ -28,9 +28,9 @@ export class ScheduleDetails implements OnInit, OnDestroy {
       private genericService: GenericService,
       private userService: UserService,
       private translate: TranslateService,
-      private doctorDropdown: DoctorDropdown,
-      private weekdayDropdown: WeekdayDropdown,
-      private hospitalLocationDropdown: HospitalLocationDropdown,
+      public doctorDropdown: DoctorDropdown,
+      public weekdayDropdown: WeekdayDropdown,
+      public hospitalLocationDropdown: HospitalLocationDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
@@ -91,6 +91,10 @@ export class ScheduleDetails implements OnInit, OnDestroy {
     catch (e) {
       console.log(e);
     }
+  }
+  
+  delete() {
+    
   }
 
  }

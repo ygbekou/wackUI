@@ -83,4 +83,8 @@ export class ServiceDetails implements OnInit, OnDestroy {
     }
   }
 
+  delete() {
+    
+  }
+  
  }

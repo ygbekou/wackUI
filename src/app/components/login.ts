@@ -57,6 +57,9 @@ export class Login implements OnInit {
       this.action = params["action"];
       console.log("action =" + this.action);
     });
+    
+    this.globalEventsManager.showMenu = false;
+
   }
 
   ngOnInit() {
@@ -86,13 +89,8 @@ export class Login implements OnInit {
       } else {
         this.authenticationService.attemptAuth(this.user)
           .subscribe(data => {
-            this.tokenStorage.saveAuthData(data);
-            console.info(data);
-            if (data == true) {
-              this.globalEventsManager.showNavBar.emit(this.user);
-
-              this.user = JSON.parse(Cookie.get('user'));
-              this.router.navigate(["/admin/adminMain"]);
+            if (this.tokenStorage.getToken() != '') {
+              this.router.navigate(["/dashboard"]);
 //              if (this.user.userGroup.id == 3) {//student
 //                this.router.navigate(["/student/studentMain"]);
 //              } else if (this.user.userGroup.id == 2) {//teacher
@@ -159,7 +157,7 @@ export class Login implements OnInit {
             
             if (result == null) {
               this.user = JSON.parse(Cookie.get('user'));
-              this.globalEventsManager.showNavBar.emit(this.user);
+              //this.globalEventsManager.showNavBar.emit(this.user);
               //window.location.reload();
             } else {
               const user: User = result.user;

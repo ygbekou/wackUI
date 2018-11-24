@@ -89,7 +89,7 @@
 								(onDropdownClick)="hospitalLocationDropdown.handleDropdownClick($event)"
 								[suggestions]="hospitalLocationDropdown.filteredLocations" [dropdown]="true"
 								id="location" (completeMethod)="hospitalLocationDropdown.filter($event)"
-								name="location" field="name" [size]="30" placeholder="{{LOCATION}}"
+								name="location" field="name" [size]="30" placeholder=""
 								[minLength]="1"></p-autoComplete>
 						</div>
 					</div>
@@ -100,7 +100,7 @@
 								(onDropdownClick)="departmentDropdown.handleDropdownClick($event)"
 								[suggestions]="departmentDropdown.filteredDepartments" [dropdown]="true"
 								id="department" (completeMethod)="departmentDropdown.filter($event)"
-								name="department" field="name" [size]="30" placeholder="{{DEPARTMENT}}"
+								name="department" field="name" [size]="30" placeholder=""
 								[minLength]="1"></p-autoComplete>
 						</div>
 					</div>
@@ -112,7 +112,7 @@
 								(onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
 								[suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
 								id="doctor" (completeMethod)="doctorDropdown.filter($event)"
-								name="doctor" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
+								name="doctor" field="name" [size]="30" placeholder=""
 								[minLength]="1"></p-autoComplete>
 						</div>
 					</div>

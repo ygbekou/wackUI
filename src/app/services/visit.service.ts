@@ -5,6 +5,7 @@ import {Constants} from '../app.constants';
 import { DoctorOrder } from '../models/doctorOrder';
 import { Reference } from '../models/reference';
 import { Visit } from '../models/visit';
+import { TokenStorage } from './token.storage';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 
 @Injectable()
@@ -15,8 +16,11 @@ export class VisitService {
   
   public physicianApprovedList: Reference[] = [];
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private token: TokenStorage) {
     this.headers = new Headers();
+    if (this.token.hasToken()) {
+      this.headers.append('Authorization', 'Bearer ' + this.token.getToken());
+    }
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');
   }

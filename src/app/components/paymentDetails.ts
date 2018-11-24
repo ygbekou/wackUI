@@ -98,5 +98,9 @@ export class PaymentDetails implements OnInit, OnDestroy {
       console.log(e);
     }
   }
+  
+  delete() {
+    
+  }
 
 }

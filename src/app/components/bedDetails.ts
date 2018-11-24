@@ -115,4 +115,6 @@ export class BedDetails implements OnInit, OnDestroy {
     this.roomDropdown.floorId = this.bed.room.floor.id;
     this.roomDropdown.getAllRooms();
   }
+  
+  delete() {}
 }

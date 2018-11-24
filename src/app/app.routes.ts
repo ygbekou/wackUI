@@ -13,12 +13,11 @@ import {EmptyDemoComponent} from './demo/view/emptydemo.component';
 import {ChartsDemoComponent} from './demo/view/chartsdemo.component';
 import {FileDemoComponent} from './demo/view/filedemo.component';
 import {DocumentationComponent} from './demo/view/documentation.component';
-
-import {Home} from './components/home';
 import {Login} from './components/login';
+import { LoggedInGuard } from './services/loggedIn.guard';
 
 export const routes: Routes = [
-  {path: '', component: DashboardDemoComponent},
+  {path: 'dashboard', component: DashboardDemoComponent},
   {path: 'sample', component: SampleDemoComponent},
   {path: 'forms', component: FormsDemoComponent},
   {path: 'data', component: DataDemoComponent},
@@ -31,10 +30,8 @@ export const routes: Routes = [
   {path: 'charts', component: ChartsDemoComponent},
   {path: 'file', component: FileDemoComponent},
   {path: 'documentation', component: DocumentationComponent},
-  {path: 'home', component: Home},
-  {path: 'login', component: Login},
-  {path: 'admin', loadChildren: './modules/admin.module#AdminModule'},
-  {path: '', component: Home, pathMatch: 'full'}
+  {path: '', component: Login, pathMatch: 'full'},
+  {path: 'admin', loadChildren: './modules/admin.module#AdminModule', canActivate: [LoggedInGuard],}
 ];
 
 export const AppRoutes: ModuleWithProviders = RouterModule.forRoot(routes);

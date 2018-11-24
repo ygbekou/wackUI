@@ -80,4 +80,7 @@ export class AccountDetails implements OnInit, OnDestroy {
     }
   }
 
+  delete() {
+    
+  }
  }

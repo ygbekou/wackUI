@@ -3,6 +3,7 @@ import { Http, Response, Headers, ResponseContentType } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { Report, Parameter, ReportView, ReportCategory } from '../models';
 import { Constants } from '../app.constants';
+import { TokenStorage } from './token.storage';
 import { TreeModule, TreeNode } from 'primeng/primeng';
 
 @Injectable()
@@ -11,8 +12,11 @@ export class ReportService {
   private actionUrl: string;
   private headers: Headers; 
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private token: TokenStorage) {
     this.headers = new Headers();
+    if (this.token.hasToken()) {
+      this.headers.append('Authorization', 'Bearer ' + this.token.getToken());
+    }
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');
   }

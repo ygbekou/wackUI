@@ -31,9 +31,9 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
       private genericService: GenericService,
       private appointmentService: AppointmentService,
       private translate: TranslateService,
-      private doctorDropdown: DoctorDropdown,
-      private departmentDropdown: DepartmentDropdown,
-      private hospitalLocationDropdown: HospitalLocationDropdown,
+      public doctorDropdown: DoctorDropdown,
+      public departmentDropdown: DepartmentDropdown,
+      public hospitalLocationDropdown: HospitalLocationDropdown,
       private route: ActivatedRoute,
       private router: Router
     ) {

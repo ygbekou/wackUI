@@ -110,4 +110,7 @@ export class DeathReportDetails implements OnInit, OnDestroy {
     
   }
 
+  delete() {
+    
+  }
 }

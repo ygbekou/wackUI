@@ -6,6 +6,7 @@ import { PatientSale } from '../models/stocks/patientSale';
 import { PurchaseOrder, PurchaseOrderProduct } from '../models/stocks/purchaseOrder';
 import { ReceiveOrder } from '../models/stocks/receiveOrder';
 import { SaleReturn } from '../models/stocks/saleReturn';
+import { TokenStorage } from './token.storage';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 
 @Injectable()
@@ -14,8 +15,11 @@ export class PurchasingService {
   private actionUrl: string;
   private headers: Headers; 
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private token: TokenStorage) {
     this.headers = new Headers();
+    if (this.token.hasToken()) {
+      this.headers.append('Authorization', 'Bearer ' + this.token.getToken());
+    }
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');
   }
