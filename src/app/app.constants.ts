@@ -1,6 +1,6 @@
 export class Constants {
-  public static apiServer = 'http://localhost:8080';
-  //public static apiServer = 'http://www.kozah.org';
+  //public static apiServer = 'http://localhost:8080';
+  public static apiServer = 'http://www.kekouda.com';
   
   public static DETAIL = 'Details';
   public static ABSENCES = 'Absenses';
