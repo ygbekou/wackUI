@@ -101,6 +101,14 @@ export class AdmissionDetails implements OnInit, OnDestroy {
         .queryParams
         .subscribe(params => {          
           
+          if (params['patientId'] != null) {
+            this.patient.id = params['patientId'];
+            this.patient.medicalRecordNumber = params['mrn'];
+            this.patient.name = params['patientName'];
+            this.patient.user.birthDate = params['birthDate'];
+            this.patient.user.sex = params['gender'];
+          }
+          
           this.admission.patient = new Patient();
           this.admission.patient.user = new User();
           this.admission.pckage = new Package();

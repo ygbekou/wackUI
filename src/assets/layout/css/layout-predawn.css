@@ -776,7 +776,7 @@
         .landing-wrapper #header .header-top .header-menu li a:hover {
           border-color: #0071bc; }
 .landing-wrapper #header .header-content {
-  background: url("../../layout/images/landing/bg-slider.jpg");
+  background: url("assets/layout/images/landing/bg-slider.jpg");
   height: 390px;
   background-size: cover;
   padding: 80px 150px 0 150px; }

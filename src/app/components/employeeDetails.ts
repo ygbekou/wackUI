@@ -62,7 +62,9 @@ export class EmployeeDetails implements OnInit, OnDestroy {
               this.genericService.getOne(employeeId, 'Employee')
                   .subscribe(result => {
                 if (result.id > 0) {
-                  this.employee = result
+                  this.employee = result;
+                  if (this.employee.user.birthDate != null)
+                    this.employee.user.birthDate = new Date(this.employee.user.birthDate);
                 }
                 else {
                   this.error = Constants.SAVE_UNSUCCESSFUL;
@@ -103,6 +105,8 @@ export class EmployeeDetails implements OnInit, OnDestroy {
           .subscribe(result => {
             if (result.id > 0) {
               this.employee = result;
+              if (this.employee.user.birthDate != null)
+                    this.employee.user.birthDate = new Date(this.employee.user.birthDate);
             }
             else {
               this.error = Constants.SAVE_UNSUCCESSFUL;
@@ -115,6 +119,8 @@ export class EmployeeDetails implements OnInit, OnDestroy {
           .subscribe(result => {
             if (result.id > 0) {
               this.employee = result;
+              if (this.employee.user.birthDate != null)
+                    this.employee.user.birthDate = new Date(this.employee.user.birthDate);
             }
             else {
               this.error = Constants.SAVE_UNSUCCESSFUL;

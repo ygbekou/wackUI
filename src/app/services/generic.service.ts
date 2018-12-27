@@ -5,7 +5,7 @@ import {Constants} from '../app.constants';
 import {Country} from '../models/country';
 import { Reference } from '../models/reference';
 import {User} from '../models/user';
-import { TokenStorage } from './';
+import { TokenStorage } from './token.storage';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {SelectItem} from 'primeng/api';
 

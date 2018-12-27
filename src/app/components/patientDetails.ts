@@ -129,6 +129,7 @@ export class PatientDetails implements OnInit, OnDestroy {
     }
     catch (e) {
       console.log(e);
+      this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
     }
   }
   

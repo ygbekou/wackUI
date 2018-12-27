@@ -109,7 +109,7 @@ export class ReferenceDetails implements OnInit, OnDestroy {
         this.referenceType = 'Category';
       }
       
-      this.genericService.save(this.reference, this.referenceType)
+      this.genericService.save(this.reference, this.globalEventsManager.selectedReferenceType)
         .subscribe(result => {
           if (result.id > 0) {
             this.reference = result;

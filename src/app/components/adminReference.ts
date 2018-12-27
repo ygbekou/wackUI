@@ -160,22 +160,22 @@ export class AdminReference implements OnInit, OnDestroy {
           this.globalEventsManager.selectedParentId = Constants.CATEGORY_MEDICINE;
           this.categoryDropdown.getAllCategories(Constants.CATEGORY_MEDICINE);
           this.referenceList.updateCols('MEDICINE_TYPE');
-        } else if (evt.index == 15) {
+        } else if (evt.index == 14) {
           this.globalEventsManager.selectedParentId = Constants.CATEGORY_SERVICE_TARIF;
           this.globalEventsManager.selectedReferenceType = "Category";
           this.referenceDetails.parentId = Constants.CATEGORY_SERVICE_TARIF;
           this.referenceList.updateCols('SERVICE');
-        } else if (evt.index == 16) {
+        } else if (evt.index == 15) {
           this.globalEventsManager.selectedReferenceType = "LabTestMethod";
           this.referenceList.updateCols('LAB_TEST_METHOD');
-        } else if (evt.index == 17) {
+        } else if (evt.index == 16) {
           this.globalEventsManager.selectedReferenceType = "LabTestUnit";
           this.referenceList.updateCols('LAB_TEST_UNIT');
-        } else if (evt.index == 18) {
+        } else if (evt.index == 17) {
           this.labTestList.getAllLabTests();
-        } else if (evt.index == 19) {
+        } else if (evt.index == 18) {
           this.hospitalLocationtList.getAllHospitalLocations();
-        } else if (evt.index == 20) {
+        } else if (evt.index == 19) {
         } 
     
      }, 0);

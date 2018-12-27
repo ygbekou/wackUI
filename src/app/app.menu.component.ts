@@ -130,7 +130,9 @@ export class AppMenuComponent implements OnInit {
         label: 'Configuration', icon: 'fa fa-cogs',
         items: [
           {label: 'Chambres et lits', icon: 'fa fa-bed', routerLink: ['/admin/adminBedStatus']},
-          {label: 'config. des References', icon: 'fa fa-search', routerLink: ['/admin/adminReference']} 
+          {label: 'config. des References', icon: 'fa fa-search', routerLink: ['/admin/adminReference']},
+          {label: 'config. du site web', icon: 'fa fa-search', routerLink: ['/admin/adminWebsite']} 
+         
         ]
       },
       {

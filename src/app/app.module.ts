@@ -108,6 +108,7 @@ import { TokenInterceptor } from './app.interceptor';
 import {Routes, RouterModule} from '@angular/router';
 import {routes} from './app.routes';
 import {Login} from './components/login';
+import {Landing} from './components/website/landing';
 import {CommonSharedModule} from './modules/common.shared.module';
 import {
   GenericService, UserService, TokenStorage, AuthenticationService, BillingService, LoggedInGuard, AdmissionService
@@ -225,7 +226,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     EmptyDemoComponent,
     FileDemoComponent,
     DocumentationComponent,
-    Login
+    Login,
+    Landing
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

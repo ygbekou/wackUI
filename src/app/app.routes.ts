@@ -14,9 +14,11 @@ import {ChartsDemoComponent} from './demo/view/chartsdemo.component';
 import {FileDemoComponent} from './demo/view/filedemo.component';
 import {DocumentationComponent} from './demo/view/documentation.component';
 import {Login} from './components/login';
+import {Landing} from './components/website/landing';
 import { LoggedInGuard } from './services/loggedIn.guard';
 
 export const routes: Routes = [
+  {path: '', component: Landing, pathMatch: 'full'},
   {path: 'dashboard', component: DashboardDemoComponent},
   {path: 'sample', component: SampleDemoComponent},
   {path: 'forms', component: FormsDemoComponent},
@@ -30,7 +32,7 @@ export const routes: Routes = [
   {path: 'charts', component: ChartsDemoComponent},
   {path: 'file', component: FileDemoComponent},
   {path: 'documentation', component: DocumentationComponent},
-  {path: '', component: Login, pathMatch: 'full'},
+  {path: 'login', component: Login, pathMatch: 'full'},
   {path: 'admin', loadChildren: './modules/admin.module#AdminModule', canActivate: [LoggedInGuard],}
 ];
 

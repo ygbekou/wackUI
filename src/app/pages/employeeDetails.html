@@ -59,7 +59,7 @@
 					</div>
 				</div>
 				<div class="ui-grid-row">
-					<div class="ui-grid-col-6 ui-sm-12">
+					<div class="ui-grid-col-4 ui-sm-12">
 						<div class="form-group">
 							<div class="ui-grid-row">
 								<label for="sex">{{ 'COMMON.DEMOGRAPHIC_INFO' | translate }}</label>
@@ -73,13 +73,20 @@
 							</div>
 						</div>
 					</div>
-					<div class="ui-grid-col-6 ui-sm-12">
+					<div class="ui-grid-col-4 ui-sm-12">
 						<div class="form-group">
 							<label for="phone">{{ 'COMMON.PHONE' | translate }}<font color="red">*</font>
 							</label> <input type="text" pInputText class="form-control" id="phone"
-								[(ngModel)]="employee.user.phone" name="phone" #phone="ngModel" required>
-							<p-message *ngIf="f.submitted && phone.invalid" severity="error" text="Invalid email"></p-message>
+								[(ngModel)]="employee.user.homePhone" name="phone" #phone="ngModel" required>
+							<p-message *ngIf="f.submitted && phone.invalid" severity="error" text="Invalid Phone"></p-message>
 						
+						</div>
+					</div>
+					<div class="ui-grid-col-4 ui-sm-12">
+						<div class="form-group">
+							<label for="birthDate">{{ 'COMMON.BIRTH_DATE' | translate }}<font color="red">*</font>:</label>
+							<p-calendar [(ngModel)]="employee.user.birthDate" id="birthDate" name="birthDate" #birthDate="ngModel" required date></p-calendar>
+							<p-message *ngIf="f.submitted && birthDate.invalid" severity="error" text="Birth Date is required"></p-message>
 						</div>
 					</div>
 				</div>

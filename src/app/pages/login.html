@@ -1,4 +1,50 @@
-<form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" validate>
+
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <script>document.write('<base href="' + document.location + '" />');</script>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <title>PrimeNG - California - Landing Page</title>
+
+        <link id="theme-css" rel="stylesheet" type="text/css" href="assets/theme/theme-blue.css">
+        <link id="layout-css" rel="stylesheet" type="text/css" href="assets/layout/css/layout-blue.css">
+        <link rel="stylesheet" type="text/css" href="assets/pages/primeng.min.css">
+    </head>
+
+    <body class="landing-body">
+        <div class="landing-wrapper">
+            <div id="header">
+                <div class="header-top clearfix">
+                    <a href="#" class="logo">
+                        <img src="assets/layout/images/logo-black.png" alt="california-layout"/>
+                    </a>
+                    <ul class="header-menu">
+                        <li><a href="#"><span>Home</span></a></li>
+                        <li><a href="#about"><span>About</span></a></li>
+                        <li><a href="#service"><span>Service</span></a></li>
+                        <li><a href="#appointment"><span>Appointment</span></a></li>
+                        <li><a href="#doctor"><span>Doctor</span></a></li>
+                        <li><a href="#department"><span>Department</span></a></li>
+                        <li><a href="#contact"><span>Contact</span></a></li>
+                        <li><a  routerLink="/login"><span>Login</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="header-content clearfix">
+                    <div class="header-content-panel">
+                        <h1>PrimeNG Presents California</h1>
+                        <p>Modern and elegant responsive application template with a premium look for PrimeNG components.</p>
+                        <button type="button" class="ui-button landing-button ui-widget ui-state-default ui-corner-all ui-button-text-only" >
+                            <span class="ui-button-text ui-c">Learn More</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" validate>
 	<div class="ui-grid ui-grid-responsive ui-fluid">
 		<div class="ui-grid-row">
 			<div class="form-group">
@@ -28,3 +74,44 @@
 				
 	</div>
 </form>
+
+
+            <div id="footer" class="footer">
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-lg-4">
+                        <h3 class="appname">California</h3>
+                        <p>PrimeNG California Premium Application Template</p>
+                    </div>
+                    <div class="ui-g-12 ui-lg-2">
+                        <span class="header">OVERVIEW</span>
+                        <a href="#">Why PrimeFaces</a>
+                        <a href="#">Who Uses PrimeFaces</a>
+                        <a href="#">Testimonials</a>
+                        <a href="#">License</a>
+                    </div>
+                    <div class="ui-g-12 ui-lg-2">
+                        <span class="header">DEMOS</span>
+                        <a href="#">PrimeFaces</a>
+                        <a href="#">PrimeNG</a>
+                        <a href="#">PrimeReact</a>
+                        <a href="#">PrimeUI</a>
+                    </div>
+                    <div class="ui-g-12 ui-lg-2">
+                        <span class="header">SUPPORT</span>
+                        <a href="#">Support Options</a>
+                        <a href="#">PrimeFaces PRO</a>
+                        <a href="#">PrimeFaces Elite</a>
+                        <a href="#">Forum</a>
+                    </div>
+                    <div class="ui-g-12 ui-lg-2 footer-social">
+                        <span class="header">SOCIAL</span>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

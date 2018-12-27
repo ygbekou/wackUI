@@ -112,6 +112,9 @@ export class UserService {
    public saveUserWithPicture = (entityClass: string, entity : any, formData: FormData): Observable<any> => {
       
       let head = new Headers();
+      if (this.token.hasToken()) {
+        head.append('Authorization', 'Bearer ' + this.token.getToken());
+      }
       let toAdd = JSON.stringify(entity);
       let re = /\"/gi;
       let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';

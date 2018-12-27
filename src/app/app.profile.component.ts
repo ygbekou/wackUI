@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import { AppComponent} from './app.component';
+import { TokenStorage } from './services';
 import {trigger, state, transition, style, animate} from '@angular/animations';
 
 @Component({
@@ -7,9 +8,9 @@ import {trigger, state, transition, style, animate} from '@angular/animations';
     template: `
         <div class="user-profile">
             <a href="#" (click)="onClick($event)" id="sidebar-profile-button">
-                <img src="assets/layout/images/avatar.png" alt="california-layout"/>
-                <span class="sidebar-profile-name">Pauline Harrell</span>
-                <span class="sidebar-profile-role">Administrator</span>
+                <img src="assets/images/User/{{tokenStorage.getPicture()}}" alt="california-layout"/>
+                <span class="sidebar-profile-name">{{tokenStorage.getName()}}</span>
+                <span class="sidebar-profile-role">{{tokenStorage.getRoleName()}}</span>
             </a>
 
             <ul id="sidebar-usermenu" class="usermenu" [@menu]="active ? 'visible' : 'hidden'">
@@ -146,7 +147,8 @@ export class AppProfileComponent {
 
     activeProfileItem: any;
 
-    constructor(public app: AppComponent) {}
+    constructor(public app: AppComponent,
+    public tokenStorage: TokenStorage) {}
 
     onClick(event) {
         this.active = !this.active;

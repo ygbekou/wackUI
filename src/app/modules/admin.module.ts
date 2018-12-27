@@ -108,6 +108,12 @@ import {EnquiryList} from '../components/enquiryList';
 import { SearchComponent } from '../components/includes/search';
 import { BillingService, VisitService, TokenStorage, LoggedInGuard } from '../services';
 
+import {SectionDetails} from '../components/website/sectionDetails';
+import {SectionList} from '../components/website/sectionList';
+import {SectionItemDetails} from '../components/website/sectionItemDetails';
+import {SectionItemList} from '../components/website/sectionItemList';
+import {AdminWebsite} from '../components/website/adminWebsite';
+
 const routes: Routes = [
   {path: 'adminMain', component: AdminMain},
   {path: 'adminAppointment', component: AdminAppointment},
@@ -181,6 +187,7 @@ const routes: Routes = [
   {path: 'enquiryDetails', component: EnquiryDetails},
   {path: 'enquiryList', component: EnquiryList},
   {path: 'waitingList', component: WaitingList},
+  {path: 'adminWebsite', component: AdminWebsite},
 ];
 
 // AoT requires an exported function for factories
@@ -217,7 +224,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     InvestigationList, PurchaseOrderDetails, PurchaseOrderList, ReceiveOrderDetails, ReceiveOrderList,
     PatientSaleDetails, PatientSaleList, SaleReturnDetails, SaleReturnList, BirthReportDetails, BirthReportList,
     DeathReportDetails, DeathReportList, HospitalLocationDetails, HospitalLocationList, PatientLookup, VisitAdmLookup, 
-    PurchaseOrderLookup, PatientSaleLookup, HospitalDetails, EnquiryDetails, EnquiryList, WaitingList],
+    PurchaseOrderLookup, PatientSaleLookup, HospitalDetails, EnquiryDetails, EnquiryList, WaitingList, 
+    SectionDetails, SectionList, SectionItemDetails, SectionItemList, AdminWebsite],
 
   providers: [
     CategoryDropdown, PackageDropdown, DoctorDropdown, TokenStorage,  BillingService, VisitService, LoggedInGuard]

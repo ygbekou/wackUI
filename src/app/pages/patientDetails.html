@@ -1,8 +1,9 @@
 
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
 	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="patient">
+		<p-messages [(value)]="messages"></p-messages>
 		<p-accordion> <p-accordionTab header="{{ 'COMMON.DEMOGRAPHIC_INFO' | translate }}" selected="true">
-	
+	 
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-8 ui-sm-12">
 				<div class="ui-grid-row">
@@ -44,9 +45,9 @@
 										<label for="sex">{{ 'COMMON.GENDER' | translate }}</label>
 									</div>
 									<div class="ui-grid-row">
-										<p-radioButton name="sex" value="M" label="Male"
+										<p-radioButton name="sex" value="M" label="Male" name="sex"
 											[(ngModel)]="patient.user.sex"></p-radioButton>
-										<p-radioButton name="sex" value="F" label="Female"
+										<p-radioButton name="sex" value="F" label="Female" name="sex"
 											[(ngModel)]="patient.user.sex"></p-radioButton>
 									</div>
 								</div>
@@ -54,7 +55,7 @@
 							<div class="ui-grid-col-4 ui-sm-12">
 								<div class="form-group">
 									<label for="bloodGroup">{{ 'COMMON.BLOOD_GROUP' | translate }}:</label>
-									<p-dropdown [options]="genericService.bloodGroups"
+									<p-dropdown [options]="genericService.bloodGroups" name="bloodGroup"
 										[(ngModel)]="patient.bloodGroup" [style]="{'width':'190px'}"></p-dropdown>
 								</div>
 							</div>
@@ -136,7 +137,7 @@
 			<div class="ui-grid-col-12 ui-sm-12">
 				<div class="form-group">
 					<label for="medicalHistory">{{ 'COMMON.MEDICAL_HISTORY' | translate }}</label>
-					<p-editor [(ngModel)]="patient.medicalHistory"
+					<p-editor [(ngModel)]="patient.medicalHistory" name="medicalHistory"
 						[style]="{'height':'100px'}"></p-editor>
 				</div>
 			</div>
@@ -146,7 +147,7 @@
 			
 			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="form-group">
-					<label for="homePhone">{{ 'COMMON.PHONE_1' | translate }}<font color="red">*</font></label> 
+					<label for="homePhone">{{ 'COMMON.PHONE' | translate }} 1<font color="red">*</font></label> 
 					<input type="text" pInputText class="form-control" id="homePhone"
 						[(ngModel)]="patient.user.homePhone" name="homePhone" #homePhone="ngModel" required>
 					<p-message *ngIf="f.submitted && homePhone.errors && homePhone.errors.required" severity="error" 
@@ -155,7 +156,7 @@
 			</div>
 			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="form-group">
-					<label for="mobilePhone">{{ 'COMMON.PHONE_2' | translate }}</label> 
+					<label for="mobilePhone">{{ 'COMMON.PHONE' | translate }} 2</label> 
 					<input type="text" pInputText class="form-control" id="mobilePhone"
 						[(ngModel)]="patient.user.mobilePhone" name="mobilePhone" #mobilePhone="ngModel">
 				</div>
@@ -255,7 +256,7 @@
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
 					<label for="expiryDate">{{ 'COMMON.EXPIRY_DATE' | translate }}:</label>
-					<p-calendar [(ngModel)]="patient.expiryDate"></p-calendar>
+					<p-calendar [(ngModel)]="patient.expiryDate" name="expiryDate"></p-calendar>
 				</div>
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
