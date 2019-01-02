@@ -243,6 +243,21 @@
 	"CHECKED_BY": "Lu par",
 	"ENQUIRY_DATETIME": "Date / Heure de requete",
 	
+	"APPLICATION_TITLE": "Titre de l'application",
+	"META_KEYWORD": "Meta Mot clé",
+	"META_DESCRIPTION": "Meta Description",
+	"FAVICON": "Favicon",
+	"COPYRIGHT_TEXT": "Texte de copyright",
+	"TWITTER_API": "Twitter Api",
+	"GOOGLE_MAP": "Google Map",
+	"FACEBOOK_URL": "URL de Facebook",
+	"TWITTER_URL": "URL de Twitter",
+	"INSTAGRAM_URL": "URL de Instagram",
+	
+	"SECTION": "Section",
+	"TITLE": "Titre",
+	"PICTURE": "Image",
+	
     "CLEAR": "Effacer",
     "DELETE": "Supprimer",
     "SAVE": "Sauvegarder",

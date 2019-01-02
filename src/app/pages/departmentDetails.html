@@ -1,40 +1,34 @@
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
-	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="sectionItem">
+	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="department">
 		<p-messages [(value)]="messages"></p-messages>
 		<div class="ui-grid-row">
-			<div class="ui-grid-col-6 ui-sm-12">		
-				<div class="form-group">
-					<label for="section">{{ 'COMMON.SECTION' | translate }}</label>
-					<p-autoComplete [(ngModel)]="sectionItem.section"
-						(onDropdownClick)="sectionDropdown.handleDropdownClick($event)"
-						[suggestions]="sectionDropdown.filteredSections" [dropdown]="true"
-						id="section" (completeMethod)="sectionDropdown.filter($event)"
-						name="section" field="title" [size]="30" placeholder=""
-						[minLength]="1"></p-autoComplete>
+			<div class="ui-grid-col-6 ui-sm-12">
+				<div class="form-group">		
+					<label for="name">{{ 'COMMON.NAME' | translate }}</label>
+					<input pInputText id="name" [(ngModel)]="department.name" name="name" #name="ngModel" required />
+					<p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
 				</div>
 			</div>
-		</div>
-		<div class="ui-grid-row">
 			<div class="ui-grid-col-6 ui-sm-12">
 				<div class="form-group">		
 					<label for="name">{{ 'COMMON.TITLE' | translate }}</label>
-					<input pInputText id="title" [(ngModel)]="sectionItem.title" name="name" #title="ngModel" required />
+					<input pInputText id="title" [(ngModel)]="department.title" name="name" #title="ngModel" required />
 					<p-message *ngIf="f.submitted && title.invalid" severity="error" text="Field is required"></p-message>
-				</div>
-			</div>
-			<div class="ui-grid-col-6 ui-sm-12">
-				<div class="form-group">		
-					<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
-					<textarea pInputTextarea id="description"
-							[(ngModel)]="sectionItem.description" name="description" #description="ngModel"> </textarea>
 				</div>
             </div>
         </div>
         <div class="ui-grid-row">
+			<div class="ui-grid-col-6 ui-sm-12">
+				<div class="form-group">		
+					<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
+					<textarea pInputTextarea id="description"
+							[(ngModel)]="department.description" name="description" #description="ngModel"> </textarea>
+				</div>
+            </div>
             <div class="ui-grid-col-6 ui-sm-12">
 				<div class="ui-grid-col-2">
 					<label for="picture">{{ 'COMMON.PICTURE' | translate }}</label>
-					<img class="thumb" src="assets/docs/SectionItem/{{sectionItem.fileLocation}}" alt="" />
+					<img class="thumb" src="assets/docs/Department/{{department.fileLocation}}" alt="" />
 				</div>
 				<div class="ui-grid-col-12 ui-sm-12">
 					<div class="form-group">
@@ -43,10 +37,12 @@
 					</div>
 				</div>
             </div>
-			<div class="ui-grid-col-6 ui-sm-12">
-				<p-radioButton name="status" value="0" label="Actif" [(ngModel)]="sectionItem.status"
+        </div>
+        <div class="ui-grid-row">
+			<div class="ui-grid-col-2 ui-sm-12">
+				<p-radioButton name="status" value="0" label="Actif" [(ngModel)]="department.status"
 					name="status" #status="ngModel" required></p-radioButton>
-				<p-radioButton name="status" value="1" label="Inactif" [(ngModel)]="sectionItem.status"
+				<p-radioButton name="status" value="1" label="Inactif" [(ngModel)]="department.status"
 					name="status" #status="ngModel" required ></p-radioButton>
 				<p-message *ngIf="f.submitted && status.invalid" severity="error" text="Field is required"></p-message>
 			</div>

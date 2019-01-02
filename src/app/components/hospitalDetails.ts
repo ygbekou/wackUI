@@ -14,17 +14,19 @@ import { Message } from 'primeng/api';
   templateUrl: '../pages/hospitalDetails.html',
   providers: [GenericService, CountryDropdown]
 })
+// tslint:disable-next-line:component-class-suffix
 export class HospitalDetails implements OnInit, OnDestroy {
   
   hospital: Hospital = new Hospital();
-  
+
   @ViewChild('logo') logo: ElementRef;
   @ViewChild('favicon') favicon: ElementRef;
+  @ViewChild('backgroundSlider') backgroundSlider: ElementRef;
   formData = new FormData();
   messages: Message[] = [];
   
   constructor
-    (
+  (
       private genericService: GenericService,
       private userService: UserService,
       private countryDropdown: CountryDropdown,
@@ -82,9 +84,22 @@ export class HospitalDetails implements OnInit, OnDestroy {
        this.formData.append('favicon', null, null);
     }
     
+    let backgroundSliderEl = this.backgroundSlider.nativeElement;
+    if (backgroundSliderEl && backgroundSliderEl.files && (backgroundSliderEl.files.length > 0)) {
+      let files :FileList = backgroundSliderEl.files;
+      for(var i = 0; i < files.length; i++){
+          this.formData.append('backgroundSlider', files[i], files[i].name);
+      }
+    } else {
+       this.formData.append('backgroundSlider', null, null);
+    }
+    
+    
     try {
       if ((logoEl && logoEl.files && (logoEl.files.length > 0)) 
-          || (faviconEl && faviconEl.files && (faviconEl.files.length > 0))) {
+          || (faviconEl && faviconEl.files && (faviconEl.files.length > 0))
+          || (backgroundSliderEl && backgroundSliderEl.files && (backgroundSliderEl.files.length > 0))
+          ) {
         this.hospital.logo = '';
         this.hospital.favicon = '';
         this.genericService.saveWithFile(this.hospital, 'Hospital', this.formData, 'saveHospital')

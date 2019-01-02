@@ -113,6 +113,8 @@ import {SectionList} from '../components/website/sectionList';
 import {SectionItemDetails} from '../components/website/sectionItemDetails';
 import {SectionItemList} from '../components/website/sectionItemList';
 import {AdminWebsite} from '../components/website/adminWebsite';
+import {DepartmentDetails} from '../components/departmentDetails';
+import {DepartmentList} from '../components/departmentList';
 
 const routes: Routes = [
   {path: 'adminMain', component: AdminMain},
@@ -223,9 +225,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails,
     InvestigationList, PurchaseOrderDetails, PurchaseOrderList, ReceiveOrderDetails, ReceiveOrderList,
     PatientSaleDetails, PatientSaleList, SaleReturnDetails, SaleReturnList, BirthReportDetails, BirthReportList,
-    DeathReportDetails, DeathReportList, HospitalLocationDetails, HospitalLocationList, PatientLookup, VisitAdmLookup, 
-    PurchaseOrderLookup, PatientSaleLookup, HospitalDetails, EnquiryDetails, EnquiryList, WaitingList, 
-    SectionDetails, SectionList, SectionItemDetails, SectionItemList, AdminWebsite],
+    DeathReportDetails, DeathReportList, HospitalLocationDetails, HospitalLocationList, PatientLookup, VisitAdmLookup,
+    PurchaseOrderLookup, PatientSaleLookup, HospitalDetails, EnquiryDetails, EnquiryList, WaitingList,
+    SectionDetails, SectionList, SectionItemDetails, SectionItemList, AdminWebsite, DepartmentDetails, DepartmentList],
 
   providers: [
     CategoryDropdown, PackageDropdown, DoctorDropdown, TokenStorage,  BillingService, VisitService, LoggedInGuard]

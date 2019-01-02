@@ -1,44 +1,40 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { SectionItem } from '../../models/website';
 import { Constants } from '../../app.constants';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { SectionDropdown } from './../dropdowns';
-import { GenericService, GlobalEventsManager } from '../../services';
-import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { GenericService } from '../../services';
+import { TranslateService} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'app-sectionItem-details',
   templateUrl: '../../pages/website/sectionItemDetails.html',
   providers: [GenericService, SectionDropdown]
-  
+
 })
+// tslint:disable-next-line:component-class-suffix
 export class SectionItemDetails implements OnInit, OnDestroy {
-  
-  sectionItem: SectionItem = new SectionItem();
-  messages: Message[] = [];
- 
-  constructor
+
+    sectionItem: SectionItem = new SectionItem();
+    messages: Message[] = [];
+    @ViewChild('picture') picture: ElementRef;
+    formData = new FormData();
+
+    constructor
     (
       private genericService: GenericService,
       private translate: TranslateService,
-      private globalEventsManager: GlobalEventsManager,
-      public  sectionDropdown: SectionDropdown,
-      private changeDetectorRef: ChangeDetectorRef,
-      private route: ActivatedRoute,
-      private router: Router
-    ) {
+      public  sectionDropdown: SectionDropdown    ) {
       this.sectionItem = new SectionItem();
   }
 
-  
-  
+
+
   ngOnInit(): void {
-    
+
   }
-  
+
   ngOnDestroy() {
     this.sectionItem = null;
   }
@@ -49,39 +45,55 @@ export class SectionItemDetails implements OnInit, OnDestroy {
         .subscribe(result => {
       if (result.id > 0) {
         this.sectionItem = result;
-      }
-      else {
+      } else {
         this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
-          this.messages.push({severity:Constants.ERROR, summary:res['COMMON.READ'], detail:res['MESSAGE.READ_FAILED']});
+          this.messages.push({severity: Constants.ERROR, summary: res['COMMON.READ'], detail: res['MESSAGE.READ_FAILED']});
         });
       }
-    })
+    });
   }
-  
+
   clear() {
     this.sectionItem = new SectionItem();
   }
-  
+
   save() {
-    this.messages = [];
-    try {
-      
-      this.genericService.save(this.sectionItem, 'com.qkcare.model.website.SectionItem')
-        .subscribe(result => {
-          if (result.id > 0) {
-            this.sectionItem = result;
-            this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe(res => {
-              this.messages.push({severity:Constants.SUCCESS, summary:res['COMMON.SAVE'], detail:res['MESSAGE.SAVE_SUCCESS']});
-            });
-          }
-          else {
-            this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_UNSUCCESS']).subscribe(res => {
-              this.messages.push({severity:Constants.SUCCESS, summary:res['COMMON.SAVE'], detail:res['MESSAGE.SAVE_UNSUCCESS']});
-            });
-          }
-        })
+    this.formData = new FormData();
+
+    const pictureEl = this.picture.nativeElement;
+    if (pictureEl && pictureEl.files && (pictureEl.files.length > 0)) {
+      const files: FileList = pictureEl.files;
+      for (let i = 0; i < files.length; i++) {
+          this.formData.append('file', files[i], files[i].name);
+      }
+    } else {
+       this.formData.append('file', null, null);
     }
-    catch (e) {
+
+    try {
+      if (pictureEl && pictureEl.files && pictureEl.files.length > 0) {
+        this.sectionItem.fileLocation = '';
+        this.genericService.saveWithFile(this.sectionItem, 'com.qkcare.model.website.SectionItem', this.formData, 'saveWithFile')
+          .subscribe(result => {
+            if (result.id > 0) {
+              this.sectionItem = result;
+              this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
+            } else {
+              this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
+            }
+          });
+      } else {
+        this.genericService.save(this.sectionItem, 'com.qkcare.model.website.SectionItem')
+          .subscribe(result => {
+            if (result.id > 0) {
+              this.sectionItem = result;
+              this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
+            } else {
+              this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
+            }
+          });
+      }
+    } catch (e) {
       console.log(e);
     }
   }

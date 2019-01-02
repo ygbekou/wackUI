@@ -35,16 +35,22 @@
 			</div>
 		</div>
 		<div class="ui-grid-row">
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@phone" for="phone">Phone <font color="red">*</font>
-					</label> <input type="text" pInputText class="form-control" id="phone"
-						[(ngModel)]="hospital.phone" name="phone" #phone="ngModel" required>
-					<p-message *ngIf="f.submitted && phone.errors && phone.errors.required" severity="error" 
-							text="Phone is required"></p-message>
+			<div class="ui-grid-col-12 ui-sm-12">
+				<div class="form-group">		
+					<label for="metaKeyword">{{ 'COMMON.META_KEYWORD' | translate }}</label>
+					<input pInputText id="metaKeyword" [(ngModel)]="hospital.metaKeyword" name="metaKeyword" #metaKeyword="ngModel" />
 				</div>
 			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
+			<div class="ui-grid-col-12 ui-sm-12">
+				<div class="form-group">		
+					<label for="metaDescription">{{ 'COMMON.META_DESCRIPTION' | translate }}</label>
+					<textarea pInputTextarea id="metaDescription"
+							[(ngModel)]="hospital.metaDescription" name="metaDescription" #metaDescription="ngModel"> </textarea>
+				</div>
+			</div>
+		</div>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="ui-grid-col-2">
 					<label i18n="@@logo" for="logo">Logo <font color="red">*</font></label>
 					<img class="thumb" src="assets/docs/Hospital/{{hospital.logo}}" alt="" />
@@ -56,7 +62,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
+			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="ui-grid-col-2">
 					<label i18n="@@favicon" for="favicon">Favicon</label>
 					<img class="thumb" src="assets/docs/Hospital/{{hospital.favicon}}" alt="" />
@@ -68,11 +74,50 @@
 					</div>
 				</div>
 			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="ui-grid-col-2">
+					<label i18n="@@backgroundSlider" for="backgroundSlider">Background Slider</label>
+					<img class="thumb" src="assets/docs/Hospital/{{hospital.backgroundSlider}}" alt="" />
+				</div>
+				<div class="ui-grid-col-12 ui-sm-12">
+					<div class="form-group">
+						<input type="file" [attr.multiple]="multiple ? true : null"
+							name="backgroundSlider" #backgroundSlider>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="form-group">
+					<label i18n="@@phone" for="phone">Phone <font color="red">*</font>
+					</label> <input type="text" pInputText class="form-control" id="phone"
+						[(ngModel)]="hospital.phone" name="phone" #phone="ngModel" required>
+					<p-message *ngIf="f.submitted && phone.errors && phone.errors.required" severity="error" 
+							text="Phone is required"></p-message>
+				</div>
+			</div>
+			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="form-group">
 					<label i18n="@@copyright" for="copyright">Copyright</label>
 					<p-editor [(ngModel)]="hospital.copyright" [style]="{'height':'100px'}" 
 						name="copyright" #copyright="ngModel"></p-editor>
+				</div>
+			</div>
+		</div>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="form-group">
+					<label for="bannerContentHeader">Banner Content Header</label>
+					<textarea pInputTextarea [(ngModel)]="hospital.bannerContentHeader" 
+						name="bannerContentHeader" #bannerContentHeader="ngModel"></textarea>
+				</div>
+			</div>
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="form-group">
+					<label for="bannerContentParagraph">Banner Content Paragraph</label>
+					<textarea pInputTextarea [(ngModel)]="hospital.bannerContentParagraph" 
+						name="bannerContentParagraph" #bannerContentParagraph="ngModel"></textarea>
 				</div>
 			</div>
 		</div>

@@ -17,100 +17,48 @@
 
     <body class="landing-body">
         <div class="landing-wrapper">
-            <div id="header">
-                <div class="header-top clearfix">
-                    <a href="#" class="logo">
-                        <img src="assets/layout/images/logo-black.png" alt="california-layout"/>
-                    </a>
-                    <ul class="header-menu">
-                        <li><a href="#"><span>Home</span></a></li>
-                        <li><a href="#about"><span>About</span></a></li>
-                        <li><a href="#service"><span>Service</span></a></li>
-                        <li><a href="#appointment"><span>Appointment</span></a></li>
-                        <li><a href="#doctor"><span>Doctor</span></a></li>
-                        <li><a href="#department"><span>Department</span></a></li>
-                        <li><a href="#contact"><span>Contact</span></a></li>
-                        <li><a  routerLink="/login"><span>Login</span></a></li>
-                    </ul>
+            <app-web-header></app-web-header>
+            <div class="ui-grid-row">
+                <br/>
+                <br/>
+                <div class="ui-grid-col-4 ui-sm-12">
+
                 </div>
+				<div class="ui-grid-col-8 ui-sm-12">	
 
-                <div class="header-content clearfix">
-                    <div class="header-content-panel">
-                        <h1>PrimeNG Presents California</h1>
-                        <p>Modern and elegant responsive application template with a premium look for PrimeNG components.</p>
-                        <button type="button" class="ui-button landing-button ui-widget ui-state-default ui-corner-all ui-button-text-only" >
-                            <span class="ui-button-text ui-c">Learn More</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" validate>
-	<div class="ui-grid ui-grid-responsive ui-fluid">
-		<div class="ui-grid-row">
-			<div class="form-group">
-				<label for="email">{{ 'COMMON.E_MAIL' | translate }}<font color="red">*</font></label> 
-				<input type="text" pInputText class="form-control" id="email" required 
-					[(ngModel)]="user.userName" name="email" #email="ngModel">
-				<p-message *ngIf="f.submitted && email.invalid" severity="error" text="Field is required"></p-message>
-			</div>
-		</div>
-		<div class="ui-grid-row">
-			<div class="form-group">
-				<label for="password">{{ 'COMMON.PASSWORD' | translate }} <font color="red">*</font></label> 
-				<input type="password" pInputText class="form-control" id="password" required
-					[(ngModel)]="user.password" name="password" #password="ngModel">
-				<p-message *ngIf="f.submitted && password.invalid" severity="error" text="Field is required"></p-message>
-			</div>
-		</div>
-	</div>
+                    <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" validate>
+                        <div class="ui-grid ui-grid-responsive ui-fluid">
+                            <div class="ui-grid-row">
+                                <div class="form-group">
+                                    <label for="email">{{ 'COMMON.E_MAIL' | translate }}<font color="red">*</font></label> 
+                                    <input type="text" pInputText class="form-control" id="email" required 
+                                        [(ngModel)]="user.userName" name="email" #email="ngModel">
+                                    <p-message *ngIf="f.submitted && email.invalid" severity="error" text="Field is required"></p-message>
+                                </div>
+                            </div>
+                            <div class="ui-grid-row">
+                                <div class="form-group">
+                                    <label for="password">{{ 'COMMON.PASSWORD' | translate }} <font color="red">*</font></label> 
+                                    <input type="password" pInputText class="form-control" id="password" required
+                                        [(ngModel)]="user.password" name="password" #password="ngModel">
+                                    <p-message *ngIf="f.submitted && password.invalid" severity="error" text="Field is required"></p-message>
+                                </div>
+                            </div>
+                        </div>
 
-	<br/>
-	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-		<button pButton type="submit" icon="fa fa-play-circle" label="{{ 'COMMON.SUBMIT' | translate }}"></button>
-		<br/>
-		<br/>						
-		Vous avez oublier votre mot de passe? Clicker sur le bouton <button pButton (click)="button='password'" icon="fa fa-play-circle" label="{{SEND_ME_MY_PASSWORD}}"></button>
-							
-				
-	</div>
-</form>
-
-
-            <div id="footer" class="footer">
-                <div class="ui-g">
-                    <div class="ui-g-12 ui-lg-4">
-                        <h3 class="appname">California</h3>
-                        <p>PrimeNG California Premium Application Template</p>
-                    </div>
-                    <div class="ui-g-12 ui-lg-2">
-                        <span class="header">OVERVIEW</span>
-                        <a href="#">Why PrimeFaces</a>
-                        <a href="#">Who Uses PrimeFaces</a>
-                        <a href="#">Testimonials</a>
-                        <a href="#">License</a>
-                    </div>
-                    <div class="ui-g-12 ui-lg-2">
-                        <span class="header">DEMOS</span>
-                        <a href="#">PrimeFaces</a>
-                        <a href="#">PrimeNG</a>
-                        <a href="#">PrimeReact</a>
-                        <a href="#">PrimeUI</a>
-                    </div>
-                    <div class="ui-g-12 ui-lg-2">
-                        <span class="header">SUPPORT</span>
-                        <a href="#">Support Options</a>
-                        <a href="#">PrimeFaces PRO</a>
-                        <a href="#">PrimeFaces Elite</a>
-                        <a href="#">Forum</a>
-                    </div>
-                    <div class="ui-g-12 ui-lg-2 footer-social">
-                        <span class="header">SOCIAL</span>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-github"></i></a>
-                    </div>
+                        <br/>
+                        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+                            <button pButton type="submit" icon="fa fa-play-circle" label="{{ 'COMMON.SUBMIT' | translate }}"></button>
+                            <br/>
+                            <br/>						
+                            Vous avez oublier votre mot de passe? Clicker sur le bouton <button pButton (click)="button='password'" icon="fa fa-play-circle" label="{{SEND_ME_MY_PASSWORD}}"></button>
+                        </div>
+                    </form> 
                 </div>
             </div>
+            <br/>
+            <br/>
+            <app-web-footer></app-web-footer>
         </div>
     </body>
 

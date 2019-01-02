@@ -92,10 +92,10 @@
 			    </p-tabPanel>
 			    <p-tabPanel id="department" header="Department">
 			    	<div *ngIf="activeTab == 11" class="ui-grid-row">
-				        <app-reference-details></app-reference-details>
+				        <app-department-details></app-department-details>
 				        <br/> 
 				        <br/>
-				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Department')"></app-reference-list>
+				        <app-department-list (departmentIdEvent)="onDepartmentSelected($event, 'Department')"></app-department-list>
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel id="manufacturer" header="Manufacturer">

@@ -118,9 +118,12 @@ export class GenericService {
   
   
    public saveWithFile = (entity: any, entityClass: string, formData: FormData, method: string): Observable<any> => {
-   
-      let head = new Headers();
      
+      let head = new Headers();
+      if (this.token.hasToken()) {
+         head.append('Authorization', 'Bearer ' + this.token.getToken());
+      }
+       
       let toAdd = JSON.stringify(entity);
       let re = /\"/gi;
       let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';

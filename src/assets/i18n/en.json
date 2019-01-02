@@ -243,6 +243,21 @@
 	"CHECKED_BY": "Read By",
 	"ENQUIRY_DATETIME": "Enquiry Date / Time",
 	
+	"APPLICATION_TITLE": "Application Title",
+	"META_KEYWORD": "Meta Keyword",
+	"META_DESCRIPTION": "Meta Description",
+	"FAVICON": "Favicon",
+	"COPYRIGHT_TEXT": "Copyright Text",
+	"TWITTER_API": "Twitter Api",
+	"GOOGLE_MAP": "Google Map",
+	"FACEBOOK_URL": "Facebook Url",
+	"TWITTER_URL": "Twitter Url",
+	"INSTAGRAM_URL": "Instagram Url",
+	
+	"SECTION": "Section",
+	"TITLE": "Title",
+	"PICTURE": "Picture",
+	
     "CLEAR": "Clear",
     "DELETE": "Delete",
     "SAVE": "Save",
@@ -256,6 +271,8 @@
     "CANCEL": "Cancel",
     "CONFIRM": "Confirm",
     "SUBMIT": "Submit"
+    
+    
 
   },
   "MESSAGE": {

@@ -3,6 +3,7 @@ export * from './searchCriteria';
 export * from './patient';
 export * from './user';
 export * from './employee';
+export * from './department';
 export * from './country';
 export * from './hospitalLocation';
 export * from './department';

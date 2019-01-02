@@ -1,14 +1,18 @@
 
 export class Hospital {
-  
   id: number;
   name: string;
   description: string;
+  metaKeyword: string;
+  metaDescription: string;
   address: string;
   email: string;
   phone: string;
   logo: string;
   favicon: string;
+  backgroundSlider: string;
+  bannerContentHeader: string;
+  bannerContentParagraph: string;
   copyright: string;
   twitterApi: string;
   googleMap: string;
@@ -19,5 +23,5 @@ export class Hospital {
   dribbbleUrl: string;
   skypeUrl: string;
   vimeoUrl: string;
-  status: number = 0;
+  status: Number = 0;
 }
