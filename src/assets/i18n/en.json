@@ -272,8 +272,6 @@
     "CONFIRM": "Confirm",
     "SUBMIT": "Submit"
     
-    
-
   },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different than the current doctor.",
@@ -285,5 +283,22 @@
     "READ_SUCCESS": "Read was successful",
     "READ_UNSUCCESS": "Read was unsuccessful",
     "OVERLAP_SCHEDULE": "Two schedules are overlaping"
+  },
+  "DATE": {
+  	"1": "Jan",
+  	"2": "Feb",
+  	"3": "Mar",
+  	"4": "Apr",
+  	"5": "May",
+  	"6": "Jun",
+  	"7": "Jul",
+    "8": "Aug",
+    "9": "Sep",
+    "10": "Oct",
+    "11": "Nov",
+    "12": "Dec"
   }
+
 }
+
+    

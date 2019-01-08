@@ -1,4 +1,4 @@
-import { Component,LOCALE_ID,OnInit, ChangeDetectorRef, ViewChild, OnDestroy } from '@angular/core';
+import { Component, LOCALE_ID, OnInit, ChangeDetectorRef, ViewChild, OnDestroy } from '@angular/core';
 import { Patient, User, UserGroup } from '../models';
 import { PatientDetails } from './patientDetails';
 import { Cookie } from 'ng2-cookies/ng2-cookies';

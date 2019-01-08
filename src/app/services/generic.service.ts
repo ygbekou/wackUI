@@ -1,12 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Http, Response, Headers} from '@angular/http';
+// tslint:disable-next-line:import-blacklist
 import {Observable} from 'rxjs/Rx';
 import {Constants} from '../app.constants';
 import {Country} from '../models/country';
 import { Reference } from '../models/reference';
-import {User} from '../models/user';
 import { TokenStorage } from './token.storage';
-import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {SelectItem} from 'primeng/api';
 
 @Injectable()
@@ -14,7 +13,6 @@ export class GenericService {
 
   private actionUrl: string;
   private headers: Headers;
-  
   public bloodGroups: SelectItem[];
 
   constructor(private http: Http, private token: TokenStorage) {
@@ -24,7 +22,7 @@ export class GenericService {
     }
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');
-    
+
     this.bloodGroups = [
             {label: 'A+', value: 'A+'},
             {label: 'A-', value: 'A-'},
@@ -38,160 +36,159 @@ export class GenericService {
   }
 
   public getAllCountries = (): Observable<Country[]> => {
-    let actionUrl = Constants.apiServer + '/service/base/getAllCountries';
+    const actionUrl = Constants.apiServer + '/service/base/getAllCountries';
     return this.http.get(actionUrl, {headers: this.headers})
       .map((response: Response) => <Country[]>response.json())
       .catch(this.handleError);
   }
-  
+
   public getAll = (entityClass: string): Observable<any[]> => {
-    let actionUrl = Constants.apiServer + '/service/' + entityClass + '/all';
+    const actionUrl = Constants.apiServer + '/service/' + entityClass + '/all';
     return this.http.get(actionUrl, {headers: this.headers})
       .map((response: Response) => <any[]>response.json())
       .catch(this.handleError);
   }
-  
+
   public getAllByCriteria = (entityClass: string, parameters: string []): Observable<any[]> => {
-    let toAdd = JSON.stringify(parameters);
-    
-    let actionUrl = Constants.apiServer + '/service/' + entityClass + '/allByCriteria';
+    const toAdd = JSON.stringify(parameters);
+
+    const actionUrl = Constants.apiServer + '/service/' + entityClass + '/allByCriteria';
     return this.http.post(actionUrl, toAdd, {headers: this.headers})
       .map((response: Response) => <any[]>response.json())
       .catch(this.handleError);
   }
-  
-  
+
   public save = (entity: any, entityClass: string): Observable<any> => {
-   
-      let toAdd = JSON.stringify(entity);
-      let re = /\"/gi;
-      let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
-      
-      let actionUrl = Constants.apiServer + '/service/' + entityClass + '/save';
+
+      const toAdd = JSON.stringify(entity);
+      const re = /\"/gi;
+      const toSend = '{"json":"' + toAdd.replace(re, '\'') + '"}';
+
+      const actionUrl = Constants.apiServer + '/service/' + entityClass + '/save';
       return this.http.post(actionUrl, toSend, { headers: this.headers })
         .map((response: Response) => {
             if (response && response.json()) {
               const error = response.json() && response.json().error;
               if (error == null) {
-                
+
               }
             }
             return response.json();
         })
         .catch(this.handleError);
    }
-  
-   public saveWithUrl = (url: string, genericObject : any): Observable<any> => {
-    
-      let toAdd = JSON.stringify(genericObject);
-      let re = /\"/gi;
-      let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
-      
-      let actionUrl = Constants.apiServer + url;
+
+   public saveWithUrl = (url: string, genericObject: any): Observable<any> => {
+
+      const toAdd = JSON.stringify(genericObject);
+      const re = /\"/gi;
+      const toSend = '{"json":"' + toAdd.replace(re, '\'') + '"}';
+
+      const actionUrl = Constants.apiServer + url;
       return this.http.post(actionUrl, toSend, { headers: this.headers })
         .map((response: Response) => {
             return response.json();
         })
         .catch(this.handleError);
    }
-  
-  
+
+
   public saveDoctorOrder = (entity: any): Observable<any> => {
-   
-      let toAdd = JSON.stringify(entity);
-      let re = /\"/gi;
-      let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
-      
-      let actionUrl = Constants.apiServer + '/service/DoctorOrder/saveDoctorOrder';
+
+      const toAdd = JSON.stringify(entity);
+      const re = /\"/gi;
+      const toSend = '{"json":"' + toAdd.replace(re, '\'') + '"}';
+
+      const actionUrl = Constants.apiServer + '/service/DoctorOrder/saveDoctorOrder';
       return this.http.post(actionUrl, toSend, { headers: this.headers })
         .map((response: Response) => {
             if (response && response.json()) {
               const error = response.json() && response.json().error;
               if (error == null) {
-                
+
               }
             }
             return response.json();
         })
         .catch(this.handleError);
    }
-  
-  
+
+
    public saveWithFile = (entity: any, entityClass: string, formData: FormData, method: string): Observable<any> => {
-     
-      let head = new Headers();
+
+      const head = new Headers();
       if (this.token.hasToken()) {
          head.append('Authorization', 'Bearer ' + this.token.getToken());
       }
-       
-      let toAdd = JSON.stringify(entity);
-      let re = /\"/gi;
-      let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
-      
+
+      const toAdd = JSON.stringify(entity);
+      const re = /\"/gi;
+      const toSend = '{"json":"' + toAdd.replace(re, '\'') + '"}';
+
       formData.append('dto', new Blob([toSend],
       {
-          type: "application/json"
+          type: 'application/json'
       }));
-     
-      let actionUrl = Constants.apiServer + '/service/' + entityClass + '/' + method;
+
+      const actionUrl = Constants.apiServer + '/service/' + entityClass + '/' + method;
       return this.http.post(actionUrl, formData, { headers: head })
         .map((response: Response) => {
             if (response && response.json()) {
               const error = response.json() && response.json().error;
               if (error == null) {
-                
+
               }
             }
             return response.json();
         })
         .catch(this.handleError);
    }
-  
+
    public getOne = (id: number, entityClass: string): Observable<any> => {
-   
-      let actionUrl = Constants.apiServer + '/service/' + entityClass + '/' + id;
+
+      const actionUrl = Constants.apiServer + '/service/' + entityClass + '/' + id;
       return this.http.get(actionUrl, { headers: this.headers })
         .map((response: Response) => {
             if (response && response.json()) {
               const error = response.json() && response.json().error;
               if (error == null) {
-                
+
               }
             }
             return response.json();
         })
         .catch(this.handleError);
    }
-  
+
    public getNewObject = (url: string, id: number): Observable<any> => {
-   
-      let actionUrl = Constants.apiServer + url + id;
+
+      const actionUrl = Constants.apiServer + url + id;
       return this.http.get(actionUrl, { headers: this.headers })
         .map((response: Response) => {
             if (response && response.json()) {
               const error = response.json() && response.json().error;
               if (error == null) {
-                
+
               }
             }
             return response.json();
         })
         .catch(this.handleError);
    }
-  
+
     public delete = (id: number, entityClass: string): Observable<any> => {
-     
-        let toDelete = JSON.stringify(id);
-        let re = /\"/gi;
-        let toSend = '{"json":"' + toDelete.replace(re, "'") + '"}';
-        
-        let actionUrl = Constants.apiServer + '/service/' + entityClass + '/delete';
+
+        const toDelete = JSON.stringify(id);
+        const re = /\"/gi;
+        const toSend = '{"json":"' + toDelete.replace(re, '\'') + '"}';
+
+        const actionUrl = Constants.apiServer + '/service/' + entityClass + '/delete';
         return this.http.post(actionUrl, toSend, { headers: this.headers })
           .map((response: Response) => {
               if (response && response.json()) {
                 const error = response.json() && response.json().error;
                 if (error == null) {
-                  
+
                 }
               }
               return response.json();
@@ -199,43 +196,41 @@ export class GenericService {
           .catch(this.handleError);
      }
 
-  
+
   public uploadFileWithFormData = (formData: FormData): Observable<any> => {
-      
-      let head = new Headers();
-   ///head.append('Content-Type', 'multipart/form-data' );
-   //head.append('Accept', 'application/json');
-    
-      let actionUrl = Constants.apiServer + '/service/fileUploader/uploadFile';
+
+      const head = new Headers();
+
+      const actionUrl = Constants.apiServer + '/service/fileUploader/uploadFile';
       return this.http.post(actionUrl, formData, { headers: head })
         .map((response: Response) => {
             if (response && response.json()) {
               const error = response.json() && response.json().error;
               if (error == null) {
-                
+
               }
             }
             return response.json();
         })
         .catch(this.handleError);
    }
-  
+
   public getActiveElements = (elementType: string): Observable<Reference[]> => {
-   
-      let actionUrl = Constants.apiServer + '/service/reference/' + elementType + '/all/active';
+
+      const actionUrl = Constants.apiServer + '/service/reference/' + elementType + '/all/active';
       return this.http.get(actionUrl, { headers: this.headers })
         .map((response: Response) => {
             if (response && response.json()) {
               const error = response.json() && response.json().error;
               if (error == null) {
-                
+
               }
             }
             return response.json();
         })
         .catch(this.handleError);
    }
-  
+
   private handleError(error: Response) {
     console.error(error);
     return Observable.throw(error.json().error || 'Server error');

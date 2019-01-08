@@ -1,12 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Http, Response, Headers} from '@angular/http';
+// tslint:disable-next-line:import-blacklist
 import {Observable} from 'rxjs/Rx';
 import {Constants} from '../app.constants';
-import { SearchCriteria } from '../models';
-import { Prescription } from '../models/prescription';
+import { SearchCriteria, Appointment } from '../models';
 import { ScheduleEvent } from '../models/scheduleEvent';
 import { TokenStorage } from './token.storage';
-import {Cookie} from 'ng2-cookies/ng2-cookies';
 
 @Injectable()
 export class AppointmentService {
@@ -23,15 +22,31 @@ export class AppointmentService {
     this.headers.append('Accept', 'application/json');
   }
 
-   public getScheduleAndAppointments = (searchCriteria : SearchCriteria): Observable<ScheduleEvent[]> => {
-    
-      let toSend = JSON.stringify(searchCriteria);
-      
-      let actionUrl = Constants.apiServer + '/service/appointment/scheduleAndAppointments';
+   public getScheduleAndAppointments = (searchCriteria: SearchCriteria): Observable<ScheduleEvent[]> => {
+
+      const toSend = JSON.stringify(searchCriteria);
+
+      const actionUrl = Constants.apiServer + '/service/appointment/scheduleAndAppointments';
       return this.http.post(actionUrl, toSend, { headers: this.headers })
         .map((response: Response) => {
             return response.json();
         })
+        .catch(this.handleError);
+   }
+
+   public getByMonths = (): Observable<any[]> => {
+
+        const actionUrl = Constants.apiServer + '/service/appointment/list/byMonth';
+        return this.http.get(actionUrl, {headers: this.headers})
+        .map((response: Response) => <any[]>response.json())
+        .catch(this.handleError);
+   }
+
+   public getUpomings = (): Observable<any[]> => {
+
+        const actionUrl = Constants.apiServer + '/service/appointment/list/upcomings';
+        return this.http.get(actionUrl, {headers: this.headers})
+        .map((response: Response) => <any[]>response.json())
         .catch(this.handleError);
    }
 

@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http, Response, Headers} from '@angular/http';
+// tslint:disable-next-line:import-blacklist
 import {Observable} from 'rxjs/Rx';
 import {Constants} from '../app.constants';
 import { BedAssignment } from '../models/bedAssignment';
@@ -26,128 +27,136 @@ export class AdmissionService {
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');
   }
-  
-  public saveAdmission = (patientAdmission : Admission): Observable<Admission> => {
-    
-      let toAdd = JSON.stringify(patientAdmission);
-      let re = /\"/gi;
-      let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
-      
-      let actionUrl = Constants.apiServer + '/service/admission/admission/save';
+
+  public saveAdmission = (patientAdmission: Admission): Observable<Admission> => {
+
+      const toAdd = JSON.stringify(patientAdmission);
+      const re = /\"/gi;
+      const toSend = '{"json":"' + toAdd.replace(re, '\'') + '"}';
+
+      const actionUrl = Constants.apiServer + '/service/admission/admission/save';
       return this.http.post(actionUrl, toSend, { headers: this.headers })
         .map((response: Response) => {
             return response.json();
         })
         .catch(this.handleError);
    }
-  
+
    public getAdmission = (id: number): Observable<any> => {
-   
-      let actionUrl = Constants.apiServer + '/service/admission/admission/get/' + id;
+
+      const actionUrl = Constants.apiServer + '/service/admission/admission/get/' + id;
       return this.http.get(actionUrl, { headers: this.headers })
         .map((response: Response) => {
             if (response && response.json()) {
               const error = response.json() && response.json().error;
               if (error == null) {
-                
+
               }
             }
             return response.json();
         })
         .catch(this.handleError);
    }
-  
+
    public getDiagnoses = (parentId: number, entity: string): Observable<AdmissionDiagnosis[]> => {
-   
-      let actionUrl = Constants.apiServer + '/service/' + entity + '/diagnosis/' + parentId + '/all';
+
+      const actionUrl = Constants.apiServer + '/service/' + entity + '/diagnosis/' + parentId + '/all';
       return this.http.get(actionUrl, { headers: this.headers })
         .map((response: Response) => {
             if (response && response.json()) {
               const error = response.json() && response.json().error;
               if (error == null) {
-                
+
               }
             }
             return response.json();
         })
         .catch(this.handleError);
    }
-  
+
   public getPrescriptions = (parentId: number, entity: string): Observable<Prescription[]> => {
-   
-      let actionUrl = Constants.apiServer + '/service/' + entity + '/prescription/' + parentId + '/all';
+
+      const actionUrl = Constants.apiServer + '/service/' + entity + '/prescription/' + parentId + '/all';
       return this.http.get(actionUrl, { headers: this.headers })
         .map((response: Response) => {
             if (response && response.json()) {
               const error = response.json() && response.json().error;
               if (error == null) {
-                
+
               }
             }
             return response.json();
         })
         .catch(this.handleError);
    }
-  
-   public transferDoctor = (doctorAssignment : DoctorAssignment): Observable<DoctorAssignment> => {
-    
-      let toAdd = JSON.stringify(doctorAssignment);
-      let re = /\"/gi;
-      let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
-      
-      let actionUrl = Constants.apiServer + '/service/admission/DOCTOR/transfer';
+
+   public transferDoctor = (doctorAssignment: DoctorAssignment): Observable<DoctorAssignment> => {
+
+      const toAdd = JSON.stringify(doctorAssignment);
+      const re = /\"/gi;
+      const toSend = '{"json":"' + toAdd.replace(re, '\'') + '"}';
+
+      const actionUrl = Constants.apiServer + '/service/admission/DOCTOR/transfer';
       return this.http.post(actionUrl, toSend, { headers: this.headers })
         .map((response: Response) => {
             return response.json();
         })
         .catch(this.handleError);
    }
-  
-   public transferBed = (bedAssignment : BedAssignment): Observable<BedAssignment> => {
-    
-      let toAdd = JSON.stringify(bedAssignment);
-      let re = /\"/gi;
-      let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
-      
-      let actionUrl = Constants.apiServer + '/service/admission/BED/transfer';
+
+   public transferBed = (bedAssignment: BedAssignment): Observable<BedAssignment> => {
+
+      const toAdd = JSON.stringify(bedAssignment);
+      const re = /\"/gi;
+      const toSend = '{"json":"' + toAdd.replace(re, '\'') + '"}';
+
+      const actionUrl = Constants.apiServer + '/service/admission/BED/transfer';
       return this.http.post(actionUrl, toSend, { headers: this.headers })
         .map((response: Response) => {
             return response.json();
         })
         .catch(this.handleError);
    }
-  
-  
-   public savePrescription = (prescription : Prescription): Observable<Prescription> => {
-    
-      let toAdd = JSON.stringify(prescription);
-      let re = /\"/gi;
-      let toSend = '{"json":"' + toAdd.replace(re, "'") + '"}';
-      
-      let actionUrl = Constants.apiServer + '/service/appointment/prescription/save';
+
+
+   public savePrescription = (prescription: Prescription): Observable<Prescription> => {
+
+      const toAdd = JSON.stringify(prescription);
+      const re = /\"/gi;
+      const toSend = '{"json":"' + toAdd.replace(re, '\'') + '"}';
+
+      const actionUrl = Constants.apiServer + '/service/appointment/prescription/save';
       return this.http.post(actionUrl, toSend, { headers: this.headers })
         .map((response: Response) => {
             return response.json();
         })
         .catch(this.handleError);
    }
-  
+
    public getPrescription = (id: number): Observable<any> => {
-   
-      let actionUrl = Constants.apiServer + '/service/admission/prescription/get/' + id;
+
+      const actionUrl = Constants.apiServer + '/service/admission/prescription/get/' + id;
       return this.http.get(actionUrl, { headers: this.headers })
         .map((response: Response) => {
             if (response && response.json()) {
               const error = response.json() && response.json().error;
               if (error == null) {
-                
+
               }
             }
             return response.json();
         })
         .catch(this.handleError);
    }
-  
+
+   public getByMonths = (): Observable<Admission[]> => {
+
+        const actionUrl = Constants.apiServer + '/service/admission/list/byMonth';
+        return this.http.get(actionUrl, {headers: this.headers})
+        .map((response: Response) => <any[]>response.json())
+        .catch(this.handleError);
+   }
+
   private handleError(error: Response) {
     console.error(error);
     return Observable.throw(error.json().error || 'Server error');

@@ -1,80 +1,126 @@
-import { Component, OnInit } from '@angular/core';
-import { CarService } from '../service/carservice';
-import { EventService } from '../service/eventservice';
-import { Car } from '../domain/car';
-import { SelectItem } from 'primeng/primeng';
-import { MenuItem } from 'primeng/primeng';
-import { BreadcrumbService } from '../../breadcrumb.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AdmissionService, AppointmentService, GenericService, VisitService } from '../../services';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+// tslint:disable-next-line:import-blacklist
+import { Subscription } from 'rxjs/Rx';
+import { Appointment } from '../../models';
 
 @Component({
     templateUrl: './dashboard.component.html'
 })
-export class DashboardDemoComponent implements OnInit {
+export class DashboardDemoComponent implements OnInit, OnDestroy {
 
-    cities: SelectItem[];
+    appointmentItem: ChartItem = new ChartItem();
+    admissionItem: ChartItem = new ChartItem();
+    visitItem: ChartItem = new ChartItem();
+    subscription: Subscription;
+    upcomingAppointments: Appointment[] = [];
+    selectedAppointment: Appointment;
+    upcomingAppointmentCols: any[];
 
-    cars: Car[];
 
-    cols: any[];
+    constructor(
+        private appointmentService: AppointmentService,
+        private admissionService: AdmissionService,
+        private visitService: VisitService,
+        private translate: TranslateService
+    ) {
 
-    chartData: any;
 
-    events: any[];
+        this.subscription = this.appointmentService.getByMonths()
+              .subscribe((data: any) => {
+                  this.appointmentItem = this.pullData(data, 'Monthly Appointment', '#00ff00', '#00ff00');
+              },
+              error => console.log(error),
+              () => console.log('Get all month data complete')
+        );
 
-    selectedCity: any;
 
-    selectedCar: Car;
+        this.subscription.add(this.admissionService.getByMonths()
+                .subscribe((data: any) => {
+                    this.admissionItem = this.pullData(data, 'Monthly Admission', '#c4ffc1', '#c4ffc1');
+                },
+              error => console.log(error),
+              () => console.log('Get all month data complete')
+        ));
 
-    items: MenuItem[];
 
-    constructor(private carService: CarService, private eventService: EventService, private breadcrumbService: BreadcrumbService) {
-        this.breadcrumbService.setItems([
-            { label: 'Dashboard', routerLink: [''] }
-        ]);
+       this.subscription.add(this.visitService.getByMonths()
+                .subscribe((data: any) => {
+                    this.visitItem = this.pullData(data, 'Monthly Visit', '#ffc100', '#ffc100');
+                },
+              error => console.log(error),
+              () => console.log('Get all month data complete')
+        ));
+
+
+        this.subscription.add(this.appointmentService.getUpomings()
+                .subscribe((data: any) => {
+                    this.upcomingAppointments = data;
+                    // tslint:disable-next-line:no-console
+                    console.info(this.upcomingAppointments);
+                },
+              error => console.log(error),
+              () => console.log('Get all upcoming appointments complete')
+        ));
     }
 
-    ngOnInit() {
-        this.carService.getCarsMedium().then(cars => this.cars = cars);
 
-        this.cols = [
-            { field: 'vin', header: 'Vin' },
-            { field: 'year', header: 'Year' },
-            { field: 'brand', header: 'Brand' },
-            { field: 'color', header: 'Color' }
-        ];
+    pullData(data: any, itemLabel: any, backgroundColor: any, borderColor: any) {
 
-        this.eventService.getEvents().then(events => { this.events = events; });
+        const chartItem: ChartItem = new ChartItem();
 
-        this.cities = [];
-        this.cities.push({ label: 'Select City', value: null });
-        this.cities.push({ label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } });
-        this.cities.push({ label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } });
-        this.cities.push({ label: 'London', value: { id: 3, name: 'London', code: 'LDN' } });
-        this.cities.push({ label: 'Istanbul', value: { id: 4, name: 'Istanbul', code: 'IST' } });
-        this.cities.push({ label: 'Paris', value: { id: 5, name: 'Paris', code: 'PRS' } });
+        const labels: any = [];
+        const labelDatas: any = [];
+        // tslint:disable-next-line:forin
+        let i = 0;
+        // tslint:disable-next-line:forin
+        for (const index in data) {
+            this.translate.get(['DATE.' + index]).subscribe(res => {
+                labels[i] = res['DATE.' + index];
+            });
 
-        this.chartData = {
-            labels: ['0', '1', '2', '3', '4', '5', '6'],
+            labelDatas[i] = data[index].length;
+            chartItem.itemTotal += data[index].length;
+            i = i + 1;
+
+        }
+
+        chartItem.itemData = {
+            labels: labels,
             datasets: [
                 {
-                    label: 'First Dataset',
-                    data: [, 6, 3, 2, 7, 9, ],
-                    fill: false,
-                    borderColor: '#FFC107'
-                },
-                {
-                    label: 'Second Dataset',
-                    data: [, 2, 1, 3, 6, 8, ],
-                    fill: false,
-                    borderColor: '#03A9F4'
+                    label: itemLabel,
+                    backgroundColor: backgroundColor,
+                    borderColor: borderColor,
+                    data: labelDatas
                 }
             ]
         };
 
-        this.items = [
-            { label: 'Save', icon: 'fa fa-check' },
-            { label: 'Update', icon: 'fa fa-refresh' },
-            { label: 'Delete', icon: 'fa fa-trash' }
+        return chartItem;
+
+    }
+
+
+    ngOnInit(): void {
+        this.upcomingAppointmentCols = [
+            { field: 'appointmentDate', header: 'Date', type: 'Date' },
+            { field: 'beginTime', header: 'Begin Time' },
+            { field: 'endTime', header: 'End Time' },
+            { field: 'doctorName', header: 'Doctor' },
+            { field: 'departmentName', header: 'Department' }
         ];
     }
+
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
+}
+
+
+export class ChartItem {
+    itemData: any;
+    itemTotal = 0;
 }

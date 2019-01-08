@@ -113,8 +113,8 @@ import {Header} from './components/website/header';
 import {Footer} from './components/website/footer';
 import {CommonSharedModule} from './modules/common.shared.module';
 import {
-  GenericService, UserService, TokenStorage, AuthenticationService, BillingService, LoggedInGuard, AdmissionService
-} from './services/';
+  GenericService, UserService, TokenStorage, AuthenticationService, BillingService, LoggedInGuard, AdmissionService,
+    AppointmentService, VisitService} from './services/';
 import {GlobalEventsManager} from './services/globalEventsManager';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -239,7 +239,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     CarService, CountryService, EventService, NodeService, BreadcrumbService,
     
     GenericService, AdmissionService, UserService, BillingService, Constants, GlobalEventsManager, TokenStorage, 
-    AuthenticationService, LoggedInGuard
+    AuthenticationService, LoggedInGuard, AppointmentService, VisitService
   ],
   bootstrap: [AppComponent]
 })

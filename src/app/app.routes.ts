@@ -32,8 +32,8 @@ export const routes: Routes = [
   {path: 'charts', component: ChartsDemoComponent},
   {path: 'file', component: FileDemoComponent},
   {path: 'documentation', component: DocumentationComponent},
-  {path: 'login', component: Login, pathMatch: 'full'},
-  {path: 'admin', loadChildren: './modules/admin.module#AdminModule', canActivate: [LoggedInGuard],}
+  {path: 'login', component: Login},
+  {path: 'admin', loadChildren: './modules/admin.module#AdminModule', canActivate: [LoggedInGuard], }
 ];
 
 export const AppRoutes: ModuleWithProviders = RouterModule.forRoot(routes);
