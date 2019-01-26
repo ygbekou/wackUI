@@ -1,41 +1,4 @@
-<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-	<p-fieldset legend="Search Criteria">
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label for="lastName">{{ 'COMMON.LAST_NAME' | translate }}:</label> 
-					<input type="text" pInputText class="form-control" id="lastName"
-						 [(ngModel)]="searchCriteria.lastName" name="lastName" >
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label for="firstName">{{ 'COMMON.FIRST_NAME' | translate }}:</label> 
-					<input type="text" pInputText class="form-control" id="firstName"
-						 [(ngModel)]="searchCriteria.firstName" name="firstName">
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label for="department">{{ 'COMMON.DEPARTMENT' | translate }}:</label> 
-					<p-autoComplete [(ngModel)]="searchCriteria.department"
-						(onDropdownClick)="departmentDropdown.handleDropdownClick($event)"
-						[suggestions]="departmentDropdown.filteredDepartments"
-						[dropdown]="true" id="department"
-						(completeMethod)="departmentDropdown.filter($event)"
-						name="department" field="name" [size]="30"
-						placeholder="" [minLength]="1">
-					</p-autoComplete>
-				</div>
-			</div>
 
-			<div>
-				<button pButton icon="fa fa-search" label="{{ 'COMMON.SEARCH' | translate }}" (click)="search()"></button>
-			</div>
-		</div>
-	</p-fieldset>
-	<br/>
-	<br/>
 	<p-table [columns]="cols" [value]="employees"> <ng-template
 		pTemplate="header" let-columns>
 	<tr>
@@ -62,4 +25,4 @@
 		</td>
 	</tr>
 	</ng-template> </p-table>
-</div>
+

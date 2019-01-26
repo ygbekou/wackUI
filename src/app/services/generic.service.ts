@@ -3,17 +3,16 @@ import {Http, Response, Headers} from '@angular/http';
 // tslint:disable-next-line:import-blacklist
 import {Observable} from 'rxjs/Rx';
 import {Constants} from '../app.constants';
-import {Country} from '../models/country';
-import { Reference } from '../models/reference';
 import { TokenStorage } from './token.storage';
 import {SelectItem} from 'primeng/api';
+import { Reference } from '../models';
 
 @Injectable()
 export class GenericService {
 
   private actionUrl: string;
   private headers: Headers;
-  public bloodGroups: SelectItem[];
+  public languages: SelectItem[];
 
   constructor(private http: Http, private token: TokenStorage) {
     this.headers = new Headers();
@@ -23,23 +22,10 @@ export class GenericService {
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');
 
-    this.bloodGroups = [
-            {label: 'A+', value: 'A+'},
-            {label: 'A-', value: 'A-'},
-            {label: 'B+', value: 'B+'},
-            {label: 'B-', value: 'B-'},
-            {label: 'O+', value: 'O+'},
-            {label: 'O-', value: 'O-'},
-            {label: 'AB+', value: 'AB+'},
-            {label: 'AB-', value: 'AB-'}
+    this.languages = [
+            {label: 'English', value: 'EN'},
+            {label: 'French', value: 'FR'}
         ];
-  }
-
-  public getAllCountries = (): Observable<Country[]> => {
-    const actionUrl = Constants.apiServer + '/service/base/getAllCountries';
-    return this.http.get(actionUrl, {headers: this.headers})
-      .map((response: Response) => <Country[]>response.json())
-      .catch(this.handleError);
   }
 
   public getAll = (entityClass: string): Observable<any[]> => {
@@ -87,27 +73,6 @@ export class GenericService {
       const actionUrl = Constants.apiServer + url;
       return this.http.post(actionUrl, toSend, { headers: this.headers })
         .map((response: Response) => {
-            return response.json();
-        })
-        .catch(this.handleError);
-   }
-
-
-  public saveDoctorOrder = (entity: any): Observable<any> => {
-
-      const toAdd = JSON.stringify(entity);
-      const re = /\"/gi;
-      const toSend = '{"json":"' + toAdd.replace(re, '\'') + '"}';
-
-      const actionUrl = Constants.apiServer + '/service/DoctorOrder/saveDoctorOrder';
-      return this.http.post(actionUrl, toSend, { headers: this.headers })
-        .map((response: Response) => {
-            if (response && response.json()) {
-              const error = response.json() && response.json().error;
-              if (error == null) {
-
-              }
-            }
             return response.json();
         })
         .catch(this.handleError);
@@ -195,25 +160,6 @@ export class GenericService {
           })
           .catch(this.handleError);
      }
-
-
-  public uploadFileWithFormData = (formData: FormData): Observable<any> => {
-
-      const head = new Headers();
-
-      const actionUrl = Constants.apiServer + '/service/fileUploader/uploadFile';
-      return this.http.post(actionUrl, formData, { headers: head })
-        .map((response: Response) => {
-            if (response && response.json()) {
-              const error = response.json() && response.json().error;
-              if (error == null) {
-
-              }
-            }
-            return response.json();
-        })
-        .catch(this.handleError);
-   }
 
   public getActiveElements = (elementType: string): Observable<Reference[]> => {
 

@@ -1,14 +1,15 @@
-import { Department } from './department';
 import { User } from './user';
 
 export class Employee {
   id: number;
-  user: User;
-  department: Department;
+  user: User = new User();
   designation: string;
-  shortBiographie: string;
-  specialist: string;
   resume: string;
+  managing: number;
   status: number;
   name: string;
+
+  constructor() {
+    this.managing = 1;
+  }
 }

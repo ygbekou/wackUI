@@ -5,35 +5,35 @@ export class DropdownUtil {
 
 
   static filter(event, entities) {
-    let query = event.query;
-    let filteredEntities = [];
+    const query = event.query;
+    const filteredEntities = [];
     if (query) {
       for (let i = 0; i < entities.length; i++) {
-        let entity = entities[i];
-        if (entity.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        const entity = entities[i];
+        if (entity.name.toLowerCase().indexOf(query.toLowerCase()) === 0) {
           filteredEntities.push(entity);
         }
       }
     } else {
-      filteredEntities.push(...entities); 
+      filteredEntities.push(...entities);
     }
 
     return filteredEntities;
   }
 
   static filterLastFirstName(event, entities) {
-    let query = event.query;
-    let filteredEntities = [];
+    const query = event.query;
+    const filteredEntities = [];
     if (query) {
       for (let i = 0; i < entities.length; i++) {
-        let entity = entities[i];
-        let name = entity.lastName + ' ' + entity.firstName;
-        if (name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        const entity = entities[i];
+        const name = entity.lastName + ' ' + entity.firstName;
+        if (name.toLowerCase().indexOf(query.toLowerCase()) === 0) {
           filteredEntities.push(entity);
         }
       }
     } else {
-      filteredEntities.push(...entities); 
+      filteredEntities.push(...entities);
     }
 
     return filteredEntities;
@@ -43,10 +43,11 @@ export class DropdownUtil {
     let filteredEntities = [];
     setTimeout(() => {
       filteredEntities = entities;
-    }, 100)
+    }, 100);
 
     return filteredEntities;
   }
 
 
 }
+

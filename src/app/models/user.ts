@@ -1,4 +1,4 @@
-import {Country} from '../models/country';
+
 import { UserGroup } from './userGroup';
 
 
@@ -21,7 +21,7 @@ export class User {
   zipCode: string;
   birthDate: Date;
   status: number;
-  
+
   constructor() {
     this.userGroup = new UserGroup();
   }

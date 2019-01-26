@@ -19,36 +19,36 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
                       label="Go" style="margin-top: 0px; height: 35px;"></button>
                   </div>
                 </div>
-            
+
               </div>
             </form>`
 })
-  
-  
+
+
 export class SearchComponent implements OnInit {
-  
+
   @Input('user') user: User;
-   
+
   @Input()
-  public search: Function; 
-  
-  @Output() 
+  public search: Function;
+
+  @Output()
   parentSearchText: EventEmitter<string> = new EventEmitter<string>();
-  
+
   @Input()
   public schText: string;
-  
-   public SEARCH_TEXT: string = "Entrer le nom du produit ou une partie du nom";
-  
+
+   public SEARCH_TEXT = 'Entrer le nom du produit ou une partie du nom';
+
   constructor() {
 
   }
-  
+
   ngOnInit() {
-  
+
   }
 
-  sendData(data:any) {
+  sendData(data: any) {
     this.parentSearchText.emit(this.schText);
   }
 }

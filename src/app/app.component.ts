@@ -1,7 +1,7 @@
 import { GlobalEventsManager } from './services';
 import { TokenStorage } from './services/token.storage';
 import {Component, AfterViewInit, ElementRef, Renderer2, ViewChild, OnDestroy, Input} from '@angular/core';
-import {Location} from "@angular/common";
+import {Location} from '@angular/common';
 import {ScrollPanel} from 'primeng/primeng';
 import { TranslateService} from '@ngx-translate/core';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
@@ -55,13 +55,13 @@ export class AppComponent implements AfterViewInit {
               public translate: TranslateService,
               private token: TokenStorage,
               public renderer: Renderer2) {
-    
+
     translate.addLangs(['en', 'fr']);
     translate.setDefaultLang('en');
 
     const browserLang = translate.getBrowserLang();
     translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
-    
+
   }
 
 //  ngOnInit() {
@@ -70,11 +70,12 @@ export class AppComponent implements AfterViewInit {
 //      }
 //    );
 //  }
-  
+
   ngAfterViewInit() {
     setTimeout(() => {
-      if (this.layoutMenuScrollerViewChild)
-        this.layoutMenuScrollerViewChild.moveBar(); 
+      if (this.layoutMenuScrollerViewChild) {
+        this.layoutMenuScrollerViewChild.moveBar();
+      }
     }, 100);
   }
 

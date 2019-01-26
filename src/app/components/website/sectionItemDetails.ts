@@ -20,6 +20,7 @@ export class SectionItemDetails implements OnInit, OnDestroy {
     messages: Message[] = [];
     @ViewChild('picture') picture: ElementRef;
     formData = new FormData();
+    url: any;
 
     constructor
     (
@@ -41,7 +42,7 @@ export class SectionItemDetails implements OnInit, OnDestroy {
 
   getSection(sectionItemId: number) {
     this.messages = [];
-    this.genericService.getOne(sectionItemId, 'com.qkcare.model.website.SectionItem')
+    this.genericService.getOne(sectionItemId, 'com.wack.model.website.SectionItem')
         .subscribe(result => {
       if (result.id > 0) {
         this.sectionItem = result;
@@ -73,7 +74,7 @@ export class SectionItemDetails implements OnInit, OnDestroy {
     try {
       if (pictureEl && pictureEl.files && pictureEl.files.length > 0) {
         this.sectionItem.fileLocation = '';
-        this.genericService.saveWithFile(this.sectionItem, 'com.qkcare.model.website.SectionItem', this.formData, 'saveWithFile')
+        this.genericService.saveWithFile(this.sectionItem, 'com.wack.model.website.SectionItem', this.formData, 'saveWithFile')
           .subscribe(result => {
             if (result.id > 0) {
               this.sectionItem = result;
@@ -83,7 +84,7 @@ export class SectionItemDetails implements OnInit, OnDestroy {
             }
           });
       } else {
-        this.genericService.save(this.sectionItem, 'com.qkcare.model.website.SectionItem')
+        this.genericService.save(this.sectionItem, 'com.wack.model.website.SectionItem')
           .subscribe(result => {
             if (result.id > 0) {
               this.sectionItem = result;
@@ -95,6 +96,23 @@ export class SectionItemDetails implements OnInit, OnDestroy {
       }
     } catch (e) {
       console.log(e);
+    }
+  }
+
+
+  delete() {
+
+  }
+
+   readUrl(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+
+      reader.onload = (event1: ProgressEvent) => {
+        this.url = (<FileReader>event.target).result;
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
     }
   }
 

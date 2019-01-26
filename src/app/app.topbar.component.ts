@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {NgModule} from '@angular/core';
 import { AppComponent} from './app.component';
 import { GenericService } from './services';
-import { Hospital } from './models';
+import { Company } from './models';
 
 @Component({
   selector: 'app-topbar',
@@ -10,21 +10,21 @@ import { Hospital } from './models';
 })
 export class AppTopBarComponent {
 
-    hospital: Hospital = new Hospital();
+    company: Company = new Company();
 
     constructor(private genericService: GenericService,
         public app: AppComponent) {
 
         const parameters = [];
-        this.genericService.getAllByCriteria('Hospital', parameters)
-          .subscribe((data: Hospital[]) => {
+        this.genericService.getAllByCriteria('Company', parameters)
+          .subscribe((data: Company[]) => {
          if (data.length > 0) {
-           this.hospital = data[0];
+           this.company = data[0];
          } else {
-           this.hospital = new Hospital();
+           this.company = new Company();
          }
        },
        error => console.log(error),
-       () => console.log('Get Hospital complete'));
+       () => console.log('Get Company complete'));
     }
 }

@@ -2,8 +2,6 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, Elem
 import { Router, ActivatedRoute } from '@angular/router';
 import { Section } from '../../models/website';
 import { Constants } from '../../app.constants';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { GenericService, GlobalEventsManager } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
@@ -46,7 +44,7 @@ export class SectionDetails implements OnInit, OnDestroy {
 
   getSection(sectionId: number) {
     this.messages = [];
-    this.genericService.getOne(sectionId, 'com.qkcare.model.website.Section')
+    this.genericService.getOne(sectionId, 'com.wack.model.website.Section')
         .subscribe(result => {
       if (result.id > 0) {
         this.section = result;
@@ -83,7 +81,7 @@ export class SectionDetails implements OnInit, OnDestroy {
     try {
       if (pictureEl && pictureEl.files && pictureEl.files.length > 0) {
         this.section.fileLocation = '';
-        this.genericService.saveWithFile(this.section, 'com.qkcare.model.website.Section', this.formData, 'saveWithFile')
+        this.genericService.saveWithFile(this.section, 'com.wack.model.website.Section', this.formData, 'saveWithFile')
           .subscribe(result => {
             if (result.id > 0) {
               this.section = result;
@@ -93,7 +91,7 @@ export class SectionDetails implements OnInit, OnDestroy {
             }
           });
       } else {
-        this.genericService.save(this.section, 'com.qkcare.model.website.Section')
+        this.genericService.save(this.section, 'com.wack.model.website.Section')
           .subscribe(result => {
             if (result.id > 0) {
               this.section = result;
@@ -106,6 +104,11 @@ export class SectionDetails implements OnInit, OnDestroy {
     } catch (e) {
       console.log(e);
     }
+  }
+
+
+  delete() {
+
   }
 
  }

@@ -6,6 +6,8 @@ export class Section {
   description: string;
   fileLocation: string;
   status: number;
+  language: string;
+  sectionLabel: string;
 }
 
 
@@ -16,4 +18,5 @@ export class SectionItem {
     description: string;
     fileLocation: string;
     status: number;
+    language: string;
   }

@@ -16,19 +16,17 @@ export class AppMenuComponent implements OnInit {
   @Input() reset: boolean;
 
   model: any[];
-  
+
   constructor(
     private globalEventsManager: GlobalEventsManager,
     public app: AppComponent) {}
 
   ngOnInit() {
-    
+
     this.globalEventsManager.showNavBar.subscribe((data: boolean) => {
-      
+
     }, error => console.log(error));
-    
-   
-    
+
 
     this.model = [
       {label: 'Dashboard', icon: 'fa fa-fw fa-home', routerLink: ['/dashboard'], displayList: '1,2,3,4,5,6,20'},
@@ -42,7 +40,7 @@ export class AppMenuComponent implements OnInit {
       {
         label: 'Personnel', icon: 'fa fa-user-md', displayList: '1,2',
         items: [
-          {label: 'Ajouter un personnel', icon: 'fa fa-plus', routerLink: ['/admin/employeeDetails'], displayList: '1,2'}, 
+          {label: 'Ajouter un personnel', icon: 'fa fa-plus', routerLink: ['/admin/employeeDetails'], displayList: '1,2'},
           {label: 'Liste du personnel', icon: 'fa fa-search', routerLink: ['/admin/employeeList'], displayList: '1,2'}
         ]
       },
@@ -62,7 +60,7 @@ export class AppMenuComponent implements OnInit {
           {label: 'Anciennes requete', icon: 'fa fa-plus', routerLink: ['/admin/enquiryList'], displayList: '1,2,3,20'},
           {label: 'Ajouter un horaire', icon: 'fa fa-plus', routerLink: ['/admin/scheduleDetails'], displayList: '1'},
           {label: 'Liste des horaires', icon: 'fa fa-search', routerLink: ['/admin/scheduleList'], displayList: '1'},
-          {label: 'Les Rendez-vous', icon: 'fa fa-calendar-check-o', routerLink: ['/admin/appointmentScheduler'], displayList: '1,2'} 
+          {label: 'Les Rendez-vous', icon: 'fa fa-calendar-check-o', routerLink: ['/admin/appointmentScheduler'], displayList: '1,2'}
         ]
       },
       {
@@ -70,14 +68,14 @@ export class AppMenuComponent implements OnInit {
         items: [
           {label: 'Ajouter une visite', icon: 'fa fa-plus', routerLink: ['/admin/visitDetails']},
           {label: 'Liste des visites', icon: 'fa fa-search', routerLink: ['/admin/visitList']},
-          {label: "Liste d'attente", icon: 'fa fa-search', routerLink: ['/admin/waitingList']},
+          {label: 'Liste d\'attente', icon: 'fa fa-search', routerLink: ['/admin/waitingList']},
         ]
       },
       {
         label: 'Laboratoire', icon: 'fa fa-stethoscope',
         items: [
           {label: 'Ajouter un test', icon: 'fa fa-plus', routerLink: ['/admin/investigationDetails']},
-          {label: 'Liste des tests', icon: 'fa fa-search', routerLink: ['/admin/investigationList']} 
+          {label: 'Liste des tests', icon: 'fa fa-search', routerLink: ['/admin/investigationList']}
         ]
       },
       {
@@ -131,8 +129,8 @@ export class AppMenuComponent implements OnInit {
         items: [
           {label: 'Chambres et lits', icon: 'fa fa-bed', routerLink: ['/admin/adminBedStatus']},
           {label: 'config. des References', icon: 'fa fa-search', routerLink: ['/admin/adminReference']},
-          {label: 'config. du site web', icon: 'fa fa-search', routerLink: ['/admin/adminWebsite']} 
-         
+          {label: 'config. du site web', icon: 'fa fa-search', routerLink: ['/admin/adminWebsite']}
+
         ]
       },
       {
@@ -519,8 +517,8 @@ export class AppMenuComponent implements OnInit {
 
     this.app.menuMode = scheme;
   }
-  
-  
+
+
 }
 
 @Component({
@@ -640,7 +638,7 @@ export class AppSubMenuComponent {
       this.activeIndex = null;
     }
   }
-  
+
   shouldDisplay(displayList: string) {
      return this.authService.shouldDisplay(displayList, this.tokenStorage.getRole());
   }

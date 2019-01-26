@@ -1,100 +1,97 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { SectionItem } from '../../models/website';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Constants } from '../../app.constants';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { GenericService, GlobalEventsManager } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'app-sectionItem-list',
   templateUrl: '../../pages/website/sectionItemList.html',
   providers: [GenericService]
 })
+// tslint:disable-next-line:component-class-suffix
 export class SectionItemList implements OnInit, OnDestroy {
-  
+
   sectionItems: SectionItem[] = [];
   cols: any[];
-  
+
   @Output() sectionItemIdEvent = new EventEmitter<string>();
-  
+
   SECTIONITEM_LIST_LABEL: string;
   SECTIONITEM_LIST: string;
-  
+
   constructor
     (
     private genericService: GenericService,
     private translate: TranslateService,
-    private globalEventsManager: GlobalEventsManager,
-    private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
     ) {
   }
 
   ngOnInit(): void {
-    
+
     this.cols = [
-            { field: 'section', header: 'Section', headerKey: 'COMMON.SECTION' },
+            { field: 'sectionName', header: 'Section', headerKey: 'COMMON.SECTION' },
             { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
             { field: 'title', header: 'Title', headerKey: 'COMMON.TITLE' },
             { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
             { field: 'picture', header: 'Picture', headerKey: 'COMMON.PICTURE' },
             { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS' }
         ];
-    
+
     this.route
         .queryParams
         .subscribe(params => {
 
-          let parameters: string [] = []; 
-                      
-          this.genericService.getAllByCriteria('com.qkcare.model.website.SectionItem', parameters)
-            .subscribe((data: SectionItem[]) => 
-            { 
-              this.sectionItems = data 
+          const parameters: string [] = [];
+
+          this.genericService.getAllByCriteria('com.wack.model.website.SectionItem', parameters)
+            .subscribe((data: SectionItem[]) => {
+              this.sectionItems = data ;
             },
             error => console.log(error),
             () => console.log('Get all SectionItem complete'));
      });
-    
-    
+
+
     this.updateCols();
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.updateCols();
     });
   }
- 
-  
+
+
   updateCols() {
-    for (var index in this.cols) {
-      let col = this.cols[index];
+    // tslint:disable-next-line:forin
+    for (const index in this.cols) {
+      const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
     }
   }
- 
-  
+
+
   ngOnDestroy() {
     this.sectionItems = null;
   }
-  
+
   edit(sectionItemId: number) {
       this.sectionItemIdEvent.emit(sectionItemId + '');
   }
 
-  delete(sectionItemId : number) {
+  delete(sectionItemId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "sectionItemId": sectionItemId,
+          'sectionItemId': sectionItemId,
         }
-      }
+      };
+      // tslint:disable-next-line:quotemark
       this.router.navigate(["/admin/sectionItemDetails"], navigationExtras);
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
     }
   }

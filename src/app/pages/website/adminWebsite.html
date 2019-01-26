@@ -1,9 +1,17 @@
-<div class="ui-grid-row"> 
+
+        <app-admin-header></app-admin-header>
+
+        <div class="ui-grid-row"> 
 		<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
 			
 			<p-tabView (onChange)="onTabChange($event)"> 
-			 	<p-tabPanel header="Section">
+                <p-tabPanel header="Company">
 			    	<div *ngIf="activeTab == 0" class="ui-grid-row">
+				        <app-company-details></app-company-details>
+				    </div>
+			    </p-tabPanel>
+			 	<p-tabPanel header="Section">
+			    	<div *ngIf="activeTab == 1" class="ui-grid-row">
 				        <app-section-details></app-section-details>
 				        <br/> 
 				        <br/>
@@ -11,15 +19,27 @@
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel header="Element de Section">
-			    	<div *ngIf="activeTab == 1" class="ui-grid-row">
+			    	<div *ngIf="activeTab == 2" class="ui-grid-row">
 				        <app-sectionItem-details></app-sectionItem-details>
 				        <br/> 
 				        <br/>
 				        <app-sectionItem-list (sectionItemIdEvent)="onSectionItemSelected($event)"></app-sectionItem-list>
 				    </div>
+                </p-tabPanel>
+                <p-tabPanel header="Employee">
+			    	<div *ngIf="activeTab == 3" class="ui-grid-row">
+                        <p-tabView [activeIndex]="activeEmployeeTab" (onChange)="onEmployeeTabChange($event)">
+                            <p-tabPanel header="Employee Details">
+                                <app-employee-details></app-employee-details>
+                            </p-tabPanel>
+                            <p-tabPanel header="Employee List">
+                                <app-employee-list (employeeIdEvent)="onEmployeeSelected($event)"></app-employee-list>
+                            </p-tabPanel>
+                        </p-tabView>
+				    </div>
 			    </p-tabPanel>
 			</p-tabView>
-		</div>
+        </div>
+    </div>
 
-	</div>
  
