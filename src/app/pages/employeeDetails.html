@@ -52,7 +52,7 @@
             <div class="ui-grid-col-2 ui-sm-12"></div>
             <div class="ui-grid-col-5 ui-sm-12">
                 <div class="form-group">
-                    <label i18n="@@email" for="email">E-mail<font color="red">*</font></label> 
+                    <label i18n="@@email" for="email">{{ 'COMMON.EMAIL' | translate }}<font color="red">*</font></label> 
                     <input type="text" pInputText class="form-control" id="email"
                         [(ngModel)]="employee.user.email" name="email" #email="ngModel" email>
                     <p-message *ngIf="f.submitted && email.invalid" severity="error" text="Invalid email"></p-message>
@@ -63,7 +63,7 @@
             <div class="ui-grid-col-5 ui-sm-12">
                 <div class="form-group">
                     <div class="ui-grid-row">
-                        <label for="sex">{{ 'COMMON.DEMOGRAPHIC_INFO' | translate }}</label>
+                        <label for="sex">{{ 'COMMON.SEX' | translate }}</label>
                     </div>
                     <div class="ui-grid-row">
                         <p-radioButton name="sex" value="M" label="Male"

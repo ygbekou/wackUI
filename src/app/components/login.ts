@@ -1,10 +1,8 @@
 import {Component, OnInit, Output, EventEmitter, NgZone} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {AuthenticationService, TokenStorage, UserService} from '../services';
 import {Constants} from '../app.constants';
 import {User} from '../models/user';
-import { UserGroup } from '../models/userGroup';
 import {GlobalEventsManager} from '../services/globalEventsManager';
 import {Message } from 'primeng/primeng';
 
@@ -71,7 +69,6 @@ export class Login implements OnInit {
           .subscribe(data => {
             if (this.tokenStorage.getToken() !== '') {
               this.router.navigate(['adminWebsite']);
-              alert(window.location.href);
             } else {
               this.error = Constants.INVALID_USER_PASS;
             }

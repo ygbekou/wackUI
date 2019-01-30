@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -110,8 +110,12 @@ import { SectionList } from './components/website/sectionList';
 import { SectionItemDetails } from './components/website/sectionItemDetails';
 import { SectionItemList } from './components/website/sectionItemList';
 import { CompanyDetails } from './components/companyDetails';
+import { CompanyList } from './components/companyList';
 import { EmployeeDetails } from './components/employeeDetails';
 import { EmployeeList } from './components/employeeList';
+import { ContactDetails } from './components/contactDetails';
+import { ContactList } from './components/contactList';
+import { GlobalErrorHandler } from './services/globalErrorHandler';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -224,10 +228,14 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     SectionItemDetails,
     SectionItemList,
     CompanyDetails,
+    CompanyList,
+    ContactDetails,
+    ContactList,
     EmployeeDetails,
     EmployeeList
   ],
   providers: [
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
      BreadcrumbService, GenericService, UserService, Constants, GlobalEventsManager, TokenStorage,

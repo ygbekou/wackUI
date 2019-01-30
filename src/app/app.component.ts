@@ -58,6 +58,7 @@ export class AppComponent implements AfterViewInit {
 
     translate.addLangs(['en', 'fr']);
     translate.setDefaultLang('en');
+    translate.currentLang = 'en';
 
     const browserLang = translate.getBrowserLang();
     translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');

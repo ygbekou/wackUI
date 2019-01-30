@@ -8,6 +8,10 @@ export class Section {
   status: number;
   language: string;
   sectionLabel: string;
+
+  constructor() {
+      this.fileLocation = '';
+  }
 }
 
 
@@ -19,4 +23,16 @@ export class SectionItem {
     fileLocation: string;
     status: number;
     language: string;
+
+     constructor() {
+      this.fileLocation = '';
+    }
+  }
+
+export class ContactUsMessage {
+    id: number;
+    name: string;
+    email: string;
+    phone: string;
+    message: string;
   }

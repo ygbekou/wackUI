@@ -6,6 +6,8 @@ import {Constants} from '../app.constants';
 import { TokenStorage } from './token.storage';
 import {SelectItem} from 'primeng/api';
 import { Reference } from '../models';
+import { GenericResponse } from '../models/genericResponse';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class GenericService {
@@ -14,7 +16,11 @@ export class GenericService {
   private headers: Headers;
   public languages: SelectItem[];
 
-  constructor(private http: Http, private token: TokenStorage) {
+  constructor(
+        private http: Http,
+        private router: Router,
+        private token: TokenStorage
+    ) {
     this.headers = new Headers();
     if (this.token.hasToken()) {
       this.headers.append('Authorization', 'Bearer ' + this.token.getToken());
@@ -141,21 +147,11 @@ export class GenericService {
         .catch(this.handleError);
    }
 
-    public delete = (id: number, entityClass: string): Observable<any> => {
+    public delete = (id: number, entityClass: string): Observable<GenericResponse> => {
 
-        const toDelete = JSON.stringify(id);
-        const re = /\"/gi;
-        const toSend = '{"json":"' + toDelete.replace(re, '\'') + '"}';
-
-        const actionUrl = Constants.apiServer + '/service/' + entityClass + '/delete';
-        return this.http.post(actionUrl, toSend, { headers: this.headers })
+        const actionUrl = Constants.apiServer + '/service/' + entityClass + '/delete/' + id;
+        return this.http.get(actionUrl, { headers: this.headers })
           .map((response: Response) => {
-              if (response && response.json()) {
-                const error = response.json() && response.json().error;
-                if (error == null) {
-
-                }
-              }
               return response.json();
           })
           .catch(this.handleError);
@@ -178,7 +174,6 @@ export class GenericService {
    }
 
   private handleError(error: Response) {
-    console.error(error);
     return Observable.throw(error.json().error || 'Server error');
   }
 }

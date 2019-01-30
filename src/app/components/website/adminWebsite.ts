@@ -1,12 +1,12 @@
-import { Component, LOCALE_ID, OnInit, ChangeDetectorRef, ViewChild, OnDestroy } from '@angular/core';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { Constants } from '../../app.constants';
-import { GenericService, UserService, GlobalEventsManager } from '../../services';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { GenericService, GlobalEventsManager } from '../../services';
 import { SectionDetails } from './sectionDetails';
 import { SectionList } from './sectionList';
 import { SectionItemDetails } from './sectionItemDetails';
 import { SectionItemList } from './sectionItemList';
 import { EmployeeDetails } from '../employeeDetails';
+import { CompanyDetails } from '../companyDetails';
+import { ContactDetails } from '../contactDetails';
 
 
 
@@ -24,9 +24,12 @@ export class AdminWebsite implements OnInit, OnDestroy {
   @ViewChild(SectionItemDetails) sectionItemDetails: SectionItemDetails;
   @ViewChild(SectionItemList) sectionItemList: SectionItemList;
   @ViewChild(EmployeeDetails) employeeDetails: EmployeeDetails;
+  @ViewChild(CompanyDetails) companyDetails: CompanyDetails;
+  @ViewChild(ContactDetails) contactDetails: ContactDetails;
 
   public activeTab = 0;
   public activeEmployeeTab = 1;
+  public activeCompanyTab = 1;
 
   constructor (
     private globalEventsManager: GlobalEventsManager,
@@ -51,13 +54,23 @@ export class AdminWebsite implements OnInit, OnDestroy {
   }
   onSectionItemSelected($event) {
       const sectionItemId = $event;
-      this.sectionItemDetails.getSection(sectionItemId);
+      this.sectionItemDetails.getSectionItem(sectionItemId);
   }
   onEmployeeSelected($event) {
       this.activeEmployeeTab = 0;
       const employeeId = $event;
       this.employeeDetails.getEmployee(employeeId);
 
+  }
+  onCompanySelected($event) {
+      this.activeCompanyTab = 0;
+      const companyId = $event;
+      this.companyDetails.getCompany(companyId);
+
+  }
+  onContactSelected($event) {
+      const contactId = $event;
+      this.contactDetails.getContact(contactId);
   }
 
   onTabChange(evt) {
@@ -71,5 +84,9 @@ export class AdminWebsite implements OnInit, OnDestroy {
 
   onEmployeeTabChange(evt) {
     this.activeEmployeeTab = evt.index;
+  }
+
+   onCompanyTabChange(evt) {
+    this.activeCompanyTab = evt.index;
   }
 }

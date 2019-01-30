@@ -1,11 +1,10 @@
-import {Component, OnInit, Output, EventEmitter, NgZone} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import {AuthenticationService, TokenStorage, UserService, GenericService} from '../services';
+import {GenericService} from '../services';
 import {Constants} from '../app.constants';
-import {User} from '../models/user';
 import {GlobalEventsManager} from '../services/globalEventsManager';
-import {Message } from 'primeng/primeng';
 import { SectionItem } from '../models/website';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -20,17 +19,19 @@ export class Services implements OnInit {
     serviceItems: SectionItem [] = [];
 
   constructor(
-    private router: Router,
     private globalEventsManager: GlobalEventsManager,
-    private genericService: GenericService,
-    private route: ActivatedRoute) {
+    public translate: TranslateService,
+    private genericService: GenericService) {
         this.globalEventsManager.showMenu = false;
-
+        this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+            this.ngOnInit();
+        });
   }
 
   ngOnInit() {
     const parameters = [];
     parameters.push('e.section.name = |name|SERVICES|String');
+    parameters.push('e.section.language = |language|' + this.translate.currentLang + '|String');
     this.genericService.getAllByCriteria('com.wack.model.website.SectionItem', parameters)
          .subscribe((data: SectionItem[]) => {
         this.serviceItems = data;

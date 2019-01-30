@@ -1,7 +1,7 @@
 <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
 	<p-table [value]="sectionItems" [responsive]="true"> 
 		<ng-template pTemplate="caption">
-	        {{ SECTIONITEM_LIST }}
+	        {{ 'COMMON.LIST' | translate }}
 	    </ng-template>
 		<ng-template pTemplate="header">
 			<tr>
@@ -16,9 +16,7 @@
 				<td *ngFor="let col of cols">{{sectionItem[col.field]}}</td>
 				<td>
 					<button type="button" pButton icon="fa fa-edit" 
-						(click)="edit(sectionItem.id)"></button>&nbsp;&nbsp;
-					<button type="button" pButton icon="fa fa-eraser" 
-						(click)="delete(sectionItem.id)"></button>
+						(click)="edit(sectionItem.id)"></button>
 				</td>
 			</tr>
 		</ng-template> 

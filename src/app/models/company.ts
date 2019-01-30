@@ -5,6 +5,7 @@ export class Company {
   description: string;
   metaKeyword: string;
   metaDescription: string;
+  language: string;
   address: string;
   country: string;
   email: string;
@@ -19,6 +20,7 @@ export class Company {
   googleMap: string;
   facebookUrl: string;
   twitterUrl: string;
+  linkedInUrl: string;
   instagramUrl: string;
   googlePlusUrl: string;
   footerParagraph1: string;

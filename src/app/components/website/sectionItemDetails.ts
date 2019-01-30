@@ -20,7 +20,7 @@ export class SectionItemDetails implements OnInit, OnDestroy {
     messages: Message[] = [];
     @ViewChild('picture') picture: ElementRef;
     formData = new FormData();
-    url: any;
+    pictureUrl: any = '';
 
     constructor
     (
@@ -40,12 +40,14 @@ export class SectionItemDetails implements OnInit, OnDestroy {
     this.sectionItem = null;
   }
 
-  getSection(sectionItemId: number) {
+  getSectionItem(sectionItemId: number) {
     this.messages = [];
     this.genericService.getOne(sectionItemId, 'com.wack.model.website.SectionItem')
         .subscribe(result => {
       if (result.id > 0) {
         this.sectionItem = result;
+        
+        alert(this.sectionItem.fileLocation);
       } else {
         this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
           this.messages.push({severity: Constants.ERROR, summary: res['COMMON.READ'], detail: res['MESSAGE.READ_FAILED']});
@@ -104,16 +106,22 @@ export class SectionItemDetails implements OnInit, OnDestroy {
 
   }
 
-   readUrl(event: any) {
+ readUrl(event: any, targetName: any) {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
 
-      reader.onload = (event1: ProgressEvent) => {
-        this.url = (<FileReader>event.target).result;
+      // tslint:disable-next-line:no-shadowed-variable
+      reader.onload = (event: ProgressEvent) => {
+        this.pictureUrl = (<FileReader>event.target).result;
       };
 
       reader.readAsDataURL(event.target.files[0]);
     }
+  }
+
+  clearPictureFile() {
+    this.pictureUrl = '';
+    this.picture.nativeElement.value = '';
   }
 
  }

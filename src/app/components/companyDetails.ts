@@ -1,12 +1,10 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserGroup, User, Company } from '../models';
+import { Company } from '../models';
 import { Constants } from '../app.constants';
-import { EditorModule } from 'primeng/editor';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { GenericService, UserService } from '../services';
 import { Message } from 'primeng/api';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-company-details',
@@ -29,8 +27,7 @@ export class CompanyDetails implements OnInit, OnDestroy {
   constructor
   (
       private genericService: GenericService,
-      private userService: UserService,
-      private changeDetectorRef: ChangeDetectorRef,
+      public translate: TranslateService,
       private route: ActivatedRoute,
       private router: Router
     ) {
@@ -110,6 +107,22 @@ export class CompanyDetails implements OnInit, OnDestroy {
     }
   }
 
+   getCompany(companyId: number) {
+    this.messages = [];
+    this.genericService.getOne(companyId, 'Company')
+        .subscribe(result => {
+      if (result.id > 0) {
+        this.company = result;
+      } else {
+        this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
+          this.messages.push({severity:
+            Constants.ERROR, summary:
+            res['COMMON.READ'], detail:
+            res['MESSAGE.READ_FAILED']});
+        });
+      }
+    });
+  }
 
   readUrl(event: any, targetName: any) {
     if (event.target.files && event.target.files[0]) {
@@ -136,6 +149,10 @@ export class CompanyDetails implements OnInit, OnDestroy {
   clearFaviconFile() {
     this.faviconUrl = '';
     this.favicon.nativeElement.value = '';
+  }
+
+  clear() {
+    this.company = new Company();
   }
 
  }

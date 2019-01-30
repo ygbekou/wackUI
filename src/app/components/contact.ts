@@ -1,13 +1,11 @@
-import {Component, OnInit, Output, EventEmitter, NgZone} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import {Component, OnInit } from '@angular/core';
 import {GenericService} from '../services';
 import {Constants} from '../app.constants';
-import {User} from '../models/user';
 import {GlobalEventsManager} from '../services/globalEventsManager';
-import {Message } from 'primeng/primeng';
-import { SectionItem } from '../models/website';
-import { Employee } from '../models/employee';
 import { Company } from '../models';
+import { Message } from 'primeng/api';
+import { ContactUsMessage } from '../models/website';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -20,12 +18,13 @@ import { Company } from '../models';
 export class Contact implements OnInit {
 
     company: Company = new Company;
+    contactUsMessage: ContactUsMessage = new ContactUsMessage();
+    messages: Message[] = [];
 
   constructor(
-    private router: Router,
     private globalEventsManager: GlobalEventsManager,
-    private genericService: GenericService,
-    private route: ActivatedRoute) {
+    public translate: TranslateService,
+    private genericService: GenericService) {
         this.globalEventsManager.showMenu = false;
   }
 
@@ -39,6 +38,29 @@ export class Contact implements OnInit {
     error => console.log(error),
     () => console.log('Get Company complete'));
   }
+
+  save(f: any) {
+        this.messages = [];
+        try {
+            this.genericService.save(this.contactUsMessage, 'ContactUsMessage')
+            .subscribe(result => {
+                if (result.id > 0) {
+                    f.submitted = false;
+                    this.contactUsMessage = new ContactUsMessage();
+                    this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe(res => {
+                        this.messages.push({severity: Constants.SUCCESS, summary: res['COMMON.SAVE'], detail: res['MESSAGE.SAVE_SUCCESS']});
+                    });
+                } else {
+                    this.translate.get(['COMMON.SAVE', 'MESSAGE.UNSAVE_SUCCESS']).subscribe(res => {
+                        this.messages.push({severity: Constants.ERROR, summary: res['COMMON.SAVE'], detail: res['MESSAGE.UNSAVE_SUCCESS']});
+                    });
+                }
+            });
+        } catch (e) {
+        console.log(e);
+        }
+  }
+
 
   setDefaults() {
 

@@ -9,13 +9,13 @@ import { Company } from '../../models';
 			<footer id="footer">
 				<div class="container">
 					<div class="footer-ribbon">
-						<span>Contact Us</span>
+						<span>{{ 'COMMON.CONTACT_US' | translate }}</span>
 					</div>
 					<div class="row py-5 my-4">
 
 						<div class="col-md-6 col-lg-3 mb-4 mb-md-0">
 							<div class="contact-details">
-								<h5 class="text-3 mb-3">CONTACT US</h5>
+								<h5 class="text-3 mb-3">{{ 'COMMON.CONTACT_US' | translate }}</h5>
 								<ul class="list list-icons list-icons-lg">
 									<li class="mb-1"><i class="far fa-dot-circle text-color-primary"></i><p class="m-0">{{company.address}}</p></li>
                                     <li class="mb-1"><i class="fab fa-whatsapp text-color-primary"></i>
@@ -26,7 +26,7 @@ import { Company } from '../../models';
 							</div>
 						</div>
 						<div class="col-md-6 col-lg-2">
-							<h5 class="text-3 mb-3">FOLLOW US</h5>
+							<h5 class="text-3 mb-3">{{ 'COMMON.FOLLOW_US' | translate }}</h5>
 							<ul class="social-icons">
                                 <li class="social-icons-facebook"><a href="{{company.facebookUrl}}" target="_blank" title="Facebook">
                                         <i class="fab fa-facebook-f"></i></a></li>

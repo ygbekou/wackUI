@@ -34,9 +34,7 @@ export class SectionItemList implements OnInit, OnDestroy {
 
     this.cols = [
             { field: 'sectionName', header: 'Section', headerKey: 'COMMON.SECTION' },
-            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
             { field: 'title', header: 'Title', headerKey: 'COMMON.TITLE' },
-            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
             { field: 'picture', header: 'Picture', headerKey: 'COMMON.PICTURE' },
             { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS' }
         ];

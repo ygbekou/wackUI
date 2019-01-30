@@ -19,6 +19,7 @@ export class SectionDetails implements OnInit, OnDestroy {
     messages: Message[] = [];
     @ViewChild('picture') picture: ElementRef;
     formData = new FormData();
+    pictureUrl: any = '';
 
     constructor
     (
@@ -43,6 +44,7 @@ export class SectionDetails implements OnInit, OnDestroy {
   }
 
   getSection(sectionId: number) {
+
     this.messages = [];
     this.genericService.getOne(sectionId, 'com.wack.model.website.Section')
         .subscribe(result => {
@@ -111,4 +113,21 @@ export class SectionDetails implements OnInit, OnDestroy {
 
   }
 
+  readUrl(event: any, targetName: any) {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+
+      // tslint:disable-next-line:no-shadowed-variable
+      reader.onload = (event: ProgressEvent) => {
+        this.pictureUrl = (<FileReader>event.target).result;
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
+
+  clearPictureFile() {
+    this.pictureUrl = '';
+    this.picture.nativeElement.value = '';
+  }
  }

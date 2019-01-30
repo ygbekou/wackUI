@@ -3,7 +3,7 @@
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@name" for="name">Name<font color="red">*</font></label> 
+					<label for="name">{{'COMMON.NAME' | translate}}<font color="red">*</font></label> 
 					<input type="text" pInputText class="form-control" id="name"
 						[(ngModel)]="company.name" name="name" #name="ngModel" required>
 						<p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
@@ -12,7 +12,7 @@
             <div class="ui-grid-col-2 ui-sm-12"></div>
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@description" for="description">Description</label>
+					<label for="description">{{'COMMON.DESCRIPTION' | translate}}</label>
 					<textarea pInputTextarea id="description" name="description" 
 						[(ngModel)]="company.description" #description="ngModel"> </textarea>
 				</div>
@@ -21,7 +21,7 @@
         <div class="ui-grid-row">
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@address" for="address">Address<font color="red">*</font></label> 
+					<label for="address">{{'COMMON.ADDRESS' | translate}}<font color="red">*</font></label> 
 					<input type="text" pInputText class="form-control" id="address" [(ngModel)]="company.address" 
 						name="address" #address="ngModel" required>
 					<p-message *ngIf="f.submitted && address.invalid" severity="error" text="Field is required"></p-message>
@@ -30,7 +30,7 @@
             <div class="ui-grid-col-2 ui-sm-12"></div>
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@email" for="email">Email <font color="red">*</font>
+					<label for="email">{{'COMMON.EMAIL' | translate}}<font color="red">*</font>
 					</label> <input type="text" pInputText class="form-control" id="email"
 						[(ngModel)]="company.email" name="email" #email="ngModel" required>
 					<p-message *ngIf="f.submitted && email.invalid" severity="error" 
@@ -57,7 +57,7 @@
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="ui-grid-col-2">
-					<label i18n="@@logo" for="logo">Logo <font color="red">*</font></label>
+					<label for="logo">{{'COMMON.LOGO' | translate}}<font color="red">*</font></label>
                     <img class="thumb" src="assets/docs/Company/{{company.logo}}" alt="" class="img-fluid" *ngIf="company.logo !== ''"/>
                     <button pButton icon="fa fa-delete" (click)="company.logo = ''" label="Remove" *ngIf="company.logo !== ''"></button>
                     <img class="thumb" src="{{logoUrl}}" alt="" class="img-fluid" *ngIf="logoUrl !== ''"/>
@@ -73,7 +73,7 @@
             <div class="ui-grid-col-2 ui-sm-12"></div>
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="ui-grid-col-2">
-					<label i18n="@@favicon" for="favicon">Favicon</label>
+					<label for="favicon">{{'COMMON.FAVICON' | translate}}</label>
                     <img class="thumb" src="assets/docs/Company/{{company.favicon}}" alt="" class="img-fluid" *ngIf="company.favicon !== ''"/>
                     <button pButton icon="fa fa-delete" (click)="company.favicon = ''" label="Remove" *ngIf="company.favicon !== ''"></button>
                     <img class="thumb" src="{{faviconUrl}}" alt="" class="img-fluid" />
@@ -90,18 +90,27 @@
         <div class="ui-grid-row">
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@phone" for="phone">Phone <font color="red">*</font>
+					<label for="phone">{{'COMMON.PHONE' | translate}}<font color="red">*</font>
 					</label> <input type="text" pInputText class="form-control" id="phone"
 						[(ngModel)]="company.phone" name="phone" #phone="ngModel" required>
 					<p-message *ngIf="f.submitted && phone.errors && phone.invalid" severity="error" 
 							text="Phone is required"></p-message>
 				</div>
             </div>
+            <div class="ui-grid-col-2 ui-sm-12"></div>
+            <div class="ui-grid-col-5 ui-sm-12">
+                <label for="language">{{'COMMON.LANGUAGE' | translate}}<font color="red">*</font></label>
+                <p-radioButton name="language" value="EN" label="{{'COMMON.ENGLISH' | translate}}" [(ngModel)]="company.language"
+                        #language="ngModel" required></p-radioButton>&nbsp;&nbsp;
+                <p-radioButton name="language" value="FR" label="{{'COMMON.FRENCH' | translate}}" [(ngModel)]="company.language"
+                        #language="ngModel" required ></p-radioButton>
+                <p-message *ngIf="f.submitted && language.invalid" severity="error" text="Field is required"></p-message>
+            </div>
         </div>
         <div class="ui-grid-row">
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@copyright" for="copyright">Copyright</label>
+					<label for="copyright">{{'COMMON.CPYRIGHT' | translate}}</label>
 					<p-editor [(ngModel)]="company.copyright" [style]="{'height':'100px'}" 
 						name="copyright" #copyright="ngModel"></p-editor>
 				</div>
@@ -109,7 +118,7 @@
             <div class="ui-grid-col-2 ui-sm-12"></div>
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">
-					<label for="bannerContentHeader">Banner Content Header</label>
+					<label for="bannerContentHeader">{{'COMMON.BANNER_CONTENT_PARAGRAPH' | translate}}</label>
 					<textarea pInputTextarea [(ngModel)]="company.bannerContentHeader" 
 						name="bannerContentHeader" #bannerContentHeader="ngModel"></textarea>
 				</div>
@@ -118,7 +127,7 @@
         <div class="ui-grid-row">
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">
-					<label for="bannerContentParagraph">Banner Content Paragraph</label>
+					<label for="bannerContentParagraph">{{'COMMON.BANNER_CONTENT_SUFFIX' | translate}}</label>
 					<textarea pInputTextarea [(ngModel)]="company.bannerContentParagraph" 
 						name="bannerContentParagraph" #bannerContentParagraph="ngModel"></textarea>
 				</div>
@@ -126,7 +135,7 @@
             <div class="ui-grid-col-2 ui-sm-12"></div>
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@twitterApi" for="twitterApi">Twitter Api</label> 
+					<label for="twitterApi">{{'COMMON.TWITTER_API' | translate}}</label> 
 					<input type="text" pInputText class="form-control" id="twitterApi"
 						[(ngModel)]="company.twitterApi" name="twitterApi" #twitterApi="ngModel"
 						name="twitterApi" #twitterApi="ngModel">
@@ -136,7 +145,7 @@
         <div class="ui-grid-row">
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@googleMap" for="googleMap">Google Map</label> 
+					<label for="googleMap">{{'COMMON.GOOGLE_MAP' | translate}}</label> 
 					<input type="text" pInputText class="form-control" id="googleMap"
 						[(ngModel)]="company.googleMap" name="googleMap" #googleMap="ngModel"
 						name="googleMap" #googleMap="ngModel">
@@ -145,7 +154,7 @@
             <div class="ui-grid-col-2 ui-sm-12"></div>
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@facebookUrl" for="facebookUrl">Facebook Url</label> 
+					<label for="facebookUrl">{{'COMMON.FACEBOOK_URL' | translate}}</label> 
 					<input type="text" pInputText class="form-control" id="facebookUrl"
 						[(ngModel)]="company.facebookUrl" name="facebookUrl" #facebookUrl="ngModel"
 						name="facebookUrl" #facebookUrl="ngModel">
@@ -155,7 +164,7 @@
         <div class="ui-grid-row">
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@twitterUrl" for="twitterUrl">Twitter Url</label> 
+					<label for="twitterUrl">{{'COMMON.TWITTER_URL' | translate}}</label> 
 					<input type="text" pInputText class="form-control" id="twitterUrl"
 						[(ngModel)]="company.twitterUrl" name="twitterUrl" #twitterUrl="ngModel"
 						name="twitterUrl" #twitterUrl="ngModel">
@@ -164,7 +173,7 @@
             <div class="ui-grid-col-2 ui-sm-12"></div>
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@instagramUrl" for="instagramUrl">Instagram Url</label> 
+					<label for="instagramUrl">{{'COMMON.INSTAGRAM_URL' | translate}}</label> 
 					<input type="text" pInputText class="form-control" id="instagramUrl"
 						[(ngModel)]="company.instagramUrl" name="instagramUrl" #instagramUrl="ngModel"
 						name="instagramUrl" #instagramUrl="ngModel">
@@ -174,7 +183,7 @@
         <div class="ui-grid-row">
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">
-					<label i18n="@@googlePlusUrl" for="googlePlusUrl">Google Plus Url</label> 
+					<label for="googlePlusUrl">{{'COMMON.GOOGLE_PLUS_URL' | translate}}</label> 
 					<input type="text" pInputText class="form-control" id="googlePlusUrl"
 						[(ngModel)]="company.googlePlusUrl" name="googlePlusUrl" #googlePlusUrl="ngModel"
 						name="googlePlusUrl" #googlePlusUrl="ngModel">
@@ -183,7 +192,7 @@
             <div class="ui-grid-col-2 ui-sm-12"></div>
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">
-					<label for="footerParagraph1">Footer Paragraph 1</label> 
+					<label for="footerParagraph1">{{'COMMON.FOOTER_PARAGRAPH_1' | translate}}</label> 
 					<input type="text" pInputText class="form-control" id="footerParagraph1"
 						[(ngModel)]="company.footerParagraph1" name="footerParagraph1" #footerParagraph1="ngModel">
 				</div>
@@ -192,7 +201,7 @@
         <div class="ui-grid-row">
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">
-					<label for="footerParagraph2">Footer Paragraph 2</label> 
+					<label for="footerParagraph2">{{'COMMON.FOOTER_PARAGRAPH_2' | translate}}</label> 
 					<input type="text" pInputText class="form-control" id="footerParagraph2"
 						[(ngModel)]="company.footerParagraph2" name="footerParagraph2" #footerParagraph2="ngModel">
 				</div>
@@ -200,7 +209,7 @@
             <div class="ui-grid-col-2 ui-sm-12"></div>
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">
-					<label for="footerParagraph3">Footer Paragraph 3</label> 
+					<label for="footerParagraph3">{{'COMMON.FOOTER_PARAGRAPH_3' | translate}}</label> 
 					<input type="text" pInputText class="form-control" id="footerParagraph3"
 						[(ngModel)]="company.footerParagraph3" name="footerParagraph3" #footerParagraph3="ngModel">
 				</div>
@@ -209,7 +218,8 @@
 	</div>
 	<br />
 	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-			<button pButton icon="fa fa-save" label="Save"></button>
+        <button type="button" pButton icon="fa fa-refresh" (click)="clear()"label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
+		<button pButton icon="fa fa-save" label="{{'COMMON.SAVE' | translate}}"></button>
 	</div>
 </form>
 
