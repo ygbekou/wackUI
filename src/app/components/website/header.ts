@@ -19,11 +19,11 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 										<nav class="header-nav-top">
 											<ul class="nav nav-pills text-uppercase text-2">
 												<li class="nav-item nav-item-anim-icon d-none d-md-block">
-                                                    <a class="nav-link pl-0" (click)="navigate('/about')">
+                                                    <a class="nav-link pl-0" href="#/about">
                                                     <i class="fas fa-angle-right"></i> {{ 'COMMON.ABOUT_US' | translate }}</a>
 												</li>
 												<li class="nav-item nav-item-anim-icon d-none d-md-block">
-                                                    <a class="nav-link" (click)="navigate('/contact')">
+                                                    <a class="nav-link" href="#/contact">
                                                     <i class="fas fa-angle-right"></i> {{ 'COMMON.CONTACT_US' | translate }}</a>
 												</li>
 											</ul>
@@ -36,13 +36,15 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
                                             {{'COMMON.LANGUAGE' | translate}} &nbsp; &nbsp;
                                             <ul class="nav nav-pills text-uppercase text-2">
                                                 <li class="nav-item nav-item-anim-icon d-none d-md-block">
-                                                    <p-radioButton name="language" value="en" label="EN" [(ngModel)]="currentLang"
-                                                        #langSelect="ngModel" (click)="translate.use(langSelect.value)">
+                                                    <p-radioButton name="language" value="en" label="EN"
+                                                     [(ngModel)]="globalEventsManager.currentLang" #langSelect="ngModel"
+                                                    (click)="globalEventsManager.changeLanguage('en')">
                                                     </p-radioButton>&nbsp;&nbsp;&nbsp;&nbsp;
                                                 </li>
                                                 <li class="nav-item nav-item-anim-icon d-none d-md-block">
-                                                    <p-radioButton name="language" value="fr" label="FR" [(ngModel)]="currentLang"
-                                                        #langSelect="ngModel" (click)="translate.use(langSelect.value)">
+                                                    <p-radioButton name="language" value="fr" label="FR"
+                                                    [(ngModel)]="globalEventsManager.currentLang" #langSelect="ngModel"
+                                                    (click)="globalEventsManager.changeLanguage('fr')">
                                                     </p-radioButton>
                                                 </li>
 											</ul>
@@ -85,32 +87,32 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 											<nav class="collapse">
 												<ul class="nav nav-pills" id="mainNav">
 													<li class="dropdown">
-														<a class="dropdown-item dropdown-toggle active" (click)="navigate('/')">
+														<a class="dropdown-item dropdown-toggle active" href="#/">
 															{{ 'COMMON.HOME' | translate }}
 														</a>
 													</li>
 													<li class="dropdown">
-														<a class="dropdown-item dropdown-toggle" (click)="navigate('/services')">
+														<a class="dropdown-item dropdown-toggle" href="#/services">
 															{{ 'COMMON.SERVICES' | translate }}
 														</a>
 													</li>
 													<li class="dropdown">
-														<a class="dropdown-item dropdown-toggle" (click)="navigate('/industries')">
+														<a class="dropdown-item dropdown-toggle" href="#/industries">
 															{{ 'COMMON.INDUSTRIES' | translate }}
 														</a>
 													</li>
 													<li class="dropdown">
-														<a class="dropdown-item dropdown-toggle" (click)="navigate('/about')">
+														<a class="dropdown-item dropdown-toggle" href="#/about">
 															{{ 'COMMON.ABOUT_US' | translate }}
 														</a>
 													</li>
 													<li class="dropdown">
-														<a class="dropdown-item dropdown-toggle" (click)="navigate('/contact')">
+														<a class="dropdown-item dropdown-toggle" href="#/contact">
 															{{ 'COMMON.CONTACT_US' | translate }}
 														</a>
                                                     </li>
                                                     <li class="dropdown" *ngIf="!tokenStorage.hasToken()">
-                                                        <a class="dropdown-item dropdown-toggle" (click)="goToLoginPage()">
+                                                        <a class="dropdown-item dropdown-toggle" href="#/login">
                                                             {{ 'COMMON.LOGIN' | translate }}
                                                         </a>
                                                     </li>
@@ -120,7 +122,7 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
                                                         </a>
                                                     </li>
                                                     <li class="dropdown" *ngIf="tokenStorage.hasToken()">
-                                                        <a class="dropdown-item dropdown-toggle" (click)="goToAdminPage()">
+                                                        <a class="dropdown-item dropdown-toggle" href="#/adminWebsite">
                                                             {{ 'COMMON.ADMIN_PAGE' | translate }}
                                                         </a>
                                                     </li>
@@ -150,12 +152,12 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 export class Header implements OnInit, OnDestroy {
 
     company: Company = new Company();
-    currentLang = 'en';
 
     constructor
     (
       private genericService: GenericService,
       public tokenStorage: TokenStorage,
+      public globalEventsManager: GlobalEventsManager,
       public translate: TranslateService,
       private router: Router
     ) {
@@ -180,21 +182,14 @@ export class Header implements OnInit, OnDestroy {
     ngOnDestroy() {
     }
 
-    goToLoginPage() {
-        this.router.navigate(['login']);
-    }
-
-    goToAdminPage() {
-        this.router.navigate(['/adminWebsite']);
-    }
-
-    navigate(url: string) {
-        this.router.navigate([url]);
+    changeLanguage(selectLang: string) {
+        this.globalEventsManager.currentLang = selectLang;
+        this.translate.use(selectLang);
     }
 
     logOut() {
         this.tokenStorage.signOut();
-        this.goToLoginPage();
+        this.router.navigate(['login']);
     }
 
  }

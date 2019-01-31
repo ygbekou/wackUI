@@ -1,6 +1,7 @@
 import { EventEmitter, Injectable} from '@angular/core';
 import { TokenStorage } from './token.storage';
 import { BehaviorSubject } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class GlobalEventsManager {
@@ -11,13 +12,17 @@ export class GlobalEventsManager {
     private patientIdSource = new BehaviorSubject<number>(0);
     currentModuleName = this.moduleNameSource.asObservable();
     currentPatientId = this.patientIdSource.asObservable();
+    currentLang = 'en';
 
     selectedReferenceType: string;
     selectedReferenceWithCategoryType: string;
     selectedParentId: number;
     selectedAdmissionId: number;
 
-    constructor(private token: TokenStorage) {
+    constructor(
+        private token: TokenStorage,
+        private translate: TranslateService,
+        ) {
       if (this.token.getToken() != null) {
         this.showMenu = true;
       }
@@ -29,5 +34,10 @@ export class GlobalEventsManager {
 
     changePatientId(patientId: number) {
       this.patientIdSource.next(patientId);
+    }
+
+    changeLanguage(selectLang: string) {
+        this.currentLang = selectLang;
+        this.translate.use(selectLang);
     }
 }

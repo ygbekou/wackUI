@@ -46,8 +46,6 @@ export class SectionItemDetails implements OnInit, OnDestroy {
         .subscribe(result => {
       if (result.id > 0) {
         this.sectionItem = result;
-        
-        alert(this.sectionItem.fileLocation);
       } else {
         this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
           this.messages.push({severity: Constants.ERROR, summary: res['COMMON.READ'], detail: res['MESSAGE.READ_FAILED']});
