@@ -17,7 +17,7 @@ export class GlobalErrorHandler implements ErrorHandler {
 
       if (error === 'Unauthorized' && router !== null) {
           tokenStorage.signOut();
-          router.navigate(['index.html']);
+          router.navigate(['/login']);
       }
      // IMPORTANT: Rethrow the error otherwise it gets swallowed
      throw error;
