@@ -1,4 +1,5 @@
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+    <p-messages [(value)]="messages"></p-messages>
 	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="employee">
 		<p-accordion> <p-accordionTab header="{{ 'COMMON.DEMOGRAPHIC_INFO' | translate }}"
 			selected="true">
@@ -13,6 +14,7 @@
                 </div>
             </div>
             <div class="ui-grid-col-2 ui-sm-12"></div>
+            <!--
 			<div class="ui-grid-col-5 ui-sm-12">
                 <div class="form-group">
                     <label for="password">{{ 'COMMON.PASSWORD' | translate }}:<font color="red">*</font></label> 
@@ -20,7 +22,8 @@
                         [(ngModel)]="employee.user.password" name="password1" #password1="ngModel" required>
                     <p-message *ngIf="f.submitted && password1.invalid" severity="error" text="Field is required"></p-message>
                 </div>
-			</div>
+            </div>
+        -->
 		</div>
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-5 ui-sm-12">

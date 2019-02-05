@@ -24,11 +24,7 @@ export class SectionDetails implements OnInit, OnDestroy {
     constructor
     (
       private genericService: GenericService,
-      private translate: TranslateService,
-      private globalEventsManager: GlobalEventsManager,
-      private changeDetectorRef: ChangeDetectorRef,
-      private route: ActivatedRoute,
-      private router: Router
+      private translate: TranslateService
     ) {
       this.section = new Section();
   }

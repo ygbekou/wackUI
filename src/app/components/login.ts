@@ -4,7 +4,8 @@ import {AuthenticationService, TokenStorage, UserService} from '../services';
 import {Constants} from '../app.constants';
 import {User} from '../models/user';
 import {GlobalEventsManager} from '../services/globalEventsManager';
-import {Message } from 'primeng/primeng';
+import { Message } from 'primeng/api';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -15,26 +16,17 @@ import {Message } from 'primeng/primeng';
 
 // tslint:disable-next-line:component-class-suffix
 export class Login implements OnInit {
-  error = '';
+  messages: Message[] = [];
   passwordSent = '';
   button = '';
   user: User;
   action: number;
-  msgs: Message[] = [];
-  don: string;
-  I_AM_MEMBER: string = Constants.I_AM_MEMBER;
-  I_AM_SUBSCRIBE: string = Constants.I_AM_SUBSCRIBE;
-  SEND_ME_MY_PASSWORD: string = Constants.SEND_ME_MY_PASSWORD;
-  MALE: string = Constants.MALE;
-  FEMALE: string = Constants.FEMALE;
-  COUNTRY_RESIDENCE: string = Constants.COUNTRY_RESIDENCE;
-  SAVE_LABEL: string = Constants.SAVE_LABEL;
-  COUNTRY_ORIGIN: string = Constants.COUNTRY_ORIGIN;
 
   constructor(
     private router: Router,
     private userService: UserService,
     private tokenStorage: TokenStorage,
+    public translate: TranslateService,
     private authenticationService: AuthenticationService,
     private globalEventsManager: GlobalEventsManager,
     private route: ActivatedRoute) {
@@ -58,7 +50,6 @@ export class Login implements OnInit {
 
   public login() {
     try {
-      this.error = '';
       this.passwordSent = '';
       console.log(this.button);
       if (this.button === 'password') {
@@ -67,15 +58,19 @@ export class Login implements OnInit {
       } else {
         this.authenticationService.attemptAuth(this.user)
           .subscribe(data => {
-            if (this.tokenStorage.getToken() !== '') {
-              this.router.navigate(['adminWebsite']);
+            if (this.tokenStorage.getToken() !== '' && this.tokenStorage.getToken() !== null) {
+                this.router.navigate(['adminWebsite']);
             } else {
-              this.error = Constants.INVALID_USER_PASS;
+                this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.LOGIN']).subscribe(res => {
+                    this.messages.push({severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.INVALID_USER_PASS']});
+                });
             }
           });
       }
     } catch (e) {
-      this.error = Constants.ERROR_OCCURRED;
+        this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.LOGIN']).subscribe(res => {
+            this.messages.push({severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.INVALID_USER_PASS']});
+        });
     }
 
 
@@ -87,13 +82,22 @@ export class Login implements OnInit {
       this.userService.sendPassword(this.user)
         .subscribe(result => {
           if (result === true) {
-            this.passwordSent = Constants.PASSWORD_SENT + this.user.email;
+            this.translate.get(['MESSAGE.PASSWORD_SENT', 'COMMON.READ']).subscribe(res => {
+                this.messages.push({severity: Constants.SUCCESS, summary: res['COMMON.READ'],
+                    detail: res['MESSAGE.PASSWORD_SENT'] + this.user.email});
+            });
           } else {
-            this.error = Constants.PASSWORD_NOT_SENT;
+           this.translate.get(['MESSAGE.PASSWORD_NOT_SENT', 'COMMON.READ']).subscribe(res => {
+                this.messages.push({severity: Constants.SUCCESS, summary: res['COMMON.READ'],
+                    detail: res['MESSAGE.PASSWORD_NOT_SENT']});
+            });
           }
         });
     } catch (e) {
-      this.error = Constants.ERROR_OCCURRED;
+      this.translate.get(['MESSAGE.ERROR_OCCURRED', 'COMMON.READ']).subscribe(res => {
+            this.messages.push({severity: Constants.ERROR, summary: res['COMMON.READ'],
+                detail: res['MESSAGE.ERROR_OCCURRED']});
+        });
     }
 
   }

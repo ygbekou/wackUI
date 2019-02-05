@@ -1,4 +1,5 @@
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+    <p-messages [(value)]="messages"></p-messages>
 	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="company">
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-5 ui-sm-12">
@@ -99,6 +100,23 @@
             </div>
             <div class="ui-grid-col-2 ui-sm-12"></div>
             <div class="ui-grid-col-5 ui-sm-12">
+				<div class="form-group">
+					<label for="phone">{{'COMMON.PHONE' | translate}} 2
+					</label> <input type="text" pInputText class="form-control" id="phone2"
+						[(ngModel)]="company.phone2" name="phone2" #phone2="ngModel">
+				</div>
+            </div>
+        </div>
+        <div class="ui-grid-row">
+			<div class="ui-grid-col-5 ui-sm-12">
+				<div class="form-group">
+					<label for="fax">{{'COMMON.FAX' | translate}}
+					</label> <input type="text" pInputText class="form-control" id="fax"
+						[(ngModel)]="company.fax" name="fax" #fax="ngModel">
+				</div>
+            </div>
+            <div class="ui-grid-col-2 ui-sm-12"></div>
+            <div class="ui-grid-col-5 ui-sm-12">
                 <label for="language">{{'COMMON.LANGUAGE' | translate}}<font color="red">*</font></label>
                 <p-radioButton name="language" value="EN" label="{{'COMMON.ENGLISH' | translate}}" [(ngModel)]="company.language"
                         #language="ngModel" required></p-radioButton>&nbsp;&nbsp;
@@ -110,9 +128,9 @@
         <div class="ui-grid-row">
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">
-					<label for="copyright">{{'COMMON.CPYRIGHT' | translate}}</label>
-					<p-editor [(ngModel)]="company.copyright" [style]="{'height':'100px'}" 
-						name="copyright" #copyright="ngModel"></p-editor>
+					<label for="copyright">{{'COMMON.COPYRIGHT' | translate}}</label>
+                    <textarea pInputTextarea [(ngModel)]="company.copyright" 
+						name="copyright" #copyright="ngModel"></textarea>
 				</div>
             </div>
             <div class="ui-grid-col-2 ui-sm-12"></div>
@@ -215,6 +233,24 @@
 				</div>
 			</div>
 		</div>
+                <div class="ui-grid-row">
+			<div class="ui-grid-col-5 ui-sm-12">
+				<div class="form-group">
+					<label for="fromEmail">{{'COMMON.FROM_EMAIL' | translate}}</label> 
+					<input type="text" pInputText class="form-control" id="fromEmail"
+						[(ngModel)]="company.fromEmail" name="fromEmail" #fromEmail="ngModel">
+				</div>
+            </div>
+            <div class="ui-grid-col-2 ui-sm-12"></div>
+			<div class="ui-grid-col-5 ui-sm-12">
+				<div class="form-group">
+					<label for="toEmail">{{'COMMON.TO_EMAIL' | translate}}</label> 
+					<input type="text" pInputText class="form-control" id="toEmail"
+						[(ngModel)]="company.toEmail" name="toEmail" #toEmail="ngModel">
+				</div>
+			</div>
+		</div>
+
 	</div>
 	<br />
 	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">

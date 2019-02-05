@@ -7,7 +7,9 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 @Component({
   selector: 'app-web-header',
   template: `
-			<header id="header" class="header-effect-shrink" data-plugin-options="{'stickyEnabled': true, 'stickyEffect': 'shrink', 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': true, 'stickyChangeLogo': true, 'stickyStartAt': 120, 'stickyHeaderContainerHeight': 70}">
+            <header id="header" class="header-effect-shrink" data-plugin-options="{'stickyEnabled': true, 'stickyEffect': 'shrink',
+            'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': true, 'stickyChangeLogo': true, 'stickyStartAt': 120,
+            'stickyHeaderContainerHeight': 70}">
 				<div class="header-body border-color-primary header-body-bottom-border">
 					<div class="header-top header-top-default border-bottom-0">
 						<div class="container">
@@ -82,32 +84,32 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 											<nav class="collapse">
 												<ul class="nav nav-pills" id="mainNav">
 													<li class="dropdown">
-														<a class="dropdown-item dropdown-toggle active" href="#/">
+														<a class="dropdown-item dropdown-toggle {{homeActive}}" href="/">
 															{{ 'COMMON.HOME' | translate }}
 														</a>
 													</li>
 													<li class="dropdown">
-														<a class="dropdown-item dropdown-toggle" href="#/services">
+														<a class="dropdown-item dropdown-toggle {{serviceActive}}" href="#/services">
 															{{ 'COMMON.SERVICES' | translate }}
 														</a>
 													</li>
 													<li class="dropdown">
-														<a class="dropdown-item dropdown-toggle" href="#/industries">
+														<a class="dropdown-item dropdown-toggle {{industryActive}}" href="#/industries">
 															{{ 'COMMON.INDUSTRIES' | translate }}
 														</a>
 													</li>
 													<li class="dropdown">
-														<a class="dropdown-item dropdown-toggle" href="#/about">
+														<a class="dropdown-item dropdown-toggle {{aboutActive}}" href="#/about">
 															{{ 'COMMON.ABOUT_US' | translate }}
 														</a>
 													</li>
 													<li class="dropdown">
-														<a class="dropdown-item dropdown-toggle" href="#/contact">
+														<a class="dropdown-item dropdown-toggle {{contactActive}}" href="#/contact">
 															{{ 'COMMON.CONTACT_US' | translate }}
 														</a>
                                                     </li>
                                                     <li class="dropdown" *ngIf="!tokenStorage.hasToken()">
-                                                        <a class="dropdown-item dropdown-toggle" href="#/login">
+                                                        <a class="dropdown-item dropdown-toggle {{loginActive}}" href="#/login">
                                                             {{ 'COMMON.LOGIN' | translate }}
                                                         </a>
                                                     </li>
@@ -150,6 +152,13 @@ export class Header implements OnInit, OnDestroy {
 
     company: Company = new Company();
 
+    homeActive = 'active';
+    serviceActive = '';
+    industryActive = '';
+    aboutActive = '';
+    contactActive = '';
+    loginActive = '';
+
     constructor
     (
       private genericService: GenericService,
@@ -171,6 +180,30 @@ export class Header implements OnInit, OnDestroy {
        error => console.log(error),
        () => console.log('Get Company complete'));
 
+       this.setActiveTab();
+
+    }
+
+    setActiveTab() {
+        this.homeActive = '';
+        this.serviceActive = '';
+        this.industryActive = '';
+        this.aboutActive = '';
+        this.contactActive = '';
+
+        if (this.router.url === '/') {
+            this.homeActive = 'active';
+        } else if (this.router.url === '/services') {
+            this.serviceActive = 'active';
+        } else if (this.router.url === '/industries') {
+            this.industryActive = 'active';
+        } else if (this.router.url === '/about') {
+            this.aboutActive = 'active';
+        } else if (this.router.url === '/contact') {
+            this.contactActive = 'active';
+        } else if (this.router.url === '/login') {
+            this.loginActive = 'active';
+        }
     }
 
     ngOnInit(): void {

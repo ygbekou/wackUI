@@ -42,7 +42,7 @@ export class Contact implements OnInit {
   save(f: any) {
         this.messages = [];
         try {
-            this.genericService.save(this.contactUsMessage, 'ContactUsMessage')
+            this.genericService.saveContactUsMessage(this.contactUsMessage)
             .subscribe(result => {
                 if (result.id > 0) {
                     f.submitted = false;

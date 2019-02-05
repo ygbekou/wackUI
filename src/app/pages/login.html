@@ -11,10 +11,11 @@
                 <div class="col-lg-8">
 
                     <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" validate>
+                        <p-messages [(value)]="messages"></p-messages>
                         <div class="ui-grid ui-grid-responsive ui-fluid">
                             <div class="ui-grid-row">
                                 <div class="form-group">
-                                    <label for="email">{{ 'COMMON.E_MAIL' | translate }}<font color="red">*</font></label> 
+                                    <label for="email">{{ 'COMMON.USERNAME' | translate }}<font color="red">*</font></label> 
                                     <input type="text" pInputText class="form-control" id="email" required 
                                         [(ngModel)]="user.userName" name="email" #email="ngModel">
                                     <p-message *ngIf="f.submitted && email.invalid" severity="error" text="Field is required"></p-message>
@@ -23,7 +24,7 @@
                             <div class="ui-grid-row">
                                 <div class="form-group">
                                     <label for="password">{{ 'COMMON.PASSWORD' | translate }} <font color="red">*</font></label> 
-                                    <input type="password" pInputText class="form-control" id="password" required
+                                    <input type="password" pInputText class="form-control" id="password"
                                         [(ngModel)]="user.password" name="password" #password="ngModel">
                                     <p-message *ngIf="f.submitted && password.invalid" severity="error" text="Field is required"></p-message>
                                 </div>
@@ -35,9 +36,9 @@
                             <button pButton type="submit" icon="fa fa-play-circle" label="{{ 'COMMON.SUBMIT' | translate }}"></button>
                             <br/>
                             <br/>
-                            <!--						
-                            Vous avez oublier votre mot de passe? Clicker sur le bouton <button pButton (click)="button='password'" icon="fa fa-play-circle" label="{{SEND_ME_MY_PASSWORD}}"></button>
-                            -->
+                            						
+                            {{'MESSAGE.FORGET_PASSWORD' | translate}} &nbsp;&nbsp;<button pButton (click)="button='password'" icon="fa fa-play-circle" label="{{'MESSAGE.SEND_PASSWORD' | translate}}"></button>
+                            
                         </div>
                     </form> 
                 </div>

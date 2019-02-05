@@ -10,6 +10,8 @@ export class Company {
   country: string;
   email: string;
   phone: string;
+  phone2: string;
+  fax: string;
   logo: string;
   favicon: string;
   backgroundSlider: string;
@@ -26,5 +28,7 @@ export class Company {
   footerParagraph1: string;
   footerParagraph2: string;
   footerParagraph3: string;
+  fromEmail: string;
+  toEmail: string;
   status: Number = 0;
 }

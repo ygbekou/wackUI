@@ -19,9 +19,16 @@ import { Company } from '../../models';
 								<ul class="list list-icons list-icons-lg">
 									<li class="mb-1"><i class="far fa-dot-circle text-color-primary"></i><p class="m-0">{{company.address}}</p></li>
                                     <li class="mb-1"><i class="fab fa-whatsapp text-color-primary"></i>
-                                    <p class="m-0"><a href="tel:{{company.phone}}">{{company.phone}}</a></p></li>
-                                    <li class="mb-1"><i class="far fa-envelope text-color-primary"></i><p class="m-0">
-                                    <a href="mailto:{{company.email}}">{{company.email}}</a></p></li>
+                                        <p class="m-0"><a href="tel:{{company.phone}}">{{company.phone}}</a></p>
+                                        <p class="m-0"><a href="tel:{{company.phone2}}">{{company.phone2}}</a></p>
+                                    </li>
+                                    <li class="mb-1"><i class="fas fa-fax text-color-primary"></i>
+                                        <p class="m-0"><a>{{company.phone}}</a></p>
+                                    </li>
+                                    <li class="mb-1"><i class="far fa-envelope text-color-primary"></i>
+                                        <p class="m-0">
+                                        <a href="mailto:{{company.email}}">{{company.email}}</a></p>
+                                    </li>
 								</ul>
 							</div>
 						</div>

@@ -83,19 +83,17 @@ export class AuthenticationService {
     const actionUrl = Constants.apiServer + '/service/token/generate-token';
     return this.http.post(actionUrl, toAdd, {headers: this.headers})
       .map((response: Response) => {
-        // login successful if there's a jwt token in the response
-        if (response) {
-          const data = response.json();
-          this.tokenStorage.saveAuthData(data);
-            if (data.token !== '') {
-              this.globalEventsManager.showMenu = true;
-            }
-          return response.json();
+            // login successful if there's a jwt token in the response
+            if (response) {
+            const data = response.json();
+            this.tokenStorage.saveAuthData(data);
+                if (data.token !== '') {
+                    this.globalEventsManager.showMenu = true;
+                }
+                return response.json();
 
-        } else {
-          return null;
+            }
         }
-      }
 
       )
       .catch(this.handleError);
@@ -119,7 +117,7 @@ export class AuthenticationService {
   private handleError(error: Response) {
     if (error.json()['path'] === '/service/token/generate-token') {
       window.sessionStorage.removeItem(TokenStorage.TOKEN_KEY);
-      // window.sessionStorage.clear();
+      return Observable.of('Failed');
     }
     return Observable.throw(error.json() || 'Server error');
   }

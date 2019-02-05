@@ -15,7 +15,7 @@ export class GlobalErrorHandler implements ErrorHandler {
        const router = this.injector.get(Router);
        const tokenStorage = this.injector.get(TokenStorage);
 
-      if (error === 'Unauthorized' && router !== null) {
+      if ((error === 'Unauthorized' || error['error'] === 'Unauthorized') && router !== null) {
           tokenStorage.signOut();
           router.navigate(['/login']);
       }

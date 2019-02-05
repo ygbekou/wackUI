@@ -22,6 +22,7 @@
     "RELIGION": "Religion",
     "MEDICAL_HISTORY": "Histoire Medicale",
     "PHONE": "Phone",
+    "FAX": "Fax",
     "ADDRESS": "Adresse",
     "CITY": "Ville",
     "COUNTRY": "Pays",
@@ -105,8 +106,10 @@
     "FOOTER_PARAGRAPH_3": "Paragraphe de pied de page 3",
     "ENGLISH": "Anglais",
     "FRENCH": "FranÃ§ais",
-    "MESSAGE": "Message"
-    
+    "MESSAGE": "Message",
+    "USERNAME": "Nom d'utilisateur",
+    "OUR_TEAM": "Notre equipe",
+    "VIEW_ALL": "Voir tout"
   },
   "MESSAGE": {
     "DELETE_CONFIRM": "ÃŠtes-vous sÃ»r de vouloir continuer?",
@@ -116,8 +119,14 @@
     "READ_UNSUCCESS": "Read was unsuccessful",
     "OVERLAP_SCHEDULE": "Deux horaires se chevauchent",
     "DELETE_SUCCESS": "La suppression a rÃ©ussi",
-    "DEETE_UNSUCCESS": "La suppression a Ã©chouÃ©. S'il vous plaÃ®t contacter l'administrateur."
-
+    "DEETE_UNSUCCESS": "La suppression a ï¿½chouï¿½. S'il vous plaï¿½t contacter l'administrateu",
+    "FORGET_PASSWORD": "Vous avez oublier votre mot de passe? Clicker sur le bouton pour recevoir un nouveau dans votre email",
+    "SEND_PASSWORD": "Envoyer mot de passe",
+    "INVALID_USER_PASS": "Nom d'utilisateur ou mot de passe invalide. Veuillez rééssayer.",
+    "ERROR_OCCURRED": "Une erreur systeme s'est produite.",
+    "PASSWORD_SENT": "Votre mot de passe a été envoyé à votre adresse email.",
+    "PASSWORD_NOT_SENT": "Votre mot de passe n'a pas été envoyé. Vérifiez que le nom d'utilisateur est correct.",
+    "SEND_US_MESSAGE": "Envoie un Message"
   },
   "DATE": {
   	"1": "Jan",

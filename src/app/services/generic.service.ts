@@ -8,6 +8,7 @@ import {SelectItem} from 'primeng/api';
 import { Reference } from '../models';
 import { GenericResponse } from '../models/genericResponse';
 import { Router } from '@angular/router';
+import { ContactUsMessage } from '../models/website';
 
 @Injectable()
 export class GenericService {
@@ -172,6 +173,16 @@ export class GenericService {
         })
         .catch(this.handleError);
    }
+
+  public saveContactUsMessage = (contactUsMessage: ContactUsMessage): Observable<ContactUsMessage> => {
+    const toAdd = JSON.stringify(contactUsMessage);
+    const actionUrl = Constants.apiServer + '/service/ContactUsMessage/save';
+    return this.http.post(actionUrl, toAdd, {headers: this.headers})
+      .map((response: Response) => {
+        return response.json();
+      })
+      .catch(this.handleError);
+  }
 
   private handleError(error: Response) {
     return Observable.throw(error.json().error || 'Server error');
