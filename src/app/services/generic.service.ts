@@ -8,7 +8,7 @@ import {SelectItem} from 'primeng/api';
 import { Reference } from '../models';
 import { GenericResponse } from '../models/genericResponse';
 import { Router } from '@angular/router';
-import { ContactUsMessage } from '../models/website';
+import { ContactUsMessage, SectionItem } from '../models/website';
 
 @Injectable()
 export class GenericService {
@@ -53,7 +53,8 @@ export class GenericService {
 
   public save = (entity: any, entityClass: string): Observable<any> => {
 
-      const toAdd = JSON.stringify(entity);
+      let toAdd = JSON.stringify(entity);
+      toAdd = toAdd.replace(/'/g, '&#039;');
       const re = /\"/gi;
       const toSend = '{"json":"' + toAdd.replace(re, '\'') + '"}';
 
@@ -73,7 +74,8 @@ export class GenericService {
 
    public saveWithUrl = (url: string, genericObject: any): Observable<any> => {
 
-      const toAdd = JSON.stringify(genericObject);
+      let toAdd = JSON.stringify(genericObject);
+      toAdd = toAdd.replace(/'/g, '&#039;');
       const re = /\"/gi;
       const toSend = '{"json":"' + toAdd.replace(re, '\'') + '"}';
 
@@ -93,7 +95,8 @@ export class GenericService {
          head.append('Authorization', 'Bearer ' + this.token.getToken());
       }
 
-      const toAdd = JSON.stringify(entity);
+      let toAdd = JSON.stringify(entity);
+      toAdd = toAdd.replace(/'/g, '&#039;');
       const re = /\"/gi;
       const toSend = '{"json":"' + toAdd.replace(re, '\'') + '"}';
 
@@ -173,6 +176,7 @@ export class GenericService {
         })
         .catch(this.handleError);
    }
+
 
   public saveContactUsMessage = (contactUsMessage: ContactUsMessage): Observable<ContactUsMessage> => {
     const toAdd = JSON.stringify(contactUsMessage);

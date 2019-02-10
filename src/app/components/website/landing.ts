@@ -1,5 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { GenericService, GlobalEventsManager } from '../../services';
 import { SectionItem, Section } from '../../models/website';
 import { Company } from '../../models';
@@ -17,105 +16,85 @@ export class Landing implements OnInit, OnDestroy {
     aboutUsSection: Section = new Section();
     serviceSection: Section = new Section();
     industrySection: Section = new Section();
-    aboutUsItems: SectionItem[] = [];
+    sliderItems: SectionItem[] = [];
     serviceItems: SectionItem[] = [];
-    company: Company = new Company();
     industryItems: SectionItem [] = [];
     managers: Employee [] = [];
+    company: Company = new Company();
+
+    changeCarrousel = true;
 
     constructor
     (
       private genericService: GenericService,
-      private globalEventsManager: GlobalEventsManager,
-      public translate: TranslateService,
-      private route: ActivatedRoute,
-      private router: Router
+      public globalEventsManager: GlobalEventsManager,
+      public translate: TranslateService
     ) {
-      this.globalEventsManager.showMenu = false;
+      this.sliderItems[0] = new SectionItem();
+      this.sliderItems[1] = new SectionItem();
+      this.sliderItems[2] = new SectionItem();
+      this.sliderItems[3] = new SectionItem();
+
+      this.loadData();
 
       this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        this.ngOnInit();
+        this.loadData();
     });
 
 
   }
 
   ngOnInit(): void {
+  }
+
+  loadData(): void {
+      this.serviceItems = [];
+      this.industryItems = [];
+
       let parameters: string [] = [];
-      parameters.push('e.section.name = |name|about_us|String');
+      parameters.push('e.section.name IN |names|SLIDERS,SERVICES,INDUSTRIES|List<String>');
+      parameters.push('e.status = |status|0|Integer');
       parameters.push('e.section.language = |language|' + this.translate.currentLang + '|String');
       this.genericService.getAllByCriteria('com.wack.model.website.SectionItem', parameters)
           .subscribe((data: SectionItem[]) => {
-        this.aboutUsItems = data;
+              if (this.changeCarrousel) {
+                  this.sliderItems = [];
+              }
+              for (const item of data) {
+                if (this.changeCarrousel && item.section.name === 'SLIDERS') {
+                    this.sliderItems.push(item);
+                } else if (item.section.name === 'SERVICES') {
+                    this.serviceItems.push(item);
+                    this.serviceSection = item.section;
+                } else if (item.section.name === 'INDUSTRIES') {
+                    this.industryItems.push(item);
+                    this.industrySection = item.section;
+                }
+              }
+
+              this.changeCarrousel = false;
+
       },
       error => console.log(error),
       () => console.log('Get all SectionItem complete'));
 
-
       parameters = [];
-      parameters.push('e.section.name = |name|SERVICES|String');
-      parameters.push('e.section.language = |language|' + this.translate.currentLang + '|String');
-      this.genericService.getAllByCriteria('com.wack.model.website.SectionItem', parameters)
-          .subscribe((data: SectionItem[]) => {
-        this.serviceItems = data;
-      },
-      error => console.log(error),
-      () => console.log('Get all SectionItem complete'));
-
-      parameters = [];
-      parameters.push('e.section.name = |name|INDUSTRIES|String');
-      parameters.push('e.section.language = |language|' + this.translate.currentLang + '|String');
-      this.genericService.getAllByCriteria('com.wack.model.website.SectionItem', parameters)
-          .subscribe((data: SectionItem[]) => {
-        this.industryItems = data;
-      },
-      error => console.log(error),
-      () => console.log('Get all SectionItem complete'));
-
-      parameters = [];
-      parameters.push('e.language = |language|' + this.translate.currentLang + '|String');
-      this.genericService.getAllByCriteria('Company', parameters)
-          .subscribe((data: Company[]) => {
-         if (data.length > 0) {
-           this.company = data[0];
-         } else {
-           this.company = new Company();
-         }
-       },
-       error => console.log(error),
-       () => console.log('Get Company complete'));
-
-
-      parameters = [];
-      parameters.push('e.name = |name|SERVICES|String');
-      parameters.push('e.language = |language|' + this.translate.currentLang + '|String');
-      this.genericService.getAllByCriteria('com.wack.model.website.Section', parameters)
-          .subscribe((data: Section[]) => {
-         if (data.length > 0) {
-           this.serviceSection = data[0];
-         } else {
-           this.serviceSection = new Section();
-         }
-       },
-       error => console.log(error),
-       () => console.log('Get SERVICE Section complete'));
-
-      parameters = [];
-      parameters.push('e.name = |name|INDUSTRIES|String');
-      parameters.push('e.language = |language|' + this.translate.currentLang + '|String');
-      this.genericService.getAllByCriteria('com.wack.model.website.Section', parameters)
-          .subscribe((data: Section[]) => {
-         if (data.length > 0) {
-           this.industrySection = data[0];
-         } else {
-           this.industrySection = new Section();
-         }
-       },
-       error => console.log(error),
-       () => console.log('Get INDUSTRIES Section complete'));
+    parameters.push('e.status = |status|0|Integer');
+    parameters.push('e.language = |language|' + this.translate.currentLang + '|String');
+    this.genericService.getAllByCriteria('Company', parameters)
+        .subscribe((data: Company[]) => {
+        if (data.length > 0) {
+            this.company = data[0];
+        } else {
+            this.company = new Company();
+        }
+    },
+    error => console.log(error),
+    () => console.log('Get Company complete'));
 
       parameters = [];
       parameters.push('e.managing = |managing|0|Integer');
+      parameters.push('e.status = |status|0|Integer');
       this.genericService.getAllByCriteria('Employee', parameters)
           .subscribe((data: Employee[]) => {
          if (data.length > 0) {
@@ -127,6 +106,13 @@ export class Landing implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+        this.aboutUsSection = null;
+        this.serviceSection = null;
+        this.industrySection = null;
+        this.sliderItems = null;
+        this.serviceItems = null;
+        this.industryItems = null;
+        this.managers = null;
   }
 
  }

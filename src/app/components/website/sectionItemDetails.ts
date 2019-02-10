@@ -79,6 +79,7 @@ export class SectionItemDetails implements OnInit, OnDestroy {
             if (result.id > 0) {
               this.sectionItem = result;
               this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
+              this.clearPictureFile();
             } else {
               this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
             }

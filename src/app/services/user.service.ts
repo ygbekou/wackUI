@@ -4,7 +4,6 @@ import {Http, Response, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import {User} from '../models/user';
 import {Constants} from '../app.constants';
-import { UserGroup } from '../models/userGroup';
 import { TokenStorage } from './token.storage';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 
@@ -61,14 +60,11 @@ export class UserService {
 
   public login = (user: User): Observable<Boolean> => {
     const toAdd = JSON.stringify(user);
-    // let actionUrl = Constants.apiServer + '/service/user/login/login';
     const actionUrl = Constants.apiServer + '/service/token/generate-token';
     return this.http.post(actionUrl, toAdd, {headers: this.headers})
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
         if (response && response.json()) {
-          // tslint:disable-next-line:no-console
-          console.info(response.json());
           user = response.json();
           if (user.id > 0) {
             Cookie.set('user', JSON.stringify(response.json()));
@@ -96,7 +92,8 @@ export class UserService {
   }
 
   public saveUserWithoutPicture = (entityClass: string, entity: any): Observable<any> => {
-    const toAdd = JSON.stringify(entity);
+    let toAdd = JSON.stringify(entity);
+    toAdd = toAdd.replace(/'/g, '&#039;');
     const re = /\"/gi;
     const toSend = '{"json":"' + toAdd.replace(re, '\'') + '"}';
 
@@ -114,7 +111,8 @@ export class UserService {
       if (this.token.hasToken()) {
         head.append('Authorization', 'Bearer ' + this.token.getToken());
       }
-      const toAdd = JSON.stringify(entity);
+      let toAdd = JSON.stringify(entity);
+      toAdd = toAdd.replace(/'/g, '&#039;');
       const re = /\"/gi;
       const toSend = '{"json":"' + toAdd.replace(re, '\'') + '"}';
 
@@ -138,13 +136,31 @@ export class UserService {
    }
 
   public sendPassword = (user: User): Observable<Boolean> => {
-    const toAdd = JSON.stringify(user);
+    let toAdd = JSON.stringify(user);
+    toAdd = toAdd.replace(/'/g, '&#039;');
     const actionUrl = Constants.apiServer + '/service/user/forgot/sendPassword';
 
     return this.http.post(actionUrl, toAdd, {headers: this.headers})
       .map((response: Response) => {
 
-        if (response && response.json() === 'Success') {
+        if (response && response.json().result === 'Success') {
+          return true;
+        } else {
+          return false;
+        }
+      })
+      .catch(this.handleError);
+  }
+
+  public changePassword = (user: User): Observable<Boolean> => {
+    let toAdd = JSON.stringify(user);
+    toAdd = toAdd.replace(/'/g, '&#039;');
+    const actionUrl = Constants.apiServer + '/service/user/forgot/changePassword';
+
+    return this.http.post(actionUrl, toAdd, {headers: this.headers})
+      .map((response: Response) => {
+
+        if (response && response.json().result === 'Success') {
           return true;
         } else {
           return false;

@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../app.constants';
 import { Employee } from '../models/employee';
 import { UserGroup } from '../models/userGroup';
@@ -32,9 +32,7 @@ export class EmployeeDetails implements OnInit, OnDestroy {
       private userService: UserService,
       private translate: TranslateService,
       public userGroupDropdown: UserGroupDropdown,
-      private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
-      private router: Router
     ) {
         this.employee.user = new User();
   }

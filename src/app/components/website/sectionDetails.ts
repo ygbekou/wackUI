@@ -84,6 +84,7 @@ export class SectionDetails implements OnInit, OnDestroy {
             if (result.id > 0) {
               this.section = result;
               this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
+              this.pictureUrl = '';
             } else {
               this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
             }

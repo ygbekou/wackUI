@@ -22,6 +22,11 @@ export class User {
   birthDate: Date;
   status: number;
 
+
+  // Transients
+  confirmPassword: string;
+
+
   constructor() {
     this.userGroup = new UserGroup();
   }

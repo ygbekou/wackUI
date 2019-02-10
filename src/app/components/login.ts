@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter, NgZone} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, NgZone, ElementRef, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {AuthenticationService, TokenStorage, UserService} from '../services';
 import {Constants} from '../app.constants';
@@ -6,6 +6,7 @@ import {User} from '../models/user';
 import {GlobalEventsManager} from '../services/globalEventsManager';
 import { Message } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
+import { OverlayPanel } from 'primeng/primeng';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -21,6 +22,8 @@ export class Login implements OnInit {
   button = '';
   user: User;
   action: number;
+  display = false;
+  confirmPassword: string;
 
   constructor(
     private router: Router,
@@ -59,7 +62,12 @@ export class Login implements OnInit {
         this.authenticationService.attemptAuth(this.user)
           .subscribe(data => {
             if (this.tokenStorage.getToken() !== '' && this.tokenStorage.getToken() !== null) {
-                this.router.navigate(['adminWebsite']);
+                if (this.tokenStorage.getFirstTimeLogin() === 'Y') {
+                    this.user.password = '';
+                    this.display = true;
+                } else {
+                    this.router.navigate(['adminWebsite']);
+                }
             } else {
                 this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.LOGIN']).subscribe(res => {
                     this.messages.push({severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.INVALID_USER_PASS']});
@@ -78,7 +86,6 @@ export class Login implements OnInit {
 
   public sendPassword() {
     try {
-      this.button = '';
       this.userService.sendPassword(this.user)
         .subscribe(result => {
           if (result === true) {
@@ -88,7 +95,7 @@ export class Login implements OnInit {
             });
           } else {
            this.translate.get(['MESSAGE.PASSWORD_NOT_SENT', 'COMMON.READ']).subscribe(res => {
-                this.messages.push({severity: Constants.SUCCESS, summary: res['COMMON.READ'],
+                this.messages.push({severity: Constants.ERROR, summary: res['COMMON.READ'],
                     detail: res['MESSAGE.PASSWORD_NOT_SENT']});
             });
           }
@@ -100,6 +107,46 @@ export class Login implements OnInit {
         });
     }
 
+  }
+
+
+  public changePassword() {
+    try {
+        this.messages = [];
+        if (this.user.confirmPassword !== this.user.password) {
+            this.translate.get(['MESSAGE.PASSWORD_NOT_MATCHED', 'COMMON.READ']).subscribe(res => {
+                this.messages.push({severity: Constants.ERROR, summary: res['COMMON.READ'],
+                    detail: res['MESSAGE.PASSWORD_NOT_MATCHED']});
+            });
+            return;
+        }
+      this.userService.changePassword(this.user)
+        .subscribe(result => {
+          if (result) {
+            this.translate.get(['MESSAGE.PASSWORD_CHANGED', 'COMMON.READ']).subscribe(res => {
+                this.messages.push({severity: Constants.SUCCESS, summary: res['COMMON.READ'],
+                    detail: res['MESSAGE.PASSWORD_CHANGED']});
+            });
+            this.display = false;
+            this.closePasswordUpdateDialog();
+          } else {
+           this.translate.get(['MESSAGE.PASSWORD_NOT_CHANGED', 'COMMON.READ']).subscribe(res => {
+                this.messages.push({severity: Constants.ERROR, summary: res['COMMON.READ'],
+                    detail: res['MESSAGE.PASSWORD_NOT_CHANGED']});
+            });
+          }
+        });
+    } catch (e) {
+      this.translate.get(['MESSAGE.ERROR_OCCURRED', 'COMMON.READ']).subscribe(res => {
+            this.messages.push({severity: Constants.ERROR, summary: res['COMMON.READ'],
+                detail: res['MESSAGE.ERROR_OCCURRED']});
+        });
+    }
+
+  }
+
+  closePasswordUpdateDialog() {
+    this.router.navigate(['adminWebsite']);
   }
 
 }

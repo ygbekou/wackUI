@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { GenericService, TokenStorage, GlobalEventsManager } from '../../services';
+import { TranslateService } from '@ngx-translate/core';
 import { Company } from '../../models';
-import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-web-header',
@@ -127,11 +127,14 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 											</nav>
 										</div>
 										<ul class="header-social-icons social-icons d-none d-sm-block">
-                                            <li class="social-icons-facebook"><a href="{{company.facebookUrl}}" target="_blank"
+                                            <li class="social-icons-facebook"><a href="{{company.facebookUrl}}"
+                                             target="_blank"
                                                 title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
-                                            <li class="social-icons-twitter"><a href="{{company.twitterUrl}}" target="_blank"
+                                            <li class="social-icons-twitter"><a href="{{company.twitterUrl}}"
+                                            target="_blank"
                                                 title="Twitter"><i class="fab fa-twitter"></i></a></li>
-                                            <li class="social-icons-linkedin"><a href="{{company.linkedInUrl}}" target="_blank"
+                                            <li class="social-icons-linkedin"><a href="{{company.linkedInUrl}}"
+                                            target="_blank"
                                                 title="Linkedin"><i class="fab fa-linkedin-in"></i></a></li>										</ul>
 										<button class="btn header-btn-collapse-nav" data-toggle="collapse" data-target=".header-nav-main nav">
 											<i class="fas fa-bars"></i>
@@ -150,35 +153,22 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 // tslint:disable-next-line:component-class-suffix
 export class Header implements OnInit, OnDestroy {
 
-    company: Company = new Company();
-
     homeActive = 'active';
     serviceActive = '';
     industryActive = '';
     aboutActive = '';
     contactActive = '';
     loginActive = '';
+    company: Company = new Company();
 
     constructor
     (
-      private genericService: GenericService,
       public tokenStorage: TokenStorage,
       public globalEventsManager: GlobalEventsManager,
+      private genericService: GenericService,
       public translate: TranslateService,
       private router: Router
     ) {
-
-        const parameters = [];
-        this.genericService.getAllByCriteria('Company', parameters)
-          .subscribe((data: Company[]) => {
-         if (data.length > 0) {
-           this.company = data[0];
-         } else {
-           this.company = new Company();
-         }
-       },
-       error => console.log(error),
-       () => console.log('Get Company complete'));
 
        this.setActiveTab();
 
@@ -207,6 +197,19 @@ export class Header implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        const parameters = [];
+        parameters.push('e.status = |status|0|Integer');
+        parameters.push('e.language = |language|' + this.translate.currentLang + '|String');
+        this.genericService.getAllByCriteria('Company', parameters)
+            .subscribe((data: Company[]) => {
+            if (data.length > 0) {
+                this.company = data[0];
+            } else {
+                this.company = new Company();
+            }
+        },
+        error => console.log(error),
+        () => console.log('Get Company complete'));
     }
 
     ngOnDestroy() {

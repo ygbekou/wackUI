@@ -1,6 +1,6 @@
 <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 <p-messages [(value)]="messages"></p-messages>
-<p-table [columns]="cols" [value]="contactUsMessages" [paginator]="true" [rows]="10"> 
+<p-table [columns]="cols" [value]="contactUsMessages" [paginator]="true" [rows]="10" [responsive]="true"> 
     <ng-template pTemplate="caption">
         {{ 'COMMON.LIST' | translate }}
     </ng-template>

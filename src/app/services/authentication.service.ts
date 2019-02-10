@@ -3,7 +3,6 @@ import {Injectable} from '@angular/core';
 import { Observable } from 'rxjs';
 
 import {Constants} from '../app.constants';
-import { GlobalEventsManager } from './globalEventsManager';
 import { TokenStorage } from './token.storage';
 import {Http, Response, Headers} from '@angular/http';
 
@@ -15,8 +14,7 @@ export class AuthenticationService {
   menuMap: Map<String, number[]> = new Map();
 
   constructor(private http: Http,
-              private tokenStorage: TokenStorage,
-              private globalEventsManager: GlobalEventsManager) {
+              private tokenStorage: TokenStorage) {
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');
@@ -87,9 +85,6 @@ export class AuthenticationService {
             if (response) {
             const data = response.json();
             this.tokenStorage.saveAuthData(data);
-                if (data.token !== '') {
-                    this.globalEventsManager.showMenu = true;
-                }
                 return response.json();
 
             }

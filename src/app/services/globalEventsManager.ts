@@ -1,7 +1,9 @@
 import { EventEmitter, Injectable} from '@angular/core';
 import { TokenStorage } from './token.storage';
 import { BehaviorSubject } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { Company } from '../models';
+import { GenericService } from '.';
 
 @Injectable()
 export class GlobalEventsManager {
@@ -19,13 +21,18 @@ export class GlobalEventsManager {
     selectedParentId: number;
     selectedAdmissionId: number;
 
+    companyEmitter: EventEmitter<Company> = new EventEmitter<Company>();
+
     constructor(
         private token: TokenStorage,
         private translate: TranslateService,
+        private genericService: GenericService
         ) {
+
       if (this.token.getToken() != null) {
         this.showMenu = true;
       }
+
     }
 
     changeModuleName(moduleName: string) {

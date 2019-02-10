@@ -33,10 +33,6 @@ export class Constants {
   public static ERROR_OCCURRED = 'Une erreur systeme s\'est produite';
   public static SAVE_UNSUCCESSFUL = 'La sauvegarde n\'a pas marche. Verifiez tous les champs.';
   public static SAVE_SUCCESSFUL = 'La sauvegarde a marche.';
-  public static ORDERING_DOCTOR_REQUIRED = 'The Ordering Doctor and the Priority and Received Date is required.';
-  public static DOCTOR_ORDER_MEDICINE_REQUIRED = 'For Pharmacy order type at least one medicine is required.';
-  public static DOCTOR_ORDER_LABORATORY_REQUIRED = 'For Laboratory order type at least one lab test/group is required.';
-  public static DIAGNOSIS_REQUIRED = 'Diagnosis is required.';
 
   public static SEND_ME_MY_PASSWORD = 'Envoyez-moi mon mot de passe';
 
@@ -49,24 +45,6 @@ export class Constants {
   public static PASSWORD_NOT_SENT = 'Le mot de passe n\'a pu etre envoye. Assurez-vous que vous avez entre un E-mail valide';
   public static PASSWORD_SENT = 'Le mot de passe vous a ete envoye a l\'addresse: ';
   public static LOCALE = 'fr-FR';
-
-  public static CATEGORY_MEDICINE = 1;
-  public static CATEGORY_BED = 2;
-  public static CATEGORY_SERVICE_TARIF = 6;
-
-  public static USER_GROUP_PATIENT = 20;
-
-  public static DOCTOR_ORDER_TYPE_PHARM = 1;
-  public static DOCTOR_ORDER_TYPE_LAB = 2;
-
-  public static DOCTOR_ORDER_STATUS_PENDING = 1;
-  public static DOCTOR_ORDER_STATUS_PENDING_NAME = 'PENDING';
-  public static DOCTOR_ORDER_STATUS_INPROGRESS = 2;
-  public static DOCTOR_ORDER_STATUS_INPROGRESS_NAME = 'INPROGRESS';
-  public static DOCTOR_ORDER_STATUS_COMPLETED = 3;
-  public static DOCTOR_ORDER_STATUS_COMPLETED_NAME = 'COMPLETED';
-  public static DOCTOR_ORDER_STATUS_CLOSED = 4;
-  public static DOCTOR_ORDER_STATUS_CLOSED_NAME = 'CLOSED';
 
   public static ACTIVITIES_PACKAGE = 'com_qkcare_model_activities_';
   public static BIRTH_REPORT_CLASS = Constants.ACTIVITIES_PACKAGE + 'BirthReport';
