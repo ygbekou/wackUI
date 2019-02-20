@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { GenericService, GlobalEventsManager } from '../../services';
-import { SectionItem, Section } from '../../models/website';
+import { SectionItem, Section, SliderText } from '../../models/website';
 import { Company } from '../../models';
 import { Employee } from '../../models/employee';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
@@ -16,9 +16,8 @@ export class Landing implements OnInit, OnDestroy {
     aboutUsSection: Section = new Section();
     serviceSection: Section = new Section();
     industrySection: Section = new Section();
-    sliderItems: SectionItem[] = [];
-    serviceItems: SectionItem[] = [];
-    industryItems: SectionItem [] = [];
+    sliderTexts: SliderText[] = [];
+    sectionMap: Map<string, SectionItem[]> = new Map();
     managers: Employee [] = [];
     company: Company = new Company();
 
@@ -30,10 +29,6 @@ export class Landing implements OnInit, OnDestroy {
       public globalEventsManager: GlobalEventsManager,
       public translate: TranslateService
     ) {
-      this.sliderItems[0] = new SectionItem();
-      this.sliderItems[1] = new SectionItem();
-      this.sliderItems[2] = new SectionItem();
-      this.sliderItems[3] = new SectionItem();
 
       this.loadData();
 
@@ -48,31 +43,36 @@ export class Landing implements OnInit, OnDestroy {
   }
 
   loadData(): void {
-      this.serviceItems = [];
-      this.industryItems = [];
+      this.sectionMap = new Map();
+      this.sliderTexts[1] = new SliderText();
+      this.sliderTexts[2] = new SliderText();
+      this.sliderTexts[3] = new SliderText();
+      this.sliderTexts[4] = new SliderText();
 
       let parameters: string [] = [];
-      parameters.push('e.section.name IN |names|SLIDERS,SERVICES,INDUSTRIES|List<String>');
+      parameters.push('e.language = |language|' + this.translate.currentLang + '|String');
+      this.genericService.getAllByCriteria('com.wack.model.website.SliderText', parameters)
+          .subscribe((data: SliderText[]) => {
+              let i = 1;
+              for (const item of data) {
+                 this.sliderTexts[i] = item;
+                 i = i + 1;
+              }
+      },
+      error => console.log(error),
+      () => console.log('Get all SliderText complete'));
+
+      parameters = [];
       parameters.push('e.status = |status|0|Integer');
       parameters.push('e.section.language = |language|' + this.translate.currentLang + '|String');
       this.genericService.getAllByCriteria('com.wack.model.website.SectionItem', parameters)
           .subscribe((data: SectionItem[]) => {
-              if (this.changeCarrousel) {
-                  this.sliderItems = [];
-              }
               for (const item of data) {
-                if (this.changeCarrousel && item.section.name === 'SLIDERS') {
-                    this.sliderItems.push(item);
-                } else if (item.section.name === 'SERVICES') {
-                    this.serviceItems.push(item);
-                    this.serviceSection = item.section;
-                } else if (item.section.name === 'INDUSTRIES') {
-                    this.industryItems.push(item);
-                    this.industrySection = item.section;
+                if (!this.sectionMap.has(item.section.title)) {
+                    this.sectionMap.set(item.section.title, []);
                 }
+                this.sectionMap.get(item.section.title).push(item);
               }
-
-              this.changeCarrousel = false;
 
       },
       error => console.log(error),
@@ -109,9 +109,8 @@ export class Landing implements OnInit, OnDestroy {
         this.aboutUsSection = null;
         this.serviceSection = null;
         this.industrySection = null;
-        this.sliderItems = null;
-        this.serviceItems = null;
-        this.industryItems = null;
+        this.sliderTexts = null;
+        this.sectionMap = null;
         this.managers = null;
   }
 

@@ -1,33 +1,33 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Section } from '../../models/website';
+import { Section, Slider } from '../../models/website';
 import { Constants } from '../../app.constants';
 import { GenericService, GlobalEventsManager } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 
 @Component({
-  selector: 'app-section-details',
-  templateUrl: '../../pages/website/sectionDetails.html',
+  selector: 'app-slider-details',
+  templateUrl: '../../pages/website/sliderDetails.html',
   providers: [GenericService]
 
 })
 // tslint:disable-next-line:component-class-suffix
-export class SectionDetails implements OnInit, OnDestroy {
+export class SliderDetails implements OnInit, OnDestroy {
 
-    section: Section = new Section();
+    slider: Slider = new Slider();
     messages: Message[] = [];
     @ViewChild('picture') picture: ElementRef;
     formData = new FormData();
     pictureUrl: any = '';
-    showInMenu = false;
 
     constructor
     (
       private genericService: GenericService,
       private translate: TranslateService
     ) {
-      this.section = new Section();
+      this.slider = new Slider();
+      this.pictureUrl = '';
   }
 
 
@@ -37,17 +37,16 @@ export class SectionDetails implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.section = null;
+    this.slider = null;
   }
 
-  getSection(sectionId: number) {
+  getSlider(sliderId: number) {
 
     this.messages = [];
-    this.genericService.getOne(sectionId, 'com.wack.model.website.Section')
+    this.genericService.getOne(sliderId, 'com.wack.model.website.Slider')
         .subscribe(result => {
       if (result.id > 0) {
-        this.section = result;
-        this.showInMenu = this.section.showInMenu === 'Y';
+        this.slider = result;
       } else {
         this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
           this.messages.push({severity:
@@ -61,7 +60,7 @@ export class SectionDetails implements OnInit, OnDestroy {
   // tslint:disable-next-line:no-trailing-whitespace
   
   clear() {
-    this.section = new Section();
+    this.slider = new Slider();
   }
 
 
@@ -79,27 +78,35 @@ export class SectionDetails implements OnInit, OnDestroy {
     }
 
     try {
-      this.section.showInMenu = this.showInMenu ? 'Y' : 'N';
+
       if (pictureEl && pictureEl.files && pictureEl.files.length > 0) {
-        this.section.fileLocation = '';
-        this.genericService.saveWithFile(this.section, 'com.wack.model.website.Section', this.formData, 'saveWithFile')
+        this.slider.fileLocation = '';
+        this.genericService.saveWithFile(this.slider, 'com.wack.model.website.Slider', this.formData, 'saveWithFile')
           .subscribe(result => {
             if (result.id > 0) {
-              this.section = result;
-              this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
+              this.slider = result;
+              this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe(res => {
+                this.messages.push({severity: Constants.SUCCESS, summary: res['COMMON.SAVE'], detail: res['MESSAGE.SAVE_SUCCESS']});
+                });
               this.pictureUrl = '';
             } else {
-              this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
+              this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_UNSUCCESS']).subscribe(res => {
+                this.messages.push({severity: Constants.SUCCESS, summary: res['COMMON.SAVE'], detail: res['MESSAGE.SAVE_SUCCESS']});
+                });
             }
           });
       } else {
-        this.genericService.save(this.section, 'com.wack.model.website.Section')
+        this.genericService.save(this.slider, 'com.wack.model.website.Slider')
           .subscribe(result => {
             if (result.id > 0) {
-              this.section = result;
-              this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
+              this.slider = result;
+              this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe(res => {
+                this.messages.push({severity: Constants.SUCCESS, summary: res['COMMON.SAVE'], detail: res['MESSAGE.SAVE_SUCCESS']});
+                });
             } else {
-              this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
+              this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe(res => {
+                this.messages.push({severity: Constants.SUCCESS, summary: res['COMMON.SAVE'], detail: res['MESSAGE.SAVE_SUCCESS']});
+                });
             }
           });
       }

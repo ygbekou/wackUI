@@ -16,7 +16,7 @@
                         </p-tabView>
 				    </div>
 			    </p-tabPanel>
-			 	<p-tabPanel header="SECTION">
+			 	<p-tabPanel header="{{'COMMON.SECTION' | translate | uppercase}}">
 			    	<div *ngIf="activeTab == 1" class="ui-grid-row">
 				        <app-section-details></app-section-details>
 				        <br/> 
@@ -51,7 +51,25 @@
                         
                         <app-contact-list (contactUsMessageIdEvent)="onContactSelected($event)"></app-contact-list>
 				    </div>
-			    </p-tabPanel>
+                </p-tabPanel>
+                <p-tabPanel header="{{'COMMON.SLIDER' | translate | uppercase}}">
+			    	<div *ngIf="activeTab == 5" class="ui-grid-row">
+                        <p-tabView [activeIndex]="activeSliderTab" (onChange)="onSliderTabChange($event)">
+                            <p-tabPanel header="{{'COMMON.SLIDER_IMAGE' | translate | uppercase}}" uppercase>
+                                <app-slider-details></app-slider-details>
+                                <br/>
+                        
+                                <app-slider-list (sliderIdEvent)="onSliderSelected($event)"></app-slider-list>
+                            </p-tabPanel>
+                            <p-tabPanel header="{{'COMMON.SLIDER_TEXT' | translate | uppercase}}">
+                                <app-sliderText-details></app-sliderText-details>
+                                <br/>
+                        
+                                <app-sliderText-list (sliderTextIdEvent)="onSliderTextSelected($event)"></app-sliderText-list>
+                            </p-tabPanel>
+                        </p-tabView>
+				    </div>
+                </p-tabPanel>
 
 			</p-tabView>
         </div>

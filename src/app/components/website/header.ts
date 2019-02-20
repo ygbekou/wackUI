@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { GenericService, TokenStorage, GlobalEventsManager } from '../../services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { Company } from '../../models';
+import { Section } from '../../models/website';
 
 @Component({
   selector: 'app-web-header',
@@ -88,14 +89,9 @@ import { Company } from '../../models';
 															{{ 'COMMON.HOME' | translate }}
 														</a>
 													</li>
-													<li class="dropdown">
-														<a class="dropdown-item dropdown-toggle {{serviceActive}}" href="#/services">
-															{{ 'COMMON.SERVICES' | translate }}
-														</a>
-													</li>
-													<li class="dropdown">
-														<a class="dropdown-item dropdown-toggle {{industryActive}}" href="#/industries">
-															{{ 'COMMON.INDUSTRIES' | translate }}
+													<li class="dropdown" *ngFor="let menuSection of menuSections">
+														<a class="dropdown-item dropdown-toggle {{sectionActives[menuSection.id]}}" href="#/section?sectionId={{menuSection.id}}">
+															{{ menuSection.name }}
 														</a>
 													</li>
 													<li class="dropdown">
@@ -154,12 +150,13 @@ import { Company } from '../../models';
 export class Header implements OnInit, OnDestroy {
 
     homeActive = 'active';
-    serviceActive = '';
+    sectionActives = [];
     industryActive = '';
     aboutActive = '';
     contactActive = '';
     loginActive = '';
     company: Company = new Company();
+    menuSections: Section[] = [];
 
     constructor
     (
@@ -167,7 +164,8 @@ export class Header implements OnInit, OnDestroy {
       public globalEventsManager: GlobalEventsManager,
       private genericService: GenericService,
       public translate: TranslateService,
-      private router: Router
+      private router: Router,
+      private route: ActivatedRoute
     ) {
 
        this.setActiveTab();
@@ -176,15 +174,21 @@ export class Header implements OnInit, OnDestroy {
 
     setActiveTab() {
         this.homeActive = '';
-        this.serviceActive = '';
+        this.sectionActives = [];
         this.industryActive = '';
         this.aboutActive = '';
         this.contactActive = '';
 
         if (this.router.url === '/') {
             this.homeActive = 'active';
-        } else if (this.router.url === '/services') {
-            this.serviceActive = 'active';
+        } else if (this.router.url.startsWith('/section')) {
+            this.route
+                .queryParams
+                .subscribe(params => {
+                const sectionId = params['sectionId'];
+                this.sectionActives[sectionId] = 'active';
+            });
+
         } else if (this.router.url === '/industries') {
             this.industryActive = 'active';
         } else if (this.router.url === '/about') {
@@ -210,6 +214,25 @@ export class Header implements OnInit, OnDestroy {
         },
         error => console.log(error),
         () => console.log('Get Company complete'));
+
+        this.loadData();
+        this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+            this.loadData();
+        });
+
+    }
+
+    loadData() {
+      const parameters: string [] = [];
+      parameters.push('e.status = |status|0|Integer');
+      parameters.push('e.showInMenu = |showInMenu|Y|String');
+      parameters.push('e.language = |language|' + this.translate.currentLang + '|String');
+      this.genericService.getAllByCriteria('com.wack.model.website.Section', parameters)
+          .subscribe((data: Section[]) => {
+            this.menuSections = data;
+      },
+      error => console.log(error),
+      () => console.log('Get all SectionItem complete'));
     }
 
     ngOnDestroy() {

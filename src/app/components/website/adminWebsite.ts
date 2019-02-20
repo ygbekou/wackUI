@@ -7,6 +7,11 @@ import { SectionItemList } from './sectionItemList';
 import { EmployeeDetails } from '../employeeDetails';
 import { CompanyDetails } from '../companyDetails';
 import { ContactDetails } from '../contactDetails';
+import { SliderList } from './sliderList';
+import { SliderDetails } from './sliderDetails';
+import { SliderTextList } from './sliderTextList';
+import { SliderTextDetails } from './sliderTextDetails';
+
 
 
 
@@ -21,6 +26,10 @@ export class AdminWebsite implements OnInit, OnDestroy {
 
   @ViewChild(SectionDetails) sectionDetails: SectionDetails;
   @ViewChild(SectionList) sectionList: SectionList;
+  @ViewChild(SliderDetails) sliderDetails: SliderDetails;
+  @ViewChild(SliderList) sliderList: SliderList;
+  @ViewChild(SliderTextDetails) sliderTextDetails: SliderTextDetails;
+  @ViewChild(SliderTextList) sliderTextList: SliderTextList;
   @ViewChild(SectionItemDetails) sectionItemDetails: SectionItemDetails;
   @ViewChild(SectionItemList) sectionItemList: SectionItemList;
   @ViewChild(EmployeeDetails) employeeDetails: EmployeeDetails;
@@ -30,6 +39,7 @@ export class AdminWebsite implements OnInit, OnDestroy {
   public activeTab = 0;
   public activeEmployeeTab = 1;
   public activeCompanyTab = 1;
+  public activeSliderTab = 0;
 
   constructor (
     private globalEventsManager: GlobalEventsManager,
@@ -68,9 +78,20 @@ export class AdminWebsite implements OnInit, OnDestroy {
       this.companyDetails.getCompany(companyId);
 
   }
+
   onContactSelected($event) {
       const contactId = $event;
       this.contactDetails.getContact(contactId);
+  }
+
+  onSliderSelected($event) {
+      const sliderId = $event;
+      this.sliderDetails.getSlider(sliderId);
+  }
+
+  onSliderTextSelected($event) {
+      const sliderTextId = $event;
+      this.sliderTextDetails.getSliderText(sliderTextId);
   }
 
   onTabChange(evt) {
@@ -88,5 +109,9 @@ export class AdminWebsite implements OnInit, OnDestroy {
 
    onCompanyTabChange(evt) {
     this.activeCompanyTab = evt.index;
+  }
+
+  onSliderTabChange(evt) {
+    this.activeSliderTab = evt.index;
   }
 }

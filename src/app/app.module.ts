@@ -95,6 +95,7 @@ import {Industries} from './components/industries';
 import {Services} from './components/services';
 import {AboutUs} from './components/aboutUs';
 import {Contact} from './components/contact';
+import {SingleSection} from './components/singleSection';
 
 import {Header} from './components/website/header';
 import {Footer} from './components/website/footer';
@@ -109,6 +110,10 @@ import { SectionDetails } from './components/website/sectionDetails';
 import { SectionList } from './components/website/sectionList';
 import { SectionItemDetails } from './components/website/sectionItemDetails';
 import { SectionItemList } from './components/website/sectionItemList';
+import { SliderDetails } from './components/website/sliderDetails';
+import { SliderList } from './components/website/sliderList';
+import { SliderTextDetails } from './components/website/sliderTextDetails';
+import { SliderTextList } from './components/website/sliderTextList';
 import { CompanyDetails } from './components/companyDetails';
 import { CompanyList } from './components/companyList';
 import { EmployeeDetails } from './components/employeeDetails';
@@ -216,6 +221,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     Login,
     Services,
     Industries,
+    SingleSection,
     AboutUs,
     Contact,
     Landing,
@@ -227,6 +233,10 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     SectionList,
     SectionItemDetails,
     SectionItemList,
+    SliderDetails,
+    SliderList,
+    SliderTextDetails,
+    SliderTextList,
     CompanyDetails,
     CompanyList,
     ContactDetails,

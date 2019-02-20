@@ -126,7 +126,12 @@
     "FROM_EMAIL": "From Email",
     "TO_EMAIL": "To Email",
     "NEW_PASSWORD": "New Password",
-    "CONFIRM_PASSWORD": "Confirm Password"
+    "CONFIRM_PASSWORD": "Confirm Password",
+
+    "SLIDER": "Slider",
+    "SLIDER_IMAGE": "Slider Image",
+    "SLIDER_TEXT": "Slider Text"
+
   },
   "MESSAGE": {
   	"DELETE_CONFIRM": "Are you sure that you want to proceed?",

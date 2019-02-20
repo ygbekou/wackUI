@@ -1,6 +1,7 @@
 export class Constants {
   // public static apiServer = 'http://localhost:8080';
-  public static apiServer = 'http://54.234.92.115:8080';
+  // public static apiServer = 'http://54.234.92.115:8080';    // alltrustconsulting
+  public static apiServer = 'http://52.90.148.49:8080';
 
   public static DETAIL = 'Details';
   public static ABSENCES = 'Absenses';

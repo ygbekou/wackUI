@@ -114,7 +114,11 @@
     "FROM_EMAIL": "Expedition Emails",
     "TO_EMAIL": "Reception Emails",
     "NEW_PASSWORD": "Nouveau mot de passe",
-    "CONFIRM_PASSWORD": "Confirmer mot de passe"
+    "CONFIRM_PASSWORD": "Confirmer mot de passe",
+
+    "SLIDER": "Slider",
+    "SLIDER_IMAGE": "Slider Image",
+    "SLIDER_TEXT": "Slider Text"
   },
   "MESSAGE": {
     "DELETE_CONFIRM": "Etes-vous sur de vouloir continuer?",
