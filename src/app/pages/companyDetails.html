@@ -236,17 +236,19 @@
                 <div class="ui-grid-row">
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">
-					<label for="fromEmail">{{'COMMON.FROM_EMAIL' | translate}}</label> 
+					<label for="fromEmail">{{'COMMON.FROM_EMAIL' | translate}}<font color="red">*</font></label> 
 					<input type="text" pInputText class="form-control" id="fromEmail"
-						[(ngModel)]="company.fromEmail" name="fromEmail" #fromEmail="ngModel">
+						[(ngModel)]="company.fromEmail" name="fromEmail" #fromEmail="ngModel" required>
+					<p-message *ngIf="f.submitted && fromEmail.invalid" severity="error" text="Field is required"></p-message>
 				</div>
             </div>
             <div class="ui-grid-col-2 ui-sm-12"></div>
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">
-					<label for="toEmail">{{'COMMON.TO_EMAIL' | translate}}</label> 
+					<label for="toEmail">{{'COMMON.TO_EMAIL' | translate}}<font color="red">*</font></label> 
 					<input type="text" pInputText class="form-control" id="toEmail"
-						[(ngModel)]="company.toEmail" name="toEmail" #toEmail="ngModel">
+						[(ngModel)]="company.toEmail" name="toEmail" #toEmail="ngModel"required>
+					<p-message *ngIf="f.submitted && toEmail.invalid" severity="error" text="Field is required"></p-message>
 				</div>
 			</div>
 		</div>

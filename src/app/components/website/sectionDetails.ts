@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, ElementRef } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Section } from '../../models/website';
 import { Constants } from '../../app.constants';
-import { GenericService, GlobalEventsManager } from '../../services';
-import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { GenericService } from '../../services';
+import { TranslateService} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 
 @Component({
@@ -75,7 +74,7 @@ export class SectionDetails implements OnInit, OnDestroy {
           this.formData.append('file', files[i], files[i].name);
       }
     } else {
-       this.formData.append('file', null, null);
+       //this.formData.append('file', null, null);
     }
 
     try {

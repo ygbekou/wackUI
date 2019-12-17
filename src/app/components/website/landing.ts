@@ -8,6 +8,7 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 @Component({
   selector: 'app-landing',
   templateUrl: '../../pages/website/landing.html',
+  styleUrls: ['./landing.css'],
   providers: [GenericService]
 })
 // tslint:disable-next-line:component-class-suffix
@@ -44,16 +45,16 @@ export class Landing implements OnInit, OnDestroy {
 
   loadData(): void {
       this.sectionMap = new Map();
+      this.sliderTexts[0] = new SliderText();
       this.sliderTexts[1] = new SliderText();
       this.sliderTexts[2] = new SliderText();
       this.sliderTexts[3] = new SliderText();
-      this.sliderTexts[4] = new SliderText();
 
       let parameters: string [] = [];
       parameters.push('e.language = |language|' + this.translate.currentLang + '|String');
       this.genericService.getAllByCriteria('com.wack.model.website.SliderText', parameters)
           .subscribe((data: SliderText[]) => {
-              let i = 1;
+              let i = 0;
               for (const item of data) {
                  this.sliderTexts[i] = item;
                  i = i + 1;

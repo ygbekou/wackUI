@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { GenericService, GlobalEventsManager } from '../../services';
 import { Company } from '../../models';
 import { TranslateService } from '@ngx-translate/core';

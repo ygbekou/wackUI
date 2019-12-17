@@ -246,10 +246,10 @@ html.sticky-header-active #header.header-effect-shrink .header-body {
 */
 @media (min-width: 991px) {
 	.slider-container {
-		height: 100vh !important;
+		height: 100vh;
 	}
 	.slider-container .slider {
-		height: 100vh !important;
+		height: 100vh;
 	}
 }
 @media (max-width: 767px) {

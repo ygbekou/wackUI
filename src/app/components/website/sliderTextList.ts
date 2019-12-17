@@ -32,9 +32,9 @@ export class SliderTextList implements OnInit, OnDestroy {
     this.cols = [
             { field: 'language', header: 'Language', headerKey: 'COMMON.LANGUAGE' },
             { field: 'sliderName', header: 'Slider', headerKey: 'COMMON.SLIDER' },
-            { field: 'text1', header: 'Text1', headerKey: 'COMMON.TEXT1' },
-            { field: 'text2', header: 'Text2', headerKey: 'COMMON.TEXT2' },
-            { field: 'text3', header: 'Text3', headerKey: 'COMMON.TEXT3' }
+            { field: 'text1', header: 'Text1', headerKey: 'COMMON.SLIDER_TEXT1' },
+            { field: 'text2', header: 'Text2', headerKey: 'COMMON.SLIDER_TEXT2' },
+            { field: 'text3', header: 'Text3', headerKey: 'COMMON.SLIDER_TEXT3' }
         ];
 
     this.route
