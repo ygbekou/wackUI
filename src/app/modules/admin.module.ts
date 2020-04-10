@@ -1,12 +1,12 @@
 import { TokenInterceptor } from '../app.interceptor';
 import {Routes, RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
-import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {HttpClient } from '@angular/common/http';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
-import {CommonSharedModule} from './common.shared.module';
-
+import { CommonSharedModule } from './common.shared.module';
+import { BaseComponent } from '../components/website/baseComponent';
 
 import { SearchComponent } from '../components/includes/search';
 import { TokenStorage, LoggedInGuard } from '../services';
@@ -34,7 +34,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
   exports: [CommonSharedModule, TranslateModule],
 
-  declarations: [SearchComponent],
+  declarations: [SearchComponent, BaseComponent],
 
   providers: [TokenStorage, LoggedInGuard]
 })

@@ -5,9 +5,10 @@ import { Employee } from '../models/employee';
 import { UserGroup } from '../models/userGroup';
 import { UserGroupDropdown } from './dropdowns';
 import { User } from '../models/user';
-import { GenericService, UserService } from '../services';
+import { GenericService, UserService, TokenStorage } from '../services';
 import { TranslateService} from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { Message, ConfirmationService } from 'primeng/api';
+import { BaseComponent } from './website/baseComponent';
 
 @Component({
   selector: 'app-employee-details',
@@ -15,25 +16,26 @@ import { Message } from 'primeng/api';
   providers: [GenericService, UserService, UserGroupDropdown]
 })
 // tslint:disable-next-line:component-class-suffix
-export class EmployeeDetails implements OnInit, OnDestroy {
+export class EmployeeDetails extends BaseComponent implements OnInit, OnDestroy {
 
   @ViewChild('picture') picture: ElementRef;
   formData = new FormData();
 
-  public error: String = '';
-  displayDialog: boolean;
   employee: Employee = new Employee();
   messages: Message[] = [];
   pictureUrl: any = '';
 
   constructor
     (
-      private genericService: GenericService,
-      private userService: UserService,
-      private translate: TranslateService,
+      public genericService: GenericService,
+      public confirmationService: ConfirmationService,
+      public translate: TranslateService,
+      public tokenStorage: TokenStorage,
+      public userService: UserService,
       public userGroupDropdown: UserGroupDropdown,
       private route: ActivatedRoute,
     ) {
+      super(genericService, translate, confirmationService, tokenStorage);
         this.employee.user = new User();
   }
 
@@ -56,10 +58,7 @@ export class EmployeeDetails implements OnInit, OnDestroy {
                   if (this.employee.user.birthDate != null) {
                     this.employee.user.birthDate = new Date(this.employee.user.birthDate);
                   }
-                } else {
-                  this.error = Constants.SAVE_UNSUCCESSFUL;
-                  this.displayDialog = true;
-                }
+                } 
               });
           } else {
           }
@@ -72,6 +71,7 @@ export class EmployeeDetails implements OnInit, OnDestroy {
   }
 
   save() {
+    this.messages = [];
     this.formData = new FormData();
         let inputEl;
         if (this.picture) {
@@ -83,37 +83,20 @@ export class EmployeeDetails implements OnInit, OnDestroy {
                 this.formData.append('file', files[i], files[i].name);
             }
             } else {
-                this.formData.append('file', null, null);
+                //this.formData.append('file', null, null);
             }
         }
 
     try {
-      this.error = '';
       if (inputEl && inputEl.files && (inputEl.files.length > 0)) {
         this.userService.saveUserWithPicture('Employee', this.employee, this.formData)
           .subscribe(result => {
-            if (result.id > 0) {
-              this.employee = result;
-              if (this.employee.user.birthDate != null) {
-                this.employee.user.birthDate = new Date(this.employee.user.birthDate);
-              }
-            } else {
-              this.error = Constants.SAVE_UNSUCCESSFUL;
-              this.displayDialog = true;
-            }
+            this.processResult(result, this.employee, this.messages, this.pictureUrl);
           });
       } else {
         this.userService.saveUserWithoutPicture('Employee', this.employee)
           .subscribe(result => {
-            if (result.id > 0) {
-              this.employee = result;
-              if (this.employee.user.birthDate != null) {
-                    this.employee.user.birthDate = new Date(this.employee.user.birthDate);
-              }
-            } else {
-              this.error = Constants.SAVE_UNSUCCESSFUL;
-              this.displayDialog = true;
-            }
+            this.processResult(result, this.employee, this.messages, this.pictureUrl);
           });
       }
     } catch (e) {
@@ -125,9 +108,6 @@ export class EmployeeDetails implements OnInit, OnDestroy {
     this.employee = new Employee();
   }
 
-  delete() {
-    alert('To Do');
-  }
 
    getEmployee(employeeId: number) {
     this.messages = [];

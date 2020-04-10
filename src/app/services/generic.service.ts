@@ -58,6 +58,8 @@ export class GenericService {
       const re = /\"/gi;
       const toSend = '{"json":"' + toAdd.replace(re, '\'') + '"}';
 
+      console.info(toSend)
+
       const actionUrl = Constants.apiServer + '/service/' + entityClass + '/save';
       return this.http.post(actionUrl, toSend, { headers: this.headers })
         .map((response: Response) => {
@@ -156,6 +158,7 @@ export class GenericService {
         const actionUrl = Constants.apiServer + '/service/' + entityClass + '/delete/' + id;
         return this.http.get(actionUrl, { headers: this.headers })
           .map((response: Response) => {
+
               return response.json();
           })
           .catch(this.handleError);

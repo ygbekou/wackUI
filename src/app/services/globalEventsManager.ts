@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { Company } from '../models';
 import { GenericService } from '.';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 @Injectable()
 export class GlobalEventsManager {
@@ -21,7 +22,7 @@ export class GlobalEventsManager {
     selectedParentId: number;
     selectedAdmissionId: number;
 
-    companyEmitter: EventEmitter<Company> = new EventEmitter<Company>();
+    company: Company = new Company();
 
     constructor(
         private token: TokenStorage,
@@ -46,5 +47,11 @@ export class GlobalEventsManager {
     changeLanguage(selectLang: string) {
         this.currentLang = selectLang;
         this.translate.use(selectLang);
+        let date = new Date(Date.now() + 86400000000e3);
+        document.cookie = "lang=" + selectLang + "; expires=" + date.toUTCString();
+        //Cookie.set('lang', selectLang, (20 * 365 * 24 * 60 * 60));
+        console.log('setting the language to: ' + selectLang);
+        console.log('language in cookie=' + Cookie.get('lang'));
+        //window.location.reload();
     }
 }

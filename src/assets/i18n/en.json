@@ -155,7 +155,9 @@
     "PASSWORD_CHANGED": "Your pasword was changed successfully.",
     "PASSWORD_NOT_CHANGED": "The system cannot change your password. Verify and try again.",
     "PASSWORD_NOT_MATCHED": "The new passord didn't match the confirm pasword. Verify and try again.",
-    "SEND_US_MESSAGE": "Send a Message"
+    "SEND_US_MESSAGE": "Send a Message",
+    "EMAIL_EXISTS": "Email already exists",
+    "USER_NAME_EXISTS": "Username already exists"
   },
   "DATE": {
   	"1": "Jan",

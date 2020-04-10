@@ -1,12 +1,9 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Output, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Constants } from '../app.constants';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import {  } from 'primeng/primeng';
-import { GenericService } from '../services';
-import { User } from '../models';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { ConfirmationService } from 'primeng/primeng';
+import { GenericService, TokenStorage } from '../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Employee } from '../models/employee';
+import { BaseComponent } from './website/baseComponent';
 
 @Component({
   selector: 'app-employee-list',
@@ -14,7 +11,7 @@ import { Employee } from '../models/employee';
   providers: [GenericService]
 })
 // tslint:disable-next-line:component-class-suffix
-export class EmployeeList implements OnInit, OnDestroy {
+export class EmployeeList extends BaseComponent implements OnInit, OnDestroy {
 
   employees: Employee[] = [];
   cols: any[];
@@ -22,13 +19,13 @@ export class EmployeeList implements OnInit, OnDestroy {
 
   constructor
     (
-    private genericService: GenericService,
-    private translate: TranslateService,
-    private changeDetectorRef: ChangeDetectorRef,
-    private route: ActivatedRoute,
-    private router: Router,
+    public genericService: GenericService,
+		public confirmationService: ConfirmationService,
+		public translate: TranslateService,
+		public tokenStorage: TokenStorage,
     ) {
 
+      super(genericService, translate, confirmationService, tokenStorage);
       const parameters: string [] = [];
       this.genericService.getAllByCriteria('Employee', parameters)
           .subscribe((data: Employee[]) => {
@@ -72,19 +69,6 @@ export class EmployeeList implements OnInit, OnDestroy {
 
   edit(employeeId: number) {
       this.employeeIdEvent.emit(employeeId + '');
-  }
-
-  delete(employeeId: number) {
-    try {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          'employeeId': employeeId,
-        }
-      };
-      this.router.navigate(['/admin/employeeDetails'], navigationExtras);
-    } catch (e) {
-      console.log(e);
-    }
   }
 
   getStatusDesc(employee: Employee): string {

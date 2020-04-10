@@ -201,7 +201,8 @@
                             </div>
                             <div class="feature-box-info ml-3">
                                 <h4 class="font-weight-normal text-5">{{sectionItem.title}}</h4>
-                                <p class="text-2">{{sectionItem.description}}</p>
+                                <div innerHtml="{{sectionItem.description}}"></div>
+                                <!-- <p class="text-2">{{sectionItem.description}}</p> -->
                             </div>
                         </div>
                     </a>
@@ -232,7 +233,7 @@
                             <div class="team-item p-0">
                                 <a class="text-decoration-none">
                                     <span class="image-wrapper">
-                                        <img src="assets/images/user/{{manager.user.picture}}" alt="PIC"
+                                        <img src="assets/images/user/{{manager.user.picture}}" alt=""
                                             class="img-fluid" />
                                     </span>
                                 </a>
@@ -249,8 +250,10 @@
                                         </div>
                                     </div>
                                     <a class="text-decoration-none">
+                                        <p><span
+                                            class="team-member-name text-color-dark font-weight-semibold text-4">{{manager.designation}}</span></p>
                                         <span
-                                            class="team-member-name text-color-dark font-weight-semibold text-4">{{manager.designation +' '+manager.name}}</span>
+                                            class="team-member-name text-color-dark font-weight-semibold text-4">{{manager.name}}</span>
                                         
                                     </a>
                                 </div>

@@ -122,6 +122,8 @@ import { ContactDetails } from './components/contactDetails';
 import { ContactList } from './components/contactList';
 import { GlobalErrorHandler } from './services/globalErrorHandler';
 
+import { ConfirmationService } from 'primeng/api';
+
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -249,7 +251,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
      BreadcrumbService, GenericService, UserService, Constants, GlobalEventsManager, TokenStorage,
-    AuthenticationService, LoggedInGuard
+    AuthenticationService, LoggedInGuard, ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

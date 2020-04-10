@@ -4,6 +4,7 @@ import { GenericService, TokenStorage, GlobalEventsManager } from '../../service
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { Company } from '../../models';
 import { Section } from '../../models/website';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 @Component({
   selector: 'app-web-header',
@@ -168,8 +169,9 @@ export class Header implements OnInit, OnDestroy {
       private route: ActivatedRoute
     ) {
 
-       this.setActiveTab();
-
+        this.setActiveTab();
+        this.globalEventsManager.currentLang = Cookie.get('lang') ? Cookie.get('lang') : 'en';
+        this.translate.use(this.globalEventsManager.currentLang);
     }
 
     setActiveTab() {
@@ -202,18 +204,7 @@ export class Header implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         const parameters = [];
-        parameters.push('e.status = |status|0|Integer');
-        parameters.push('e.language = |language|' + this.translate.currentLang + '|String');
-        this.genericService.getAllByCriteria('Company', parameters)
-            .subscribe((data: Company[]) => {
-            if (data.length > 0) {
-                this.company = data[0];
-            } else {
-                this.company = new Company();
-            }
-        },
-        error => console.log(error),
-        () => console.log('Get Company complete'));
+        
 
         this.loadData();
         this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
@@ -224,9 +215,26 @@ export class Header implements OnInit, OnDestroy {
 
     loadData() {
       const parameters: string [] = [];
+
       parameters.push('e.status = |status|0|Integer');
+        parameters.push('e.language = |language|' + this.globalEventsManager.currentLang + '|String');
+        this.genericService.getAllByCriteria('Company', parameters)
+            .subscribe((data: Company[]) => {
+            if (data.length > 0) {
+                this.company = data[0];
+                this.globalEventsManager.company = data[0];
+            } else {
+                this.company = new Company();
+                this.globalEventsManager.company = new Company();
+            }
+        },
+        error => console.log(error),
+        () => console.log('Get Company complete'));
+
+
+      //parameters.push('e.status = |status|0|Integer');
       parameters.push('e.showInMenu = |showInMenu|Y|String');
-      parameters.push('e.language = |language|' + this.translate.currentLang + '|String');
+      //parameters.push('e.language = |language|' + this.globalEventsManager.currentLang + '|String');
       this.genericService.getAllByCriteria('com.wack.model.website.Section', parameters)
           .subscribe((data: Section[]) => {
             this.menuSections = data;

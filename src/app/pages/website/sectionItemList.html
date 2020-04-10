@@ -1,5 +1,6 @@
-<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-	<p-table [value]="sectionItems" [responsive]="true" [responsive]="true"> 
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+<p-messages [(value)]="messages"></p-messages>
+	<p-table [value]="sectionItems" [responsive]="true"> 
 		<ng-template pTemplate="caption">
 	        {{ 'COMMON.LIST' | translate }}
 	    </ng-template>
@@ -16,9 +17,14 @@
 				<td *ngFor="let col of cols">{{sectionItem[col.field]}}</td>
 				<td>
 					<button type="button" pButton icon="fa fa-edit" 
-						(click)="edit(sectionItem.id)"></button>
+						(click)="edit(sectionItem.id)"></button>&nbsp;&nbsp;
+					<button type="button" class="ui-button-rounded ui-button-warning" pButton icon="fa fa-eraser" 
+						(click)="deleteItem(sectionItems, sectionItem.id, 'com.wack.model.website.SectionItem')" 
+						title="{{ 'COMMON.DELETE' | translate }}">
+					</button>
+					
 				</td>
 			</tr>
 		</ng-template> 
 	</p-table>
-</div>
+

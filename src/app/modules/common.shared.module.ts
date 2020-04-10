@@ -18,7 +18,6 @@ import {
   DataGridModule, PanelModule, UIChart, PickListModule, ScheduleModule, ToolbarModule, Message, MessageModule
 } from 'primeng/primeng';
 
-
 @NgModule({
   declarations: [],
 
@@ -43,6 +42,9 @@ import {
     CalendarModule, RadioButtonModule, DropdownModule, AutoCompleteModule, UIChart, PickListModule, OrganizationChartModule,
     DataTableModule, DialogModule, GalleriaModule, MessagesModule, TreeModule, DataGridModule, PanelModule, ScheduleModule, TableModule,
     ToolbarModule, MessageModule
+  ],
+
+  providers: [
   ],
 })
 

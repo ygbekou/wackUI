@@ -142,7 +142,9 @@
     "PASSWORD_CHANGED": "Votre mot de passe a �t� chang� avec succ�s.",
     "PASSWORD_NOT_CHANGED": "Le system n'a pas pu change votre mot de passe. Verifiez et essayez a nouveau.",
     "PASSWORD_NOT_MATCHED": "Le nouveau mot de passe ne correspond pas au mot de passe de confirmation. Verifiez et essayez à nouveau.",
-    "SEND_US_MESSAGE": "Envoie un Message"
+    "SEND_US_MESSAGE": "Envoie un Message",
+    "EMAIL_EXISTS": "Ce email existe deja",
+    "USER_NAME_EXISTS": "Ce non d'utilisateur existe deja."
   },
   "DATE": {
   	"1": "Jan",

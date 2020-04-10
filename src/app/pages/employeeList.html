@@ -1,4 +1,5 @@
-
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+<p-messages [(value)]="messages"></p-messages>
 	<p-table [columns]="cols" [value]="employees" [responsive]="true"> 
         <ng-template pTemplate="caption">
 	        {{ 'COMMON.LIST' | translate }}
@@ -24,8 +25,11 @@
                     </div>
                 </td>
                 <td>
-                    <button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;
-                    <button type="button" pButton icon="fa fa-eraser" (click)="delete(rowData.id)"></button>
+                    <button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;&nbsp;
+                    <button type="button" class="ui-button-rounded ui-button-warning" pButton icon="fa fa-eraser" 
+						(click)="deleteItem(employees, rowData.id, 'com.wack.model.Employee')" 
+						title="{{ 'COMMON.DELETE' | translate }}">
+					</button>
                 </td>
             </tr>
         </ng-template> 

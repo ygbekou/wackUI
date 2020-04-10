@@ -4,13 +4,14 @@
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-5 ui-sm-12">		
 				<div class="form-group">
-					<label for="section">{{ 'COMMON.SECTION' | translate }}</label>
+					<label for="section">{{ 'COMMON.SECTION' | translate }}<font color="red">*</font></label>
 					<p-autoComplete [(ngModel)]="sectionItem.section"
 						(onDropdownClick)="sectionDropdown.handleDropdownClick($event)"
 						[suggestions]="sectionDropdown.filteredSections" [dropdown]="true"
 						id="section" (completeMethod)="sectionDropdown.filter($event)"
 						name="section" field="sectionLabel" [size]="30" placeholder=""
-						[minLength]="1"></p-autoComplete>
+						[minLength]="1" #section="ngModel" required></p-autoComplete>
+                        <p-message *ngIf="f.submitted && section.invalid" severity="error" text="Field is required"></p-message>
 				</div>
             </div>
             <div class="ui-grid-col-2 ui-sm-12">
@@ -18,8 +19,8 @@
             </div>
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">		
-					<label for="name">{{ 'COMMON.TITLE' | translate }}</label>
-					<input pInputText id="title" [(ngModel)]="sectionItem.title" name="name" #title="ngModel" required />
+					<label for="name">{{ 'COMMON.TITLE' | translate }}<font color="red">*</font></label>
+					<input pInputText id="title" [(ngModel)]="sectionItem.title" name="title" #title="ngModel" required />
 					<p-message *ngIf="f.submitted && title.invalid" severity="error" text="Field is required"></p-message>
 				</div>
             </div>
@@ -27,9 +28,10 @@
         <div class="ui-grid-row">
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">		
-					<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
-					<textarea pInputTextarea id="description" [rows]='5'
-							[(ngModel)]="sectionItem.description" name="description" #description="ngModel"> </textarea>
+					<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}<font color="red">*</font></label>
+                    <p-editor id="description" name="description" [(ngModel)]="sectionItem.description" #description="ngModel" [style]="{'height':'320px'}"></p-editor>
+                    <!-- <textarea pInputTextarea id="description" [rows]='5' [(ngModel)]="sectionItem.description"
+                        name="description" #description="ngModel"> </textarea> -->
 				</div>
             </div>
             <div class="ui-grid-col-2 ui-sm-12"></div>
