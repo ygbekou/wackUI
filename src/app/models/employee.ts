@@ -8,6 +8,7 @@ export class Employee {
   managing: number;
   status: number;
   name: string;
+  modifierName: string;
 
   constructor() {
     this.managing = 1;

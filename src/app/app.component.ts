@@ -2,10 +2,11 @@ import { GlobalEventsManager } from './services';
 import { TokenStorage } from './services/token.storage';
 import {Component, AfterViewInit, ElementRef, Renderer2, ViewChild, OnDestroy, Input} from '@angular/core';
 import {Location} from '@angular/common';
-import {ScrollPanel} from 'primeng/primeng';
-import { TranslateService} from '@ngx-translate/core';
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {ScrollPanel} from 'primeng';
+import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
+import { registerLocaleData } from '@angular/common';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import localeFr from '@angular/common/locales/fr';
 
 @Component({
   selector: 'app-root',
@@ -48,7 +49,7 @@ export class AppComponent implements AfterViewInit {
 
   megaMenuClick: boolean;
 
-  @ViewChild('layoutMenuScroller') layoutMenuScrollerViewChild: ScrollPanel;
+  @ViewChild('layoutMenuScroller', {static: false}) layoutMenuScrollerViewChild: ScrollPanel;
 
   constructor(public globalEventsManager: GlobalEventsManager,
               private location: Location,
@@ -59,7 +60,7 @@ export class AppComponent implements AfterViewInit {
     translate.addLangs(['en', 'fr']);
     translate.setDefaultLang('en');
     translate.currentLang = 'en';
-
+    registerLocaleData(localeFr);
     const browserLang = translate.getBrowserLang();
     translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
 

@@ -1,0 +1,111 @@
+
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+    <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+        <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="purchase">
+            <p-messages [(value)]="messages"></p-messages>
+            <div class="form-group">
+                <label for="product">{{ 'COMMON.PRODUCT' | translate }}<font color="red">*</font></label> &nbsp;&nbsp;&nbsp;&nbsp; <font color="red"><label *ngIf="isCancel()">{{ 'COMMON.CANCELLED' | translate }} by {{purchase.modifierName}}</label></font>
+                <p-autoComplete [(ngModel)]="purchase.product" [disabled]="!isNew()" 
+                    (onDropdownClick)="productDropdown.handleDropdownClick($event)"
+                    [suggestions]="productDropdown.filteredProducts" [dropdown]="true" id="product"
+                    (completeMethod)="productDropdown.filter($event)" name="product" field="name" [size]="30"
+                    placeholder="{{ 'COMMON.PRODUCT' | translate }}" [minLength]="1" #product="ngModel" required>
+                </p-autoComplete>
+                <p-message *ngIf="f.submitted && product.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+
+            <div class="form-group">
+                <label for="supplier">{{ 'COMMON.SUPPLIER' | translate }}<font color="red">*</font></label>
+                <p-autoComplete [(ngModel)]="purchase.supplier"
+                    (onDropdownClick)="supplierDropdown.handleDropdownClick($event)"
+                    [suggestions]="supplierDropdown.filteredSuppliers" [dropdown]="true" id="supplier"
+                    (completeMethod)="supplierDropdown.filter($event)" name="supplier" field="name" [size]="30"
+                    placeholder="{{ 'COMMON.SUPPLIER' | translate }}" [minLength]="1" #supplier="ngModel" required>
+                </p-autoComplete>
+                <p-message *ngIf="f.submitted && supplier.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+
+            <div class="form-group">
+                <label for="primaryPurchaser">{{ 'COMMON.PRIMARY_PURCHASER' | translate }}<font color="red">*</font></label>
+                <p-autoComplete [(ngModel)]="purchase.primaryPurchaser"
+                    (onDropdownClick)="employeeDropdown.handleDropdownClick($event)"
+                    [suggestions]="employeeDropdown.filteredEmployees" [dropdown]="true" id="primaryPurchaser"
+                    (completeMethod)="employeeDropdown.filter($event)" name="primaryPurchaser" field="name" [size]="30"
+                    placeholder="{{ 'COMMON.EMPLOYEE' | translate }}" [minLength]="1" #primaryPurchaser="ngModel" required>
+                </p-autoComplete>
+                <p-message *ngIf="f.submitted && primaryPurchaser.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+
+            <div class="form-group">
+                <label for="secondaryPurchaser">{{ 'COMMON.SECONDARY_PURCHASER' | translate }}<font color="red">*</font></label>
+                <p-autoComplete [(ngModel)]="purchase.secondaryPurchaser"
+                    (onDropdownClick)="employeeDropdown.handleDropdownClick($event)"
+                    [suggestions]="employeeDropdown.filteredEmployees" [dropdown]="true" id="secondaryPurchaser"
+                    (completeMethod)="employeeDropdown.filter($event)" name="secondaryPurchaser" field="name" [size]="30"
+                    placeholder="{{ 'COMMON.EMPLOYEE' | translate }}" [minLength]="1" #secondaryPurchaser="ngModel" required>
+                </p-autoComplete>
+                <p-message *ngIf="f.submitted && secondaryPurchaser.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+        
+            <div class="form-group">
+                <label for="purchaseDate">{{ 'COMMON.PURCHASE_DATE' | translate }}<font color="red">*</font></label> 
+                <p-calendar [(ngModel)]="purchase.purchaseDate" name="purchaseDate"  #purchaseDate="ngModel" required></p-calendar>
+                <p-message *ngIf="f.submitted && purchaseDate.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+        
+            <div class="form-group">
+                <label for="unitAmount">{{ 'COMMON.UNIT_PRICE' | translate }}<font color="red">*</font></label> 
+                <input type="text" pInputText id="unitAmount" currencyMask [options]="appInfoStorage.CURRENCY_MASK_INTEGER"
+                    [disabled]="!isNew()" [(ngModel)]="purchase.unitAmount" name="unitAmount" #unitAmount="ngModel" required>
+                <p-message *ngIf="f.submitted && unitAmount.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">{{ 'COMMON.QUANTITY' | translate }}<font color="red">*</font></label> 
+                <input type="text" pInputText id="quantity" currencyMask [options]="appInfoStorage.CURRENCY_MASK_INTEGER"
+                    [disabled]="!isNew()" [(ngModel)]="purchase.quantity" name="quantity" #quantity="ngModel" required>
+                <p-message *ngIf="f.submitted && quantity.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+
+            <div class="form-group">
+                <label for="totalAmount">{{ 'COMMON.TOTAL_AMOUNT' | translate }}<font color="red">*</font></label> 
+                <input type="text" pInputText id="totalAmount" currencyMask [options]="appInfoStorage.CURRENCY_MASK_INTEGER"
+                    [disabled]="!isNew()" [(ngModel)]="purchase.totalAmount" name="totalAmount" #totalAmount="ngModel" required>
+                <p-message *ngIf="f.submitted && totalAmount.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+        
+            <div class="form-group">
+                <label for="description">{{'COMMON.DESCRIPTION' | translate}}</label>
+                <textarea pInputTextarea id="description" name="description" rows="5" cols="250"
+                    [(ngModel)]="purchase.description" #description="ngModel"> </textarea>
+                    
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4 ui-sm-12" *ngIf="hasReceipt1()">
+                    <a  target="_blank" href="assets/docs/Purchase/{{purchase.id}}/{{purchase.receipt1}}">Receipt1</a>
+                </div>
+                <div class="ui-grid-col-4 ui-sm-12" *ngIf="hasReceipt2()">
+                    <a  target="_blank" href="assets/docs/Purchase/{{purchase.id}}/{{purchase.receipt2}}">Receipt2</a>
+                </div>
+                <div class="ui-grid-col-4 ui-sm-12" *ngIf="hasReceipt3()">
+                    <a  target="_blank" href="assets/docs/Purchase/{{purchase.id}}/{{purchase.receipt3}}">Receipt3</a>
+                </div>
+            </div>
+            <p-fileUpload #fubauto mode="basic" [disabled]="hasReceipt1()" customUpload="true"  (uploadHandler)="onFileUpload($event, 1)" [auto]="true" chooseLabel="{{'COMMON.RECEIPT' | translate}} 1"></p-fileUpload>
+
+            <p-fileUpload #fubauto mode="basic" [disabled]="hasReceipt2()" customUpload="true" (uploadHandler)="onFileUpload($event, 2)" [auto]="true" chooseLabel="{{'COMMON.RECEIPT' | translate}} 2"></p-fileUpload>
+
+            <p-fileUpload #fubauto mode="basic" [disabled]="hasReceipt3()" customUpload="true" (uploadHandler)="onFileUpload($event, 3)" [auto]="true" chooseLabel="{{'COMMON.RECEIPT' | translate}} 3"></p-fileUpload>
+
+        </div>
+        
+    </div>
+    
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+        <button type="button" pButton icon="fa fa-close" (click)="clear()" label="{{ 'COMMON.ADD' | translate }}"></button>&nbsp;&nbsp;
+        <button pButton icon="fa fa-check"  label="{{ 'COMMON.SAVE' | translate }}" [disabled]="isCancel()"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button" pButton icon="fa fa-delete" (click)="cancel()" label="{{ 'COMMON.CANCEL' | translate }}" [disabled]="isCancel()"></button>&nbsp;&nbsp;
+
+    </div>
+    
+</form>	

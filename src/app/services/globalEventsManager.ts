@@ -17,6 +17,11 @@ export class GlobalEventsManager {
     currentPatientId = this.patientIdSource.asObservable();
     currentLang = 'en';
 
+    public DATE_FORMAT = 'MM/dd/yyyy';
+    public DATE_TIME_FORMAT = 'MM/dd/yyyy HH:mm';
+    public CAL_DATE_FORMAT = 'mm/dd/yy';
+    public LOCALE = 'en-US';
+
     selectedReferenceType: string;
     selectedReferenceWithCategoryType: string;
     selectedParentId: number;

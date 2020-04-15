@@ -1,0 +1,79 @@
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+    <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+        <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="payment">
+            <p-messages [(value)]="messages"></p-messages>
+            <div class="form-group">
+                <label for="paymentType">{{ 'COMMON.PAYMENT_TYPE' | translate }}<font color="red">*</font></label> &nbsp;&nbsp;&nbsp;&nbsp; <font color="red"><label *ngIf="isCancel()">{{ 'COMMON.CANCELLED' | translate }} by {{payment.modifierName}}</label></font>
+                <p-autoComplete [(ngModel)]="payment.paymentType"
+                    (onDropdownClick)="paymentTypeDropdown.handleDropdownClick($event)"
+                    [suggestions]="paymentTypeDropdown.filteredPaymentTypes" [dropdown]="true" id="paymemtType"
+                    (completeMethod)="paymentTypeDropdown.filter($event)" name="paymemtType" field="name" [size]="30"
+                    placeholder="{{ 'COMMON.PAYMENT_TYPE' | translate }}" [minLength]="1" #paymentType="ngModel" required>
+                </p-autoComplete>
+                <p-message *ngIf="f.submitted && paymentType.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+        
+            <div class="form-group">
+                <label for="paymentDate">{{ 'COMMON.PAYMENT_DATE' | translate }}<font color="red">*</font></label> 
+                <p-calendar [(ngModel)]="payment.paymentDate" name="paymentDate"  #paymentDate="ngModel" required></p-calendar>
+                <p-message *ngIf="f.submitted && paymentDate.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+        
+            <div class="form-group">
+                <label for="payer">{{ 'COMMON.PAYER' | translate }}<font color="red">*</font></label>
+                <p-autoComplete [(ngModel)]="payment.payer"
+                    (onDropdownClick)="employeeDropdown.handleDropdownClick($event)"
+                    [suggestions]="employeeDropdown.filteredEmployees" [dropdown]="true" id="payer"
+                    (completeMethod)="employeeDropdown.filter($event)" name="payer" field="name" [size]="30"
+                    placeholder="{{ 'COMMON.EMPLOYEE' | translate }}" [minLength]="1" #payer="ngModel" required>
+                </p-autoComplete>
+                <p-message *ngIf="f.submitted && payer.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+        
+            <div class="form-group">
+                <label for="receiver">{{ 'COMMON.RECEIVER' | translate }}<font color="red">*</font></label>
+                <p-autoComplete [(ngModel)]="payment.receiver"
+                    (onDropdownClick)="employeeDropdown.handleDropdownClick($event)"
+                    [suggestions]="employeeDropdown.filteredEmployees" [dropdown]="true" id="receiver"
+                    (completeMethod)="employeeDropdown.filter($event)" name="receiver" field="name" [size]="30"
+                    placeholder="{{ 'COMMON.EMPLOYEE' | translate }}" [minLength]="1" #receiver="ngModel" required>
+                </p-autoComplete>
+                <p-message *ngIf="f.submitted && receiver.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+        
+            <div class="form-group">
+                <label for="contractLabor">{{ 'COMMON.LABOR' | translate }}<font color="red">*</font></label>
+                <p-autoComplete [(ngModel)]="payment.contractLabor"
+                    (onDropdownClick)="contractLaborDropdown.handleDropdownClick($event)"
+                    [suggestions]="contractLaborDropdown.filteredContractLabors" [dropdown]="true" id="contractLabor"
+                    (completeMethod)="contractLaborDropdown.filter($event)" name="contractLabor" field="label" [size]="30"
+                    placeholder="{{ 'COMMON.PAYMENT_TYPE' | translate }}" [minLength]="1" #contractLabor="ngModel" required>
+                </p-autoComplete>
+                <p-message *ngIf="f.submitted && contractLabor.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+
+            <div class="form-group">
+                <label for="taxes">{{ 'COMMON.AMOUNT' | translate }}<font color="red">*</font></label> 
+                <input type="text" pInputText id="amount" currencyMask [options]="appInfoStorage.CURRENCY_MASK_INTEGER"
+                    [(ngModel)]="payment.amount" name="amount" #amount="ngModel" [disabled]="!isNew()" required>
+                <p-message *ngIf="f.submitted && amount.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+        
+            <div class="form-group">
+                <label for="description">{{'COMMON.DESCRIPTION' | translate}}</label>
+                <textarea pInputTextarea id="description" name="description" rows="3" cols="250"
+                    [(ngModel)]="payment.description" #description="ngModel"> </textarea>
+                    
+            </div>
+        </div>
+        
+    </div>
+    
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+        <button type="button" pButton icon="fa fa-close" (click)="clear()" label="{{ 'COMMON.ADD' | translate }}"></button>&nbsp;&nbsp;
+        <button pButton icon="fa fa-check"  label="{{ 'COMMON.SAVE' | translate }}" [disabled]="isCancel()"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button" pButton icon="fa fa-delete" (click)="cancel()" label="{{ 'COMMON.CANCEL' | translate }}" [disabled]="isCancel()"></button>&nbsp;&nbsp;
+
+    </div>
+    
+</form>	

@@ -1,0 +1,50 @@
+
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+    <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+        <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="quote">
+            <p-messages [(value)]="messages"></p-messages>
+
+            <div class="form-group">
+                <label for="name">{{ 'COMMON.NAME' | translate }}</label>
+                <input pInputText id="name" [(ngModel)]="quote.name" name="name" #name="ngModel" [size]="30" required />
+                <p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+
+            <div class="form-group">
+                <label for="quoter">{{ 'COMMON.QUOTER' | translate }}<font color="red">*</font></label>
+                <p-autoComplete [(ngModel)]="quote.quoter"
+                    (onDropdownClick)="employeeDropdown.handleDropdownClick($event)"
+                    [suggestions]="employeeDropdown.filteredEmployees" [dropdown]="true" id="quoter"
+                    (completeMethod)="employeeDropdown.filter($event)" name="quoter" field="name" [size]="30"
+                    placeholder="{{ 'COMMON.QUOTER' | translate }}" [minLength]="1" #quoter="ngModel" required>
+                </p-autoComplete>
+                <p-message *ngIf="f.submitted && quoter.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+        
+            <div class="form-group">
+                <label for="quoteDate">{{ 'COMMON.QUOTE_DATE' | translate }}<font color="red">*</font></label> 
+                <p-calendar [(ngModel)]="quote.quoteDate" name="quoteDate"  #quoteDate="ngModel" required></p-calendar>
+                <p-message *ngIf="f.submitted && quoteDate.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+        
+            <div class="form-group">
+                <label for="description">{{'COMMON.DESCRIPTION' | translate}}</label>
+                <textarea pInputTextarea id="description" name="description" rows="5" cols="250"
+                    [(ngModel)]="quote.description" #description="ngModel"> </textarea>
+                    
+            </div>
+
+            <div class="form-group" *ngIf="quote.id !== undefined">
+                <p-fileUpload #fubauto customUpload="true" multiple="multiple" (uploadHandler)="onFileUpload($event)" 
+                [files]="files" [auto]="true" chooseLabel="{{'COMMON.UPLOAD_FILES' | translate}}"></p-fileUpload>
+            </div>
+        </div>
+        
+    </div>
+    
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+        <button type="button" pButton icon="fa fa-close" (click)="clear()" label="{{ 'COMMON.ADD' | translate }}"></button>&nbsp;&nbsp;
+        <button pButton icon="fa fa-check"  label="{{ 'COMMON.SAVE' | translate }}"></button>
+    </div>
+    
+</form>	

@@ -18,7 +18,7 @@ export class SectionItemDetails implements OnInit, OnDestroy {
 
     sectionItem: SectionItem = new SectionItem();
     messages: Message[] = [];
-    @ViewChild('picture') picture: ElementRef;
+    @ViewChild('picture', {static: false}) picture: ElementRef;
     formData = new FormData();
     pictureUrl: any = '';
 

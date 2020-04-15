@@ -1,6 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
@@ -8,9 +8,9 @@ import { AppRoutes } from './app.routes';
 import { HttpModule} from '@angular/http';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-
-
-import { AccordionModule } from 'primeng/accordion';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
+ 
+import { AccordionModule } from 'primeng/accordion'; 
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
@@ -31,7 +31,6 @@ import { EditorModule } from 'primeng/editor';
 import { FieldsetModule } from 'primeng/fieldset';
 import { FileUploadModule } from 'primeng/fileupload';
 import { GalleriaModule } from 'primeng/galleria';
-import { GrowlModule } from 'primeng/growl';
 import { InplaceModule } from 'primeng/inplace';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputSwitchModule } from 'primeng/inputswitch';
@@ -56,7 +55,6 @@ import { PickListModule } from 'primeng/picklist';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RatingModule } from 'primeng/rating';
-import { ScheduleModule } from 'primeng/schedule';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { SlideMenuModule } from 'primeng/slidemenu';
@@ -103,7 +101,6 @@ import {CommonSharedModule} from './modules/common.shared.module';
 import {
   GenericService, UserService, TokenStorage, AuthenticationService, LoggedInGuard} from './services/';
 import { GlobalEventsManager } from './services/globalEventsManager';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AdminWebsite } from './components/website/adminWebsite';
 import { AdminHeader } from './components/website/adminHeader';
 import { SectionDetails } from './components/website/sectionDetails';
@@ -112,6 +109,8 @@ import { SectionItemDetails } from './components/website/sectionItemDetails';
 import { SectionItemList } from './components/website/sectionItemList';
 import { SliderDetails } from './components/website/sliderDetails';
 import { SliderList } from './components/website/sliderList';
+import { FundDetails } from './components/stock/fundDetails';
+import { FundList } from './components/stock/fundList';
 import { SliderTextDetails } from './components/website/sliderTextDetails';
 import { SliderTextList } from './components/website/sliderTextList';
 import { CompanyDetails } from './components/companyDetails';
@@ -120,9 +119,27 @@ import { EmployeeDetails } from './components/employeeDetails';
 import { EmployeeList } from './components/employeeList';
 import { ContactDetails } from './components/contactDetails';
 import { ContactList } from './components/contactList';
+import { ReferenceDetails } from './components/common/referenceDetails';
+import { ReferenceList } from './components/common/referenceList';
+import { PaymentDetails } from './components/stock/paymentDetails';
+import { PaymentList } from './components/stock/paymentList';
 import { GlobalErrorHandler } from './services/globalErrorHandler';
 
 import { ConfirmationService } from 'primeng/api';
+import { EmployeeDropdown } from './components/dropdowns/dropdown.employee';
+import { PaymentTypeDropdown } from './components/dropdowns/dropdown.paymentType';
+import { SupplierDetails } from './components/stock/supplierDetails';
+import { SupplierList } from './components/stock/supplierList';
+import { PurchaseDetails } from './components/stock/purchaseDetails';
+import { PurchaseList } from './components/stock/purchaseList';
+import { SupplierDropdown } from './components/dropdowns/dropdown.supplier';
+import { ProductDropdown } from './components/dropdowns/dropdown.product';
+import { ContractLaborDetails } from './components/stock/contractLaborDetails';
+import { ContractLaborList } from './components/stock/contractLaborList';
+import { ContractLaborDropdown } from './components/dropdowns/dropdown.contractLabor';
+import { QuoteDetails } from './components/stock/quoteDetails';
+import { QuoteList } from './components/stock/quoteList';
+import { ManagerDropdown } from './components/dropdowns/dropdown.manager';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -165,7 +182,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FieldsetModule,
     FileUploadModule,
     GalleriaModule,
-    GrowlModule,
     InplaceModule,
     InputMaskModule,
     InputSwitchModule,
@@ -190,7 +206,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ProgressBarModule,
     RadioButtonModule,
     RatingModule,
-    ScheduleModule,
     ScrollPanelModule,
     SelectButtonModule,
     SlideMenuModule,
@@ -208,7 +223,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ToolbarModule,
     TooltipModule,
     TreeModule,
-    TreeTableModule
+    TreeTableModule,
+    CurrencyMaskModule
   ],
   declarations: [
     AppComponent,
@@ -237,6 +253,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     SectionItemList,
     SliderDetails,
     SliderList,
+    FundDetails,
+    FundList,
     SliderTextDetails,
     SliderTextList,
     CompanyDetails,
@@ -244,14 +262,27 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ContactDetails,
     ContactList,
     EmployeeDetails,
-    EmployeeList
+    EmployeeList,
+    ReferenceDetails,
+    ReferenceList,
+    PaymentDetails,
+    PaymentList,
+    SupplierDetails,
+    SupplierList,
+    PurchaseDetails,
+    PurchaseList,
+    ContractLaborDetails,
+    ContractLaborList,
+    QuoteDetails,
+    QuoteList
   ],
   providers: [
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-     BreadcrumbService, GenericService, UserService, Constants, GlobalEventsManager, TokenStorage,
-    AuthenticationService, LoggedInGuard, ConfirmationService
+     BreadcrumbService, GenericService, UserService, Constants, GlobalEventsManager, TokenStorage, AuthenticationService, 
+     LoggedInGuard, ConfirmationService, EmployeeDropdown, PaymentTypeDropdown, SupplierDropdown, ProductDropdown, ManagerDropdown,
+     ContractLaborDropdown
   ],
   bootstrap: [AppComponent]
 })

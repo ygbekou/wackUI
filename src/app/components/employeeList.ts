@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { ConfirmationService } from 'primeng/primeng';
+import { ConfirmationService } from 'primeng';
 import { GenericService, TokenStorage } from '../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Employee } from '../models/employee';
@@ -14,6 +14,7 @@ import { BaseComponent } from './website/baseComponent';
 export class EmployeeList extends BaseComponent implements OnInit, OnDestroy {
 
   employees: Employee[] = [];
+  selectedEmployee: Employee;
   cols: any[];
   @Output() employeeIdEvent = new EventEmitter<string>();
 
@@ -67,8 +68,20 @@ export class EmployeeList extends BaseComponent implements OnInit, OnDestroy {
     this.employees = null;
   }
 
-  edit(employeeId: number) {
-      this.employeeIdEvent.emit(employeeId + '');
+  edit(employee: Employee) {
+      this.employeeIdEvent.emit(employee.id + '');
+      this.selectedEmployee = employee;
+  }
+
+  updateTable(employee: Employee) {
+		const index = this.employees.findIndex(x => x.id === employee.id);
+
+		if (index === -1) {
+			this.employees.push(employee);
+		} else {
+			this.employees[index] = employee;
+		}
+
   }
 
   getStatusDesc(employee: Employee): string {

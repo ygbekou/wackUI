@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../app.constants';
 import { Employee } from '../models/employee';
@@ -18,12 +18,13 @@ import { BaseComponent } from './website/baseComponent';
 // tslint:disable-next-line:component-class-suffix
 export class EmployeeDetails extends BaseComponent implements OnInit, OnDestroy {
 
-  @ViewChild('picture') picture: ElementRef;
+  @ViewChild('picture', {static: false}) picture: ElementRef;
   formData = new FormData();
 
   employee: Employee = new Employee();
   messages: Message[] = [];
   pictureUrl: any = '';
+  @Output() employeeSaveEvent = new EventEmitter<Employee>();
 
   constructor
     (
@@ -92,11 +93,15 @@ export class EmployeeDetails extends BaseComponent implements OnInit, OnDestroy 
         this.userService.saveUserWithPicture('Employee', this.employee, this.formData)
           .subscribe(result => {
             this.processResult(result, this.employee, this.messages, this.pictureUrl);
+            this.employee = result;
+            this.employeeSaveEvent.emit(this.employee);
           });
       } else {
         this.userService.saveUserWithoutPicture('Employee', this.employee)
           .subscribe(result => {
             this.processResult(result, this.employee, this.messages, this.pictureUrl);
+            this.employee = result;
+            this.employeeSaveEvent.emit(this.employee);
           });
       }
     } catch (e) {
@@ -142,6 +147,19 @@ export class EmployeeDetails extends BaseComponent implements OnInit, OnDestroy 
   clearPicture() {
     this.pictureUrl = '';
     this.picture.nativeElement.value = '';
+  }
+
+  cancel() {
+    this.employee.status = 1;
+    this.save();
+  }
+
+  isNew() {
+    return this.employee.id === undefined || this.employee.id === null;
+  }
+
+  isCancel() {
+    return this.employee.status === 1;
   }
 
  }

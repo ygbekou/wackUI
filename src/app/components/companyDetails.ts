@@ -16,9 +16,9 @@ export class CompanyDetails implements OnInit, OnDestroy {
 
   company: Company = new Company();
 
-  @ViewChild('logo') logo: ElementRef;
-  @ViewChild('favicon') favicon: ElementRef;
-  @ViewChild('backgroundSlider') backgroundSlider: ElementRef;
+  @ViewChild('logo', {static: false}) logo: ElementRef;
+  @ViewChild('favicon', {static: false}) favicon: ElementRef;
+  @ViewChild('backgroundSlider', {static: false}) backgroundSlider: ElementRef;
   formData = new FormData();
   messages: Message[] = [];
   logoUrl: any = '';

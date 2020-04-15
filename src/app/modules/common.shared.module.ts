@@ -1,22 +1,25 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {RouterModule} from '@angular/router';
-import {NgModule, ModuleWithProviders} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {LightboxModule} from 'angular2-lightbox';
-import {HttpModule} from '@angular/http';
-import {TableModule} from 'primeng/table';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+//import { LightboxModule } from 'angular2-lightbox';
+import { HttpModule } from '@angular/http';
+import { TableModule } from 'primeng/table';
+import { CardModule } from 'primeng/card';
 
 import {
   TabViewModule, EditorModule, SharedModule, FieldsetModule, ProgressBarModule,
   FileUploadModule, StepsModule, InputTextareaModule, SpinnerModule,
-  GrowlModule, ChartModule, PasswordModule, ToggleButtonModule, CarouselModule,
-  DataListModule, CheckboxModule, InputTextModule, SelectButtonModule,
+  ChartModule, PasswordModule, ToggleButtonModule, CarouselModule,
+  CheckboxModule, InputTextModule, SelectButtonModule, FullCalendar, FullCalendarModule, 
   CalendarModule, RadioButtonModule, DropdownModule, InputMaskModule, OverlayPanelModule,
-  AutoCompleteModule, DataTableModule, DialogModule, ListboxModule, AccordionModule,
-  GalleriaModule, MessagesModule, TreeModule, TreeNode, OrganizationChartModule,
-  DataGridModule, PanelModule, UIChart, PickListModule, ScheduleModule, ToolbarModule, Message, MessageModule
-} from 'primeng/primeng';
+  AutoCompleteModule, DialogModule, ListboxModule, AccordionModule,
+  GalleriaModule, MessagesModule, TreeModule, TreeNode, OrganizationChartModule, ConfirmDialogModule,
+  PanelModule, UIChart, PickListModule, ToolbarModule, Message, MessageModule, ScrollPanelModule
+} from 'primeng';
+
+//import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [],
@@ -24,11 +27,12 @@ import {
   imports: [
     CommonModule, FormsModule, ReactiveFormsModule, HttpModule, ToggleButtonModule, FieldsetModule,
     TabViewModule, EditorModule, SharedModule, FileUploadModule, InputMaskModule, SpinnerModule, OverlayPanelModule,
-    StepsModule, InputTextareaModule, GrowlModule, ChartModule, SelectButtonModule, OrganizationChartModule,
-    PasswordModule, DataListModule, CheckboxModule, InputTextModule, ListboxModule, CarouselModule,
-    CalendarModule, RadioButtonModule, DropdownModule, AutoCompleteModule, ScheduleModule, ProgressBarModule,
-    DataTableModule, DialogModule, GalleriaModule, MessagesModule, TreeModule, AccordionModule,
-    DataGridModule, PanelModule, ScheduleModule, LightboxModule, TableModule, ToolbarModule, MessageModule
+    StepsModule, InputTextareaModule, ChartModule, SelectButtonModule, OrganizationChartModule,
+    PasswordModule, CheckboxModule, InputTextModule, ListboxModule, CarouselModule, FullCalendarModule,
+    CalendarModule, RadioButtonModule, DropdownModule, AutoCompleteModule, ProgressBarModule,
+    DialogModule, GalleriaModule, MessagesModule, TreeModule, AccordionModule, ConfirmDialogModule,
+    PanelModule, TableModule, ToolbarModule, MessageModule,
+    CardModule, ScrollPanelModule, //BrowserAnimationsModule, NoopAnimationsModule
   ],
 
   exports: [
@@ -37,14 +41,12 @@ import {
 
     // primeng exports
     TabViewModule, EditorModule, SharedModule, FileUploadModule, ToggleButtonModule, SpinnerModule, FieldsetModule, ProgressBarModule,
-    StepsModule, InputTextareaModule, GrowlModule, ChartModule, SelectButtonModule, ListboxModule, AccordionModule, LightboxModule,
-    PasswordModule, DataListModule, CheckboxModule, InputTextModule, InputMaskModule, ScheduleModule, CarouselModule, OverlayPanelModule,
+    StepsModule, InputTextareaModule, ChartModule, SelectButtonModule, ListboxModule, AccordionModule,
+    PasswordModule, CheckboxModule, InputTextModule, InputMaskModule, CarouselModule, OverlayPanelModule,
     CalendarModule, RadioButtonModule, DropdownModule, AutoCompleteModule, UIChart, PickListModule, OrganizationChartModule,
-    DataTableModule, DialogModule, GalleriaModule, MessagesModule, TreeModule, DataGridModule, PanelModule, ScheduleModule, TableModule,
-    ToolbarModule, MessageModule
-  ],
-
-  providers: [
+    DialogModule, GalleriaModule, MessagesModule, TreeModule, PanelModule, TableModule,
+    ToolbarModule, MessageModule, ConfirmDialogModule, CardModule, ScrollPanelModule, FullCalendar, 
+    FullCalendarModule, //BrowserAnimationsModule, NoopAnimationsModule
   ],
 })
 

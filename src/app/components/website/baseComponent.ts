@@ -112,6 +112,13 @@ export class BaseComponent {
 
   }
 
+  removeElement(listItems: any[], name: string) {
+
+	const index = listItems.findIndex(x => x === name);
+	listItems.splice(index, 1);
+
+  }
+
 
   updateChildCols(cols: any[]) {
     for (const index in cols) {
@@ -128,6 +135,10 @@ export class BaseComponent {
   isEmptyStr(value) {
     return value === undefined || value === null || (typeof value === 'string' && value.trim()) === ''
 
+  }
+
+  protected getNumber(value: number): number {
+    return value !== undefined ? value : 0;
   }
 
 

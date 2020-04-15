@@ -1,0 +1,74 @@
+
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+    <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+        <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="contractLabor">
+            <p-messages [(value)]="messages"></p-messages>
+
+            <div class="form-group">
+                <label for="contractDate">{{ 'COMMON.CONTRACT_DATE' | translate }}<font color="red">*</font></label> &nbsp;&nbsp;&nbsp;&nbsp; <font color="red"><label *ngIf="isCancel()">{{ 'COMMON.CANCELLED' | translate }} by {{contractLabor.modifierName}}</label></font>
+                <p-calendar [(ngModel)]="contractLabor.contractDate" name="contractDate"  #contractDate="ngModel" required></p-calendar>
+                <p-message *ngIf="f.submitted && contractDate.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+
+            <div class="form-group">
+                <label for="name">{{ 'COMMON.NAME' | translate }}</label>
+                <input pInputText id="name" [(ngModel)]="contractLabor.name" name="name" #name="ngModel" [size]="30" required />
+                <p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+
+            <div class="form-group">
+                <label for="contractor">{{ 'COMMON.CONTRACTOR' | translate }}<font color="red">*</font></label>
+                <p-autoComplete [(ngModel)]="contractLabor.contractor"
+                    (onDropdownClick)="employeeDropdown.handleDropdownClick($event)"
+                    [suggestions]="employeeDropdown.filteredEmployees" [dropdown]="true" id="contractor"
+                    (completeMethod)="employeeDropdown.filter($event)" name="contractor" field="name" [size]="30"
+                    placeholder="{{ 'COMMON.CONTRACTOR' | translate }}" [minLength]="1" #contractor="ngModel" required>
+                </p-autoComplete>
+                <p-message *ngIf="f.submitted && contractor.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+        
+            <div class="form-group">
+                <label for="amount">{{ 'COMMON.AMOUNT' | translate }}<font color="red">*</font></label> 
+                <input type="text" pInputText id="amount" currencyMask (ngModelChange)="updateBalance()" 
+                    [options]="appInfoStorage.CURRENCY_MASK_INTEGER"
+                    [(ngModel)]="contractLabor.amount" name="amount" #amount="ngModel" required>
+                <p-message *ngIf="f.submitted && amount.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+
+            <div class="form-group">
+                <label for="paid">{{ 'COMMON.PAID' | translate }}</label> 
+                <input type="text" pInputText id="paid" currencyMask [options]="appInfoStorage.CURRENCY_MASK_INTEGER"
+                readonly="true" [(ngModel)]="contractLabor.paid" name="paid">
+            </div>
+
+            <div class="form-group">
+                <label for="balance">{{ 'COMMON.BALANCE' | translate }}</label> 
+                <input type="text" pInputText id="balance" currencyMask readonly="true" [options]="appInfoStorage.CURRENCY_MASK_INTEGER"
+                [(ngModel)]="contractLabor.balance" name="balance">
+            </div>
+
+            <div class="form-group">
+                <label for="description">{{'COMMON.DESCRIPTION' | translate}}</label>
+                <textarea pInputTextarea id="description" name="description" rows="5" cols="250"
+                    [(ngModel)]="contractLabor.description" #description="ngModel"> </textarea>
+                    
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4 ui-sm-12" *ngIf="hasImage()">
+                    <a  target="_blank" href="assets/docs/ContractLabor/{{contractLabor.id}}/{{contractLabor.image}}">Image</a>
+                </div>
+            </div>
+            <p-fileUpload #fubauto mode="basic" [disabled]="hasImage()" customUpload="true"  (uploadHandler)="onFileUpload($event)" [auto]="true" chooseLabel="{{'COMMON.FILE' | translate}}"></p-fileUpload>
+
+        </div>
+        
+    </div>
+    
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+        <button type="button" pButton icon="fa fa-close" (click)="clear()" label="{{ 'COMMON.ADD' | translate }}"></button>&nbsp;&nbsp;
+        <button pButton icon="fa fa-check"  label="{{ 'COMMON.SAVE' | translate }}" [disabled]="isCancel()"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button" pButton icon="fa fa-delete" (click)="cancel()" label="{{ 'COMMON.CANCEL' | translate }}" [disabled]="isCancel()"></button>&nbsp;&nbsp;
+        
+    </div>
+    
+</form>	

@@ -36,7 +36,7 @@
 			    	<div *ngIf="activeTab == 3" class="ui-grid-row">
                         <p-tabView [activeIndex]="activeEmployeeTab" (onChange)="onEmployeeTabChange($event)">
                             <p-tabPanel header="{{'COMMON.DETAILS' | translate}}">
-                                <app-employee-details></app-employee-details>
+                                <app-employee-details (employeeSaveEvent)="onEmployeeSaved($event)"></app-employee-details>
                             </p-tabPanel>
                             <p-tabPanel header="{{'COMMON.LIST' | translate}}">
                                 <app-employee-list (employeeIdEvent)="onEmployeeSelected($event)"></app-employee-list>
@@ -66,6 +66,92 @@
                                 <br/>
                         
                                 <app-sliderText-list (sliderTextIdEvent)="onSliderTextSelected($event)"></app-sliderText-list>
+                            </p-tabPanel>
+                        </p-tabView>
+				    </div>
+                </p-tabPanel>
+                <p-tabPanel header="{{'COMMON.STOCK' | translate | uppercase}}">
+			    	<div *ngIf="activeTab == 6" class="ui-grid-row">
+                        <p-tabView [activeIndex]="activeStockTab" (onChange)="onStockTabChange($event)">
+                            <p-tabPanel header="{{'COMMON.FUND' | translate | uppercase}}" uppercase>
+                                <div *ngIf="activeStockTab === 0" class="ui-grid-row">
+                                    <div class="ui-grid-col-9 ui-sm-12">
+                                        <app-fund-list (fundIdEvent)="onFundSelected($event)"></app-fund-list>
+                                    </div>
+                                    <div class="ui-grid-col-3 ui-sm-12">
+                                        <app-fund-details (fundSaveEvent)="onFundSaved($event)"></app-fund-details>
+                                    </div>
+                                </div>
+                            </p-tabPanel>
+                            <p-tabPanel header="{{'COMMON.PAYMENT_TYPE' | translate | uppercase}}" uppercase>
+                                <div *ngIf="activeStockTab === 1" class="ui-grid-row">
+                                    <div class="ui-grid-col-9 ui-sm-12">
+                                        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'com.wack.model.stock.PaymentType')"></app-reference-list>
+                                    </div>
+                                    <div class="ui-grid-col-3 ui-sm-12">
+                                        <app-reference-details  (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+                                    </div>
+                                </div>
+                            </p-tabPanel>
+                            <p-tabPanel header="{{'COMMON.QUOTE' | translate | uppercase}}" uppercase>
+                                <div *ngIf="activeStockTab === 2" class="ui-grid-row">
+                                    <div class="ui-grid-col-9 ui-sm-12">
+                                        <app-quote-list (quoteIdEvent)="onQuoteSelected($event)"></app-quote-list>
+                                    </div>
+                                    <div class="ui-grid-col-3 ui-sm-12">
+                                        <app-quote-details (quoteSaveEvent)="onQuoteSaved($event)"></app-quote-details>
+                                    </div>
+                                </div>
+                            </p-tabPanel>
+                            <p-tabPanel header="{{'COMMON.LABOR' | translate | uppercase}}" uppercase>
+                                <div *ngIf="activeStockTab === 3" class="ui-grid-row">
+                                    <div class="ui-grid-col-9 ui-sm-12">
+                                        <app-contractlabor-list (contractLaborIdEvent)="onContractLaborSelected($event)"></app-contractlabor-list>
+                                    </div>
+                                    <div class="ui-grid-col-3 ui-sm-12">
+                                        <app-contractlabor-details (contractLaborSaveEvent)="onContractLaborSaved($event)"></app-contractlabor-details>
+                                    </div>
+                                </div>
+                            </p-tabPanel>
+                            <p-tabPanel header="{{'COMMON.PAYMENT' | translate | uppercase}}" uppercase>
+                                <div *ngIf="activeStockTab === 4" class="ui-grid-row">
+                                    <div class="ui-grid-col-9 ui-sm-12">
+                                        <app-payment-list (paymentIdEvent)="onPaymentSelected($event)"></app-payment-list>
+                                    </div>
+                                    <div class="ui-grid-col-3 ui-sm-12">
+                                        <app-payment-details (paymentSaveEvent)="onPaymentSaved($event)"></app-payment-details>
+                                    </div>
+                                </div>
+                            </p-tabPanel>
+                            <p-tabPanel header="{{'COMMON.SUPPLIER' | translate | uppercase}}" uppercase>
+                                <div *ngIf="activeStockTab === 5" class="ui-grid-row">
+                                    <div class="ui-grid-col-9 ui-sm-12">
+                                        <app-supplier-list (supplierIdEvent)="onSupplierSelected($event)"></app-supplier-list>
+                                    </div>
+                                    <div class="ui-grid-col-3 ui-sm-12">
+                                        <app-supplier-details  (supplierSaveEvent)="onSupplierSaved($event)"></app-supplier-details>
+                                    </div>
+                                </div>
+                            </p-tabPanel>
+                            <p-tabPanel header="{{'COMMON.PRODUCT' | translate | uppercase}}" uppercase>
+                                <div *ngIf="activeStockTab === 6" class="ui-grid-row">
+                                    <div class="ui-grid-col-9 ui-sm-12">
+                                        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'com.wack.model.stock.Product')"></app-reference-list>
+                                    </div>
+                                    <div class="ui-grid-col-3 ui-sm-12">
+                                        <app-reference-details  (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+                                    </div>
+                                </div>
+                            </p-tabPanel>
+                            <p-tabPanel header="{{'COMMON.PURCHASE' | translate | uppercase}}" uppercase>
+                                <div *ngIf="activeStockTab === 7" class="ui-grid-row">
+                                    <div class="ui-grid-col-9 ui-sm-12">
+                                        <app-purchase-list (purchaseIdEvent)="onPurchaseSelected($event)"></app-purchase-list>
+                                    </div>
+                                    <div class="ui-grid-col-3 ui-sm-12">
+                                        <app-purchase-details (purchaseSaveEvent)="onPurchaseSaved($event)"></app-purchase-details>
+                                    </div>
+                                </div>
                             </p-tabPanel>
                         </p-tabView>
 				    </div>

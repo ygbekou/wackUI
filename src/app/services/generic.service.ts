@@ -5,7 +5,7 @@ import {Observable} from 'rxjs/Rx';
 import {Constants} from '../app.constants';
 import { TokenStorage } from './token.storage';
 import {SelectItem} from 'primeng/api';
-import { Reference } from '../models';
+import { Reference, Payment } from '../models';
 import { GenericResponse } from '../models/genericResponse';
 import { Router } from '@angular/router';
 import { ContactUsMessage, SectionItem } from '../models/website';
@@ -137,6 +137,23 @@ export class GenericService {
         .catch(this.handleError);
    }
 
+  public getOneWithFiles = (id: number, entityClass: string): Observable<any> => {
+
+    const actionUrl = Constants.apiServer + '/service/' + entityClass + '/withfiles/' + id;
+    return this.http.get(actionUrl, { headers: this.headers })
+      .map((response: Response) => {
+          if (response && response.json()) {
+            const error = response.json() && response.json().error;
+            if (error == null) {
+
+            }
+          }
+          return response.json();
+      })
+      .catch(this.handleError);
+   }
+
+
    public getNewObject = (url: string, id: number): Observable<any> => {
 
       const actionUrl = Constants.apiServer + url + id;
@@ -153,16 +170,31 @@ export class GenericService {
         .catch(this.handleError);
    }
 
-    public delete = (id: number, entityClass: string): Observable<GenericResponse> => {
+  public delete = (id: number, entityClass: string): Observable<GenericResponse> => {
 
-        const actionUrl = Constants.apiServer + '/service/' + entityClass + '/delete/' + id;
-        return this.http.get(actionUrl, { headers: this.headers })
-          .map((response: Response) => {
+    const actionUrl = Constants.apiServer + '/service/' + entityClass + '/delete/' + id;
+    alert(actionUrl)
+    return this.http.get(actionUrl, { headers: this.headers })
+      .map((response: Response) => {
 
-              return response.json();
-          })
-          .catch(this.handleError);
-     }
+          return response.json();
+      })
+      .catch(this.handleError);
+  }
+
+  public deleteFile = (entityClass: string, vo: Reference): Observable<GenericResponse> => {
+    const head = new Headers();
+      if (this.token.hasToken()) {
+         head.append('Authorization', 'Bearer ' + this.token.getToken());
+      }
+    const toAdd = JSON.stringify(vo);
+    const actionUrl = Constants.apiServer + '/service/' + entityClass + '/deletefile';
+    return this.http.post(actionUrl, toAdd, {headers: this.headers})
+      .map((response: Response) => {
+        return response.json();
+      })
+      .catch(this.handleError);
+  }
 
   public getActiveElements = (elementType: string): Observable<Reference[]> => {
 
@@ -184,6 +216,16 @@ export class GenericService {
   public saveContactUsMessage = (contactUsMessage: ContactUsMessage): Observable<ContactUsMessage> => {
     const toAdd = JSON.stringify(contactUsMessage);
     const actionUrl = Constants.apiServer + '/service/ContactUsMessage/save';
+    return this.http.post(actionUrl, toAdd, {headers: this.headers})
+      .map((response: Response) => {
+        return response.json();
+      })
+      .catch(this.handleError);
+  }
+
+  public savePayment = (payment: Payment): Observable<Payment> => {
+    const toAdd = JSON.stringify(payment);
+    const actionUrl = Constants.apiServer + '/service/Payment/save';
     return this.http.post(actionUrl, toAdd, {headers: this.headers})
       .map((response: Response) => {
         return response.json();

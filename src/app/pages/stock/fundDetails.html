@@ -1,0 +1,41 @@
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+    <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+        <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="fund">
+            <p-messages [(value)]="messages"></p-messages>
+            <div class="form-group">
+                <label for="receptionDate">{{ 'COMMON.RECEPTION_DATE' | translate }}<font color="red">*</font></label>  &nbsp;&nbsp;&nbsp;&nbsp; <font color="red"><label *ngIf="isCancel()">{{ 'COMMON.CANCELLED' | translate }} by {{fund.modifierName}}</label></font>
+                <p-calendar [(ngModel)]="fund.receptionDate" name="receptionDate"  #receptionDate="ngModel" required></p-calendar>
+                <p-message *ngIf="f.submitted && receptionDate.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+            <div class="form-group">
+                <label for="receiver">{{ 'COMMON.RECEIVER' | translate }}</label>
+                <p-autoComplete [(ngModel)]="fund.receiver"
+                    (onDropdownClick)="managerDropdown.handleDropdownClick($event)"
+                    [suggestions]="managerDropdown.filteredManagers" [dropdown]="true" id="receiver" [disabled]="!isNew()"
+                    (completeMethod)="managerDropdown.filter($event)" name="receiver" field="name" [size]="30" required
+                    placeholder="{{ 'COMMON.MANAGER' | translate }}" [minLength]="1" #receiver="ngModel">
+                </p-autoComplete>
+                <p-message *ngIf="f.submitted && receiver.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+            <div class="form-group">
+                <label for="taxes">{{ 'COMMON.AMOUNT' | translate }}</label> 
+                <input type="text" pInputText id="amount" currencyMask [options]="appInfoStorage.CURRENCY_MASK_INTEGER"
+                    [disabled]="!isNew()" [(ngModel)]="fund.amount" name="amount" #amount="ngModel">
+                <p-message *ngIf="f.submitted && amount.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+            <div class="form-group">
+                <label for="description">{{'COMMON.DESCRIPTION' | translate}}</label>
+                <textarea pInputTextarea id="description" name="description" rows="3"
+                    [(ngModel)]="fund.description" #description="ngModel"> </textarea>
+            </div>
+        </div>
+    </div>
+    
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+        <button type="button" pButton icon="fa fa-close" (click)="clear()" label="{{ 'COMMON.ADD' | translate }}"></button>&nbsp;&nbsp;
+        <button pButton icon="fa fa-check"  label="{{ 'COMMON.SAVE' | translate }}" [disabled]="isCancel()"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button" pButton icon="fa fa-delete" (click)="cancel()" label="{{ 'COMMON.CANCEL' | translate }}" [disabled]="isCancel()"></button>&nbsp;&nbsp;
+        
+    </div>
+    
+</form>	

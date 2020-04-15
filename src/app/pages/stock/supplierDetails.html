@@ -1,0 +1,35 @@
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+    <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+        <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="supplier">
+            <p-messages [(value)]="messages"></p-messages>
+            
+            <div class="form-group">
+                <label for="name">{{ 'COMMON.NAME' | translate }}</label>
+                <input pInputText id="name" [(ngModel)]="supplier.name" name="name" #name="ngModel" [size]="30" required />
+                <p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+            <div class="form-group">
+                <label for="contact">{{ 'COMMON.CONTACT' | translate }}</label>
+                <input pInputText id="name" [(ngModel)]="supplier.contact" name="contact" #contact="ngModel" />
+            </div>
+            <div class="form-group">
+                <label for="phone">{{ 'COMMON.PHONE' | translate }}</label>
+                <input pInputText id="phone" [(ngModel)]="supplier.phone" name="phone" #phone="ngModel" />
+            </div>
+            <div class="form-group">
+                <label for="email">{{ 'COMMON.EMAIL' | translate }}</label>
+                <input pInputText id="email" [(ngModel)]="supplier.email" name="email" #email="ngModel" />
+            </div>
+            <div class="form-group">
+                <label for="name">{{ 'COMMON.ADDRESS' | translate }}</label>
+                <input pInputText id="address" [(ngModel)]="supplier.address" name="address" #address="ngModel" />
+            </div>
+        </div>
+    </div>
+    
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+        <button type="button" pButton icon="fa fa-close" (click)="clear()" label="{{ 'COMMON.ADD' | translate }}"></button>&nbsp;&nbsp;
+        <button pButton icon="fa fa-check"  label="{{ 'COMMON.SAVE' | translate }}"></button>
+    </div>
+    
+</form>	

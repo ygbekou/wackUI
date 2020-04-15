@@ -1,0 +1,43 @@
+<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+	<p-table #dt [value]="purchases" [responsive]="true" selectionMode="single" [(selection)]="selectedPurchase" dataKey="id"
+		[rowsPerPageOptions]="[10,25,50]"> 
+		<ng-template pTemplate="caption">
+	        {{ 'COMMON.LIST' | translate }}
+	    </ng-template>
+		<ng-template pTemplate="header">
+			<tr>
+				<th *ngFor="let col of cols" [pSortableColumn]="col.field"  [ngStyle]="col.style">
+					{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
+				</th>
+				<!-- <th>Action</th> -->
+			</tr>
+			<tr>
+				<th *ngFor="let col of cols" >
+					<input *ngIf="col.field === 'productName' || col.field === 'primaryPurchaserName' || col.field === 'secondaryPurchaserName'" 
+						pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'startsWith')" placeholder="Search by Name">
+				</th>
+			</tr>
+		</ng-template> 
+		<ng-template pTemplate="body" let-purchase>
+			<tr [pSelectableRow]="purchase" [pSelectableRowDblClick]="purchase" (dblclick)="edit(purchase)">
+				<td *ngFor="let col of cols">
+					<div *ngIf="col.type === 'string'" [ngStyle]="col.textstyle">
+						{{purchase[col.field]}}
+					</div>
+					<div *ngIf="col.type === 'currency'" [ngStyle]="col.textstyle">
+						{{purchase[col.field] | currency: 'CFA':'symbol':'1.0-0':translate.currentLang}}
+					</div>
+					<div *ngIf="col.type === 'integer'" [ngStyle]="col.textstyle">
+						{{purchase[col.field] | currency: '':'symbol':'1.0-0'}}
+					</div>
+					<div *ngIf="col.type === 'date'" [ngStyle]="col.textstyle">
+						{{purchase[col.field] | date: globalEventsManager.DATE_FORMAT}}
+					</div>
+				</td>
+				<!-- <td>
+					<button type="button" pButton icon="fa fa-edit" (click)="edit(purchase)"></button>&nbsp;&nbsp;
+				</td> -->
+			</tr>
+		</ng-template> 
+	</p-table>
+</div>
