@@ -63,7 +63,7 @@ export class QuoteList extends BaseComponent implements OnInit, OnDestroy {
 
           const parameters: string [] = [];
 
-          this.genericService.getAllByCriteria('com.wack.model.stock.Quote', parameters)
+          this.genericService.getAllByCriteria('com.wack.model.stock.Quote', parameters , ' ORDER BY quoteDate DESC ')
             .subscribe((data: Quote[]) => {
               this.quotes = data;
             },

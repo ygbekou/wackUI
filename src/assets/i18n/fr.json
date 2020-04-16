@@ -151,7 +151,11 @@
     "QUOTE": "Devis",
     "QUOTE_DATE": "Date du Devis",
     "QUOTER": "Travailleur",
-    "UPLOAD_FILES": "Charger Fichiers"
+    "UPLOAD_FILES": "Charger Fichiers",
+    "CANCELLED": "Annuler",
+    "SALARY": "Salaire",
+    "SALARY_YEAR": "Année Salaire",
+    "SALARY_MONTH": "Mois Salaire"
   },
   "MESSAGE": {
     "DELETE_CONFIRM": "Etes-vous sur de vouloir continuer?",

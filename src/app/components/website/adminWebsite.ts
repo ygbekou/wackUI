@@ -213,11 +213,11 @@ export class AdminWebsite implements OnInit, OnDestroy {
     this.activeStockTab = evt.index;
     if (evt.index === 1) {
       this.processReference(null, 'com.wack.model.stock.PaymentType', 'PAYMENT_TYPE');
-    } else if (evt.index === 5) {
-      this.processReference(null, 'com.wack.model.stock.Supplier', 'SUPPLIER');
     } else if (evt.index === 6) {
+      this.processReference(null, 'com.wack.model.stock.Supplier', 'SUPPLIER');
+    } else if (evt.index === 7) {
       this.processReference(null, 'com.wack.model.stock.Product', 'PRODUCT');
-    } 
+    }
 
   }
 
@@ -228,6 +228,6 @@ export class AdminWebsite implements OnInit, OnDestroy {
       this.referenceList.updateCols(listLabel);
       this.referenceList.getAll();
     }, 10);
-    
+
   }
 }

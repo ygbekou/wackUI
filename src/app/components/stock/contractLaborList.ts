@@ -60,7 +60,7 @@ export class ContractLaborList implements OnInit, OnDestroy {
 
           const parameters: string [] = [];
 
-          this.genericService.getAllByCriteria('com.wack.model.stock.ContractLabor', parameters)
+          this.genericService.getAllByCriteria('com.wack.model.stock.ContractLabor', parameters, ' ORDER BY contractDate DESC ')
             .subscribe((data: ContractLabor[]) => {
               this.contractLabors = data;
             },

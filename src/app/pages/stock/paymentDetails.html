@@ -2,7 +2,7 @@
     <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
         <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="payment">
             <p-messages [(value)]="messages"></p-messages>
-            <div class="form-group">
+            <div class="form-group" *ngIf="paymentGroup !== 'SALARY'">
                 <label for="paymentType">{{ 'COMMON.PAYMENT_TYPE' | translate }}<font color="red">*</font></label> &nbsp;&nbsp;&nbsp;&nbsp; <font color="red"><label *ngIf="isCancel()">{{ 'COMMON.CANCELLED' | translate }} by {{payment.modifierName}}</label></font>
                 <p-autoComplete [(ngModel)]="payment.paymentType"
                     (onDropdownClick)="paymentTypeDropdown.handleDropdownClick($event)"
@@ -12,9 +12,32 @@
                 </p-autoComplete>
                 <p-message *ngIf="f.submitted && paymentType.invalid" severity="error" text="Field is required"></p-message>
             </div>
+
+            <div class="form-group" *ngIf="paymentGroup === 'SALARY'">
+                <label for="salaryMonth">{{ 'COMMON.SALARY_MONTH' | translate }}<font color="red">*</font></label> &nbsp;&nbsp;&nbsp;&nbsp; <font color="red"><label *ngIf="isCancel()">{{ 'COMMON.CANCELLED' | translate }} by {{payment.modifierName}}</label></font>
+                <p-autoComplete [(ngModel)]="payment.salaryMonth"
+                    (onDropdownClick)="monthDropdown.handleDropdownClick($event)"
+                    [suggestions]="monthDropdown.filteredMonths" [dropdown]="true" id="salaryMonth"
+                    (completeMethod)="monthDropdown.filter($event)" name="salaryMonth" field="name" [size]="30"
+                    placeholder="{{ 'COMMON.MONTH' | translate }}" [minLength]="1" #salaryMonth="ngModel" required>
+                </p-autoComplete>
+                <p-message *ngIf="f.submitted && salaryMonth.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+
+            <div class="form-group" *ngIf="paymentGroup === 'SALARY'">
+                <label for="taxes">{{ 'COMMON.SALARY_YEAR' | translate }}<font color="red">*</font></label> 
+                <p-autoComplete [(ngModel)]="payment.salaryYear"
+                    (onDropdownClick)="yearDropdown.handleDropdownClick($event)"
+                    [suggestions]="yearDropdown.filteredYears" [dropdown]="true" id="salaryYear"
+                    (completeMethod)="yearDropdown.filter($event)" name="salaryYear" [size]="30"
+                    placeholder="{{ 'COMMON.MONTH' | translate }}" [minLength]="1" #salaryYear="ngModel" required>
+                </p-autoComplete>
+                <p-message *ngIf="f.submitted && salaryYear.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+
         
             <div class="form-group">
-                <label for="paymentDate">{{ 'COMMON.PAYMENT_DATE' | translate }}<font color="red">*</font></label> 
+                <label for="paymentDate">{{ 'COMMON.PAYMENT_DATE' | translate }}<font color="red">*</font></label>
                 <p-calendar [(ngModel)]="payment.paymentDate" name="paymentDate"  #paymentDate="ngModel" required></p-calendar>
                 <p-message *ngIf="f.submitted && paymentDate.invalid" severity="error" text="Field is required"></p-message>
             </div>
@@ -41,7 +64,7 @@
                 <p-message *ngIf="f.submitted && receiver.invalid" severity="error" text="Field is required"></p-message>
             </div>
         
-            <div class="form-group">
+            <div class="form-group" *ngIf="paymentGroup !== 'SALARY'">
                 <label for="contractLabor">{{ 'COMMON.LABOR' | translate }}<font color="red">*</font></label>
                 <p-autoComplete [(ngModel)]="payment.contractLabor"
                     (onDropdownClick)="contractLaborDropdown.handleDropdownClick($event)"

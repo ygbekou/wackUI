@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GenericService, GlobalEventsManager } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
@@ -17,6 +17,7 @@ export class PaymentList implements OnInit, OnDestroy {
   cols: any[];
 
   @Output() paymentIdEvent = new EventEmitter<string>();
+  @Input() paymentGroup: string;
 
 
   constructor
@@ -56,7 +57,13 @@ export class PaymentList implements OnInit, OnDestroy {
 
           const parameters: string [] = [];
 
-          this.genericService.getAllByCriteria('com.wack.model.stock.Payment', parameters)
+          if (this.paymentGroup === 'SALARY') {
+            parameters.push('e.paymentType.id = |paymentTypeId|100|Long');
+          } else {
+            parameters.push('e.paymentType.id != |paymentTypeId|100|Long');
+          }
+
+          this.genericService.getAllByCriteria('com.wack.model.stock.Payment', parameters, ' ORDER BY paymentDate DESC ')
             .subscribe((data: Payment[]) => {
               this.payments = data;
             },

@@ -52,7 +52,7 @@ export class FundList implements OnInit, OnDestroy {
 
           const parameters: string [] = [];
 
-          this.genericService.getAllByCriteria('com.wack.model.stock.Fund', parameters)
+          this.genericService.getAllByCriteria('com.wack.model.stock.Fund', parameters , ' ORDER BY receptionDate DESC ')
             .subscribe((data: Fund[]) => {
               this.funds = data;
             },

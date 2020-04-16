@@ -61,7 +61,7 @@ export class PurchaseList implements OnInit, OnDestroy {
 
           const parameters: string [] = [];
 
-          this.genericService.getAllByCriteria('com.wack.model.stock.Purchase', parameters)
+          this.genericService.getAllByCriteria('com.wack.model.stock.Purchase', parameters, ' ORDER BY purchaseDate DESC ')
             .subscribe((data: Purchase[]) => {
               this.purchases = data;
             },

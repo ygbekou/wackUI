@@ -9,6 +9,7 @@ import { Reference, Payment } from '../models';
 import { GenericResponse } from '../models/genericResponse';
 import { Router } from '@angular/router';
 import { ContactUsMessage, SectionItem } from '../models/website';
+import { SearchAttribute } from '../models/searchCriteria';
 
 @Injectable()
 export class GenericService {
@@ -42,11 +43,15 @@ export class GenericService {
       .catch(this.handleError);
   }
 
-  public getAllByCriteria = (entityClass: string, parameters: string []): Observable<any[]> => {
-    const toAdd = JSON.stringify(parameters);
+  public getAllByCriteria = (entityClass: string, parameters: string[], orderBy = ''): Observable<any[]> => {
 
-    const actionUrl = Constants.apiServer + '/service/' + entityClass + '/allByCriteria';
-    return this.http.post(actionUrl, toAdd, {headers: this.headers})
+    const searchAttribute = new SearchAttribute();
+    searchAttribute.parameters = parameters;
+    searchAttribute.orderBy = orderBy;
+    const toAdd = JSON.stringify(searchAttribute);
+
+    const actionUrl = Constants.apiServer + '/service/' + entityClass + '/allByCriteriaAndOrderBy';
+    return this.http.post(actionUrl, toAdd, { headers: this.headers })
       .map((response: Response) => <any[]>response.json())
       .catch(this.handleError);
   }

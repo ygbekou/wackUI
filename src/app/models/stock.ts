@@ -17,6 +17,8 @@ export class Fund {
 export class Payment {
   id: number;
   paymentType: Reference;
+  salaryMonth: Reference;
+  salaryYear: number;
   receiver: Employee;
   contractLabor: ContractLabor;
   payer: Employee;
