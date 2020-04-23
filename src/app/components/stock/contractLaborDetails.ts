@@ -7,6 +7,7 @@ import { ContractLabor } from 'src/app/models';
 import { EmployeeDropdown } from '../dropdowns/dropdown.employee';
 import { AppInfoStorage } from 'src/app/services/app.info.storage';
 import { BaseComponent } from '../website/baseComponent';
+import { QuoteDropdown } from '../dropdowns/dropdown.quote';
 
 @Component({
   selector: 'app-contractlabor-details',
@@ -28,7 +29,8 @@ export class ContractLaborDetails extends BaseComponent implements OnInit, OnDes
       public genericService: GenericService,
       public translate: TranslateService,
       public appInfoStorage: AppInfoStorage,
-      public  employeeDropdown: EmployeeDropdown,
+      public employeeDropdown: EmployeeDropdown,
+      public quoteDropdown: QuoteDropdown,
       public tokenStorage: TokenStorage,
       public confirmationService: ConfirmationService
     ) {
@@ -83,7 +85,7 @@ export class ContractLaborDetails extends BaseComponent implements OnInit, OnDes
 
     try {
 
-      this.genericService.saveWithFile(this.contractLabor, 'com.wack.model.stock.ContractLabor', this.formData, 'saveCompany')
+      this.genericService.saveContractLabor(this.contractLabor, this.formData)
         .subscribe(result => {
           if (result.id > 0) {
             this.contractLabor = result;
@@ -104,11 +106,6 @@ export class ContractLaborDetails extends BaseComponent implements OnInit, OnDes
       console.log(e);
     }
   }
-
-
-  delete() {
-
-  } 
 
   public onFileUpload(event): void {
 
@@ -141,4 +138,9 @@ export class ContractLaborDetails extends BaseComponent implements OnInit, OnDes
     return this.contractLabor.status === 1;
   }
 
+  populateQuoteDropdown() {
+    this.quoteDropdown.parameters.push('e.quoter.id = |quoterId|' + this.contractLabor.contractor.id + '|Long')
+    this.quoteDropdown.getAllQuotes();
+    this.contractLabor.quote = null;
+  }
 }

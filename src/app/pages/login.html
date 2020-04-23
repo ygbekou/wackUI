@@ -2,7 +2,7 @@
 
         <app-web-header></app-web-header>
 
-        <p-dialog header="First Time Login - Change Password" [(visible)]="display" [style]="{width: '2000px', height: '2000px'}" 
+        <p-dialog header="First Time Login - Change Password" [(visible)]="display" [style]="{width: '500px', height: '500px'}" 
             (onHide)="closePasswordUpdateDialog()" [blockScroll]="true" [draggable]="false">
             <form name="form1" (ngSubmit)="f1.form.valid && changePassword()" #f1="ngForm" validate>
                 <div class="form-group">

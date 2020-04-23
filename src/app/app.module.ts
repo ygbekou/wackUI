@@ -142,6 +142,7 @@ import { QuoteList } from './components/stock/quoteList';
 import { ManagerDropdown } from './components/dropdowns/dropdown.manager';
 import { MonthDropdown } from './components/dropdowns/dropdown.month';
 import { YearDropdown } from './components/dropdowns/dropdown.year';
+import { QuoteDropdown } from './components/dropdowns/dropdown.quote';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -284,7 +285,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
      BreadcrumbService, GenericService, UserService, Constants, GlobalEventsManager, TokenStorage, AuthenticationService, 
      LoggedInGuard, ConfirmationService, EmployeeDropdown, PaymentTypeDropdown, SupplierDropdown, ProductDropdown, ManagerDropdown,
-     ContractLaborDropdown, MonthDropdown, YearDropdown
+     ContractLaborDropdown, MonthDropdown, YearDropdown, QuoteDropdown
   ],
   bootstrap: [AppComponent]
 })

@@ -1,38 +1,39 @@
+<p-messages [(value)]="messages"></p-messages>
 <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-	<p-table [value]="quotes" [responsive]="true" selectionMode="single" [(selection)]="selectedQuote" dataKey="id"> 
+	<p-table [value]="quotes" [responsive]="true" selectionMode="single" [(selection)]="selectedQuote" dataKey="id"
+		[scrollable]="true" scrollHeight="300px" [style]="{width:'100%'}"> 
 		<ng-template pTemplate="caption">
 	        {{ 'COMMON.LIST' | translate }}
 	    </ng-template>
 		<ng-template pTemplate="header">
 			<tr>
-				<th style="width: 2.25em"></th>
-				<th *ngFor="let col of cols" [pSortableColumn]="col.field" [ngStyle]="col.style">
+				<th style="width: 5%"></th>
+				<th *ngFor="let col of cols" [pSortableColumn]="col.field" [ngStyle]="col.headerstyle">
 					{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
 				</th>
-				<!-- <th>Action</th> -->
 			</tr>
 		</ng-template> 
 		<ng-template pTemplate="body" let-expanded="expanded" let-quote>
-			<tr [pSelectableRow]="quote" [pSelectableRowDblClick]="quote" (dblclick)="edit(quote)">
-				<td>
-					<a (click)="getFiles(quote)" href="#" [pRowToggler]="quote">
+			<tr [pSelectableRow]="quote" [pSelectableRowDblClick]="quote" (dblclick)="edit(quote)" [ngClass]="quote.status === 1 ? 'cancelled' : null">
+				<td style="width: 5%">
+					<a (click)="getFiles(quote); getQuoteItems(quote)" href="#" [pRowToggler]="quote">
 						<i [ngClass]="expanded ? 'pi pi-fw pi-chevron-circle-down' : 'pi pi-fw pi-chevron-circle-right'"></i>
 					</a>
 				</td>
-				<td *ngFor="let col of cols">
-					<div *ngIf="col.type != 'date'" [ngStyle]="col.textstyle">
+				<td *ngFor="let col of cols" [ngStyle]="col.rowstyle">
+					<div *ngIf="col.type === 'string'">
 						{{quote[col.field]}}
 					</div>
-					<div *ngIf="col.type == 'date'" [ngStyle]="col.textstyle">
+					<div *ngIf="col.type === 'currency'">
+						{{quote[col.field] | currency: 'CFA':'symbol':'1.0-0':translate.currentLang}}
+					</div>
+					<div *ngIf="col.type === 'date'">
 						{{quote[col.field] | date: globalEventsManager.DATE_FORMAT}}
 					</div>
 				</td>
-				<!-- <td>
-					<button type="button" pButton icon="fa fa-edit" (click)="edit(quote)"></button>&nbsp;&nbsp;
-				</td> -->
 			</tr>
 		</ng-template> 
-		<ng-template pTemplate="rowexpansion" let-quote>
+		<ng-template pTemplate="rowexpansion" let-quote let-i="rowIndex">
 			<tr>
 				<td [attr.colspan]="cols.length + 1">
 					<div class="ui-g ui-fluid" style="font-size:16px;padding:20px">
@@ -52,9 +53,115 @@
 							</ng-template> 
 						</p-table>
 
+						<br/>
+
+						<p-button icon="fa fa-plus" (click)="addNewMaterial(quote)"></p-button>
+						<p-table [columns]="materialCols" [value]="quote.materials" [(selection)]="selectedQuotes[i]"
+							*ngIf="quote.materials != undefined && quote.materials.length > 0"> 
+							<ng-template pTemplate="caption">
+								{{ 'COMMON.MATERIAL' | translate }}
+							</ng-template>
+							<ng-template pTemplate="header" let-columns>
+								<tr>
+									<th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="col.style">
+										{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
+									</th>
+									<th [ngStyle]="{width: '10%'}">Action</th>
+								</tr>
+							</ng-template> 
+							<ng-template pTemplate="body" let-material let-columns="columns" let-y="rowIndex">
+								<tr>
+									<td *ngFor="let col of columns" pEditableColumn [ngStyle]="col.textstyle">
+										<p-cellEditor *ngIf="col.field === 'product'">
+											<ng-template pTemplate="input"> 
+												 <p-autoComplete [(ngModel)]="material[col.field]" [disabled]="material.status === 1"
+													(onDropdownClick)="productDropdown.handleDropdownClick($event)"
+													[suggestions]="productDropdown.filteredProducts" [dropdown]="true"
+													(completeMethod)="productDropdown.filter($event)" 
+													field="name" [size]="30" placeholder="" [minLength]="1" name="{{col.field}}">
+												</p-autoComplete>
+											</ng-template> 
+											<ng-template pTemplate="output"> 
+												{{material[col.field] === undefined ? '' : material[col.field].name}} 
+											</ng-template> 
+										</p-cellEditor>
+										<p-cellEditor *ngIf="col.field === 'quantity'">
+											<ng-template pTemplate="input"> 
+												<input type="text" [(ngModel)]="material[col.field]" (ngModelChange)="calculateTotal(quote, material)"> 
+											</ng-template> 
+											<ng-template pTemplate="output"> 
+												{{material[col.field] | currency: ' ':'symbol':'1.0-0':translate.currentLang}}
+											</ng-template> 
+										</p-cellEditor>
+										<p-cellEditor *ngIf="col.field === 'unitPrice'">
+											<ng-template pTemplate="input"> 
+												<input type="text" [(ngModel)]="material[col.field]" (ngModelChange)="calculateTotal(quote, material)"> 
+											</ng-template> 
+											<ng-template pTemplate="output"> 
+												{{material[col.field] | currency: 'CFA':'symbol':'1.0-0':translate.currentLang}}
+											</ng-template> 
+										</p-cellEditor>
+										<p-cellEditor *ngIf="col.field === 'totalAmount'">
+											<ng-template pTemplate="input"> 
+												{{material[col.field] | currency: 'CFA':'symbol':'1.0-0':translate.currentLang}}
+											</ng-template> 
+											<ng-template pTemplate="output"> 
+												{{material[col.field] | currency: 'CFA':'symbol':'1.0-0':translate.currentLang}}
+											</ng-template> 
+										</p-cellEditor>
+									</td>
+									<td>
+										<p-button icon="fa fa-save" (click)="save(quote, material, y)"></p-button> &nbsp;&nbsp;&nbsp;&nbsp;
+										<button icon="fa fa-eraser" type="button" class="ui-button-rounded ui-button-warning" pButton  
+											(click)="deleteMaterial(quote, material)" title="{{ 'COMMON.DELETE' | translate }}">
+										</button>
+									</td>
+								</tr>
+							</ng-template> 
+						</p-table>
+
+						<br/>
+						
+						<p-table [columns]="laborCols" [value]="quote.contractLabors" [(selection)]="selectedQuotes[i]" 
+							*ngIf="quote.contractLabors != undefined && quote.contractLabors.length > 0"> 
+							<ng-template pTemplate="caption">
+								{{ 'COMMON.LABOR' | translate }}
+							</ng-template>
+							<ng-template pTemplate="header" let-columns>
+								<tr>
+									<th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="col.style">
+										{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
+									</th>
+								</tr>
+							</ng-template> 
+							<ng-template pTemplate="body" let-contractLabor let-columns="columns" let-y="rowIndex">
+								<tr>
+									<td *ngFor="let col of columns" [ngStyle]="col.textstyle">
+										<div *ngIf="col.type === 'string'">
+											{{contractLabor[col.field]}}
+										</div>
+										<div *ngIf="col.type === 'currency'">
+											{{contractLabor[col.field] | currency: 'CFA':'symbol':'1.0-0':translate.currentLang}}
+										</div>
+										<div *ngIf="col.type === 'date'">
+											{{contractLabor[col.field] | date: globalEventsManager.DATE_FORMAT}}
+										</div>
+									</td>
+								</tr>
+							</ng-template> 
+						</p-table>
+
 					</div>
 				</td>
 			</tr>
 		</ng-template>
+		<ng-template pTemplate="footer">
+			<tr>
+				<td style="width: 5%"></td>
+				<td rowspan="3" style="font-weight: bold; width: 52%">Totals</td>
+				<td [ngStyle]="totalstyle">{{totalQuote | currency: 'CFA':'symbol':'1.0-0':translate.currentLang}}</td>
+				<td></td>
+			</tr>
+    	</ng-template>
 	</p-table>
 </div>

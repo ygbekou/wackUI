@@ -1,33 +1,38 @@
 <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-	<p-table [value]="contractLabors" [responsive]="true" selectionMode="single" [(selection)]="selectedContractLabor" dataKey="id"> 
+	<p-table [value]="contractLabors" [responsive]="true" selectionMode="single" [(selection)]="selectedContractLabor" dataKey="id" 
+		[scrollable]="true" scrollHeight="300px" [style]="{width:'100%'}"> 
 		<ng-template pTemplate="caption">
 	        {{ 'COMMON.LIST' | translate }}
 	    </ng-template>
 		<ng-template pTemplate="header">
 			<tr>
-				<th *ngFor="let col of cols" [pSortableColumn]="col.field" [ngStyle]="col.style">
+				<th *ngFor="let col of cols" [pSortableColumn]="col.field" [ngStyle]="col.headerstyle">
 					{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
 				</th>
-				<!-- <th>Action</th> -->
 			</tr>
 		</ng-template> 
 		<ng-template pTemplate="body" let-contractLabor>
 			<tr [pSelectableRow]="contractLabor" [pSelectableRowDblClick]="contractLabor" (dblclick)="edit(contractLabor)">
-				<td *ngFor="let col of cols">
-					<div *ngIf="col.type === 'string'" [ngStyle]="col.textstyle">
+				<td *ngFor="let col of cols" [ngStyle]="col.rowstyle">
+					<div *ngIf="col.type === 'string'">
 						{{contractLabor[col.field]}}
 					</div>
-					<div *ngIf="col.type === 'currency'" [ngStyle]="col.textstyle">
+					<div *ngIf="col.type === 'currency'">
 						{{contractLabor[col.field] | currency: 'CFA':'symbol':'1.0-0':translate.currentLang}}
 					</div>
-					<div *ngIf="col.type === 'date'" [ngStyle]="col.textstyle">
+					<div *ngIf="col.type === 'date'">
 						{{contractLabor[col.field] | date: globalEventsManager.DATE_FORMAT}}
 					</div>
 				</td>
-				<!-- <td>
-					<button type="button" pButton icon="fa fa-edit" (click)="edit(contractLabor)"></button>&nbsp;&nbsp;
-				</td> -->
 			</tr>
 		</ng-template> 
+		<ng-template pTemplate="footer">
+			<tr>
+				<td rowspan="4" style="font-weight: bold; width: 64%">Totals</td>
+				<td [ngStyle]="totalstyle">{{totalAmount | currency: 'CFA':'symbol':'1.0-0':translate.currentLang}}</td>
+				<td [ngStyle]="totalstyle">{{totalPaid | currency: 'CFA':'symbol':'1.0-0':translate.currentLang}}</td>
+				<td [ngStyle]="totalstyle">{{totalBalance | currency: 'CFA':'symbol':'1.0-0':translate.currentLang}}</td>
+			</tr>
+    	</ng-template>
 	</p-table>
 </div>

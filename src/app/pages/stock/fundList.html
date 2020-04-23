@@ -1,34 +1,42 @@
 <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-	<p-table [value]="funds" [responsive]="true" selectionMode="single" [(selection)]="selectedFund" dataKey="id"> 
-		<ng-template pTemplate="caption">
-	        {{ 'COMMON.LIST' | translate }}
-	    </ng-template>
+	<p-table #dt [value]="funds" [responsive]="true" selectionMode="single" [(selection)]="selectedFund" dataKey="id"
+			[scrollable]="true" scrollHeight="300px" [style]="{width:'100%'}"> 
+		<ng-template pTemplate="caption"> 
+			{{ 'COMMON.LIST' | translate }}
+		</ng-template>
 		<ng-template pTemplate="header">
 			<tr>
-				<th *ngFor="let col of cols" [pSortableColumn]="col.field"  [ngStyle]="col.style">
+				<th *ngFor="let col of cols" [pSortableColumn]="col.field"  [ngStyle]="col.headerstyle">
 					{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
 				</th>
-				<!-- <th>Action</th> -->
+			</tr>
+			<tr>
+				<th *ngFor="let col of cols" [ngSwitch]="col.field">
+					<input *ngSwitchCase="'receiverName'" pInputText type="text" style="width: 150px" (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+				</th>
 			</tr>
 		</ng-template> 
 		<ng-template pTemplate="body" let-fund>
-			<tr [pSelectableRow]="fund" [pSelectableRowDblClick]="fund" (dblclick)="edit(fund)">
-				<td *ngFor="let col of cols">
-					<div *ngIf="col.type === 'string'" [ngStyle]="col.textstyle">
+			<tr [pSelectableRow]="fund" [pSelectableRowDblClick]="fund" (dblclick)="edit(fund)" [ngClass]="fund.status === 1 ? 'cancelled' : null">
+				<td *ngFor="let col of cols" [ngStyle]="col.rowstyle">
+					<div *ngIf="col.type === 'string'">
 						{{fund[col.field]}}
 					</div>
-					<div *ngIf="col.type === 'currency'" [ngStyle]="col.textstyle">
+					<div *ngIf="col.type === 'currency'">
 						{{fund[col.field] | currency: 'CFA':'symbol':'1.0-0':translate.currentLang}}
 					</div>
-					<div *ngIf="col.type === 'date'" [ngStyle]="col.textstyle">
+					<div *ngIf="col.type === 'date'">
 						{{fund[col.field] | date: globalEventsManager.DATE_FORMAT}}
 					</div>
 				</td>
-				<!-- <td>
-					<button type="button" pButton icon="fa fa-edit" (click)="edit(fund)"></button>&nbsp;&nbsp;
-					
-				</td> -->
 			</tr>
 		</ng-template> 
+		<ng-template pTemplate="footer">
+			<tr>
+				<td rowspan="2" style="font-weight: bold; width: 45%">Totals</td>
+				<td [ngStyle]="totalstyle">{{totalFund | currency: 'CFA':'symbol':'1.0-0':translate.currentLang}}</td>
+				<td></td>
+			</tr>
+    	</ng-template>
 	</p-table>
 </div>

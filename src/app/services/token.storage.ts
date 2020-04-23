@@ -91,5 +91,8 @@ export class TokenStorage {
     return this.getFirstName() + ' ' + middleName + this.getLastName();
   }
 
+  public isAdmin(): boolean {
+    return this.getRole() === '1';
+  }
 
 }

@@ -7,6 +7,13 @@ import { Payment } from 'src/app/models';
 @Component({
   selector: 'app-payment-list',
   templateUrl: '../../pages/stock/paymentList.html',
+  styles: [`
+        .cancelled {
+          background-color: #FF0000 !important;
+          color: #ffffff !important;
+        }
+    `
+    ],
   providers: [GenericService]
 })
 // tslint:disable-next-line:component-class-suffix
@@ -14,8 +21,13 @@ export class PaymentList implements OnInit, OnDestroy {
 
   payments: Payment[] = [];
   selectedPayment: Payment;
-  cols: any[];
-
+  cols: any[] = [];
+  totalstyle = {
+          width: '10%',
+          'font-weight': 'bold',
+          'text-align': 'right'
+        };
+  totalPayment: number;
   @Output() paymentIdEvent = new EventEmitter<string>();
   @Input() paymentGroup: string;
 
@@ -32,24 +44,43 @@ export class PaymentList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.cols = [
+    this.cols.push(
             { field: 'paymentDate', header: 'Date', headerKey: 'COMMON.RECEPTION_DATE', type: 'date',
-                  style: {width: '10%', 'text-align': 'center'}   },
-            { field: 'contractLaborLabel', header: 'Labor', headerKey: 'COMMON.LABOR', type: 'string',
-                  style: {width: '28%', 'text-align': 'center'}   },
-            { field: 'paymentTypeName', header: 'Payment Type', headerKey: 'COMMON.PAYMENT_TYPE', type: 'string',
-                  style: {width: '10%', 'text-align': 'center'}   },
+                  headerstyle: {width: '10%', 'text-align': 'center', 'font-weight': 'bold'},
+                  rowstyle: {width: '10%'}   }
+    );
+    if (this.paymentGroup === 'LABOR') {
+      this.cols.push(
+        { field: 'contractLaborLabel', header: 'Labor', headerKey: 'COMMON.LABOR', type: 'string',
+                  headerstyle: {width: '29%', 'text-align': 'center', 'font-weight': 'bold'},
+                  rowstyle: {width: '29%'}   }
+      );
+    } else {
+      this.cols = this.cols.concat([
+        { field: 'salaryMonthName', header: 'Month', headerKey: 'COMMON.SALARY_MONTH', type: 'string',
+                  headerstyle: {width: '19%', 'text-align': 'center', 'font-weight': 'bold'},
+                  rowstyle: {width: '19%'}   },
+        { field: 'salaryYear', header: 'Year', headerKey: 'COMMON.SALARY_YEAR', type: 'string',
+                  headerstyle: {width: '10%', 'text-align': 'center', 'font-weight': 'bold'},
+                  rowstyle: {width: '10%', 'text-align': 'right'}   }
+      ]
+      );
+    }
+
+    this.cols = this.cols.concat([
+      { field: 'paymentTypeName', header: 'Payment Type', headerKey: 'COMMON.PAYMENT_TYPE', type: 'string',
+                  headerstyle: {width: '15%', 'text-align': 'center', 'font-weight': 'bold'},
+                  rowstyle: {width: '15%'}   },
             { field: 'payerName', header: 'Payer', headerKey: 'COMMON.PAYER', type: 'string',
-                  style: {width: '15%', 'text-align': 'center'}  },
+                  headerstyle: {width: '18%', 'text-align': 'center', 'font-weight': 'bold'},
+                  rowstyle: {width: '18%'}  },
             { field: 'receiverName', header: 'Receiver', headerKey: 'COMMON.RECEIVER', type: 'string',
-                  style: {width: '15%', 'text-align': 'center'}   },
+                  headerstyle: {width: '18%', 'text-align': 'center', 'font-weight': 'bold'},
+                  rowstyle: {width: '18%'}   },
             { field: 'amount', header: 'Amount', headerKey: 'COMMON.AMOUNT', type: 'currency',
-                  style: {width: '10%', 'text-align': 'center'},
-                  textstyle: {'text-align': 'right'}   },
-            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string',
-                  style: {width: '8%', 'text-align': 'center'}   },
-            //{ field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION' }
-        ];
+                  headerstyle: {width: '10%', 'text-align': 'center', 'font-weight': 'bold'},
+                  rowstyle: {width: '10%', 'text-align': 'right'}   }
+    ]);
 
     this.route
         .queryParams
@@ -66,6 +97,9 @@ export class PaymentList implements OnInit, OnDestroy {
           this.genericService.getAllByCriteria('com.wack.model.stock.Payment', parameters, ' ORDER BY paymentDate DESC ')
             .subscribe((data: Payment[]) => {
               this.payments = data;
+              this.totalPayment = this.payments
+                              .map(c => c.status === 0 ? c.amount : 0)
+                              .reduce((sum, current) => sum + current);
             },
             error => console.log(error),
             () => console.log('Get all Payment complete'));
@@ -100,7 +134,7 @@ export class PaymentList implements OnInit, OnDestroy {
   }
 
   delete(paymentId: number) {
-  
+
   }
 
   updateTable(payment: Payment) {

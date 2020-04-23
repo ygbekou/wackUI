@@ -7,6 +7,13 @@ import { Fund, Supplier } from 'src/app/models';
 @Component({
   selector: 'app-supplier-list',
   templateUrl: '../../pages/stock/supplierList.html',
+  styles: [`
+        .cancelled {
+          background-color: #FF0000 !important;
+          color: #ffffff !important;
+        }
+    `
+    ],
   providers: [GenericService]
 })
 // tslint:disable-next-line:component-class-suffix
@@ -33,20 +40,20 @@ export class SupplierList implements OnInit, OnDestroy {
 
     this.cols = [
             { field: 'name', header: 'Name', headerKey: 'COMMON.NAME', type: 'string',
-                  style: {width: '20%', 'text-align': 'center'},
-                  textstyle: {'text-overflow': 'ellipsis', 'overflow': 'hidden', 'white-space': 'nowrap'} },
+                  headerstyle: {width: '20%', 'text-align': 'center', 'font-weight': 'bold'},
+                  rowstyle: {width: '20%', 'text-overflow': 'ellipsis', 'overflow': 'hidden', 'white-space': 'nowrap'} },
             { field: 'contact', header: 'Contact', headerKey: 'COMMON.CONTACT',
-                  style: {width: '20%', 'text-align': 'center'},
-                  textstyle: {'text-overflow': 'ellipsis', 'overflow': 'hidden', 'white-space': 'nowrap'} },
+                  headerstyle: {width: '20%', 'text-align': 'center', 'font-weight': 'bold'},
+                  rowstyle: {width: '20%', 'text-overflow': 'ellipsis', 'overflow': 'hidden', 'white-space': 'nowrap'} },
             { field: 'phone', header: 'Phone', headerKey: 'COMMON.PHONE',
-                  style: {width: '10%', 'text-align': 'center'},
-                  textstyle: {'text-overflow': 'ellipsis', 'overflow': 'hidden', 'white-space': 'nowrap'} },
+                  headerstyle: {width: '10%', 'text-align': 'center', 'font-weight': 'bold'},
+                  rowstyle: {width: '10%', 'text-overflow': 'ellipsis', 'overflow': 'hidden', 'white-space': 'nowrap'} },
             { field: 'email', header: 'Email', headerKey: 'COMMON.EMAIL',
-                  style: {width: '15%', 'text-align': 'center'},
-                  textstyle: {'text-overflow': 'ellipsis', 'overflow': 'hidden', 'white-space': 'nowrap'} },
+                  headerstyle: {width: '20%', 'text-align': 'center', 'font-weight': 'bold'},
+                  rowstyle: {width: '20%', 'text-overflow': 'ellipsis', 'overflow': 'hidden', 'white-space': 'nowrap'} },
             { field: 'address', header: 'Address', headerKey: 'COMMON.ADDRESS',
-                  style: {width: '25%', 'text-align': 'center'},
-                  textstyle: {'text-overflow': 'ellipsis', 'overflow': 'hidden', 'white-space': 'nowrap'} }
+                  headerstyle: {width: '30%', 'text-align': 'center', 'font-weight': 'bold'},
+                  rowstyle: {width: '30%', 'text-overflow': 'ellipsis', 'overflow': 'hidden', 'white-space': 'nowrap'} }
         ];
 
     this.route
@@ -89,10 +96,6 @@ export class SupplierList implements OnInit, OnDestroy {
   edit(supplier: Supplier) {
       this.supplierIdEvent.emit(supplier.id + '');
       this.selectedSupplier = supplier;
-  }
-
-  delete(supplierId: number) {
-  
   }
 
   updateTable(supplier: Supplier) {

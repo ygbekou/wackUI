@@ -5,7 +5,7 @@ import {Observable} from 'rxjs/Rx';
 import {Constants} from '../app.constants';
 import { TokenStorage } from './token.storage';
 import {SelectItem} from 'primeng/api';
-import { Reference, Payment } from '../models';
+import { Reference, Payment, Material, ContractLabor } from '../models';
 import { GenericResponse } from '../models/genericResponse';
 import { Router } from '@angular/router';
 import { ContactUsMessage, SectionItem } from '../models/website';
@@ -62,8 +62,6 @@ export class GenericService {
       toAdd = toAdd.replace(/'/g, '&#039;');
       const re = /\"/gi;
       const toSend = '{"json":"' + toAdd.replace(re, '\'') + '"}';
-
-      console.info(toSend)
 
       const actionUrl = Constants.apiServer + '/service/' + entityClass + '/save';
       return this.http.post(actionUrl, toSend, { headers: this.headers })
@@ -178,7 +176,6 @@ export class GenericService {
   public delete = (id: number, entityClass: string): Observable<GenericResponse> => {
 
     const actionUrl = Constants.apiServer + '/service/' + entityClass + '/delete/' + id;
-    alert(actionUrl)
     return this.http.get(actionUrl, { headers: this.headers })
       .map((response: Response) => {
 
@@ -234,6 +231,44 @@ export class GenericService {
     return this.http.post(actionUrl, toAdd, {headers: this.headers})
       .map((response: Response) => {
         return response.json();
+      })
+      .catch(this.handleError);
+  }
+
+  public saveMaterial = (material: Material): Observable<Material> => {
+    const toAdd = JSON.stringify(material);
+    const actionUrl = Constants.apiServer + '/service/Quote/material/save';
+    return this.http.post(actionUrl, toAdd, {headers: this.headers})
+      .map((response: Response) => {
+        return response.json();
+      })
+      .catch(this.handleError);
+  }
+
+  public saveContractLabor = (contractLabor: ContractLabor, formData: FormData): Observable<ContractLabor> => {
+    const head = new Headers();
+    if (this.token.hasToken()) {
+        head.append('Authorization', 'Bearer ' + this.token.getToken());
+    }
+    const toAdd = JSON.stringify(contractLabor);
+    formData.append('contractLabor', new Blob([toAdd],
+      {
+          type: 'application/json'
+      }));
+    const actionUrl = Constants.apiServer + '/service/Quote/contractlabor/save';
+    return this.http.post(actionUrl, formData, {headers: head})
+      .map((response: Response) => {
+        return response.json();
+      })
+      .catch(this.handleError);
+  }
+
+  public deleteWithUrl = (url: string, id: number): Observable<GenericResponse> => {
+
+    const actionUrl = Constants.apiServer + url + id;
+    return this.http.get(actionUrl, { headers: this.headers })
+      .map((response: Response) => {
+          return response.json();
       })
       .catch(this.handleError);
   }

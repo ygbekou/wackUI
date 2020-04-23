@@ -1,5 +1,5 @@
-import { Employee } from "./employee";
-import { Reference } from "./reference";
+import { Employee } from './employee';
+import { Reference } from './reference';
 
 export class Fund {
   id: number;
@@ -37,9 +37,29 @@ export class Quote {
   quoter: Employee;
   quoteDate: Date;
   name: string;
+  totalAmount: number;
   description: string;
+  status: number;
 
-  fileNames: string[];
+  fileNames: string [];
+  materials: Material [];
+  contractLabors: ContractLabor[];
+
+  constructor() {
+    this.totalAmount = 0;
+  }
+}
+
+export class Material {
+  id: number;
+  product: Reference;
+  quote: Quote;
+  unitPrice: number;
+  quantity: number;
+  totalAmount: number;
+  status: number;
+  modifierName: string;
+  productName: string;
 
   constructor() {
   }
@@ -49,6 +69,7 @@ export class ContractLabor {
   id: number;
   name: string;
   contractor: Employee;
+  quote: Quote;
   contractDate: Date;
   amount: number;
   paid: number;
@@ -70,7 +91,7 @@ export class Supplier {
   phone: string;
   email: string;
   address: string;
-  
+
   constructor() {
   }
 }

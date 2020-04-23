@@ -32,7 +32,7 @@ export class BaseComponent {
                 detail: res['MESSAGE.SAVE_SUCCESS']
             });
         });
-        
+
         if (entityObject.user && entityObject.user.birthDate != null) {
             entityObject.user.birthDate = new Date(entityObject.user.birthDate);
         }
@@ -48,16 +48,34 @@ export class BaseComponent {
         });
     }
   }
-  
+
+  protected processDeleteResult(result, messages) {
+    if (result.result === 'SUCCESS') {
+        this.translate.get(['COMMON.DELETE', 'MESSAGE.DELETE_SUCCESS']).subscribe(res => {
+            messages.push({
+                severity: Constants.SUCCESS, summary: res['COMMON.DELETE'],
+                detail: res['MESSAGE.DELETE_SUCCESS']
+            });
+        });
+    } else {
+        this.translate.get(['COMMON.DELETE', 'MESSAGE.DELETE_UNSUCCESS', 'MESSAGE.' + result.errors[0]]).subscribe(res => {
+            messages.push({
+                severity: Constants.ERROR, summary: res['COMMON.DELETE'],
+                detail: res['MESSAGE.DELETE_UNSUCCESS'] + ': ' + res['MESSAGE.' + result.errors[0]]
+            });
+        });
+    }
+  }
+
 
   deleteItem(listItems: any[], id: string, entity: string) {
-    
+
 	  if (id === undefined || id === null) {
 			this.removeItem(listItems, +id);
 			return;
 		}
 
-    
+
     this.messages = [];
 		let confirmMessage = '';
 
@@ -72,9 +90,8 @@ export class BaseComponent {
             accept: () => {
                 this.genericService.delete(+id, entity)
                     .subscribe((response: GenericResponse) => {
-                        console.info(response)
                         if ('SUCCESS' === response.result) {
-                          
+
                             this.translate.get(['COMMON.DELETE', 'MESSAGE.DELETE_SUCCESS']).subscribe(res => {
                                 this.messages.push({
                                     severity: Constants.SUCCESS, summary: res['COMMON.DELETE'],
@@ -104,7 +121,7 @@ export class BaseComponent {
         });
 
 	}
-	
+
   removeItem(listItems: any[], id: number) {
 
 	const index = listItems.findIndex(x => x.id === id);
@@ -133,7 +150,7 @@ export class BaseComponent {
 
 
   isEmptyStr(value) {
-    return value === undefined || value === null || (typeof value === 'string' && value.trim()) === ''
+    return value === undefined || value === null || (typeof value === 'string' && value.trim()) === '';
 
   }
 

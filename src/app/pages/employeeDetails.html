@@ -117,11 +117,11 @@
             <div class="ui-grid-col-5 ui-sm-12">
 				<div class="ui-grid-col-2">
 					<label i18n="@@picture" for="picture">{{ 'COMMON.PICTURE' | translate }} </label>
-                    <img class="thumb" src="assets/images/User/{{employee.user.picture}}" alt="" 
-                        class="img-fluid" *ngIf="employee.user.picture !== ''"/>
+                    <img class="thumb img-fluid" src="assets/images/User/{{employee.user.picture}}" alt="" 
+                        *ngIf="employee.user.picture !== ''"/>
                     <button pButton icon="fa fa-delete" (click)="employee.user.picture = ''" 
                         label="Remove" *ngIf="employee.user.picture !== ''"></button>
-                    <img class="thumb" src="{{pictureUrl}}" alt="" class="img-fluid" *ngIf="pictureUrl !== ''"/>
+                    <img class="thumb img-fluid" src="{{pictureUrl}}" alt="" *ngIf="pictureUrl !== ''"/>
                     <button pButton icon="fa fa-delete" (click)="clearPicture()" label="Remove" *ngIf="pictureUrl !== ''"></button>
                 </div>
                 <br/>
@@ -149,8 +149,7 @@
                     <div class="ui-grid-col-5 ui-sm-12">
                         <div class="form-group">
                             <label for="userGroup">{{ 'COMMON.ROLE' | translate }}</label>
-                            <p-autoComplete [(ngModel)]="employee.user.userGroup"
-                                [disabled]="employee.user.userGroup.id == 1"
+                            <p-autoComplete [(ngModel)]="employee.user.userGroup" [disabled]="!tokenStorage.isAdmin()"
                                 (onDropdownClick)="userGroupDropdown.handleDropdownClick($event)"
                                 [suggestions]="userGroupDropdown.filteredUserGroups"
                                 [dropdown]="true" id="userGroup"
@@ -173,9 +172,9 @@
                     <div class="ui-grid-col-2 ui-sm-12"></div>
                     <div class="ui-grid-col-5 ui-sm-12">
                         <p-radioButton name="managing" value="0" label="Manager" [(ngModel)]="employee.managing"
-                            name="managing" #managing="ngModel" required></p-radioButton>
+                            #managing="ngModel" required></p-radioButton>
                         <p-radioButton name="managing" value="1" label="Non Manager" [(ngModel)]="employee.managing"
-                            name="managing" #managing="ngModel" required ></p-radioButton>
+                            #managing="ngModel" required ></p-radioButton>
                         <p-message *ngIf="f.submitted && managing.invalid" severity="error" text="Field is required"></p-message>
                     </div>
                 </div>
@@ -189,7 +188,7 @@
 
 	<div class="form-group">
 		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-			<button type="button" pButton icon="fa fa-refresh" (click)="clear()"label="{{ 'COMMON.ADD' | translate }}"></button>&nbsp;&nbsp;
+			<button type="button" pButton icon="fa fa-refresh" (click)="clear()"label="{{ 'COMMON.ADD' | translate }}"></button> &nbsp;&nbsp;
 			<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}" [disabled]="isCancel()"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<button type="button" pButton icon="fa fa-delete" (click)="cancel()" label="{{ 'COMMON.CANCEL' | translate }}" [disabled]="isCancel()"></button>&nbsp;&nbsp;
             

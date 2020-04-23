@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { GenericService, GlobalEventsManager } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Fund } from 'src/app/models';
@@ -7,6 +7,13 @@ import { Fund } from 'src/app/models';
 @Component({
   selector: 'app-fund-list',
   templateUrl: '../../pages/stock/fundList.html',
+  styles: [`
+        .cancelled {
+          background-color: #FF0000 !important;
+          color: #ffffff !important;
+        }
+    `
+    ],
   providers: [GenericService]
 })
 // tslint:disable-next-line:component-class-suffix
@@ -15,7 +22,12 @@ export class FundList implements OnInit, OnDestroy {
   funds: Fund[] = [];
   selectedFund: Fund;
   cols: any[];
-
+  totalstyle = {
+          width: '15%',
+          'font-weight': 'bold',
+          'text-align': 'right'
+        };
+  totalFund: number;
   @Output() fundIdEvent = new EventEmitter<string>();
 
 
@@ -33,17 +45,17 @@ export class FundList implements OnInit, OnDestroy {
 
     this.cols = [
             { field: 'receptionDate', header: 'Date', headerKey: 'COMMON.RECEPTION_DATE', type: 'date',
-                  style: {width: '10%', 'text-align': 'center'} },
+                  headerstyle: {width: '15%', 'text-align': 'center', 'font-weight': 'bold'},
+                  rowstyle: {width: '15%'} },
             { field: 'receiverName', header: 'Receiver', headerKey: 'COMMON.RECEIVER', type: 'string',
-                  style: {width: '20%', 'text-align': 'center'} },
+                  headerstyle: {width: '30%', 'text-align': 'center', 'font-weight': 'bold'}, 
+                  rowstyle: {width: '30%'} },
             { field: 'amount', header: 'Amount', headerKey: 'COMMON.AMOUNT', type: 'currency',
-                  style: {width: '10%', 'text-align': 'center'},
-                  textstyle: {'text-align': 'right'} },
-            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string',
-                  style: {width: '10%', 'text-align': 'center'} },
+                  headerstyle: {width: '15%', 'text-align': 'center', 'font-weight': 'bold'}, 
+                  rowstyle: {width: '15%', 'text-align': 'right'} },
             { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'string',
-                  style: {width: '40%', 'text-align': 'center'},
-                  textstyle: {'text-overflow': 'ellipsis', 'overflow': 'hidden', 'white-space': 'nowrap'} }
+                  headerstyle: {width: '40%', 'text-align': 'center', 'font-weight': 'bold'},
+                  rowstyle: {width: '40%', 'text-overflow': 'ellipsis', 'overflow': 'hidden', 'white-space': 'nowrap'} }
         ];
 
     this.route
@@ -52,9 +64,12 @@ export class FundList implements OnInit, OnDestroy {
 
           const parameters: string [] = [];
 
-          this.genericService.getAllByCriteria('com.wack.model.stock.Fund', parameters , ' ORDER BY receptionDate DESC ')
+          this.genericService.getAllByCriteria('com.wack.model.stock.Fund', parameters , ' ORDER BY status , receptionDate DESC ')
             .subscribe((data: Fund[]) => {
               this.funds = data;
+              this.totalFund = this.funds
+                              .map(c => c.status === 0 ? c.amount : 0)
+                              .reduce((sum, current) => sum + current);
             },
             error => console.log(error),
             () => console.log('Get all Fund complete'));
@@ -89,7 +104,7 @@ export class FundList implements OnInit, OnDestroy {
   }
 
   delete(fundId: number) {
-  
+
   }
 
   updateTable(fund: Fund) {
@@ -102,5 +117,5 @@ export class FundList implements OnInit, OnDestroy {
 		}
 
   }
-  
+
  }

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { GenericService, GlobalEventsManager } from '../../services';
+import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { SectionDetails } from './sectionDetails';
 import { SectionList } from './sectionList';
 import { SectionItemDetails } from './sectionItemDetails';
@@ -75,6 +75,7 @@ export class AdminWebsite implements OnInit, OnDestroy {
 
   constructor (
     private globalEventsManager: GlobalEventsManager,
+    public tokenStorage: TokenStorage
   ) {
 
   }

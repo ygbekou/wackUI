@@ -138,7 +138,7 @@
 
     "STOCK": "Stock",
     "RECEIVER": "Receiver",
-    "RECEPTION_DATE": "Reception Date",
+    "RECEPTION_DATE": "Recept. Date",
     "AMOUNT": "Amount",
     "FUND": "Fund",
     "PAYMENT_TYPE": "Payment Type",
@@ -167,7 +167,8 @@
     "CANCELLED": "Cancelled",
     "SALARY": "Salary",
     "SALARY_YEAR": "Salary Year",
-    "SALARY_MONTH": "Salary Month"
+    "SALARY_MONTH": "Salary Month",
+    "MATERIAL": "Material"
 
   },
   "MESSAGE": {
@@ -190,7 +191,8 @@
     "PASSWORD_NOT_MATCHED": "The new passord didn't match the confirm pasword. Verify and try again.",
     "SEND_US_MESSAGE": "Send a Message",
     "EMAIL_EXISTS": "Email already exists",
-    "USER_NAME_EXISTS": "Username already exists"
+    "USER_NAME_EXISTS": "Username already exists",
+    "NOT_AUTHORIZED": "You are not authorized to view this page"
   },
   "DATE": {
   	"1": "Jan",

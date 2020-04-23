@@ -70,6 +70,7 @@ export class QuoteDetails implements OnInit, OnDestroy {
   
   clear() {
     this.quote = new Quote();
+    this.formData = new FormData();
   }
 
 

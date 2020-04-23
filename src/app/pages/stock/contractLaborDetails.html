@@ -11,7 +11,7 @@
             </div>
 
             <div class="form-group">
-                <label for="name">{{ 'COMMON.NAME' | translate }}</label>
+                <label for="name">{{ 'COMMON.NAME' | translate }}</label><font color="red">*</font>
                 <input pInputText id="name" [(ngModel)]="contractLabor.name" name="name" #name="ngModel" [size]="30" required />
                 <p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
             </div>
@@ -22,9 +22,21 @@
                     (onDropdownClick)="employeeDropdown.handleDropdownClick($event)"
                     [suggestions]="employeeDropdown.filteredEmployees" [dropdown]="true" id="contractor"
                     (completeMethod)="employeeDropdown.filter($event)" name="contractor" field="name" [size]="30"
-                    placeholder="{{ 'COMMON.CONTRACTOR' | translate }}" [minLength]="1" #contractor="ngModel" required>
+                    placeholder="{{ 'COMMON.CONTRACTOR' | translate }}" [minLength]="1" #contractor="ngModel" 
+                    (ngModelChange)="populateQuoteDropdown()" required>
                 </p-autoComplete>
                 <p-message *ngIf="f.submitted && contractor.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+
+            <div class="form-group">
+                <label for="quote">{{ 'COMMON.QUOTE' | translate }}<font color="red">*</font></label>
+                <p-autoComplete [(ngModel)]="contractLabor.quote"
+                    (onDropdownClick)="quoteDropdown.handleDropdownClick($event)"
+                    [suggestions]="quoteDropdown.filteredQuotes" [dropdown]="true" id="quote"
+                    (completeMethod)="quoteDropdown.filter($event)" name="quote" field="name" [size]="30"
+                    placeholder="{{ 'COMMON.QUOTE' | translate }}" [minLength]="1" #quote="ngModel" required>
+                </p-autoComplete>
+                <p-message *ngIf="f.submitted && quote.invalid" severity="error" text="Field is required"></p-message>
             </div>
         
             <div class="form-group">

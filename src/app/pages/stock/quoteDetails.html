@@ -26,6 +26,13 @@
                 <p-calendar [(ngModel)]="quote.quoteDate" name="quoteDate"  #quoteDate="ngModel" required></p-calendar>
                 <p-message *ngIf="f.submitted && quoteDate.invalid" severity="error" text="Field is required"></p-message>
             </div>
+
+            <div class="form-group">
+                <label for="totalAmount">{{ 'COMMON.TOTAL_AMOUNT' | translate }}<font color="red">*</font></label> 
+                <input type="text" pInputText id="totalAmount" currencyMask [options]="appInfoStorage.CURRENCY_MASK_INTEGER"
+                   [(ngModel)]="quote.totalAmount" name="totalAmount" #totalAmount="ngModel" [disabled]="true" required>
+                <p-message *ngIf="f.submitted && totalAmount.invalid" severity="error" text="Field is required"></p-message>
+            </div>
         
             <div class="form-group">
                 <label for="description">{{'COMMON.DESCRIPTION' | translate}}</label>
@@ -43,7 +50,7 @@
     </div>
     
 	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-        <button type="button" pButton icon="fa fa-close" (click)="clear()" label="{{ 'COMMON.ADD' | translate }}"></button>&nbsp;&nbsp;
+        <button pButton icon="fa fa-close" (click)="clear()" label="{{ 'COMMON.ADD' | translate }}"></button>&nbsp;&nbsp;
         <button pButton icon="fa fa-check"  label="{{ 'COMMON.SAVE' | translate }}"></button>
     </div>
     

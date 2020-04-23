@@ -3,7 +3,7 @@ import { Constants } from '../../app.constants';
 import { GenericService } from '../../services';
 import { TranslateService} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
-import { Purchase, Reference } from 'src/app/models';
+import { Purchase } from 'src/app/models';
 import { EmployeeDropdown } from '../dropdowns/dropdown.employee';
 import { AppInfoStorage } from 'src/app/services/app.info.storage';
 import { SupplierDropdown } from '../dropdowns/dropdown.supplier';
@@ -67,6 +67,7 @@ export class PurchaseDetails implements OnInit, OnDestroy {
   
   clear() {
     this.purchase = new Purchase();
+    this.formData = new FormData();
   }
 
   cancel() {
