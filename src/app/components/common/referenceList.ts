@@ -9,6 +9,13 @@ import { BaseComponent } from '../website/baseComponent';
 @Component({
   selector: 'app-reference-list',
   templateUrl: '../../pages/common/referenceList.html',
+  styles: [`
+      .cancelled {
+        background-color: #FF0000 !important;
+        color: #ffffff !important;
+      }
+  `
+  ],
   providers: [GenericService]
 })
 export class ReferenceList extends BaseComponent implements OnInit, OnDestroy {
@@ -44,13 +51,12 @@ export class ReferenceList extends BaseComponent implements OnInit, OnDestroy {
 
     	this.cols = [
             { field: 'name', header: 'Name', headerKey: 'COMMON.NAME', type: 'string',
-                                        style: {width: '25%', 'text-align': 'center'} },
+                    headerstyle: {width: '30%', 'text-align': 'center', 'font-weight': 'bold'},
+                    rowstyle: {width: '30%'}  },
             { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'string',
-                                        style: {width: '50%', 'text-align': 'center'},
-                                        textstyle: {'text-overflow': 'ellipsis', 'overflow': 'hidden', 'white-space': 'nowrap'} },
-            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string',
-                                        style: {width: '10%', 'text-align': 'center'}
-                                       }
+                    headerstyle: {width: '60%', 'text-align': 'center', 'font-weight': 'bold'},
+                    rowstyle: {width: '60%', 'text-overflow': 'ellipsis', 'overflow': 'hidden', 'white-space': 'nowrap'} },
+           
         ];
 
 		this.getAll();

@@ -159,7 +159,7 @@ export class GenericService {
 
    public getNewObject = (url: string, id: number): Observable<any> => {
 
-      const actionUrl = Constants.apiServer + url + id;
+      const actionUrl = Constants.apiServer + url + (id !== 0 ? id : '');
       return this.http.get(actionUrl, { headers: this.headers })
         .map((response: Response) => {
             if (response && response.json()) {

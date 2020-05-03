@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-//import { LightboxModule } from 'angular2-lightbox';
 import { HttpModule } from '@angular/http';
 import { TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
@@ -19,8 +18,6 @@ import {
   PanelModule, UIChart, PickListModule, ToolbarModule, Message, MessageModule, ScrollPanelModule
 } from 'primeng';
 
-//import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
-
 @NgModule({
   declarations: [],
 
@@ -32,7 +29,7 @@ import {
     CalendarModule, RadioButtonModule, DropdownModule, AutoCompleteModule, ProgressBarModule,
     DialogModule, GalleriaModule, MessagesModule, TreeModule, AccordionModule, ConfirmDialogModule,
     PanelModule, TableModule, ToolbarModule, MessageModule,
-    CardModule, ScrollPanelModule, //BrowserAnimationsModule, NoopAnimationsModule
+    CardModule, ScrollPanelModule
   ],
 
   exports: [
@@ -45,8 +42,8 @@ import {
     PasswordModule, CheckboxModule, InputTextModule, InputMaskModule, CarouselModule, OverlayPanelModule,
     CalendarModule, RadioButtonModule, DropdownModule, AutoCompleteModule, UIChart, PickListModule, OrganizationChartModule,
     DialogModule, GalleriaModule, MessagesModule, TreeModule, PanelModule, TableModule,
-    ToolbarModule, MessageModule, ConfirmDialogModule, CardModule, ScrollPanelModule, FullCalendar, 
-    FullCalendarModule, //BrowserAnimationsModule, NoopAnimationsModule
+    ToolbarModule, MessageModule, ConfirmDialogModule, CardModule, ScrollPanelModule, FullCalendar,
+    FullCalendarModule
   ],
 })
 

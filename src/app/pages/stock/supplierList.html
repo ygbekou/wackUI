@@ -1,5 +1,5 @@
 <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-	<p-table [value]="suppliers" [responsive]="true" selectionMode="single" [(selection)]="selectedSupplier" dataKey="id"
+	<p-table #dt [value]="suppliers" [responsive]="true" selectionMode="single" [(selection)]="selectedSupplier" dataKey="id"
 		[scrollable]="true" scrollHeight="300px" [style]="{width:'100%'}"> 
 		<ng-template pTemplate="caption">
 	        {{ 'COMMON.LIST' | translate }}
@@ -8,6 +8,12 @@
 			<tr>
 				<th *ngFor="let col of cols" [pSortableColumn]="col.field" [ngStyle]="col.headerstyle">
 					{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
+				</th>
+			</tr>
+			<tr>
+				<th *ngFor="let col of cols" >
+					<input *ngIf="col.field === 'name'" 
+						pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'startsWith')" placeholder="Search by Name">
 				</th>
 			</tr>
 		</ng-template> 

@@ -2,7 +2,13 @@
 	<p-table #dt [value]="purchases" [responsive]="true" selectionMode="single" [(selection)]="selectedPurchase" dataKey="id"
 		[scrollable]="true" scrollHeight="300px" [style]="{width:'100%'}"> 
 		<ng-template pTemplate="caption">
-	        {{ 'COMMON.LIST' | translate }}
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4 ui-sm-12" style="text-align: left">
+					<button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf()" class="ui-button-warning"></button>
+				</div>
+				<div class="ui-grid-col-4 ui-sm-12">{{ 'COMMON.LIST' | translate }}</div>
+				<div class="ui-grid-col-4 ui-sm-12"></div>
+			</div>
 	    </ng-template>
 		<ng-template pTemplate="header">
 			<tr>
@@ -18,7 +24,7 @@
 			</tr>
 		</ng-template> 
 		<ng-template pTemplate="body" let-purchase>
-			<tr [pSelectableRow]="purchase" [pSelectableRowDblClick]="purchase" (dblclick)="edit(purchase)">
+			<tr [pSelectableRow]="purchase" [pSelectableRowDblClick]="purchase" (dblclick)="edit(purchase)"  [ngClass]="purchase.status === 1 ? 'cancelled' : null">
 				<td *ngFor="let col of cols" [ngStyle]="col.rowstyle">
 					<div *ngIf="col.type === 'string'">
 						{{purchase[col.field]}}

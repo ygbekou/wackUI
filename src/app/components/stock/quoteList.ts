@@ -1,4 +1,7 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import {CurrencyPipe} from '@angular/common';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
@@ -8,6 +11,8 @@ import { Constants } from 'src/app/app.constants';
 import { GenericResponse } from 'src/app/models/genericResponse';
 import { BaseComponent } from '../website/baseComponent';
 import { ProductDropdown } from '../dropdowns/dropdown.product';
+
+
 
 @Component({
   selector: 'app-quote-list',
@@ -19,7 +24,7 @@ import { ProductDropdown } from '../dropdowns/dropdown.product';
         }
     `
     ],
-  providers: [GenericService]
+  providers: [GenericService, CurrencyPipe]
 })
 // tslint:disable-next-line:component-class-suffix
 export class QuoteList extends BaseComponent implements OnInit, OnDestroy {
@@ -28,6 +33,7 @@ export class QuoteList extends BaseComponent implements OnInit, OnDestroy {
   selectedQuote: Quote;
   selectedQuotes: any[] = [];
   cols: any[];
+  exportCols: any[];
   fileCols: any[];
   materialCols: any[];
   laborCols: any[];
@@ -54,6 +60,7 @@ export class QuoteList extends BaseComponent implements OnInit, OnDestroy {
     public tokenStorage: TokenStorage,
     public productDropdown: ProductDropdown,
     private router: Router,
+    private cp: CurrencyPipe
     ) {
       super(genericService, translate, confirmationService, tokenStorage);
   }
@@ -77,6 +84,8 @@ export class QuoteList extends BaseComponent implements OnInit, OnDestroy {
                   headerstyle: {width: '28%', 'text-align': 'center', 'font-weight': 'bold'},
                   rowstyle: {width: '28%', 'text-overflow': 'ellipsis', 'overflow': 'hidden', 'white-space': 'nowrap'}  }
         ];
+
+    this.exportCols = this.cols.map(col => ({title: col.header, dataKey: col.field}));
 
     this.fileCols = [
             { field: 'name', header: 'Name', headerKey: 'COMMON.NAME', type: 'string',
@@ -302,5 +311,76 @@ export class QuoteList extends BaseComponent implements OnInit, OnDestroy {
   addNewMaterial(quote: Quote) {
     quote.materials.push(new Material());
   }
+
+  exportPdf() {
+      const doc = new jsPDF();
+      const locale = this.globalEventsManager.LOCALE;
+      const cp = this.cp;
+      const translate = this.translate;
+      const footRow = [{paymentDate: 'Totals', totalAmount: this.totalQuote}];
+      doc.autoTable({
+        columns: this.exportCols,
+        body: this.quotes,
+        foot: footRow,
+        footStyles: {
+            fillColor: [241, 196, 15],
+            fontSize: 10
+        },
+        columnStyles: {
+            totalAmount: {
+                halign: 'right',
+                cellWidth: 30,
+            }
+        },
+        didParseCell: function(data) {
+            if (data.row.section === 'body' && data.column.dataKey === 'quoteDate') {
+              data.cell.text[0] = new Date(+ data.cell.text[0]).toLocaleDateString(locale,
+                Constants.LOCAL_DATE_OPTIONS);
+            }
+            if ((data.row.section === 'body' || data.row.section === 'foot') && data.column.dataKey === 'totalAmount') {
+              data.cell.text[0] = cp.transform(+ data.cell.text[0], null, '', '1.0-0', translate.currentLang);
+              data.cell.styles.halign = 'right';
+            }
+        },
+        didDrawCell: function(data) {
+
+        },
+        didDrawPage: function (data) {
+            // Footer
+            const str = 'Page ' + doc.internal.getNumberOfPages();
+            doc.setFontSize(10);
+
+            // jsPDF 1.4+ uses getWidth, <1.4 uses .width
+            const pageSize = doc.internal.pageSize;
+            const pageHeight = pageSize.height ? pageSize.height : pageSize.getHeight();
+            doc.text(str, data.settings.margin.left, pageHeight - 10);
+        },
+      });
+
+
+
+      doc.save('quoteList.pdf');
+  }
+
+
+    // exportExcel() {
+    //     import('xlsx').then(xlsx => {
+    //         const worksheet = xlsx.utils.json_to_sheet(this.getCars());
+    //         const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+    //         const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+    //         this.saveAsExcelFile(excelBuffer, 'primengTable');
+    //     });
+    // }
+
+    // saveAsExcelFile(buffer: any, fileName: string): void {
+    //     import('file-saver').then(FileSaver => {
+    //         const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    //         const EXCEL_EXTENSION = '.xlsx';
+    //         const data: Blob = new Blob([buffer], {
+    //             type: EXCEL_TYPE
+    //         });
+    //         FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    //     });
+    // }
 
  }

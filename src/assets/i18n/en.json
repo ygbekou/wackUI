@@ -168,7 +168,9 @@
     "SALARY": "Salary",
     "SALARY_YEAR": "Salary Year",
     "SALARY_MONTH": "Salary Month",
-    "MATERIAL": "Material"
+    "MATERIAL": "Material",
+    "STATISTIC": "Statistic",
+    "FUND_EXPENSES": "Fund vs Expenses"
 
   },
   "MESSAGE": {

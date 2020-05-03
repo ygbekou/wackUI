@@ -143,6 +143,7 @@ import { ManagerDropdown } from './components/dropdowns/dropdown.manager';
 import { MonthDropdown } from './components/dropdowns/dropdown.month';
 import { YearDropdown } from './components/dropdowns/dropdown.year';
 import { QuoteDropdown } from './components/dropdowns/dropdown.quote';
+import { FundExpenseStatistics } from './components/stock/fundExpenseStatistics';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -277,7 +278,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ContractLaborDetails,
     ContractLaborList,
     QuoteDetails,
-    QuoteList
+    QuoteList,
+    FundExpenseStatistics
   ],
   providers: [
     { provide: ErrorHandler, useClass: GlobalErrorHandler },

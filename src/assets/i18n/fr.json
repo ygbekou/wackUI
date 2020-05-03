@@ -156,7 +156,9 @@
     "SALARY": "Salaire",
     "SALARY_YEAR": "Année Salaire",
     "SALARY_MONTH": "Mois Salaire",
-    "MATERIAL": "Material"
+    "MATERIAL": "Material",
+    "STATISTIC": "Statistique",
+    "FUND_EXPENSES": "Fond et Depenses"
   },
   "MESSAGE": {
     "DELETE_CONFIRM": "Etes-vous sur de vouloir continuer?",

@@ -45,6 +45,9 @@ export class Quote {
   materials: Material [];
   contractLabors: ContractLabor[];
 
+  // I need these fields for pdf print
+  quoteDateStr: string;
+
   constructor() {
     this.totalAmount = 0;
   }

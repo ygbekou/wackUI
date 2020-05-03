@@ -1,8 +1,14 @@
 <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-	<p-table [value]="contractLabors" [responsive]="true" selectionMode="single" [(selection)]="selectedContractLabor" dataKey="id" 
+	<p-table #dt [value]="contractLabors" [responsive]="true" selectionMode="single" [(selection)]="selectedContractLabor" dataKey="id" 
 		[scrollable]="true" scrollHeight="300px" [style]="{width:'100%'}"> 
 		<ng-template pTemplate="caption">
-	        {{ 'COMMON.LIST' | translate }}
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4 ui-sm-12" style="text-align: left">
+					<button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf()" class="ui-button-warning"></button>
+				</div>
+				<div class="ui-grid-col-4 ui-sm-12">{{ 'COMMON.LIST' | translate }}</div>
+				<div class="ui-grid-col-4 ui-sm-12"></div>
+			</div>
 	    </ng-template>
 		<ng-template pTemplate="header">
 			<tr>
@@ -10,9 +16,15 @@
 					{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
 				</th>
 			</tr>
+			<tr>
+				<th *ngFor="let col of cols" >
+					<input *ngIf="col.field === 'name' || col.field === 'contractorName' || col.field === 'quoteName'" 
+						pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'startsWith')" placeholder="Search by Name">
+				</th>
+			</tr>
 		</ng-template> 
 		<ng-template pTemplate="body" let-contractLabor>
-			<tr [pSelectableRow]="contractLabor" [pSelectableRowDblClick]="contractLabor" (dblclick)="edit(contractLabor)">
+			<tr [pSelectableRow]="contractLabor" [pSelectableRowDblClick]="contractLabor" (dblclick)="edit(contractLabor)" [ngClass]="contractLabor.status === 1 ? 'cancelled' : null">
 				<td *ngFor="let col of cols" [ngStyle]="col.rowstyle">
 					<div *ngIf="col.type === 'string'">
 						{{contractLabor[col.field]}}

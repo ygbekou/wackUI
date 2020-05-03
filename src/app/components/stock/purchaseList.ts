@@ -1,8 +1,13 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 import { GenericService, GlobalEventsManager } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Purchase } from 'src/app/models';
+import { CurrencyPipe } from '@angular/common';
+import { Constants } from 'src/app/app.constants';
+
 
 @Component({
   selector: 'app-purchase-list',
@@ -14,7 +19,7 @@ import { Purchase } from 'src/app/models';
         }
     `
     ],
-  providers: [GenericService]
+  providers: [GenericService, CurrencyPipe]
 })
 // tslint:disable-next-line:component-class-suffix
 export class PurchaseList implements OnInit, OnDestroy {
@@ -22,6 +27,7 @@ export class PurchaseList implements OnInit, OnDestroy {
   purchases: Purchase[] = [];
   selectedPurchase: Purchase;
   cols: any[];
+  exportCols: any[];
   totalstyle = {
           width: '14%',
           'font-weight': 'bold',
@@ -37,6 +43,7 @@ export class PurchaseList implements OnInit, OnDestroy {
     public translate: TranslateService,
     private route: ActivatedRoute,
     public globalEventsManager: GlobalEventsManager,
+    private currencyPipe: CurrencyPipe,
     private router: Router,
     ) {
   }
@@ -70,13 +77,16 @@ export class PurchaseList implements OnInit, OnDestroy {
                   rowstyle: {width: '14%', 'text-align': 'right'} }
         ];
 
+    this.exportCols = this.cols.map(col => ({title: col.header, dataKey: col.field}))
+                                .filter(col => col.dataKey !== 'secondaryPurchaserName');
+
     this.route
         .queryParams
         .subscribe(params => {
 
           const parameters: string [] = [];
 
-          this.genericService.getAllByCriteria('com.wack.model.stock.Purchase', parameters, ' ORDER BY purchaseDate DESC ')
+          this.genericService.getAllByCriteria('com.wack.model.stock.Purchase', parameters, ' ORDER BY status, purchaseDate DESC ')
             .subscribe((data: Purchase[]) => {
               this.purchases = data;
               this.sumTotalAmount = this.purchases
@@ -128,6 +138,67 @@ export class PurchaseList implements OnInit, OnDestroy {
 			this.purchases[index] = purchase;
 		}
 
-	}
+  }
+  
+
+  exportPdf() {
+      const doc = new jsPDF();
+      const locale = this.globalEventsManager.LOCALE;
+      const cp = this.currencyPipe;
+      const translate = this.translate;
+      const footRow = [{purchaseDate: 'Totals', totalAmount: this.sumTotalAmount}];
+      doc.autoTable({
+        columns: this.exportCols,
+        body: this.purchases,
+        foot: footRow,
+        footStyles: {
+            fillColor: [241, 196, 15],
+            fontSize: 10
+        },
+        columnStyles: {
+            unitAmount: {
+                halign: 'right',
+                cellWidth: 25,
+            },
+            totalAmount: {
+                halign: 'right',
+                cellWidth: 30,
+            }
+        },
+        didParseCell: function(data) {
+            if (data.row.section === 'body' && data.column.dataKey === 'purchaseDate') {
+              data.cell.text[0] = new Date(+ data.cell.text[0]).toLocaleDateString(locale,
+                Constants.LOCAL_DATE_OPTIONS);
+            }
+            if ((data.row.section === 'body' || data.row.section === 'foot') && data.column.dataKey === 'totalAmount') {
+              data.cell.text[0] = cp.transform(+ data.cell.text[0], null, '', '1.0-0', translate.currentLang);
+              data.cell.styles.halign = 'right';
+            }
+            if ((data.row.section === 'body') &&
+               (data.column.dataKey === 'unitAmount' || data.column.dataKey === 'quantity')) {
+              data.cell.text[0] = cp.transform(+ data.cell.text[0], null, '', '1.0-0', translate.currentLang);
+              data.cell.styles.halign = 'right';
+            }
+            
+        },
+        didDrawCell: function(data) {
+
+        },
+        didDrawPage: function (data) {
+            // Footer
+            const str = 'Page ' + doc.internal.getNumberOfPages();
+            doc.setFontSize(10);
+
+            // jsPDF 1.4+ uses getWidth, <1.4 uses .width
+            const pageSize = doc.internal.pageSize;
+            const pageHeight = pageSize.height ? pageSize.height : pageSize.getHeight();
+            doc.text(str, data.settings.margin.left, pageHeight - 10);
+        },
+      });
+
+
+
+      doc.save('purchaseList.pdf');
+  }
 
  }

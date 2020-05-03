@@ -72,6 +72,7 @@ export class AdminWebsite implements OnInit, OnDestroy {
   public activeCompanyTab = 1;
   public activeSliderTab = 0;
   public activeStockTab = 0;
+  public activeStatisticTab = 0;
 
   constructor (
     private globalEventsManager: GlobalEventsManager,
@@ -92,21 +93,21 @@ export class AdminWebsite implements OnInit, OnDestroy {
   }
 
   onSectionSelected($event) {
-      const sectionId = $event;
-      this.sectionDetails.getSection(sectionId);
+    const sectionId = $event;
+    this.sectionDetails.getSection(sectionId);
   }
   onSectionItemSelected($event) {
-      const sectionItemId = $event;
-      this.sectionItemDetails.getSectionItem(sectionItemId);
+    const sectionItemId = $event;
+    this.sectionItemDetails.getSectionItem(sectionItemId);
   }
 
   onEmployeeSelected($event) {
-      this.activeEmployeeTab = 0;
-      const employeeId = $event;
-      this.employeeDetails.getEmployee(employeeId);
+    this.activeEmployeeTab = 0;
+    const employeeId = $event;
+    this.employeeDetails.getEmployee(employeeId);
   }
   onEmployeeSaved($event) {
-	  this.employeeList.updateTable($event);
+    this.employeeList.updateTable($event);
   }
 
   onCompanySelected($event) {
@@ -127,17 +128,17 @@ export class AdminWebsite implements OnInit, OnDestroy {
   }
 
   onFundSaved($event) {
-	  this.fundList.updateTable($event);
+    this.fundList.updateTable($event);
   }
 
   onFundSelected($event) {
-      const fundId = $event;
-      this.fundDetails.getFund(fundId);
+    const fundId = $event;
+    this.fundDetails.getFund(fundId);
   }
 
   onSliderTextSelected($event) {
-      const sliderTextId = $event;
-      this.sliderTextDetails.getSliderText(sliderTextId);
+    const sliderTextId = $event;
+    this.sliderTextDetails.getSliderText(sliderTextId);
   }
 
   onReferenceSelected($event, referenceType) {
@@ -146,7 +147,7 @@ export class AdminWebsite implements OnInit, OnDestroy {
   }
 
   onReferenceSaved($event) {
-	  this.referenceList.updateTable($event);
+    this.referenceList.updateTable($event);
   }
 
   onQuoteSelected($event) {
@@ -154,7 +155,7 @@ export class AdminWebsite implements OnInit, OnDestroy {
     this.quoteDetails.getQuote(quoteId);
   }
   onQuoteSaved($event) {
-	  this.quoteList.updateTable($event);
+    this.quoteList.updateTable($event);
   }
 
   onContractLaborSelected($event) {
@@ -162,7 +163,7 @@ export class AdminWebsite implements OnInit, OnDestroy {
     this.contractLaborDetails.getContractLabor(contractLaborId);
   }
   onContractLaborSaved($event) {
-	  this.contractLaborList.updateTable($event);
+    this.contractLaborList.updateTable($event);
   }
 
   onPaymentSelected($event) {
@@ -170,7 +171,7 @@ export class AdminWebsite implements OnInit, OnDestroy {
     this.paymentDetails.getPayment(paymentId);
   }
   onPaymentSaved($event) {
-	  this.paymentList.updateTable($event);
+    this.paymentList.updateTable($event);
   }
 
   onPurchaseSelected($event) {
@@ -178,7 +179,7 @@ export class AdminWebsite implements OnInit, OnDestroy {
     this.purchaseDetails.getPurchase(purchaseId);
   }
   onPurchaseSaved($event) {
-	  this.purchaseList.updateTable($event);
+    this.purchaseList.updateTable($event);
   }
 
   onSupplierSelected($event) {
@@ -186,7 +187,7 @@ export class AdminWebsite implements OnInit, OnDestroy {
     this.supplierDetails.getSupplier(supplierId);
   }
   onSupplierSaved($event) {
-	  this.supplierList.updateTable($event);
+    this.supplierList.updateTable($event);
   }
 
   onTabChange(evt) {
@@ -218,6 +219,14 @@ export class AdminWebsite implements OnInit, OnDestroy {
       this.processReference(null, 'com.wack.model.stock.Supplier', 'SUPPLIER');
     } else if (evt.index === 7) {
       this.processReference(null, 'com.wack.model.stock.Product', 'PRODUCT');
+    }
+
+  }
+
+  onStatisticTabChange(evt) {
+    this.activeStatisticTab = evt.index;
+    if (evt.index === 1) {
+      
     }
 
   }
