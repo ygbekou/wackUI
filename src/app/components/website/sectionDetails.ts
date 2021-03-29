@@ -46,7 +46,7 @@ export class SectionDetails implements OnInit, OnDestroy {
         .subscribe(result => {
       if (result.id > 0) {
         this.section = result;
-        this.showInMenu = this.section.showInMenu === 'Y';
+        this.showInMenu = this.section.showInMenu === 1;
       } else {
         this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
           this.messages.push({severity:
@@ -71,16 +71,16 @@ export class SectionDetails implements OnInit, OnDestroy {
     if (pictureEl && pictureEl.files && (pictureEl.files.length > 0)) {
       const files: FileList = pictureEl.files;
       for (let i = 0; i < files.length; i++) {
-          this.formData.append('file', files[i], files[i].name);
+          this.formData.append('file[]', files[i], 'picture.jpg');
       }
     } else {
        //this.formData.append('file', null, null);
     }
 
     try {
-      this.section.showInMenu = this.showInMenu ? 'Y' : 'N';
+      this.section.showInMenu = this.showInMenu ? 1 : 0;
       if (pictureEl && pictureEl.files && pictureEl.files.length > 0) {
-        this.section.fileLocation = '';
+        this.section.picture = '';
         this.genericService.saveWithFile(this.section, 'com.wack.model.website.Section', this.formData, 'saveWithFile')
           .subscribe(result => {
             if (result.id > 0) {

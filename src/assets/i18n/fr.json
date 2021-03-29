@@ -158,7 +158,14 @@
     "SALARY_MONTH": "Mois Salaire",
     "MATERIAL": "Material",
     "STATISTIC": "Statistique",
-    "FUND_EXPENSES": "Fond et Depenses"
+    "FUND_EXPENSES": "Fond et Depenses",
+    "SEND_MESSAGE_TO": "Envoyer un message � ",
+    "AUTHOR": "Auteur",
+    "RANK": "Evalué",
+    "TESTIMONY": "Témoignage",
+    "COMMENTS": "Commentaire",
+    "YEAR": "Année",
+    "COMPANY_HISTORY": "Histoire de la Compagnie"
   },
   "MESSAGE": {
     "DELETE_CONFIRM": "Etes-vous sur de vouloir continuer?",

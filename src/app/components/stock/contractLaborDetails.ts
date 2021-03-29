@@ -56,6 +56,7 @@ export class ContractLaborDetails extends BaseComponent implements OnInit, OnDes
       if (result.id > 0) {
         this.contractLabor = result;
         this.contractLabor.contractDate = new Date(this.contractLabor.contractDate);
+        this.contractLabor.contractDate = new Date(this.contractLabor.contractDate.toLocaleString('en-US', {timeZone: 'UTC'}));
       } else {
         this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
           this.messages.push({severity:

@@ -1,0 +1,43 @@
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+<p-messages [(value)]="messages"></p-messages>
+	<p-table #dt [columns]="cols" [value]="testimonies" [responsive]="true" selectionMode="single" [(selection)]="selectedTestimony" dataKey="id"> 
+        <ng-template pTemplate="caption">
+	        {{ 'COMMON.LIST' | translate }}
+	    </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    {{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
+                <th>Action</th>
+            </tr>
+            <tr>
+				<th *ngFor="let col of cols" >
+					<input *ngIf="col.field === 'lastName' || col.field === 'firstName' || col.field === 'groupName'  || col.field === 'phone'" 
+						pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'startsWith')" placeholder="Search by Name">
+				</th>
+			</tr>
+        </ng-template> 
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]=rowData>
+                <td *ngFor="let col of columns">
+                    <div *ngIf="col.type === 'Date'">{{rowData[col.field] |
+                        date:'dd/MM/yyyy'}}</div>
+                    <div *ngIf="col.type !== 'Date'">
+                        <div *ngIf="col.field == 'status'">
+                            {{getStatusDesc(rowData)}}</div>
+                        <div *ngIf="col.field !== 'status'">
+                            {{rowData[col.field]}}</div>
+                    </div>
+                </td>
+                <td>
+                    <button type="button" pButton icon="fa fa-edit" (click)="edit(rowData)"></button>&nbsp;&nbsp;&nbsp;
+                    <button type="button" class="ui-button-rounded ui-button-warning" pButton icon="fa fa-eraser" 
+						(click)="deleteItem(testimonies, rowData.id, 'com.wack.model.website.Testimony')" 
+						title="{{ 'COMMON.DELETE' | translate }}">
+					</button>
+                </td>
+            </tr>
+        </ng-template> 
+    </p-table>
+

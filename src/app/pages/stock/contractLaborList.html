@@ -33,7 +33,7 @@
 						{{contractLabor[col.field] | currency: 'CFA':'symbol':'1.0-0':translate.currentLang}}
 					</div>
 					<div *ngIf="col.type === 'date'">
-						{{contractLabor[col.field] | date: globalEventsManager.DATE_FORMAT}}
+						{{contractLabor[col.field] | date: globalEventsManager.DATE_FORMAT : 'UTC'}}
 					</div>
 				</td>
 			</tr>

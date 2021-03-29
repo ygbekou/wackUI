@@ -36,7 +36,7 @@
 						{{purchase[col.field] | number:'1.0-0':translate.currentLang}}
 					</div>
 					<div *ngIf="col.type === 'date'">
-						{{purchase[col.field] | date: globalEventsManager.DATE_FORMAT}}
+						{{purchase[col.field] | date: globalEventsManager.DATE_FORMAT : 'UTC'}}
 					</div>
 				</td>
 			</tr>

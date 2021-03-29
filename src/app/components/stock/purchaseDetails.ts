@@ -53,6 +53,7 @@ export class PurchaseDetails implements OnInit, OnDestroy {
       if (result.id > 0) {
         this.purchase = result;
         this.purchase.purchaseDate = new Date(this.purchase.purchaseDate);
+        this.purchase.purchaseDate = new Date(this.purchase.purchaseDate.toLocaleString('en-US', {timeZone: 'UTC'}));
       } else {
         this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
           this.messages.push({severity:

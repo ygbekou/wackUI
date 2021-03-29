@@ -26,6 +26,10 @@ import { ContractLaborList } from '../stock/contractLaborList';
 import { QuoteDetails } from '../stock/quoteDetails';
 import { QuoteList } from '../stock/quoteList';
 import { EmployeeList } from '../employeeList';
+import { TestimonyDetails } from '../testimonyDetails';
+import { TestimonyList } from '../testimonyList';
+import { CompanyHistoryDetails } from './companyHistoryDetails';
+import { CompanyHistoryList } from './companyHistoryList';
 
 
 
@@ -39,6 +43,8 @@ import { EmployeeList } from '../employeeList';
 export class AdminWebsite implements OnInit, OnDestroy {
   [x: string]: any;
 
+  @ViewChild(CompanyHistoryDetails, {static: false}) companyHistoryDetails: CompanyHistoryDetails;
+  @ViewChild(CompanyHistoryList, {static: false}) companyHistoryList: CompanyHistoryList;
   @ViewChild(SectionDetails, {static: false}) sectionDetails: SectionDetails;
   @ViewChild(SectionList, {static: false}) sectionList: SectionList;
   @ViewChild(SliderDetails, {static: false}) sliderDetails: SliderDetails;
@@ -49,6 +55,8 @@ export class AdminWebsite implements OnInit, OnDestroy {
   @ViewChild(SliderTextList, {static: false}) sliderTextList: SliderTextList;
   @ViewChild(SectionItemDetails, {static: false}) sectionItemDetails: SectionItemDetails;
   @ViewChild(SectionItemList, {static: false}) sectionItemList: SectionItemList;
+  @ViewChild(TestimonyDetails, {static: false}) testimonyDetails: TestimonyDetails;
+  @ViewChild(TestimonyList, {static: false}) testimonyList: TestimonyList;
   @ViewChild(EmployeeDetails, {static: false}) employeeDetails: EmployeeDetails;
   @ViewChild(EmployeeList, {static: false}) employeeList: EmployeeList;
   @ViewChild(CompanyDetails, {static: false}) companyDetails: CompanyDetails;
@@ -90,6 +98,15 @@ export class AdminWebsite implements OnInit, OnDestroy {
     this.sectionList = null;
     this.sectionItemDetails = null;
     this.sectionItemList = null;
+    this.testimonyDetails = null;
+    this.testimonyList = null;
+    this.companyHistoryDetails = null;
+    this.companyHistoryList = null;
+  }
+
+  onCompanyHistorySelected($event) {
+    const companyHistoryId = $event;
+    this.companyHistoryDetails.getCompanyHistory(companyHistoryId);
   }
 
   onSectionSelected($event) {
@@ -101,6 +118,19 @@ export class AdminWebsite implements OnInit, OnDestroy {
     this.sectionItemDetails.getSectionItem(sectionItemId);
   }
 
+  onTestimonySelected($event) {
+    const testimonyId = $event;
+    this.testimonyDetails.getTestimony(testimonyId);
+  }
+
+  onTestimonySaved($event) {
+    this.testimonyList.updateTable($event);
+  }
+
+  onCompnyHistorySaved($event) {
+    this.companyHistoryList.updateTable($event);
+  }
+
   onEmployeeSelected($event) {
     this.activeEmployeeTab = 0;
     const employeeId = $event;
@@ -108,6 +138,10 @@ export class AdminWebsite implements OnInit, OnDestroy {
   }
   onEmployeeSaved($event) {
     this.employeeList.updateTable($event);
+  }
+
+  onCompanyHistorySaved($event) {
+    this.companyHistoryList.updateTable($event);
   }
 
   onCompanySelected($event) {

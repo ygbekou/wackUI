@@ -74,7 +74,7 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
 								<div class="header-row">
 									<div class="header-logo">
 										<a href="index.html">
-											<img alt="ATC" width="200" height="96" src="assets/docs/Company/{{company.logo}}">
+											<img alt="" width="200" height="96" src="assets/images/company/logo.jpg">
 										</a>
 									</div>
 								</div>
@@ -233,7 +233,7 @@ export class Header implements OnInit, OnDestroy {
 
 
       //parameters.push('e.status = |status|0|Integer');
-      parameters.push('e.showInMenu = |showInMenu|Y|String');
+      parameters.push('e.showInMenu = |showInMenu|1|Integer');
       //parameters.push('e.language = |language|' + this.globalEventsManager.currentLang + '|String');
       this.genericService.getAllByCriteria('com.wack.model.website.Section', parameters)
           .subscribe((data: Section[]) => {

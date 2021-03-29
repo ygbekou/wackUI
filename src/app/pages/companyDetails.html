@@ -59,8 +59,8 @@
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="ui-grid-col-2">
 					<label for="logo">{{'COMMON.LOGO' | translate}}<font color="red">*</font></label>
-                    <img class="thumb" src="assets/docs/Company/{{company.logo}}" alt="" class="img-fluid" *ngIf="company.logo !== ''"/>
-                    <button pButton icon="fa fa-delete" (click)="company.logo = ''" label="Remove" *ngIf="company.logo !== ''"></button>
+                    <img class="thumb" src="assets/images/company/logo.jpg" alt="" class="img-fluid" *ngIf="company.logo !== '' && logoUrl === ''"/>
+                    <button pButton icon="fa fa-delete" (click)="company.logo = ''" label="Remove" *ngIf="company.logo !== '' && logoUrl === ''"></button>
                     <img class="thumb" src="{{logoUrl}}" alt="" class="img-fluid" *ngIf="logoUrl !== ''"/>
                     <button pButton icon="fa fa-delete" (click)="clearLogoFile()" label="Remove" *ngIf="logoUrl !== ''"></button>
                 </div>
@@ -75,8 +75,8 @@
 			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="ui-grid-col-2">
 					<label for="favicon">{{'COMMON.FAVICON' | translate}}</label>
-                    <img class="thumb" src="assets/docs/Company/{{company.favicon}}" alt="" class="img-fluid" *ngIf="company.favicon !== ''"/>
-                    <button pButton icon="fa fa-delete" (click)="company.favicon = ''" label="Remove" *ngIf="company.favicon !== ''"></button>
+                    <img class="thumb" src="assets/images/company/favicon.jpg" alt="" class="img-fluid" *ngIf="company.favicon !== '' && faviconUrl === ''"/>
+                    <button pButton icon="fa fa-delete" (click)="company.favicon = ''" label="Remove" *ngIf="company.favicon !== '' && faviconUrl === ''"></button>
                     <img class="thumb" src="{{faviconUrl}}" alt="" class="img-fluid" />
                     <button pButton icon="fa fa-delete" (click)="clearFaviconFile()" label="Remove" *ngIf="faviconUrl !== ''"></button>
                     <br/>

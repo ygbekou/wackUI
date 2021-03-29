@@ -1,5 +1,6 @@
 
 import { UserGroup } from './userGroup';
+import { Country } from './website';
 
 
 export class User {
@@ -17,17 +18,18 @@ export class User {
   mobilePhone: string;
   address: string;
   city: string;
-  country: string;
+  country: Country;
   zipCode: string;
   birthDate: Date;
   status: number;
 
-
   // Transients
   confirmPassword: string;
 
+  type = 'User';
 
   constructor() {
     this.userGroup = new UserGroup();
+    this.country = new Country();
   }
 }

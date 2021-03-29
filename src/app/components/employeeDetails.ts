@@ -81,7 +81,7 @@ export class EmployeeDetails extends BaseComponent implements OnInit, OnDestroy 
             if (inputEl && inputEl.files && (inputEl.files.length > 0)) {
             const files: FileList = inputEl.files;
             for (let i = 0; i < files.length; i++) {
-                this.formData.append('file', files[i], files[i].name);
+                this.formData.append('file', files[i], 'picture.jpg');
             }
             } else {
                 //this.formData.append('file', null, null);

@@ -15,9 +15,17 @@
                             </p-tabPanel>
                         </p-tabView>
 				    </div>
-			    </p-tabPanel>
-			 	<p-tabPanel header="{{'COMMON.SECTION' | translate | uppercase}}">
+                </p-tabPanel>
+                <p-tabPanel header="{{'COMMON.COMPANY_HISTORY' | translate | uppercase}}">
 			    	<div *ngIf="activeTab == 1" class="ui-grid-row">
+				        <app-companyhistory-details (companyHistorySaveEvent)="onCompanyHistorySaved($event)"></app-companyhistory-details>
+				        <br/> 
+				        <br/>
+				        <app-companyhistory-list (companyHistoryIdEvent)="onCompanyHistorySelected($event)"></app-companyhistory-list>
+				    </div>
+                </p-tabPanel>
+			 	<p-tabPanel header="{{'COMMON.SECTION' | translate | uppercase}}">
+			    	<div *ngIf="activeTab == 2" class="ui-grid-row">
 				        <app-section-details></app-section-details>
 				        <br/> 
 				        <br/>
@@ -25,7 +33,7 @@
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel header="{{'COMMON.SECTION_ITEM' | translate}}">
-			    	<div *ngIf="activeTab == 2" class="ui-grid-row">
+			    	<div *ngIf="activeTab == 3" class="ui-grid-row">
 				        <app-sectionItem-details></app-sectionItem-details>
 				        <br/> 
 				        <br/>
@@ -33,7 +41,7 @@
 				    </div>
                 </p-tabPanel>
                 <p-tabPanel header="{{'COMMON.EMPLOYEE' | translate}}">
-			    	<div *ngIf="activeTab == 3" class="ui-grid-row">
+			    	<div *ngIf="activeTab == 4" class="ui-grid-row">
                         <p-tabView [activeIndex]="activeEmployeeTab" (onChange)="onEmployeeTabChange($event)">
                             <p-tabPanel header="{{'COMMON.DETAILS' | translate}}">
                                 <app-employee-details (employeeSaveEvent)="onEmployeeSaved($event)"></app-employee-details>
@@ -45,7 +53,7 @@
 				    </div>
                 </p-tabPanel>
                 <p-tabPanel header="{{'COMMON.MESSAGES' | translate}}">
-			    	<div *ngIf="activeTab == 4" class="ui-grid-row">
+			    	<div *ngIf="activeTab == 5" class="ui-grid-row">
                         <app-contact-details></app-contact-details>
                         <br/>
                         
@@ -53,7 +61,7 @@
 				    </div>
                 </p-tabPanel>
                 <p-tabPanel header="{{'COMMON.SLIDER' | translate | uppercase}}">
-			    	<div *ngIf="activeTab == 5" class="ui-grid-row">
+			    	<div *ngIf="activeTab == 6" class="ui-grid-row">
                         <p-tabView [activeIndex]="activeSliderTab" (onChange)="onSliderTabChange($event)">
                             <p-tabPanel header="{{'COMMON.SLIDER_IMAGE' | translate | uppercase}}" uppercase>
                                 <app-slider-details></app-slider-details>
@@ -70,8 +78,16 @@
                         </p-tabView>
 				    </div>
                 </p-tabPanel>
+                <p-tabPanel header="{{'COMMON.TESTIMONY' | translate | uppercase}}">
+			    	<div *ngIf="activeTab == 7" class="ui-grid-row">
+				        <app-testimony-details></app-testimony-details>
+				        <br/> 
+				        <br/>
+				        <app-testimony-list (testimonyIdEvent)="onTestimonySelected($event)"></app-testimony-list>
+				    </div>
+                </p-tabPanel>
                 <p-tabPanel header="{{'COMMON.STOCK' | translate | uppercase}}">
-			    	<div *ngIf="activeTab == 6" class="ui-grid-row">
+			    	<div *ngIf="activeTab == 8" class="ui-grid-row">
                         <p-tabView [activeIndex]="activeStockTab" (onChange)="onStockTabChange($event)">
                             <p-tabPanel header="{{'COMMON.FUND' | translate | uppercase}}" uppercase>
                                 <div *ngIf="activeStockTab === 0" class="ui-grid-row">
@@ -168,7 +184,7 @@
 				    </div>
                 </p-tabPanel>
                 <p-tabPanel header="{{'COMMON.STATISTIC' | translate | uppercase}}">
-			    	<div *ngIf="activeTab == 7" class="ui-grid-row">
+			    	<div *ngIf="activeTab == 9" class="ui-grid-row">
                         <p-tabView [activeIndex]="activeStatisticTab" (onChange)="onStatisticTabChange($event)">
                             <p-tabPanel header="{{'COMMON.FUND_EXPENSES' | translate | uppercase}}" uppercase>
                                 <div *ngIf="activeStatisticTab === 0" class="ui-grid-row">
@@ -180,10 +196,7 @@
                                     </div>
                                 </div>
                             </p-tabPanel>
-                            
-                           
-                           
-                        </p-tabView>
+                       </p-tabView>
 				    </div>
                 </p-tabPanel>
 

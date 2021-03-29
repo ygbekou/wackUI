@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-company-details',
   templateUrl: '../pages/companyDetails.html',
-  providers: [GenericService]
+  providers: []
 })
 // tslint:disable-next-line:component-class-suffix
 export class CompanyDetails implements OnInit, OnDestroy {
@@ -64,7 +64,7 @@ export class CompanyDetails implements OnInit, OnDestroy {
     if (logoEl && logoEl.files && (logoEl.files.length > 0)) {
       const files: FileList = logoEl.files;
       for (let i = 0; i < files.length; i++) {
-          this.formData.append('file[]', files[i], 'logo' + '.' + files[i].name.split('.')[1]);
+          this.formData.append('file[]', files[i], 'logo.jpg');
           nbFiles = +1;
       }
     }
@@ -73,7 +73,7 @@ export class CompanyDetails implements OnInit, OnDestroy {
     if (faviconEl && faviconEl.files && (faviconEl.files.length > 0)) {
       const files: FileList = faviconEl.files;
       for (let i = 0; i < files.length; i++) {
-          this.formData.append('file[]', files[i], 'favicon' + '.' + files[i].name.split('.')[1]);
+          this.formData.append('file[]', files[i], 'favicon.jpg');
           nbFiles = +1;
       }
     }
@@ -125,6 +125,7 @@ export class CompanyDetails implements OnInit, OnDestroy {
   }
 
   readUrl(event: any, targetName: any) {
+
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
 

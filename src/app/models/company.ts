@@ -30,5 +30,11 @@ export class Company {
   footerParagraph3: string;
   fromEmail: string;
   toEmail: string;
+  hoursOfOperation: string;
+  longitude: number;
+  latitude: number;
+  homeImage: string;
   status: Number = 0;
+
+  type = 'Company';
 }

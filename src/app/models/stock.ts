@@ -10,6 +10,8 @@ export class Fund {
   status: number;
   modifierName: string;
 
+  type = 'Fund';
+
   constructor() {
   }
 }
@@ -27,6 +29,8 @@ export class Payment {
   description: string;
   status: number;
   modifierName: string;
+
+  type = 'Payment';
 
   constructor() {
   }
@@ -48,6 +52,8 @@ export class Quote {
   // I need these fields for pdf print
   quoteDateStr: string;
 
+  type = 'Quote';
+
   constructor() {
     this.totalAmount = 0;
   }
@@ -63,6 +69,8 @@ export class Material {
   status: number;
   modifierName: string;
   productName: string;
+
+  type = 'Material';
 
   constructor() {
   }
@@ -83,6 +91,8 @@ export class ContractLabor {
   status: number;
   modifierName: string;
 
+  type = 'ContractLabor';
+
   constructor() {
   }
 }
@@ -94,6 +104,8 @@ export class Supplier {
   phone: string;
   email: string;
   address: string;
+
+  type = 'Supplier';
 
   constructor() {
   }
@@ -115,6 +127,8 @@ export class Purchase {
   description: string;
   status: number;
   modifierName: string;
+
+  type = 'Purchase';
 
   constructor() {
   }

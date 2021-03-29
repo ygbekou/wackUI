@@ -1,33 +1,38 @@
 
-        <app-web-header></app-web-header>
-        <div role="main" class="main">
-				<section class="section-secondary custom-section-padding">
-					<div class="container">
-						<div class="row mb-4">
-							<div class="col">
-                                <h2 class="font-weight-bold text-color-dark mb-3" 
-                                *ngIf="sectionItems !== null && sectionItems.length > 0">* {{sectionItems[0].section.title}}</h2>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-4"  *ngFor="let sectionItem of sectionItems">
-								<a class="text-decoration-none" data-appear-animation="fadeInUp" data-appear-animation-delay="0">
-									<div class="feature-box custom-feature-box feature-box-style-2">
-										<div class="feature-box-icon">
-											<img src="assets/docs/SectionItem/{{sectionItem.fileLocation}}" alt="">
-										</div>
-										<div class="feature-box-info ml-3">
-											<h4 class="font-weight-normal text-5">{{sectionItem.title}}</h4>
-											<div class="text-2" innerHtml="{{sectionItem.description}}"></div>
-										</div>
-									</div>
-								</a>
+<app-web-header></app-web-header>
+	<div role="main" class="main">
+		<section class="section bg-color-light custom-padding-1 border-0 my-0">
+			<div class="container">
+				<div class="row mt-5">
+					<div class="col text-center"  *ngIf="sectionItems !== null && sectionItems.length > 0">
+						<img src="assets/images/sections/{{sectionItems[0].section.id}}/{{sectionItems[0].section.picture}}" class="img-fluid" style="height: 400px;" alt="" />
+						<br/>
+						<h1 class="custom-primary-font custom-fontsize-1 font-weight-normal mb-0 ml-4" style="white-space: nowrap;">{{sectionItems[0].section.title}}</h1>
+						<br/>
+						<br/>
+						<div innerHtml="{{sectionItems[0].section.description}}"></div>
+						<br/>
+						<br/>
+						<br/>
+						<br/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6 col-lg-3 mb-5 mb-lg-0" *ngFor="let sectionItem of sectionItems">
+						<div class="feature-box feature-box-style-5 custom-feature-box-1 flex-column" data-appear-animation="fadeInLeftLonger" data-appear-animation-delay="300">
+							<div class="feature-box-info pl-0 pr-3">
+								<img src="assets/images/sectionitems/{{sectionItem.id}}/{{sectionItem.picture}}" class="img-fluid" alt="" />
+								<p class="mb-3" style="font-weight:bold">{{sectionItem.title}}</p> 
+								<div innerHtml="{{sectionItem.description}}"></div>
 							</div>
 						</div>
 					</div>
-				</section>			
-        </div>
-        <br/>
-        <br/>
-        <app-web-footer></app-web-footer>
+					
+				</div>
+			</div>
+		</section>		
+	</div>
+	<br/>
+	<br/>
+<app-web-footer></app-web-footer>
    

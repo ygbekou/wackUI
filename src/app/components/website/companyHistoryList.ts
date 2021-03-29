@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { SectionItem } from '../../models/website';
+import { Section, CompanyHistory } from '../../models/website';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
@@ -7,21 +7,20 @@ import { BaseComponent } from './baseComponent';
 import { ConfirmationService } from 'primeng/api';
 
 @Component({
-  // tslint:disable-next-line:component-selector
-  selector: 'app-sectionItem-list',
-  templateUrl: '../../pages/website/sectionItemList.html',
-  providers: []
+  selector: 'app-companyhistory-list',
+  templateUrl: '../../pages/website/companyHistoryList.html',
+  providers: [GenericService]
 })
 // tslint:disable-next-line:component-class-suffix
-export class SectionItemList extends BaseComponent implements OnInit, OnDestroy {
+export class CompanyHistoryList extends BaseComponent implements OnInit, OnDestroy {
 
-  sectionItems: SectionItem[] = [];
+  companyHistories: CompanyHistory[] = [];
   cols: any[];
 
-  @Output() sectionItemIdEvent = new EventEmitter<string>();
+  @Output() companyHistoryIdEvent = new EventEmitter<string>();
 
-  SECTIONITEM_LIST_LABEL: string;
-  SECTIONITEM_LIST: string;
+  COMPANY_HISTORY_LIST_LABEL: string;
+  COMPANY_HISTORY_LIST: string;
 
   constructor
     (
@@ -29,6 +28,7 @@ export class SectionItemList extends BaseComponent implements OnInit, OnDestroy 
 		public confirmationService: ConfirmationService,
 		public translate: TranslateService,
 		public tokenStorage: TokenStorage,
+    private globalEventsManager: GlobalEventsManager,
     private route: ActivatedRoute,
     private router: Router,
     ) {
@@ -38,9 +38,10 @@ export class SectionItemList extends BaseComponent implements OnInit, OnDestroy 
   ngOnInit(): void {
 
     this.cols = [
-            { field: 'sectionName', header: 'Section', headerKey: 'COMMON.SECTION' },
+            { field: 'year', header: 'Year', headerKey: 'COMMON.YEAR' },
             { field: 'title', header: 'Title', headerKey: 'COMMON.TITLE' },
-            //{ field: 'picture', header: 'Picture', headerKey: 'COMMON.PICTURE' },
+            { field: 'language', header: 'Language', headerKey: 'COMMON.LANGUAGE' },
+            { field: 'picture', header: 'Picture', headerKey: 'COMMON.PICTURE' },
             { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS' }
         ];
 
@@ -50,12 +51,12 @@ export class SectionItemList extends BaseComponent implements OnInit, OnDestroy 
 
           const parameters: string [] = [];
 
-          this.genericService.getAllByCriteria('com.wack.model.website.SectionItem', parameters)
-            .subscribe((data: SectionItem[]) => {
-              this.sectionItems = data ;
+          this.genericService.getAllByCriteria('com.wack.model.website.CompanyHistory', parameters)
+            .subscribe((data: CompanyHistory[]) => {
+              this.companyHistories = data;
             },
             error => console.log(error),
-            () => console.log('Get all SectionItem complete'));
+            () => console.log('Get all CompanyHistory complete'));
      });
 
 
@@ -78,25 +79,36 @@ export class SectionItemList extends BaseComponent implements OnInit, OnDestroy 
 
 
   ngOnDestroy() {
-    this.sectionItems = null;
+    this.companyHistories = null;
   }
 
-  edit(sectionItemId: number) {
-      this.sectionItemIdEvent.emit(sectionItemId + '');
+  edit(companyHistoryId: number) {
+      this.companyHistoryIdEvent.emit(companyHistoryId + '');
   }
 
-  delete(sectionItemId: number) {
+  delete(companyHistoryId: number) {
     try {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          'sectionItemId': sectionItemId,
+          'companyHistoryId': companyHistoryId,
         }
       };
-      // tslint:disable-next-line:quotemark
-      this.router.navigate(["/admin/sectionItemDetails"], navigationExtras);
+      this.router.navigate(['/admin/companyHistoryDetails'], navigationExtras);
     } catch (e) {
       console.log(e);
     }
+  }
+
+
+  updateTable(companyHistory: CompanyHistory) {
+		const index = this.companyHistories.findIndex(x => x.id === companyHistory.id);
+
+		if (index === -1) {
+			this.companyHistories.push(companyHistory);
+		} else {
+			this.companyHistories[index] = companyHistory;
+		}
+
   }
 
  }

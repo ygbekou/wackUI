@@ -4,14 +4,17 @@ export class Section {
   name: string;
   title: string;
   description: string;
-  fileLocation: string;
+  picture: string;
   status: number;
-  showInMenu: string;
+  showInMenu: number;
   language: string;
   sectionLabel: string;
+  rank: number;
+
+  type = 'Section';
 
   constructor() {
-      this.fileLocation = '';
+    this.picture = '';
   }
 }
 
@@ -21,17 +24,20 @@ export class SectionItem {
     section: Section;
     title: string;
     description: string;
-    fileLocation: string;
+    picture: string;
     status: number;
     showInMenu: string;
     language: string;
+    rank: number;
 
     text1: string;
     text2: string;
     text3: string;
 
-     constructor() {
-      this.fileLocation = '';
+    type = 'SectionItem';
+
+    constructor() {
+      this.picture = '';
     }
   }
 
@@ -41,16 +47,22 @@ export class SectionItem {
     email: string;
     phone: string;
     message: string;
+
+    type = 'ContactUsMessage';
   }
 
  export class Slider {
   id: number;
   name: string;
-  fileLocation: string;
+  picture: string;
+  useIdAsFileName: number;
+
   status: number;
 
+  type = 'Slider';
+
   constructor() {
-      this.fileLocation = '';
+      this.picture = '';
   }
 
 }
@@ -63,4 +75,40 @@ export class SectionItem {
   text3: string;
   language: string;
 
+  type = 'SliderText';
+}
+
+
+export class Testimony {
+  id: number;
+  author: string;
+  comments: string;
+  language: string;
+  rank: number;
+  status: number;
+
+  type = 'Testimony';
+}
+
+
+export class Country {
+  id = 215;
+  name: string;
+  domain: string;
+
+  type = 'Country';
+
+}
+
+
+export class CompanyHistory {
+  id: number;
+  year: number;
+  title: string;
+  description: string;
+  picture: string;
+  status: number;
+  language: string;
+
+  type = 'CompanyHistory';
 }

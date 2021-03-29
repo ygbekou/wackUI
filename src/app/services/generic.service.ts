@@ -8,7 +8,7 @@ import {SelectItem} from 'primeng/api';
 import { Reference, Payment, Material, ContractLabor } from '../models';
 import { GenericResponse } from '../models/genericResponse';
 import { Router } from '@angular/router';
-import { ContactUsMessage, SectionItem } from '../models/website';
+import { ContactUsMessage, SectionItem, Testimony } from '../models/website';
 import { SearchAttribute } from '../models/searchCriteria';
 
 @Injectable()
@@ -17,6 +17,7 @@ export class GenericService {
   private actionUrl: string;
   private headers: Headers;
   public languages: SelectItem[];
+  public testimonials: Testimony[];
 
   constructor(
         private http: Http,
@@ -34,7 +35,10 @@ export class GenericService {
             {label: 'English', value: 'EN'},
             {label: 'French', value: 'FR'}
         ];
+
+        
   }
+
 
   public getAll = (entityClass: string): Observable<any[]> => {
     const actionUrl = Constants.apiServer + '/service/' + entityClass + '/all';

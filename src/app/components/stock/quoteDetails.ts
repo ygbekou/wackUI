@@ -56,6 +56,7 @@ export class QuoteDetails implements OnInit, OnDestroy {
       if (result.id > 0) {
         this.quote = result;
         this.quote.quoteDate = new Date(this.quote.quoteDate);
+        this.quote.quoteDate = new Date(this.quote.quoteDate.toLocaleString('en-US', {timeZone: 'UTC'}));
       } else {
         this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
           this.messages.push({severity:

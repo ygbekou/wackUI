@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import {Constants} from '../app.constants';
 import { TokenStorage } from './token.storage';
 import {Http, Response, Headers} from '@angular/http';
+import { AuthToken } from '../models/authToken';
 
 @Injectable()
 export class AuthenticationService {
@@ -78,15 +79,18 @@ export class AuthenticationService {
 
   public attemptAuth = (user: User): Observable<any> => {
     const toAdd = JSON.stringify(user);
-    const actionUrl = Constants.apiServer + '/service/token/generate-token';
+    const actionUrl = Constants.apiServer + '/service/token/authenticate';
     return this.http.post(actionUrl, toAdd, {headers: this.headers})
-      .map((response: Response) => {
+      .map((response: any) => {
             // login successful if there's a jwt token in the response
-            if (response) {
-            const data = response.json();
-            this.tokenStorage.saveAuthData(data);
-                return response.json();
+            if (response.ok) {
+              const data = JSON.parse(response._body);
+              if (data.token) {
+                this.tokenStorage.saveAuthData(data);
+                return data;
+              } else {
 
+              }
             }
         }
 
@@ -110,7 +114,7 @@ export class AuthenticationService {
   }
 
   private handleError(error: Response) {
-    if (error.json()['path'] === '/service/token/generate-token') {
+    if (error.json()['path'] === '/service/token/authenticate') {
       window.sessionStorage.removeItem(TokenStorage.TOKEN_KEY);
       return Observable.of('Failed');
     }

@@ -1,13 +1,13 @@
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
     <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-        <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="section">
+        <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="companyHistory">
             <p-messages [(value)]="messages"></p-messages>
             <div class="ui-grid-row">
                 <div class="ui-grid-col-5 ui-sm-12">
                     <div class="form-group">		
-                        <label for="name">{{ 'COMMON.NAME' | translate }}<font color="red">*</font></label>
-                        <input pInputText id="name" [(ngModel)]="section.name" name="name" #name="ngModel" required />
-                        <p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
+                        <label for="name">{{ 'COMMON.YEAR' | translate }}<font color="red">*</font></label>
+                        <input pInputText id="year" [(ngModel)]="companyHistory.year" name="year" #year="ngModel" required />
+                        <p-message *ngIf="f.submitted && year.invalid" severity="error" text="Field is required"></p-message>
                     </div>
                 </div>
                 <div class="ui-grid-col-2 ui-sm-12">
@@ -16,7 +16,7 @@
                 <div class="ui-grid-col-5 ui-sm-12">
                     <div class="form-group">		
                         <label for="name">{{ 'COMMON.TITLE' | translate }}<font color="red">*</font></label>
-                        <input pInputText id="title" [(ngModel)]="section.title" name="title" #title="ngModel" required />
+                        <input pInputText id="title" [(ngModel)]="companyHistory.title" name="title" #title="ngModel" required />
                         <p-message *ngIf="f.submitted && title.invalid" severity="error" text="Field is required"></p-message>
                     </div>
                 </div>
@@ -26,17 +26,17 @@
                     <div class="form-group">		
                         <label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
                         <textarea pInputTextarea id="description"
-                                [(ngModel)]="section.description" name="description" #description="ngModel"> </textarea>
+                                [(ngModel)]="companyHistory.description" name="description" #description="ngModel"> </textarea>
                     </div>
                 </div>
                 <div class="ui-grid-col-2 ui-sm-12"></div>
                 <div class="ui-grid-col-5 ui-sm-12">
                     <div class="ui-grid-col-2">
                         <label for="picture">{{'COMMON.PICTURE' | translate}}</label>
-                        <img class="thumb" src="assets/images/sections/{{section.id}}/{{section.picture}}" alt="" class="img-fluid" 
-                            *ngIf="section.picture !== '' && section.picture !== 'null'"/>
-                        <button pButton icon="fa fa-delete" (click)="section.picture = ''" label="Remove" 
-                            *ngIf="section.picture !== '' && section.picture !== null"></button>
+                        <img class="thumb" src="assets/images/companyhistorys/{{companyHistory.id}}/{{companyHistory.picture}}" alt="" class="img-fluid" 
+                            *ngIf="companyHistory.picture !== '' && companyHistory.picture !== 'null'"/>
+                        <button pButton icon="fa fa-delete" (click)="companyHistory.picture = ''" label="Remove" 
+                            *ngIf="companyHistory.picture !== '' && companyHistory.picture !== null"></button>
                         <img class="thumb" src="{{pictureUrl}}" alt="" class="img-fluid" *ngIf="pictureUrl !== ''"/>
                         <button pButton icon="fa fa-delete" (click)="clearPictureFile()" label="Remove" *ngIf="pictureUrl !== ''"></button>
                     </div>
@@ -51,33 +51,20 @@
             <div class="ui-grid-row">
                 <div class="ui-grid-col-5 ui-sm-12">
                     <label for="language">{{'COMMON.LANGUAGE' | translate}}<font color="red">*</font></label>
-                    <p-radioButton name="language" value="EN" label="{{'COMMON.ENGLISH' | translate}}" [(ngModel)]="section.language"
+                    <p-radioButton name="language" value="EN" label="{{'COMMON.ENGLISH' | translate}}" [(ngModel)]="companyHistory.language"
                          #language="ngModel" required></p-radioButton>
-                    <p-radioButton name="language" value="FR" label="{{'COMMON.FRENCH' | translate}}" [(ngModel)]="section.language"
+                    <p-radioButton name="language" value="FR" label="{{'COMMON.FRENCH' | translate}}" [(ngModel)]="companyHistory.language"
                          #language="ngModel" required ></p-radioButton>
                     <p-message *ngIf="f.submitted && language.invalid" severity="error" text="Field is required"></p-message>
                 </div>
                 <div class="ui-grid-col-2 ui-sm-12">
                 </div>
                 <div class="ui-grid-col-5 ui-sm-12">
-                    <p-radioButton name="status" value="0" label="Actif" [(ngModel)]="section.status"
+                    <p-radioButton name="status" value="0" label="Actif" [(ngModel)]="companyHistory.status"
                         #status="ngModel" required></p-radioButton>
-                    <p-radioButton name="status" value="1" label="Inactif" [(ngModel)]="section.status"
+                    <p-radioButton name="status" value="1" label="Inactif" [(ngModel)]="companyHistory.status"
                         #status="ngModel" required ></p-radioButton>
                     <p-message *ngIf="f.submitted && status.invalid" severity="error" text="Field is required"></p-message>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-5 ui-sm-12">
-                    <p-checkbox name="showInMenu" [(ngModel)]="showInMenu" binary="true"></p-checkbox>
-                    &nbsp;&nbsp;<label for="showInMenu">{{'COMMON.SHOW_IN_MENU' | translate}}</label>
-                </div>
-                <div class="ui-grid-col-2 ui-sm-12"></div>
-                <div class="ui-grid-col-5 ui-sm-12">
-                    <div class="form-group">		
-                        <label for="name">{{ 'COMMON.RANK' | translate }}</label>
-                        <input pInputText id="rank" [(ngModel)]="section.rank" name="rank" #rank="ngModel" />
-                    </div>
                 </div>
             </div>
         </div>

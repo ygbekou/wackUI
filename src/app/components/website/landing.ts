@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { GenericService, GlobalEventsManager } from '../../services';
-import { SectionItem, Section, SliderText } from '../../models/website';
+import { SectionItem, Section, SliderText, Testimony, CompanyHistory } from '../../models/website';
 import { Company } from '../../models';
 import { Employee } from '../../models/employee';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { Testimonials } from '../testimonials';
 
 @Component({
   selector: 'app-landing',
@@ -21,12 +22,15 @@ export class Landing implements OnInit, OnDestroy {
     sectionMap: Map<string, SectionItem[]> = new Map();
     managers: Employee [] = [];
     company: Company = new Company();
+    testimonials: Testimony [] = [];
+    companyHistories: CompanyHistory [] = [];
 
     changeCarrousel = true;
+    showTestimonials = false;
 
     constructor
     (
-      private genericService: GenericService,
+      public genericService: GenericService,
       public globalEventsManager: GlobalEventsManager,
       public translate: TranslateService
     ) {
@@ -44,6 +48,7 @@ export class Landing implements OnInit, OnDestroy {
   }
 
   loadData(): void {
+
       this.sectionMap = new Map();
       this.sliderTexts[0] = new SliderText();
       this.sliderTexts[1] = new SliderText();
@@ -55,6 +60,7 @@ export class Landing implements OnInit, OnDestroy {
       this.genericService.getAllByCriteria('com.wack.model.website.SliderText', parameters)
           .subscribe((data: SliderText[]) => {
               let i = 0;
+
               for (const item of data) {
                  this.sliderTexts[i] = item;
                  i = i + 1;
@@ -66,11 +72,12 @@ export class Landing implements OnInit, OnDestroy {
       parameters = [];
       parameters.push('e.status = |status|0|Integer');
       parameters.push('e.section.language = |language|' + this.translate.currentLang + '|String');
-      this.genericService.getAllByCriteria('com.wack.model.website.SectionItem', parameters)
+      this.genericService.getAllByCriteria('com.wack.model.website.SectionItem', parameters, ' ORDER BY e.section.rank, e.rank DESC ')
           .subscribe((data: SectionItem[]) => {
+              console.info(data);
               for (const item of data) {
                 if (!this.sectionMap.has(item.section.title)) {
-                    this.sectionMap.set(item.section.title, []);
+                    this.sectionMap.set(item.section.title, new Array());
                 }
                 this.sectionMap.get(item.section.title).push(item);
               }
@@ -104,6 +111,45 @@ export class Landing implements OnInit, OnDestroy {
        },
        error => console.log(error),
        () => console.log('Get Managers complete'));
+
+
+      this.getTestimonials();
+      this.getCompanyHistories();
+
+  }
+
+  changeClass(newId) {
+    for (const companyHistory of this.companyHistories) {
+      if (Number(newId) === companyHistory.year) {
+        document.getElementById(newId).className = 'tab-pane tab-pane-navigation custom-tab-pane-navigation-1 active';
+      } else {
+        document.getElementById(companyHistory.year + '').className = 'tab-pane tab-pane-navigation';
+      }
+    }
+  }
+
+  getTestimonials() {
+    const parameters: string [] = [];
+    parameters.push('e.language = |language|' + this.translate.currentLang + '|String');
+    parameters.push('e.status = |status|0|Integer');
+    this.genericService.getAllByCriteria('com.wack.model.website.Testimony', parameters)
+        .subscribe((data: Testimony[]) => {
+          this.testimonials = data;
+      },
+      error => console.log(error),
+      () => console.log('Get Testimonials complete'));
+  }
+
+  getCompanyHistories() {
+    const parameters: string [] = [];
+    parameters.push('e.language = |language|' + this.translate.currentLang + '|String');
+    parameters.push('e.status = |status|0|Integer');
+    this.genericService.getAllByCriteria('com.wack.model.website.CompanyHistory', parameters, ' ORDER BY e.year DESC ')
+        .subscribe((data: CompanyHistory[]) => {
+          this.companyHistories = data;
+      },
+      error => console.log(error),
+      () => console.log('Get CompanyHistory complete'));
   }
 
   ngOnDestroy() {

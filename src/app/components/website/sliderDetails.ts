@@ -71,7 +71,7 @@ export class SliderDetails implements OnInit, OnDestroy {
     if (pictureEl && pictureEl.files && (pictureEl.files.length > 0)) {
       const files: FileList = pictureEl.files;
       for (let i = 0; i < files.length; i++) {
-          this.formData.append('file', files[i], files[i].name);
+          this.formData.append('file[]', files[i], 'picture.jpg');
       }
     } else {
        this.formData.append('file', null, null);
@@ -80,7 +80,8 @@ export class SliderDetails implements OnInit, OnDestroy {
     try {
 
       if (pictureEl && pictureEl.files && pictureEl.files.length > 0) {
-        this.slider.fileLocation = '';
+        this.slider.picture = '';
+        this.slider.useIdAsFileName = 1;
         this.genericService.saveWithFile(this.slider, 'com.wack.model.website.Slider', this.formData, 'saveWithFile')
           .subscribe(result => {
             if (result.id > 0) {

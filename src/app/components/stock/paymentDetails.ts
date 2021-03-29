@@ -64,6 +64,8 @@ export class PaymentDetails implements OnInit, OnDestroy {
       if (result.id > 0) {
         this.payment = result;
         this.payment.paymentDate = new Date(this.payment.paymentDate);
+        this.payment.paymentDate = new Date(this.payment.paymentDate.toLocaleString('en-US', {timeZone: 'UTC'}));
+
       } else {
         this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
           this.messages.push({severity:

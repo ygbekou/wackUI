@@ -170,8 +170,14 @@
     "SALARY_MONTH": "Salary Month",
     "MATERIAL": "Material",
     "STATISTIC": "Statistic",
-    "FUND_EXPENSES": "Fund vs Expenses"
-
+    "FUND_EXPENSES": "Fund vs Expenses",
+    "SEND_MESSAGE_TO": "Send a Message to",
+    "AUTHOR": "Author",
+    "RANK": "Rank",
+    "TESTIMONY": "Testimony",
+    "COMMENTS": "Comments",
+    "YEAR": "Year",
+    "COMPANY_HISTORY": "Company History"
   },
   "MESSAGE": {
   	"DELETE_CONFIRM": "Are you sure that you want to proceed?",

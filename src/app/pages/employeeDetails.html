@@ -100,8 +100,8 @@
             <div class="ui-grid-col-5 ui-sm-12">
                 <div class="form-group">
                     <label for="country">{{ 'COMMON.COUNTRY' | translate }}</label>
-                    <input type="text" pInputText class="form-control" id="country"
-                        [(ngModel)]="employee.user.country" name="country" #country="ngModel">
+                    <input type="text" pInputText class="form-control" id="country" disabled
+                        [(ngModel)]="employee.user.country.name" name="country" #country="ngModel">
                 </div>
             </div>
         </div>
@@ -117,18 +117,17 @@
             <div class="ui-grid-col-5 ui-sm-12">
 				<div class="ui-grid-col-2">
 					<label i18n="@@picture" for="picture">{{ 'COMMON.PICTURE' | translate }} </label>
-                    <img class="thumb img-fluid" src="assets/images/User/{{employee.user.picture}}" alt="" 
-                        *ngIf="employee.user.picture !== ''"/>
+                    <img class="thumb img-fluid" src="assets/images/users/{{employee.user.picture}}" alt="" 
+                        *ngIf="employee.user.picture !== '' && pictureUrl === null"/>
                     <button pButton icon="fa fa-delete" (click)="employee.user.picture = ''" 
-                        label="Remove" *ngIf="employee.user.picture !== ''"></button>
-                    <img class="thumb img-fluid" src="{{pictureUrl}}" alt="" *ngIf="pictureUrl !== ''"/>
-                    <button pButton icon="fa fa-delete" (click)="clearPicture()" label="Remove" *ngIf="pictureUrl !== ''"></button>
+                        label="Remove" *ngIf="employee.user.picture !== '' && pictureUrl === null"></button>
+                    <img class="thumb img-fluid" src="{{pictureUrl}}" alt="" *ngIf="pictureUrl !== '' && pictureUrl !== null"/>
+                    <button pButton icon="fa fa-delete" (click)="clearPicture()" label="Remove" *ngIf="pictureUrl !== '' && pictureUrl !== null"></button>
                 </div>
                 <br/>
 				<div class="ui-grid-col-12 ui-sm-12">
 					<div class="form-group">
-                        <input type="file" (change)="readUrl($event)" [attr.multiple]="null" name="picture" 
-                            #picture *ngIf="employee.user.picture === ''">
+                        <input type="file" (change)="readUrl($event)" [attr.multiple]="null" name="picture" #picture>
 					</div>
 				</div>
             </div>

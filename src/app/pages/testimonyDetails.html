@@ -1,0 +1,63 @@
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+    <p-messages [(value)]="messages"></p-messages>
+	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="testimony">
+
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-5 ui-sm-12">
+                <div class="form-group">
+                    <label for="NAME">{{ 'COMMON.AUTHOR' | translate }}<font color="red">*</font>:
+                    </label> <input type="text" pInputText class="form-control" id="name"
+                            [(ngModel)]="testimony.author" name="author" #author="ngModel" required>
+                    <p-message *ngIf="f.submitted && author.invalid" severity="error" text="Field is required"></p-message>
+                </div>
+            </div>
+            <div class="ui-grid-col-2 ui-sm-12"></div>
+            <div class="ui-grid-col-5 ui-sm-12">
+                <div class="form-group">
+                    <label for="rank">{{ 'COMMON.RANK' | translate }}</label> 
+                    <p-rating [(ngModel)]="testimony.rank" id="rank" name="rank" #rank="ngModel" required></p-rating>
+                    <p-message *ngIf="f.submitted && rank.invalid" severity="error" text="Field is required"></p-message>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-5 ui-sm-12">
+                <label for="language">{{'COMMON.LANGUAGE' | translate}}<font color="red">*</font></label>
+                <p-radioButton name="language" value="EN" label="{{'COMMON.ENGLISH' | translate}}" [(ngModel)]="testimony.language"
+                        #language="ngModel" required></p-radioButton>
+                <p-radioButton name="language" value="FR" label="{{'COMMON.FRENCH' | translate}}" [(ngModel)]="testimony.language"
+                        #language="ngModel" required ></p-radioButton>
+                <p-message *ngIf="f.submitted && language.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+            <div class="ui-grid-col-2 ui-sm-12"></div>
+            <div class="ui-grid-col-5 ui-sm-12">
+                <p-radioButton name="status" value="0" label="Actif" [(ngModel)]="testimony.status"
+                    #status="ngModel" required></p-radioButton>
+                <p-radioButton name="status" value="1" label="Inactif" [(ngModel)]="testimony.status"
+                    #status="ngModel" required ></p-radioButton>
+                <p-message *ngIf="f.submitted && status.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+        </div>
+
+        <div class="ui-grid-row">
+			<div class="ui-grid-col-12 ui-sm-12">
+                <textarea maxlength="5000" data-msg-required="Please enter your message." rows="10" class="form-control"
+                                 name="comments" id="comments" placeholder="{{ 'COMMON.COMMENTS' | translate }}*"  [(ngModel)]="testimony.comments" 
+                                 #comments="ngModel" required>
+                </textarea>
+            </div>
+        </div>
+    </div>
+	
+	<br />
+
+	<div class="form-group">
+		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+			<button type="button" pButton icon="fa fa-refresh" (click)="clear()"label="{{ 'COMMON.ADD' | translate }}"></button> &nbsp;&nbsp;
+			<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}" [disabled]="isCancel()"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button type="button" pButton icon="fa fa-delete" (click)="cancel()" label="{{ 'COMMON.CANCEL' | translate }}" [disabled]="isCancel()"></button>&nbsp;&nbsp;
+            
+		</div>
+	</div>
+</form>

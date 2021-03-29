@@ -24,7 +24,7 @@
 						{{supplier[col.field]}}
 					</div>
 					<div *ngIf="col.type == 'date'">
-						{{supplier[col.field] | date: globalEventsManager.DATE_FORMAT}}
+						{{supplier[col.field] | date: globalEventsManager.DATE_FORMAT : 'UTC'}}
 					</div>
 				</td>
 			</tr>

@@ -1,33 +1,34 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { SectionItem } from '../../models/website';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Section, CompanyHistory } from '../../models/website';
 import { Constants } from '../../app.constants';
-import { SectionDropdown } from './../dropdowns';
 import { GenericService } from '../../services';
 import { TranslateService} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
+import { Employee } from 'src/app/models';
 
 @Component({
-  // tslint:disable-next-line:component-selector
-  selector: 'app-sectionItem-details',
-  templateUrl: '../../pages/website/sectionItemDetails.html',
-  providers: [GenericService, SectionDropdown]
+  selector: 'app-companyhistory-details',
+  templateUrl: '../../pages/website/companyHistoryDetails.html',
+  providers: []
 
 })
 // tslint:disable-next-line:component-class-suffix
-export class SectionItemDetails implements OnInit, OnDestroy {
+export class CompanyHistoryDetails implements OnInit, OnDestroy {
 
-    sectionItem: SectionItem = new SectionItem();
+    companyHistory: CompanyHistory = new CompanyHistory();
     messages: Message[] = [];
     @ViewChild('picture', {static: false}) picture: ElementRef;
     formData = new FormData();
     pictureUrl: any = '';
+    showInMenu = false;
+    @Output() companyHistorySaveEvent = new EventEmitter<CompanyHistory>();
 
     constructor
     (
       private genericService: GenericService,
-      private translate: TranslateService,
-      public  sectionDropdown: SectionDropdown    ) {
-      this.sectionItem = new SectionItem();
+      private translate: TranslateService
+    ) {
+      this.companyHistory = new CompanyHistory();
   }
 
 
@@ -37,26 +38,31 @@ export class SectionItemDetails implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.sectionItem = null;
+    this.companyHistory = null;
   }
 
-  getSectionItem(sectionItemId: number) {
+  getCompanyHistory(companyHistoryId: number) {
+
     this.messages = [];
-    this.genericService.getOne(sectionItemId, 'com.wack.model.website.SectionItem')
+    this.genericService.getOne(companyHistoryId, 'com.wack.model.website.CompanyHistory')
         .subscribe(result => {
       if (result.id > 0) {
-        this.sectionItem = result;
+        this.companyHistory = result;
       } else {
         this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
-          this.messages.push({severity: Constants.ERROR, summary: res['COMMON.READ'], detail: res['MESSAGE.READ_FAILED']});
+          this.messages.push({severity: Constants.ERROR,
+            summary: res['COMMON.READ'],
+            detail: res['MESSAGE.READ_FAILED']});
         });
       }
     });
   }
-
+  // tslint:disable-next-line:no-trailing-whitespace
+  
   clear() {
-    this.sectionItem = new SectionItem();
+    this.companyHistory = new CompanyHistory();
   }
+
 
   save() {
     this.formData = new FormData();
@@ -73,22 +79,25 @@ export class SectionItemDetails implements OnInit, OnDestroy {
 
     try {
       if (pictureEl && pictureEl.files && pictureEl.files.length > 0) {
-        this.sectionItem.picture = '';
-        this.genericService.saveWithFile(this.sectionItem, 'com.wack.model.website.SectionItem', this.formData, 'saveWithFile')
+        this.companyHistory.picture = '';
+        alert(this.companyHistory.status);
+        this.genericService.saveWithFile(this.companyHistory, 'com.wack.model.website.CompanyHistory', this.formData, 'saveWithFile')
           .subscribe(result => {
             if (result.id > 0) {
-              this.sectionItem = result;
+              this.companyHistory = result;
+              this.companyHistorySaveEvent.emit(this.companyHistory);
               this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
-              this.clearPictureFile();
+              this.pictureUrl = '';
             } else {
               this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
             }
           });
       } else {
-        this.genericService.save(this.sectionItem, 'com.wack.model.website.SectionItem')
+        this.genericService.save(this.companyHistory, 'com.wack.model.website.CompanyHistory')
           .subscribe(result => {
             if (result.id > 0) {
-              this.sectionItem = result;
+              this.companyHistory = result;
+              this.companyHistorySaveEvent.emit(this.companyHistory);
               this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
             } else {
               this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
@@ -105,7 +114,7 @@ export class SectionItemDetails implements OnInit, OnDestroy {
 
   }
 
- readUrl(event: any, targetName: any) {
+  readUrl(event: any, targetName: any) {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
 
@@ -122,5 +131,4 @@ export class SectionItemDetails implements OnInit, OnDestroy {
     this.pictureUrl = '';
     this.picture.nativeElement.value = '';
   }
-
  }

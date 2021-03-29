@@ -49,7 +49,8 @@ export class FundDetails implements OnInit, OnDestroy {
       if (result.id > 0) {
         this.fund = result;
         this.fund.receptionDate = new Date(this.fund.receptionDate);
-      } else {
+        this.fund.receptionDate = new Date(this.fund.receptionDate.toLocaleString('en-US', {timeZone: 'UTC'}));
+     } else {
         this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
           this.messages.push({severity:
             Constants.ERROR, summary:
@@ -74,7 +75,7 @@ export class FundDetails implements OnInit, OnDestroy {
 
     try {
 
-      
+
       this.genericService.save(this.fund, 'com.wack.model.stock.Fund')
         .subscribe(result => {
           if (result.id > 0) {
@@ -90,7 +91,7 @@ export class FundDetails implements OnInit, OnDestroy {
               });
           }
         });
-      
+
     } catch (e) {
       console.log(e);
     }

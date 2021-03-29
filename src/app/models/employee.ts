@@ -10,6 +10,8 @@ export class Employee {
   name: string;
   modifierName: string;
 
+  type = 'Employee';
+
   constructor() {
     this.managing = 1;
   }

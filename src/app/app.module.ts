@@ -105,6 +105,8 @@ import { AdminWebsite } from './components/website/adminWebsite';
 import { AdminHeader } from './components/website/adminHeader';
 import { SectionDetails } from './components/website/sectionDetails';
 import { SectionList } from './components/website/sectionList';
+import { TestimonyDetails } from './components/testimonyDetails';
+import { TestimonyList } from './components/testimonyList';
 import { SectionItemDetails } from './components/website/sectionItemDetails';
 import { SectionItemList } from './components/website/sectionItemList';
 import { SliderDetails } from './components/website/sliderDetails';
@@ -144,6 +146,9 @@ import { MonthDropdown } from './components/dropdowns/dropdown.month';
 import { YearDropdown } from './components/dropdowns/dropdown.year';
 import { QuoteDropdown } from './components/dropdowns/dropdown.quote';
 import { FundExpenseStatistics } from './components/stock/fundExpenseStatistics';
+import { Testimonials } from './components/testimonials';
+import { CompanyHistoryDetails } from './components/website/companyHistoryDetails';
+import { CompanyHistoryList } from './components/website/companyHistoryList';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -253,6 +258,10 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AdminHeader,
     SectionDetails,
     SectionList,
+    CompanyHistoryDetails,
+    CompanyHistoryList,
+    TestimonyDetails,
+    TestimonyList,
     SectionItemDetails,
     SectionItemList,
     SliderDetails,
@@ -279,7 +288,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ContractLaborList,
     QuoteDetails,
     QuoteList,
-    FundExpenseStatistics
+    FundExpenseStatistics,
+    Testimonials
+
   ],
   providers: [
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
