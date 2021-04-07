@@ -32,8 +32,8 @@ export class GenericService {
     this.headers.append('Accept', 'application/json');
 
     this.languages = [
-            {label: 'English', value: 'EN'},
-            {label: 'French', value: 'FR'}
+            {label: 'English', value: 'en'},
+            {label: 'French', value: 'fr'}
         ];
 
         

@@ -87,4 +87,15 @@ export class SliderList implements OnInit, OnDestroy {
     }
   }
 
+
+  updateTable(slider: Slider) {
+		const index = this.sliders.findIndex(x => x.id === slider.id);
+
+		if (index === -1) {
+			this.sliders.push(slider);
+		} else {
+			this.sliders[index] = slider;
+		}
+
+  }
  }

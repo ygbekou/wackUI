@@ -7,6 +7,7 @@ import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate
 import { registerLocaleData } from '@angular/common';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import localeFr from '@angular/common/locales/fr';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 @Component({
   selector: 'app-root',
@@ -55,14 +56,27 @@ export class AppComponent implements AfterViewInit {
               private location: Location,
               public translate: TranslateService,
               private token: TokenStorage,
-              public renderer: Renderer2) {
+              public renderer: Renderer2,
+              ) {
 
     translate.addLangs(['en', 'fr']);
-    translate.setDefaultLang('en');
-    translate.currentLang = 'en';
+
+    let lang = navigator.language;
+    if (lang) {
+      lang = lang.substring(0, 2);
+    }
+    if (Cookie.get('lang')) {
+      this.translate.use(Cookie.get('lang'));
+      lang=Cookie.get('lang');
+      console.log('Using cookie lang=' + Cookie.get('lang'));
+    } else if (lang) {
+      console.log('Using browser lang=' + lang);
+      this.translate.use(lang);
+    } else {
+      this.translate.use('fr');
+      console.log('Using default lang=fr');
+    }
     registerLocaleData(localeFr);
-    const browserLang = translate.getBrowserLang();
-    translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
 
   }
 

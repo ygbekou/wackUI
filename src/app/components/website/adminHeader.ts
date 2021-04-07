@@ -35,12 +35,12 @@ import { TranslateService } from '@ngx-translate/core';
                                         <nav class="header-nav-top">
                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                             <p-radioButton name="language" value="en" label="EN"
-                                                [(ngModel)]="globalEventsManager.currentLang" #langSelect="ngModel"
+                                                [(ngModel)]="translate.currentLang" #langSelect="ngModel"
                                             (click)="globalEventsManager.changeLanguage('en')">
                                             </p-radioButton>&nbsp;&nbsp;&nbsp;&nbsp;
 
                                             <p-radioButton name="language" value="fr" label="FR"
-                                            [(ngModel)]="globalEventsManager.currentLang" #langSelect="ngModel"
+                                            [(ngModel)]="translate.currentLang" #langSelect="ngModel"
                                             (click)="globalEventsManager.changeLanguage('fr')">
                                             </p-radioButton>
 
@@ -72,7 +72,7 @@ import { TranslateService } from '@ngx-translate/core';
 								<div class="header-row">
 									<div class="header-logo">
 										<a href="index.html">
-											<img alt="ATC" width="200" height="96" src="assets/docs/Company/{{company.logo}}">
+											<img alt="ATC" width="200" height="96" src="assets/images/company/logo.jpg">
 										</a>
 									</div>
 								</div>

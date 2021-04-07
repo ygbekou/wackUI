@@ -25,6 +25,7 @@ export class ReferenceDetails extends BaseComponent implements OnInit, OnDestroy
   messages: Message[] = [];
   
   @Input() canSave: boolean;
+  @Input() referenceTypeStr: string;
   @Output() referenceSaveEvent = new EventEmitter<Reference>();
  
   constructor
@@ -114,6 +115,7 @@ export class ReferenceDetails extends BaseComponent implements OnInit, OnDestroy
         this.referenceType = this.globalEventsManager.selectedReferenceType;
       }
 
+      this.reference.type = this.referenceTypeStr;
       
       this.genericService.save(this.reference, this.globalEventsManager.selectedReferenceType)
         .subscribe(result => {

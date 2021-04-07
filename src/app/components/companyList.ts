@@ -92,4 +92,17 @@ export class CompanyList extends BaseComponent implements OnInit, OnDestroy {
     }
     return statusDesc;
   }
+
+
+  updateTable(company: Company) {
+		const index = this.companies.findIndex(x => x.id === company.id);
+
+		if (index === -1) {
+			this.companies.push(company);
+		} else {
+			this.companies[index] = company;
+		}
+
+  }
+
  }

@@ -99,4 +99,16 @@ export class SectionItemList extends BaseComponent implements OnInit, OnDestroy 
     }
   }
 
+
+  updateTable(sectionItem: SectionItem) {
+		const index = this.sectionItems.findIndex(x => x.id === sectionItem.id);
+
+		if (index === -1) {
+			this.sectionItems.push(sectionItem);
+		} else {
+			this.sectionItems[index] = sectionItem;
+		}
+
+  }
+
  }

@@ -8,7 +8,6 @@ export class AppInfoStorage {
   public CURRENCY_MASK_INTEGER;
   public CURRENCY_MASK_DECIMAL; 
   public CURRENCY_FORMAT;
-  
 
   constructor(
     public translate: TranslateService,

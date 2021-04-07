@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, ChangeDetectorRef, ViewChild, EventEmitter, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Company } from '../models';
 import { Constants } from '../app.constants';
@@ -23,6 +23,8 @@ export class CompanyDetails implements OnInit, OnDestroy {
   messages: Message[] = [];
   logoUrl: any = '';
   faviconUrl: any = '';
+
+  @Output() companySaveEvent = new EventEmitter<Company>();
 
   constructor
   (
@@ -57,6 +59,7 @@ export class CompanyDetails implements OnInit, OnDestroy {
   }
 
   save() {
+    this.messages = [];
     this.formData = new FormData();
     let nbFiles: Number = 0 ;
 
@@ -87,6 +90,7 @@ export class CompanyDetails implements OnInit, OnDestroy {
             if (result.id > 0) {
               this.company = result;
               this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
+              this.companySaveEvent.emit(this.company);
             } else {
               this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
             }
@@ -97,6 +101,7 @@ export class CompanyDetails implements OnInit, OnDestroy {
             if (result.id > 0) {
               this.company = result;
               this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
+              this.companySaveEvent.emit(this.company);
             } else {
               this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
             }

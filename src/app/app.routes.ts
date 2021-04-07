@@ -7,6 +7,7 @@ import { LoggedInGuard } from './services/loggedIn.guard';
 import { AdminWebsite } from './components/website/adminWebsite';
 import { Industries } from './components/industries';
 import { AboutUs } from './components/aboutUs';
+import { Testimonials } from './components/testimonials';
 import { Contact } from './components/contact';
 import { SingleSection } from './components/singleSection';
 
@@ -18,6 +19,7 @@ export const routes: Routes = [
   {path: 'services', component: Services},
   {path: 'industries', component: Industries},
   {path: 'about', component: AboutUs},
+  {path: 'testimonials', component: Testimonials},
   {path: 'contact', component: Contact},
   {path: 'adminWebsite', component: AdminWebsite},
   {path: 'admin', loadChildren: './modules/admin.module#AdminModule', canActivate: [LoggedInGuard], }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, Output, EventEmitter, ElementRef } from '@angular/core';
 import { Section } from '../../models/website';
 import { Constants } from '../../app.constants';
 import { GenericService } from '../../services';
@@ -20,6 +20,8 @@ export class SectionDetails implements OnInit, OnDestroy {
     formData = new FormData();
     pictureUrl: any = '';
     showInMenu = false;
+
+    @Output() sectionSaveEvent = new EventEmitter<Section>();
 
     constructor
     (
@@ -65,6 +67,7 @@ export class SectionDetails implements OnInit, OnDestroy {
 
 
   save() {
+    this.messages = [];
     this.formData = new FormData();
 
     const pictureEl = this.picture.nativeElement;
@@ -87,6 +90,7 @@ export class SectionDetails implements OnInit, OnDestroy {
               this.section = result;
               this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
               this.pictureUrl = '';
+              this.sectionSaveEvent.emit(this.section);
             } else {
               this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
             }
@@ -97,6 +101,7 @@ export class SectionDetails implements OnInit, OnDestroy {
             if (result.id > 0) {
               this.section = result;
               this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
+              this.sectionSaveEvent.emit(this.section);
             } else {
               this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
             }

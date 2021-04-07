@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, Output, EventEmitter, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Section, Slider } from '../../models/website';
 import { Constants } from '../../app.constants';
@@ -20,6 +20,8 @@ export class SliderDetails implements OnInit, OnDestroy {
     @ViewChild('picture', {static: false}) picture: ElementRef;
     formData = new FormData();
     pictureUrl: any = '';
+
+    @Output() sliderSaveEvent = new EventEmitter<Slider>();
 
     constructor
     (
@@ -65,6 +67,7 @@ export class SliderDetails implements OnInit, OnDestroy {
 
 
   save() {
+    this.messages = [];
     this.formData = new FormData();
 
     const pictureEl = this.picture.nativeElement;
@@ -74,7 +77,7 @@ export class SliderDetails implements OnInit, OnDestroy {
           this.formData.append('file[]', files[i], 'picture.jpg');
       }
     } else {
-       this.formData.append('file', null, null);
+       //this.formData.append('file', null, null);
     }
 
     try {
@@ -90,6 +93,7 @@ export class SliderDetails implements OnInit, OnDestroy {
                 this.messages.push({severity: Constants.SUCCESS, summary: res['COMMON.SAVE'], detail: res['MESSAGE.SAVE_SUCCESS']});
                 });
               this.pictureUrl = '';
+              this.sliderSaveEvent.emit(this.slider);
             } else {
               this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_UNSUCCESS']).subscribe(res => {
                 this.messages.push({severity: Constants.SUCCESS, summary: res['COMMON.SAVE'], detail: res['MESSAGE.SAVE_SUCCESS']});
@@ -104,6 +108,7 @@ export class SliderDetails implements OnInit, OnDestroy {
               this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe(res => {
                 this.messages.push({severity: Constants.SUCCESS, summary: res['COMMON.SAVE'], detail: res['MESSAGE.SAVE_SUCCESS']});
                 });
+              this.sliderSaveEvent.emit(this.slider);
             } else {
               this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe(res => {
                 this.messages.push({severity: Constants.SUCCESS, summary: res['COMMON.SAVE'], detail: res['MESSAGE.SAVE_SUCCESS']});

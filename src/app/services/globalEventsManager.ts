@@ -39,6 +39,11 @@ export class GlobalEventsManager {
         this.showMenu = true;
       }
 
+
+      if (Cookie.get('lang')) {
+        this.currentLang = Cookie.get('lang');
+      }
+
     }
 
     changeModuleName(moduleName: string) {
@@ -52,11 +57,8 @@ export class GlobalEventsManager {
     changeLanguage(selectLang: string) {
         this.currentLang = selectLang;
         this.translate.use(selectLang);
+        this.translate.currentLang = selectLang;
         let date = new Date(Date.now() + 86400000000e3);
         document.cookie = "lang=" + selectLang + "; expires=" + date.toUTCString();
-        //Cookie.set('lang', selectLang, (20 * 365 * 24 * 60 * 60));
-        console.log('setting the language to: ' + selectLang);
-        console.log('language in cookie=' + Cookie.get('lang'));
-        //window.location.reload();
     }
 }

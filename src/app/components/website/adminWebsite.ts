@@ -6,6 +6,7 @@ import { SectionItemDetails } from './sectionItemDetails';
 import { SectionItemList } from './sectionItemList';
 import { EmployeeDetails } from '../employeeDetails';
 import { CompanyDetails } from '../companyDetails';
+import { CompanyList } from '../companyList';
 import { ContactDetails } from '../contactDetails';
 import { SliderList } from './sliderList';
 import { SliderDetails } from './sliderDetails';
@@ -60,6 +61,7 @@ export class AdminWebsite implements OnInit, OnDestroy {
   @ViewChild(EmployeeDetails, {static: false}) employeeDetails: EmployeeDetails;
   @ViewChild(EmployeeList, {static: false}) employeeList: EmployeeList;
   @ViewChild(CompanyDetails, {static: false}) companyDetails: CompanyDetails;
+  @ViewChild(CompanyList, {static: false}) companyList: CompanyList;
   @ViewChild(ContactDetails, {static: false}) contactDetails: ContactDetails;
   @ViewChild(ReferenceDetails, {static: false}) referenceDetails: ReferenceDetails;
   @ViewChild(ReferenceList, {static: false}) referenceList: ReferenceList;
@@ -144,12 +146,33 @@ export class AdminWebsite implements OnInit, OnDestroy {
     this.companyHistoryList.updateTable($event);
   }
 
+  onSectionSaved($event) {
+    this.sectionList.updateTable($event);
+  }
+
+  onSectionItemSaved($event) {
+    this.sectionItemList.updateTable($event);
+  }
+
+  onSliderSaved($event) {
+    this.sliderList.updateTable($event);
+  }
+
+  onSliderTextSaved($event) {
+    this.sliderTextList.updateTable($event);
+  }
+
   onCompanySelected($event) {
       this.activeCompanyTab = 0;
       const companyId = $event;
       this.companyDetails.getCompany(companyId);
 
   }
+
+  onCompanySaved($event) {
+    this.companyList.updateTable($event);
+  }
+
 
   onContactSelected($event) {
       const contactId = $event;

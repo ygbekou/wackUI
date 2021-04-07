@@ -97,4 +97,17 @@ export class SliderTextList extends BaseComponent implements OnInit, OnDestroy {
     }
   }
 
+
+  updateTable(sliderText: SliderText) {
+		const index = this.sliderTexts.findIndex(x => x.id === sliderText.id);
+
+		if (index === -1) {
+			this.sliderTexts.push(sliderText);
+		} else {
+			this.sliderTexts[index] = sliderText;
+		}
+
+  }
+
+
  }

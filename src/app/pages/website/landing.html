@@ -223,7 +223,8 @@
         <div class="container">
             <div class=" appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="1300">
                 <div class="col">
-                    <div class="owl-carousel owl-theme stage-margin custom-carousel-style-1 mb-0" data-plugin-options="{'items': 5, 'margin': 10, 'loop': false, 'nav': true, 'dots': false, 'stagePadding': 40}">
+                    <div class="owl-carousel owl-theme stage-margin custom-carousel-style-1 mb-0" 
+                        style="border-color: #1b9dff; color: #1b9dff" data-plugin-options="{'items': 5, 'margin': 10, 'loop': false, 'nav': true, 'dots': false, 'stagePadding': 40}">
                         <div>
                             <img class="img-fluid" src="assets/images/slider/5.jpg" alt="">
                         </div>
@@ -269,7 +270,7 @@
     </section>
     <hr class="solid custom-opacity-2 mt-0">
     <section class="section bg-color-light custom-padding-1 border-0 my-0" *ngFor="let sectionEntry of sectionMap | keyvalue">
-        <div class="container">
+        <div class="container" *ngIf="sectionMap[sectionEntry]">
             <div class="row mt-5">
                 <div class="col text-center">
                     <img src="assets/images/sectionitems/{{sectionMap[sectionEntry].section.id}}/{{sectionMap[sectionEntry].section.picture}}" class="img-fluid" alt="" />
@@ -360,7 +361,7 @@
             </div>
             <div class="row text-center mt-5">
                 <div class="col">
-                    <a href="#" class="btn btn-outline btn-primary font-weight-bold custom-btn-style-1 text-2">{{'COMMON.VIEW_ALL' | translate}}</a>
+                    <a href="#/testimonials" class="btn btn-outline btn-primary font-weight-bold custom-btn-style-1 text-2">{{'COMMON.VIEW_ALL' | translate}}</a>
                 </div>
             </div>
         </div>

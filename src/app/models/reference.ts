@@ -6,7 +6,7 @@ export class Reference {
   parent: Reference;
   parentId1: number;
 
-
+  type: string;
   childs: Reference[];
 
   public static createReference(id: number, name: string) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, Output, EventEmitter, ElementRef } from '@angular/core';
 import { SliderText } from '../../models/website';
 import { Constants } from '../../app.constants';
 import { SliderDropdown } from './../dropdowns';
@@ -19,6 +19,7 @@ export class SliderTextDetails implements OnInit, OnDestroy {
     sliderText: SliderText = new SliderText();
     messages: Message[] = [];
 
+    @Output() sliderTextSaveEvent = new EventEmitter<SliderText>();
 
     constructor
     (
@@ -58,7 +59,8 @@ export class SliderTextDetails implements OnInit, OnDestroy {
   }
 
   save() {
-
+    this.messages = [];
+    
     try {
 
         this.genericService.save(this.sliderText, 'com.wack.model.website.SliderText')
@@ -68,6 +70,7 @@ export class SliderTextDetails implements OnInit, OnDestroy {
               this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe(res => {
                 this.messages.push({severity: Constants.SUCCESS, summary: res['COMMON.SAVE'], detail: res['MESSAGE.SAVE_SUCCESS']});
                 });
+              this.sliderTextSaveEvent.emit(this.sliderText);
             } else {
               this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_UNSUCCESS']).subscribe(res => {
                 this.messages.push({severity: Constants.SUCCESS, summary: res['COMMON.SAVE'], detail: res['MESSAGE.SAVE_SUCCESS']});

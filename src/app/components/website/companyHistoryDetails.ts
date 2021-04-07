@@ -65,6 +65,7 @@ export class CompanyHistoryDetails implements OnInit, OnDestroy {
 
 
   save() {
+    this.messages = [];
     this.formData = new FormData();
 
     const pictureEl = this.picture.nativeElement;
